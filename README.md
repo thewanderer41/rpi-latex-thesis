@@ -57,3 +57,17 @@ These pro-tips can be found in the `tips` folder, including:
 - [ThesisFormatting.md](https://github.com/gonsie/rpi-latex-thesis/blob/master/tips/ThesisFormatting.md): This file lists several reasons why a thesis was returned to a student.
 - [Medha_Atre_Comments.md](https://github.com/gonsie/rpi-latex-thesis/blob/master/tips/Medha_Atre_Comments.md): This file contains Medha's comments on the thesis submission process, as emailed to the CSGrads list in September 2011.
 - [Terry_Hayden_Pro_Tips.md](https://github.com/gonsie/rpi-latex-thesis/blob/master/tips/Terry_Hayden_Pro_Tips.md): This file is a collection of several tips from Terry Hayden.
+
+## IEEE Reference Style
+
+The RPI thesis class defines the layout of the thesis document, except for the references section.
+As noted by OGE:
+
+> References to relevant literature should follow the commonly accepted practice in the candidate's field.
+> Your advisor will assist you with the proper form of citation.
+
+In all reality, this repository will mostly be used by Computer Science students.
+As such, the `IEEE-resources` folder contains the files necessary for an IEEE-styled thesis (originally found [here](http://www.ieee.org/conferences_events/conferences/publishing/templates.html)), including:
+
+- IEEE Style Guide
+- IEEE BibTeX resources 
