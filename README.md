@@ -35,7 +35,7 @@ These files have not been modified.
 
 ## RPI/OGE Forms
 
-Hard copies of some of the needed forms can be found in the OGE-forms folder.
+Hard copies of some of the needed forms can be found in the `OGE-forms` folder.
 
 - RPI's Office of Graduate Education for Current Students: http://gradoffice.rpi.edu/update.do?catcenterkey=2
   - see right-hand sidebar for links to forms and checklists
@@ -52,7 +52,7 @@ Hard copies of some of the needed forms can be found in the OGE-forms folder.
 
 Over the years, many students have had difficulties in having their theses accepted by OGE.
 In an attempt to alleviate this process, several individuals have passed on their wisdom.
-These pro-tips can be found in the tips folder, including:
+These pro-tips can be found in the `tips` folder, including:
 
 - [ThesisFormatting.md](https://github.com/gonsie/rpi-latex-thesis/blob/master/tips/ThesisFormatting.md): This file lists several reasons why a thesis was returned to a student.
 - [Medha_Atre_Comments.md](https://github.com/gonsie/rpi-latex-thesis/blob/master/tips/Medha_Atre_Comments.md): This file contains Medha's comments on the thesis submission process, as emailed to the CSGrads list in September 2011.
