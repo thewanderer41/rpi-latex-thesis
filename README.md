@@ -1,7 +1,10 @@
 RPI Thesis LaTeX
 ================
 
-Check out the original version [markemer/rpi-latex-thesis](http://github.com/markemer/rpi-latex-thesis).
+The RPI Thesis LaTeX file is officially maintained by dotCIO and can be found here:
+
+- [thesis.cls](http://www.rpi.edu/dept/arc/docs/latex-thesis/thesis.cls)
+- [Thesis LaTeX Preparation page](http://www.rpi.edu/dept/arc/docs/latex-thesis/thesis.cls)
 
 I have made a number of changes to the Thesis class;
 **These changes are in no way endorsed by any official at RPI/OGE.**
@@ -15,7 +18,22 @@ I have made a number of changes to the Thesis class;
   Use the command `\softtitlepage`.
 - Added command for self attribution footnote. See [template/rpithes.tex:27](https://github.com/gonsie/rpi-latex-thesis/blob/master/template/rpithes.tex#L27) and the OGE Thesis Manual (page 12).
 
-# RPI Resources
+# Usage of This Repository
+
+This repository is a collection of resources for students writing RPI theses.
+
+## Thesis TeX Style File
+
+The main resource is the TeX style-file, `thesis.cls`.
+This is the main file, and really, the only one you need to get started.
+A link to the original file and a list of changes is noted above.
+
+## RPI's Provided Template
+
+The files in the `template` folder contain the RPI thesis template tex files (originally provided by dotCIO).
+These files have not been modified.
+
+## RPI/OGE Forms
 
 Hard copies of some of the needed forms can be found in the OGE-forms folder.
 
@@ -30,7 +48,7 @@ Hard copies of some of the needed forms can be found in the OGE-forms folder.
 - dotCIO Thesis Page: http://dotcio.rpi.edu/services/printing-publishing/thesis-preparation
   - includes original LaTeX and MSWord templates
 
-# Pro Tips!
+## Pro Tips!
 
 Over the years, many students have had difficulties in having their theses accepted by OGE.
 In an attempt to alleviate this process, several individuals have passed on their wisdom.
