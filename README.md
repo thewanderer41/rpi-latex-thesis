@@ -31,7 +31,7 @@ A link to the original file and a list of changes is noted above.
 ## RPI's Provided Template
 
 The files in the `template` folder contain the RPI thesis template tex files (originally provided by dotCIO).
-These files have not been modified.
+The only change exists in [rpithes.tex:27](https://github.com/gonsie/rpi-latex-thesis/blob/master/template/rpithes.tex#L27) and it is for the self attribution required by the OGE Thesis Manual (page 12).
 
 ## RPI/OGE Forms
 
