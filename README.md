@@ -17,6 +17,7 @@ I have made a number of changes to the Thesis class;
 - Added a Candidacy title page (no signature lines).
   Use the command `\softtitlepage`.
 - Added command for self attribution footnote. See [template/rpithes.tex:27](https://github.com/gonsie/rpi-latex-thesis/blob/master/template/rpithes.tex#L27) and the OGE Thesis Manual (page 12).
+  This requires that line [thesis.cls:314](https://github.com/gonsie/rpi-latex-thesis/blob/master/thesis.cls#L314) be commented out.
 
 # Usage of This Repository
 
