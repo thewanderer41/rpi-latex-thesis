@@ -10,9 +10,9 @@ The conceptual model used within this thesis is built around the expression of t
 
 \section{ADDITION}
 
-When a change adds a new attribute to a version, it only needs to refer to version two and its corresponding attribute.  The reasoning should be fairly obvious as the attribute never existed in version one, and therefore, there is nothing to refer to and no need to form a relationship between the change and version one.  However, by linking the addition change to version one, we address a difficulty with comparing provenance graphs.  When two data objects have identical structures, it is difficult to determine what time the objects were added to the dataset and which version they belong to.  As a result, determining the compatability of the two objects becomes difficult.  The change contributions to the dataset evolution appears naturally using this construction. The resulting model can be seen in Figure~\ref{AdditionFig}.
+When a change adds a new attribute to a version, it only needs to refer to version two and its corresponding attribute.  The reasoning should be fairly obvious as the attribute never existed in version one, and therefore, there is nothing to refer to and no need to form a relationship between the change and version one.  However, by linking the addition change to version one, we address a difficulty with comparing provenance graphs.  When two data objects have identical structures, it is difficult to determine what time the objects were added to the dataset and which version they belong to.  As a result, determining the compatability of the two objects becomes difficult.  The change contributions to the dataset evolution appears naturally using this construction. The resulting model can be seen in Figure~\ref{AdditionFig}.  Some relationships are specifically left out, such as that between Change A and Version 2, to not confuse identification of other types of changes.  The relationship between Change A and Version 2 can still be implied from Attribute 2.
 
-\begin{figure}
+\begin{figure}[t]
 	\centering
 	\vspace{0.0in} % normally the command here would be \includegraphics
 %	\includegraphics{figures/Addition.png}
@@ -36,14 +36,16 @@ When a change adds a new attribute to a version, it only needs to refer to versi
 
 \section{INVALIDATION}
 
-The Invalidation operation corresponds to the delete concept found in other applications.  The choice of invalidation over delete results from the policy that data is never deleted.
+The Invalidation operation corresponds to the delete concept found in other applications.  The choice of invalidation over delete results from the policy that, in versioning, data should never be deleted.  In practicality, this may not be particularly feasible due to space limitations and relative validity.  In either case, the change invalidates an attribute in version one, resulting in version two.  Unlike the Addition operation, Invalidation forms a clear relationship between both versions, which can be seen in Figure \ref{InvalidationFig}.  Notice again that since Attribute 1 no longer exists in Version 2, there is no corresponding Attribute 2 to refer to.
 
-\begin{figure}
+From Figure \ref{AdditionFig}, we can see the confusion that could result from requiring explicit relationships between versions and changes in both the Addition and Invalidation operations.  Linking Change A to Version 2 would create a duplicate connection and provides a mechanism to identify when items specifically enter or leave a version.
+
+\begin{figure}[t]
 	\centering
 	\vspace{0.0in} % normally the command here would be \includegraphics
 	%	\includegraphics{figures/Addition.png}
 	\begin{tikzpicture}[every node/.style={draw, rectangle}]
-	\begin{scope}[node distance=20mm and 20mm]
+	\begin{scope}[node distance=15mm and 20mm]
 	\node (c) [scale=1.25] at (1,0) {Change I};
 	\node (1) [above left=of c, scale=1.25] {Version 1};
 	\node (2) [above right=of c, scale=1.25] {Version 2};
@@ -55,10 +57,36 @@ The Invalidation operation corresponds to the delete concept found in other appl
 	\end{scope}
 	\end{tikzpicture}
 	\caption{Model of the relationships between Versions 1 and 2 when invalidating Attribute 1 from Version 1 as a result of Change I}
-	\label{Invalidationfig}  % the \label command comes AFTER the caption
+	\label{InvalidationFig}  % the \label command comes AFTER the caption
 \end{figure}
 
 
 \section{MODIFICATION}
 
+The final operation is Modification, and it maps a change from one attribute from version one to its corresponding attribute in version two.  The particular type of change in this case is purposely left out in order to allow data producers to subclass and customize the resulting graph to properly reflect the versioning that they desire.
+
+\begin{figure}[b]
+	\centering
+	\vspace{0.0in} % normally the command here would be \includegraphics
+	%	\includegraphics{figures/Addition.png}
+	\begin{tikzpicture}[every node/.style={draw, rectangle}]
+		\begin{scope}[node distance=20mm and 20mm]
+			\node (c) [scale=1.25] at (1,0) {Change M};
+			\node (1) [above left=of c, scale=1.25] {Version 1};
+			\node (2) [above right=of c, scale=1.25] {Version 2};
+			\node (a1) [below =of 1, scale=1.25] {Attribute 1};
+			\node (a2) [below =of 2, scale=1.25] {Attribute 2};
+
+			\draw [line width=2pt,->] (a1) -- (c);
+			\draw [line width=2pt,->] (c) -- (a2);
+			\draw [line width=2pt, ->] (1) -- (a1);
+			\draw [line width=2pt, ->] (2) -- (a2);
+		\end{scope}
+	\end{tikzpicture}
+	\caption{Model of the relationships between Versions 1 and 2 when modifying Attribute 1 from Version 1 as a result of Change M, resulting in Attribute 2 from Version 2}
+	\label{ModificationFig}  % the \label command comes AFTER the caption
+\end{figure}
+
 \section{MULTIPLE LINKED VERSIONS}
+
+Using the construction outlined in the previous three sections, many changes can be compiled together into a graph in a changelog.  After all additions, invalidations, and modifications have been compiled into a single graph, a complete mapping from version one to version two may be developed.  The orientation of the relationships in the graph allows a flow to be created from attributes in version one to corresponding attributes in version two.  Taking version two and performing the same graph construction to a version three results in not only a flow from version two to version three, but also from version one to version three.  As a result, the flow can be used to construct a mapping from version one to version three or any future version.
