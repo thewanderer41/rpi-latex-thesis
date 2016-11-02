@@ -6,36 +6,102 @@
 
 \chapter{INTRODUCTION}
 
-Software development followed a stiff production cycle prior to the early 2000s.  However, as technology developed, software development required a system to adapt and change to evolving conditions leading to the Agile Manifesto.  Likewise, data collected by researchers grew at an astounding rate with new technology.  NASA's Atmospheric Science Data Center reported a growth from hosting around five million files to twenty million files between 2001 and 2004\footnote{Agencies and research groups have collected new data at an incredible rate.  The amount of data housed by NASA quadrupled from 2001 to 2004 \cite{barkstromLibrary} and high energy physics labs can generate on the order of 4000 new datasets every day \cite{ATLAS}.}.  Many datasets have required reprocessings of their data, either to improve data quality or to correct for errors [CALIPSO, ARM].  Indeed, version control systems can provide contexts for modifications when combined with error detection systems, providing a more complete picture of the system's behavior [Reference 9].  (Dynamic dataset generation?)
+Software development followed a stiff production cycle prior to the early 2000s.
+However, as technology developed, software development required a system to adapt and change to evolving conditions leading to the Agile Manifesto.
+Likewise, data collected by researchers grew at an astounding rate with new technology.
+NASA's Atmospheric Science Data Center reported a growth from hosting around five million files to twenty million files between 2001 and 2004\footnote{Agencies and research groups have collected new data at an incredible rate.
+The amount of data housed by NASA quadrupled from 2001 to 2004 \cite{proellBigData} and high energy physics labs can generate on the order of 4000 new datasets every day \cite{Flouris04clotho:transparent}.}.
+Many datasets have required reprocessings of their data, either to improve data quality or to correct for errors [CALIPSO, ARM].
+Indeed, version control systems can provide contexts for modifications when combined with error detection systems, providing a more complete picture of the system's behavior [Reference 9].  (Dynamic dataset generation?)
 
-Dataset versioning tracks and documents the changes which occur in datasets.  There exists a tendancy to model dataset change using methods from software versioning.  Dot-decimal style version numbers are commonly seen in relation to new releases of software such as MATLAB or R, and current version naming schemes in data often use dot-decimal notation.  However, this convention results in semantically poor version names as the decimal numbers generally function solely as counts.  The Ubuntu versioning scheme appears to follow a major-minor numbering pattern, but the major and minor numbers correspond to the year and month of the release, respectively.  As a result, the version name holds no significance as the extent of difference between two versions.  Additionally, this method breaks down since it is difficult to predict the impact changes in data will have on data consumers.  Depending on how the data is processed or what subsets are used, dataset changes that the producers perceives as minor changes may have significant repercussions for the consumer.  This demonstrates the structural difference between software and datasets in that a revision in data only constitutes an adjustment to the relevant subsets.  An alteration to a software file constitutes a change to the project as a whole.  As a result, datasets provide a context which does not completely translate from software project versioning.
+Dataset versioning tracks and documents the changes which occur in datasets.
+There exists a tendancy to model dataset change using methods from software versioning.
+Dot-decimal style version numbers are commonly seen in relation to new releases of software such as MATLAB or R, and current version naming schemes in data often use dot-decimal notation.
+However, this convention results in semantically poor version names as the decimal numbers generally function solely as counts.
+The Ubuntu versioning scheme appears to follow a major-minor numbering pattern, but the major and minor numbers correspond to the year and month of the release, respectively.
+As a result, the version name holds no significance as the extent of difference between two versions.
+Additionally, this method breaks down since it is difficult to predict the impact changes in data will have on data consumers.
+Depending on how the data is processed or what subsets are used, dataset changes that the producers perceives as minor changes may have significant repercussions for the consumer.
+This demonstrates the structural difference between software and datasets in that a revision in data only constitutes an adjustment to the relevant subsets.
+An alteration to a software file constitutes a change to the project as a whole.
+As a result, datasets provide a context which does not completely translate from software project versioning.
 
 \section{Types of Change}
 
-Change is the fundamental characteristic in the study of versioning.  Continuing the comparison with software, the measure of change in applications is primarily functional.  Data, on the other hand, has not only function but also structure.  While swapping the ordering of columns in a spreadsheet may not effect the usability of the data, it could cause issues with codes that use the data.  This highlights the idea that many different forms of change exist with differing degrees of intensity.  In this document, change is viewed as having three general categories: scientific, technical, and lexical.  The most impactful change, scientific, denotes changes that have modified the fundamental science used to generate the dataset.  Changes in algorithms or sampling methods generally fall under scientific modifications as they effect the base assumptions and possible error within the dataset.  Technical impacts do not change the underlying science of the data, but impose a large enough change as to warrant notice.  Structure alteration and unit conversions count as technical changes since the dataset now needs to be consumed differently but remains valid for use.  Lexical changes belie the transformations that can best be described as corrections.  Filling in previously missing values or fix erroneous values may be lexical changes.
+Change is the fundamental characteristic in the study of versioning.
+Continuing the comparison with software, the measure of change in applications is primarily functional.
+Data, on the other hand, has not only function but also structure.
+While swapping the ordering of columns in a spreadsheet may not effect the usability of the data, it could cause issues with codes that use the data.
+This highlights the idea that many different forms of change exist with differing degrees of intensity.
+In this document, change is viewed as having three general categories: scientific, technical, and lexical.
+The most impactful change, scientific, denotes changes that have modified the fundamental science used to generate the dataset.
+Changes in algorithms or sampling methods generally fall under scientific modifications as they effect the base assumptions and possible error within the dataset.
+Technical impacts do not change the underlying science of the data, but impose a large enough change as to warrant notice.
+Structure alteration and unit conversions count as technical changes since the dataset now needs to be consumed differently but remains valid for use.
+Lexical changes belie the transformations that can best be described as corrections.
+Filling in previously missing values or fix erroneous values may be lexical changes.
 
-The exact category that a particular change falls into can be controversial.  The decision to change concentration units from parts per million to milligrams per milliliter poses a Technical change for a data producer.  However, for a data consumer, the change may be viewed as a Scientific change as it invalidates the methods they had previously used.  This conflict in view illustrates the data consumer-producer dynamic.  In general, data producers are in control of the methods of versioning, but data consumers determine the classification of a data change.  Reference 19 demonstrates the viewpoint as producers tend to use versioning systems to ensure data quality of service through audits and recovery tools.  Meanwhile, a consumer will analyze the historical changes and determine the impact this may have to their data use.  As a result, this means that data versioning systems must communicate a dynamic view of the changes in a system contextualized by the user of that data.
+The exact category that a particular change falls into can be controversial.
+The decision to change concentration units from parts per million to milligrams per milliliter poses a Technical change for a data producer.
+However, for a data consumer, the change may be viewed as a Scientific change as it invalidates the methods they had previously used.
+This conflict in view illustrates the data consumer-producer dynamic.
+In general, data producers are in control of the methods of versioning, but data consumers determine the classification of a data change.
+Reference 19 demonstrates the viewpoint as producers tend to use versioning systems to ensure data quality of service through audits and recovery tools.
+Meanwhile, a consumer will analyze the historical changes and determine the impact this may have to their data use.
+As a result, this means that data versioning systems must communicate a dynamic view of the changes in a system contextualized by the user of that data.
 
 \section{Provenance and Provenance Distance}
 
-The information that details the activities and agents involved in generating a data entity is known as provenance.  In NASA remote sensing data, provenance is generally grouped into input data, scripts, and calibration constants [Barkstrom] and changes to it signals that a new versions should be propagated down the workflow.  Software revision management tools such as Git and SVN also keep track of provenance information when logging new commits to a project, using branches and merges.  It is, however, important to distinguish between the contributions of provenance to change tracking and the contributions of versioning.  Provenance allows for the identification of change localities; it signals where changes in data have occurred.  However, provenance does not elaborate on the extent of the alterations made, not should it.  The priority of provenance tracking is understanding where and how a data object was generated, not it's relationship to other data products.  In the field of semantic technologies, the W3C recommendation, PROV provides a data model to encode provenance information into searchable graphs.  PROV expresses relationships between versions with the wasRevisionOf or alternateOf property.  The properties do not allow for more elaboration as to what changes were made to transform from one version into its alternate.  Versioning provides the context for a change by providing the comparison between data objects.
+The information that details the activities and agents involved in generating a data entity is known as provenance.
+In NASA remote sensing data, provenance is generally grouped into input data, scripts, and calibration constants [Barkstrom] and changes to it signals that a new versions should be propagated down the workflow.
+Software revision management tools such as Git and SVN also keep track of provenance information when logging new commits to a project, using branches and merges.
+It is, however, important to distinguish between the contributions of provenance to change tracking and the contributions of versioning.
+Provenance allows for the identification of change localities; it signals where changes in data have occurred.
+However, provenance does not elaborate on the extent of the alterations made, not should it.
+The priority of provenance tracking is understanding where and how a data object was generated, not it's relationship to other data products.
+In the field of semantic technologies, the W3C recommendation, PROV provides a data model to encode provenance information into searchable graphs.
+PROV expresses relationships between versions with the wasRevisionOf or alternateOf property.
+The properties do not allow for more elaboration as to what changes were made to transform from one version into its alternate.
+Versioning provides the context for a change by providing the comparison between data objects.
 
 \subsection{Provenance Distance}
 
-Data workflows have become complex and sizable in such a way that even subtle changes may have noticeable effects.  (Refer to NASA citation of cosmetic changing resulting in changed datasets).  One approach is following the provenance of the new data and identifying potential differences between how the data has become generated.  Since provenance graphs have both directed edges and labeled nodes, there are a few methods of measuring similarity available (Levenshtein Distance) beyond basic isomorphism.  This similarity measure is known as the provenance distance between the two data objects.  A concern that arises with this approach is that, as previously stated, provenance only provides a context for versioning.  Consider an example where there are versions 1 and 2 of a data object, both compiled from a reference source.  Since there are two versions, it is understood that the versions are different so the comparison extends to their reference sources.  If both versions were compiled from the same source, it can only be concluded that the compilation methods were different.  In the case of the NASA datasets, those methods should not have changed and no further insight has been found.  If the reference sources have been changed, then it is expected that there would be a new version or data object and no new information has been found.  This reasoning motivates the development of a versioning method that utilizes changelogs and RDFa to determine versioning distance.
+Data workflows have become complex and sizable in such a way that even subtle changes may have noticeable effects.
+(Refer to NASA citation of cosmetic changing resulting in changed datasets).
+One approach is following the provenance of the new data and identifying potential differences between how the data has become generated.
+Since provenance graphs have both directed edges and labeled nodes, there are a few methods of measuring similarity available (Levenshtein Distance) beyond basic isomorphism.
+This similarity measure is known as the provenance distance between the two data objects.
+A concern that arises with this approach is that, as previously stated, provenance only provides a context for versioning.
+Consider an example where there are versions 1 and 2 of a data object, both compiled from a reference source.
+Since there are two versions, it is understood that the versions are different so the comparison extends to their reference sources.
+If both versions were compiled from the same source, it can only be concluded that the compilation methods were different.
+In the case of the NASA datasets, those methods should not have changed and no further insight has been found.
+If the reference sources have been changed, then it is expected that there would be a new version or data object and no new information has been found.
+This reasoning motivates the development of a versioning method that utilizes changelogs and RDFa to determine versioning distance.
 
 \section{Changelogs}
 
-Changelogs, sometimes called patch notes, are artifacts resulting from the versioning process often found in major software projects.  They detail the changes made within the system and some will have explanations on the motivations behind changes.  These logs provide a great source of value to developers as they can be used to give insight to the health of a software project (Changelog references).  Changelogs also allow developers to link bugs and errors with their corrections in later versions (Bugzilla citation).  Despite these contributions, changelogs are rarely found along with data.  Possible reasons for this omission may include the size of data  as it may become difficult to scalably communicate data change (Data exceeds ability to track reference) or that the ease of data acquisition and storage inclines towards simply using the latest version.  As a result, new dataset versions are often accompanied by usage documents, but documentation on version transitions are omitted.  This creates a impediment to making data forward and backwards compatible, costing data consumers both time and money.
+Changelogs, sometimes called patch notes, are artifacts resulting from the versioning process often found in major software projects.
+They detail the changes made within the system and some will have explanations on the motivations behind changes.
+These logs provide a great source of value to developers as they can be used to give insight to the health of a software project (Changelog references).
+Changelogs also allow developers to link bugs and errors with their corrections in later versions (Bugzilla citation).
+Despite these contributions, changelogs are rarely found along with data.
+Possible reasons for this omission may include the size of data  as it may become difficult to scalably communicate data change (Data exceeds ability to track reference) or that the ease of data acquisition and storage inclines towards simply using the latest version.
+As a result, new dataset versions are often accompanied by usage documents, but documentation on version transitions are omitted.
+This creates a impediment to making data forward and backwards compatible, costing data consumers both time and money.
 
-
-
-\subsection{What they are}
-\subsection{Previous work on how they can be analyzed}
-\subsection{Only Human readable}
+Changelogs are also difficult to consume as they are often built to be read only by humans.
+The transition between different versions of large datasets is then left largely up to the human user's ability to understand and process the modifications mentioned within the change log.
+In the absence of any sort of change notes, it is up to the consumer to be able to locate the points of differences between the versions they are working among.
+Therefore, providing an machine consumable changelog would accelerate and assist in navigating through dataset changes and error corrections.
 
 \section{RDFa}
-\subsection{Introduction and usage}
+
+The modifications to implement a machine readable changelog should still remain in a form viewable by a human user.
+The subjectivity of versioning information means that domain scientists should still be able to interpret changes as they relate to their application.
+Resource Description Framework in Attributes (RDFa) allows web developers encode information XHTML and HTML documents using standardized ontologies.
+The developer would use the attributes in RDFa to augment the existing HTML tags to provide extra meaning that a web crawler can extract.
+The displayed text would remain unchanged signifying that if a changelog could be produced in HTML, then data producers can embed machine readable versioning information into a changelog using RDFa while still leaving it human readable as well.
 
 
 %%% Local Variables:

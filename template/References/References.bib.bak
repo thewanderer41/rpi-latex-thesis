@@ -1,0 +1,38 @@
+% Encoding: UTF-8
+
+@InProceedings{Flouris04clotho:transparent,
+  author    = {Michail D. Flouris},
+  title     = {Clotho: Transparent Data Versioning at the Block I/O Level},
+  booktitle = {In Proceedings of the 12th NASA Goddard, 21st IEEE Conference on Mass Storage Systems and Technologies (MSST 2004},
+  year      = {2004},
+  pages     = {315--328},
+}
+
+@InProceedings{proellBigData,
+  author    = {Stefan Proell and Andreas Rauber},
+  title     = {Scalable Data Citation in Dynamic Large Databases: Model and Reference Implementation},
+  booktitle = {IEEE International Conference on Big Data 2013 (IEEE BigData 2013)},
+  year      = {2013},
+  month     = {10},
+}
+
+@Article{Tichy:1985:RSV:4200.4202,
+  author     = {Tichy, Walter F.},
+  title      = {RCS\&Mdash;a System for Version Control},
+  journal    = {Softw. Pract. Exper.},
+  year       = {1985},
+  volume     = {15},
+  number     = {7},
+  pages      = {637--654},
+  month      = jul,
+  acmid      = {4202},
+  address    = {New York, NY, USA},
+  doi        = {10.1002/spe.4380150703},
+  issn       = {0038-0644},
+  issue_date = {July 1985},
+  numpages   = {18},
+  publisher  = {John Wiley \&amp; Sons, Inc.},
+  url        = {http://dx.doi.org/10.1002/spe.4380150703},
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}
