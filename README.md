@@ -1,7 +1,6 @@
-RPI Thesis LaTeX
-================
+# Resources for Writing a Thesis at RPI
 
-The RPI Thesis LaTeX file is officially maintained by dotCIO and can be found here:
+The official LaTeX Thesis class file for RPI is maintained by dotCIO and can be found here:
 
 - [thesis.cls](http://www.rpi.edu/dept/arc/docs/latex-thesis/thesis.cls)
 - [Thesis LaTeX Preparation page](http://www.rpi.edu/dept/arc/docs/latex-thesis/thesis.cls)
