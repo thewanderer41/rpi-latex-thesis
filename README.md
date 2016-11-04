@@ -1,3 +1,5 @@
+*Just want to get started? See the [rpi-thesis-template](http://github.com/gonsie/rpi-thesis-template) repo!*
+
 # Resources for Writing a Thesis at RPI
 
 The official LaTeX Thesis class file for RPI is maintained by dotCIO and can be found here:
