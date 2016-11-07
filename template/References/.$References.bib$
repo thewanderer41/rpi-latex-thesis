@@ -538,7 +538,7 @@ be in line with traditional close source development.},
   url        = {http://dx.doi.org/10.1016/0012-365X(95)00073-6},
 }
 
-@Article{,
+@Article{Cao2013,
   author  = {Bin Cao and Ying Li and Jianwei Yin},
   title   = {Measuring Similarity between Gaphs Based on the Levenshtein Distance},
   journal = {Applied Mathematics \& Information Sciences},

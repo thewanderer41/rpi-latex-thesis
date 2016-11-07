@@ -12,12 +12,12 @@ Likewise, data collected by researchers grew at an astounding rate with new tech
 NASA's Atmospheric Science Data Center reported a growth from hosting around five million files to twenty million files between 2001 and 2004\footnote{Agencies and research groups have collected new data at an incredible rate.
 The amount of data housed by NASA quadrupled from 2001 to 2004 \cite{Barkstrom_digitallibrary} and high energy physics labs can generate on the order of 4000 new datasets every day \cite{Flouris04clotho:transparent}.}.
 Many datasets have required reprocessings of their data, either to improve data quality or to correct for errors [CALIPSO, ARM].
-Indeed, version control systems can provide contexts for modifications when combined with error detection systems, providing a more complete picture of the system's behavior [Reference 9].  (Dynamic dataset generation?)
+Indeed, version control systems can provide contexts for modifications when combined with error detection systems, providing a more complete picture of the system's behavior \cite{Fischer2003}.  (Dynamic dataset generation?)
 
 Dataset versioning tracks and documents the changes which occur in datasets.
-There exists a tendancy to model dataset change using methods from software versioning.
+There exists a tendancy to model dataset change using methods from software versioning \cite{Chacon:2009:PG:1618548} \cite{cederqvist2002version} \cite{tichy1985rcs}.
 Dot-decimal style version numbers are commonly seen in relation to new releases of software such as MATLAB or R, and current version naming schemes in data often use dot-decimal notation.
-However, this convention results in semantically poor version names as the decimal numbers generally function solely as counts.
+However, this convention results in semantically poor version names as the decimal numbers generally function solely as counts \cite{Dijkstra1994}.
 The Ubuntu versioning scheme appears to follow a major-minor numbering pattern, but the major and minor numbers correspond to the year and month of the release, respectively.
 As a result, the version name holds no significance as the extent of difference between two versions.
 Additionally, this method breaks down since it is difficult to predict the impact changes in data will have on data consumers.
