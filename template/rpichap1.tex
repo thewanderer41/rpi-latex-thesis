@@ -55,8 +55,8 @@ As a result, this means that data versioning systems must communicate a dynamic 
 \section{Provenance and Provenance Distance}
 
 The information that details the activities and agents involved in generating a data entity is known as provenance.
-In NASA remote sensing data, provenance is generally grouped into input data, scripts, and calibration constants [Barkstrom] and changes to it signals that a new versions should be propagated down the workflow.
-Software revision management tools such as Git and SVN also keep track of provenance information when logging new commits to a project, using branches and merges.
+In NASA remote sensing data, provenance is generally grouped into input data, scripts, and calibration constants and changes to it signals that a new versions should be propagated down the workflow \cite{Barkstrom2003}.
+Software revision management tools such as Git and SVN also keep track of provenance information when logging new commits to a project, using branches and merges  \cite{Chacon:2009:PG:1618548}.
 It is, however, important to distinguish between the contributions of provenance to change tracking and the contributions of versioning.
 Provenance allows for the identification of change localities; it signals where changes in data have occurred.
 However, provenance does not elaborate on the extent of the alterations made, not should it.
@@ -71,7 +71,7 @@ Versioning provides the context for a change by providing the comparison between
 Data workflows have become complex and sizable in such a way that even subtle changes may have noticeable effects.
 (Refer to NASA citation of cosmetic changing resulting in changed datasets).
 One approach is following the provenance of the new data and identifying potential differences between how the data has become generated.
-Since provenance graphs have both directed edges and labeled nodes, there are a few methods of measuring similarity available (Levenshtein Distance) beyond basic isomorphism \cite{proellBigData} \cite{Gao2010} \cite{Goddard:1996:DGU:246962.246972} .
+Since provenance graphs have both directed edges and labeled nodes, there are a few methods of measuring similarity available (Levenshtein Distance) beyond basic isomorphism \cite{Cao2013} \cite{Gao2010} \cite{Goddard:1996:DGU:246962.246972} .
 This similarity measure is known as the provenance distance between the two data objects.
 A concern that arises with this approach is that, as previously stated, provenance only provides a context for versioning.
 Consider an example where there are versions 1 and 2 of a data object, both compiled from a reference source.
