@@ -6,7 +6,24 @@
 
 \chapter{PREVIOUS WORK}
 %\resetfootnote %this command starts footnote numbering with 1 again.
-PROV is a W3C recommendation that deliniates a method to express data provenance with semantic technologies.  Using the model of relating activities, agents, and entities, data managers can express the origins of their datasets.  However, when an entity is revised, the PROV data model can only express the relationship as a revision or that the new dataset was derived from the original.  This leaves
+Early work in the field of data versioning begins in the library sciences.
+As the computing field grows, many data publications are now being provided in digital formats as well as print.
+Digital Object Identifiers (DOI) and other identifiers evolved from the need to track the growing number of digital documents.
+They have also been used to track and cite datasets, but unlike documents, datasets have a tendancy to change after publication.
+As a result, new versions of data would get a new DOI to prevent confusion, and this unnecessarily consumes the available handles and the time of institutions assigning handles \cite{Lyons2005}.
+Other identifier systems have also had problems with maintaining healthy links to data as it changes and moves, but systems using newer technology have been able to achieve success in localized networks \cite{Payette2002}.
+Built on XML and web service technology, the Mellon Fedora project linked together various disparate digital library collections at the University of Virginia.
+
+Many organizations rely on databases to provide large segments of data to their consumers.
+Various methods have been studied to manage changes within these systems focusing primarily on schema versioning, emphasizing data's structural component \cite{roddick1996model}.
+More recently, new methods have been developed to adjust to the enormous quantities of data populating modern databases \cite{Proell2013} \cite{DBLP:conf/data/2013}.
+The focus for this method emphasizes the focus on scalability of solutions and notes that a significant challenge to proper data referencing is proper subset description \cite{proellBigData}.
+
+
+PROV is a W3C recommendation that deliniates a method to express data provenance with semantic technologies \cite{Belhajjame2013}.
+Using the model of relating activities, agents, and entities, data managers can express the origins of their datasets.
+However, when an entity is revised, the PROV data model can only express the relationship as a revision or that the new dataset was derived from the original.
+This leaves
 
 
 

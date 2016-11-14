@@ -12,10 +12,12 @@ Likewise, data collected by researchers grew at an astounding rate with new tech
 NASA's Atmospheric Science Data Center reported a growth from hosting around five million files to twenty million files between 2001 and 2004\footnote{Agencies and research groups have collected new data at an incredible rate.
 The amount of data housed by NASA quadrupled from 2001 to 2004 \cite{Barkstrom_digitallibrary} and high energy physics labs can generate on the order of 4000 new datasets every day \cite{Flouris04clotho:transparent}.}.
 Many datasets have required reprocessings of their data, either to improve data quality or to correct for errors [CALIPSO, ARM].
+The pervasiveness of Big Data extends beyond just large agencies, but even into the biological and health fields \cite{burrows2006review} \cite{Tagger2005}.
 Indeed, version control systems can provide contexts for modifications when combined with error detection systems, providing a more complete picture of the system's behavior \cite{Fischer2003}.  (Dynamic dataset generation?)
 
 Dataset versioning tracks and documents the changes which occur in datasets.
 There exists a tendancy to model dataset change using methods from software versioning \cite{Chacon:2009:PG:1618548} \cite{cederqvist2002version} \cite{tichy1985rcs}.
+When applied to such data formats as XML documents, version management systems disturb important data properties such as structure \cite{Chien:2000:VMX:646544.696357}
 Dot-decimal style version numbers are commonly seen in relation to new releases of software such as MATLAB or R, and current version naming schemes in data often use dot-decimal notation.
 However, this convention results in semantically poor version names as the decimal numbers generally function solely as counts \cite{Dijkstra1994}.
 The Ubuntu versioning scheme appears to follow a major-minor numbering pattern, but the major and minor numbers correspond to the year and month of the release, respectively.
@@ -69,7 +71,7 @@ Versioning provides the context for a change by providing the comparison between
 Data workflows have become complex and sizable in such a way that even subtle changes may have noticeable effects.
 (Refer to NASA citation of cosmetic changing resulting in changed datasets).
 One approach is following the provenance of the new data and identifying potential differences between how the data has become generated.
-Since provenance graphs have both directed edges and labeled nodes, there are a few methods of measuring similarity available (Levenshtein Distance) beyond basic isomorphism.
+Since provenance graphs have both directed edges and labeled nodes, there are a few methods of measuring similarity available (Levenshtein Distance) beyond basic isomorphism \cite{proellBigData} \cite{Gao2010} \cite{Goddard:1996:DGU:246962.246972} .
 This similarity measure is known as the provenance distance between the two data objects.
 A concern that arises with this approach is that, as previously stated, provenance only provides a context for versioning.
 Consider an example where there are versions 1 and 2 of a data object, both compiled from a reference source.
@@ -82,9 +84,9 @@ This reasoning motivates the development of a versioning method that utilizes ch
 \section{Changelogs}
 
 Changelogs, sometimes called patch notes, are artifacts resulting from the versioning process often found in major software projects.
-They detail the changes made within the system and some will have explanations on the motivations behind changes.
-These logs provide a great source of value to developers as they can be used to give insight to the health of a software project (Changelog references).
-Changelogs also allow developers to link bugs and errors with their corrections in later versions (Bugzilla citation).
+They detail the changes made within the system and some will have explanations on the motivations behind changes \cite{uel1037}.
+These logs provide a great source of value to developers as they can be used to give insight to the health of a software project \cite{German03automatingthe} \cite{6132954}.
+Changelogs also allow developers to link bugs and errors with their corrections in later versions \cite{Chen:2004:OCL:990374.990391}.
 Despite these contributions, changelogs are rarely found along with data.
 Possible reasons for this omission may include the size of data  as it may become difficult to scalably communicate data change (Data exceeds ability to track reference) or that the ease of data acquisition and storage inclines towards simply using the latest version.
 As a result, new dataset versions are often accompanied by usage documents, but documentation on version transitions are omitted.

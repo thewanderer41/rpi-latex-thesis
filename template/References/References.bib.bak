@@ -60,7 +60,7 @@
   pages     = {75--91},
 }
 
-@InProceedings{Fischer:2003:PRH:942800.943568,
+@InProceedings{Fischer2003,
   author    = {Fischer, Michael and Pinzger, Martin and Gall, Harald},
   title     = {Populating a Release History Database from Version Control and Bug Tracking Systems},
   booktitle = {Proceedings of the International Conference on Software Maintenance},
