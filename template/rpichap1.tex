@@ -11,9 +11,9 @@ However, as technology developed, software development required a system to adap
 Likewise, data collected by researchers grew at an astounding rate with new technology.
 NASA's Atmospheric Science Data Center reported a growth from hosting around five million files to twenty million files between 2001 and 2004\footnote{Agencies and research groups have collected new data at an incredible rate.
 The amount of data housed by NASA quadrupled from 2001 to 2004 \cite{Barkstrom_digitallibrary} and high energy physics labs can generate on the order of 4000 new datasets every day \cite{Flouris04clotho:transparent}.}.
-Many datasets have required reprocessings of their data, either to improve data quality or to correct for errors [CALIPSO, ARM].
-The pervasiveness of Big Data extends beyond just large agencies, but even into the biological and health fields \cite{burrows2006review} \cite{Tagger2005}.
-Indeed, version control systems can provide contexts for modifications when combined with error detection systems, providing a more complete picture of the system's behavior \cite{Fischer2003}.  (Dynamic dataset generation?)
+Many datasets have required reprocessings of their data, either to improve data quality or to correct for errors \cite{barkstrom2014earth}.
+Due to the rapid growth of new technologies, the need for proper data versioning extends beyond major agencies and even applies to smaller projects \cite{burrows2006review} \cite{Tagger2005} \cite{Stuckenholz:2005:CEV:1039174.1039197}.
+Indeed, version control systems can provide contexts for modifications when combined with error detection systems, providing a more complete picture of the system's behavior \cite{Fischer2003}.
 
 Dataset versioning tracks and documents the changes which occur in datasets.
 There exists a tendancy to model dataset change using methods from software versioning \cite{Chacon:2009:PG:1618548} \cite{cederqvist2002version} \cite{tichy1985rcs}.
@@ -55,28 +55,32 @@ As a result, this means that data versioning systems must communicate a dynamic 
 \section{Provenance and Provenance Distance}
 
 The information that details the activities and agents involved in generating a data entity is known as provenance.
-In NASA remote sensing data, provenance is generally grouped into input data, scripts, and calibration constants and changes to it signals that a new versions should be propagated down the workflow \cite{Barkstrom2003}.
+Studying the structure of a data's provenance has provided insight into behavior and quality by revealing the qualities of the contributing data sources and code sources \cite{dai2014provenance} \cite{Cavanaugh2002}.
+Provenance management differs from organization to organization, but most generally agree the core factors of scripts, calibrations, and inputs form the core components of lineage tracking \cite{Barkstrom2003} \cite{Branco2008}.
 Software revision management tools such as Git and SVN also keep track of provenance information when logging new commits to a project, using branches and merges  \cite{Chacon:2009:PG:1618548}.
+Provenance is a powerful mechanism to follow data quality changes or error introduction .
+The information also gives data warehouses a mechanism to evolve and adjust their ability to provide better data \cite{Vassiliadis1999}.
 It is, however, important to distinguish between the contributions of provenance to change tracking and the contributions of versioning.
 Provenance allows for the identification of change localities; it signals where changes in data have occurred.
 However, provenance does not elaborate on the extent of the alterations made, not should it.
-The priority of provenance tracking is understanding where and how a data object was generated, not it's relationship to other data products.
+The priority of provenance tracking is understanding where and how a data object was generated, not it's relationship to other data products \cite{Bose:2005:LRS:1057977.1057978}.
 In the field of semantic technologies, the W3C recommendation, PROV provides a data model to encode provenance information into searchable graphs.
+It has played a significant contribution in maintaining the quality and reproducibility of datasets and reporting in the National Climate Assessment \cite{Tilmes2012,Ma2014191,Ma2014} \cite{Ma2014191} \cite{Ma2014}.
 PROV expresses relationships between versions with the wasRevisionOf or alternateOf property.
 The properties do not allow for more elaboration as to what changes were made to transform from one version into its alternate.
 Versioning provides the context for a change by providing the comparison between data objects.
 
 \subsection{Provenance Distance}
 
-Data workflows have become complex and sizable in such a way that even subtle changes may have noticeable effects.
-(Refer to NASA citation of cosmetic changing resulting in changed datasets).
+Data workflows have become complex and sized in such a way that even subtle changes may have meaningful effects \cite{TILMES2011548}.
 One approach is following the provenance of the new data and identifying potential differences between how the data has become generated.
-Since provenance graphs have both directed edges and labeled nodes, there are a few methods of measuring similarity available (Levenshtein Distance) beyond basic isomorphism \cite{Cao2013} \cite{Gao2010} \cite{Goddard:1996:DGU:246962.246972} .
+Since provenance graphs have both directed edges and labeled nodes, there are a few methods of measuring similarity available beyond basic isomorphism \cite{Cao2013} \cite{Gao2010} \cite{Goddard:1996:DGU:246962.246972} .
 This similarity measure is known as the provenance distance between the two data objects.
 A concern that arises with this approach is that, as previously stated, provenance only provides a context for versioning.
 Consider an example where there are versions 1 and 2 of a data object, both compiled from a reference source.
 Since there are two versions, it is understood that the versions are different so the comparison extends to their reference sources.
 If both versions were compiled from the same source, it can only be concluded that the compilation methods were different.
+There also exist methods that compare workflows based on quality criteria that leverages provenance to bound quality of service \cite{2015:CAA:2778374.2778504}.
 In the case of the NASA datasets, those methods should not have changed and no further insight has been found.
 If the reference sources have been changed, then it is expected that there would be a new version or data object and no new information has been found.
 This reasoning motivates the development of a versioning method that utilizes changelogs and RDFa to determine versioning distance.

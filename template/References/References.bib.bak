@@ -27,6 +27,7 @@
   number        = {7},
   pages         = {637--654},
   __markedentry = {[blee:1]},
+  groups        = {Version Management},
   publisher     = {Wiley Online Library},
 }
 
@@ -196,13 +197,14 @@
 }
 
 @Article{Baker2009,
-  author  = {Karen S. Baker and Lynn Yarmey},
-  title   = {Data Stewardship: Environmental Data Curation and a Web-of-Repositories},
-  journal = {The International Journal of Data Curation},
-  year    = {2009},
-  volume  = {4},
-  number  = {2},
-  pages   = {12-27},
+  author        = {Karen S. Baker and Lynn Yarmey},
+  title         = {Data Stewardship: Environmental Data Curation and a Web-of-Repositories},
+  journal       = {The International Journal of Data Curation},
+  year          = {2009},
+  volume        = {4},
+  number        = {2},
+  pages         = {12-27},
+  __markedentry = {[blee:1]},
 }
 
 @Article{Branco2008,
@@ -311,22 +313,24 @@
 }
 
 @InProceedings{Kovse2003VGridAVS,
-  author    = {Jernej Kovse and Theo H{\"a}rder},
-  title     = {V-Grid-A Versioning Services Framework for the Grid},
-  booktitle = {Berliner XML Tage},
-  year      = {2003},
+  author        = {Jernej Kovse and Theo H{\"a}rder},
+  title         = {V-Grid-A Versioning Services Framework for the Grid},
+  booktitle     = {Berliner XML Tage},
+  year          = {2003},
+  __markedentry = {[blee:1]},
 }
 
 @TechReport{Holtman:687353,
-  author       = {Holtman, Koen},
-  title        = {{CMS Data Grid System Overview and Requirements}},
-  institution  = {CERN},
-  year         = {2001},
-  number       = {CMS-NOTE-2001-037},
-  address      = {Geneva},
-  month        = {Jul},
-  reportnumber = {CMS-NOTE-2001-037},
-  url          = {http://cds.cern.ch/record/687353},
+  author        = {Holtman, Koen},
+  title         = {{CMS Data Grid System Overview and Requirements}},
+  institution   = {CERN},
+  year          = {2001},
+  number        = {CMS-NOTE-2001-037},
+  address       = {Geneva},
+  month         = {Jul},
+  __markedentry = {[blee:1]},
+  reportnumber  = {CMS-NOTE-2001-037},
+  url           = {http://cds.cern.ch/record/687353},
 }
 
 @Book{Chacon:2009:PG:1618548,
@@ -337,6 +341,7 @@
   address       = {Berkely, CA, USA},
   edition       = {1st},
   __markedentry = {[blee:1]},
+  groups        = {Version Management},
   isbn          = {1430218339, 9781430218333},
 }
 
@@ -346,6 +351,7 @@
   year          = {2002},
   author        = {Cederqvist, Per and Pesch, Roland and others},
   __markedentry = {[blee:1]},
+  groups        = {Version Management},
 }
 
 @Manual{Belhajjame2013,
@@ -356,6 +362,7 @@
   year          = {2013},
   note          = {30},
   __markedentry = {[blee:1]},
+  groups        = {Provenance},
   url           = {https://www.w3.org/TR/prov-primer},
 }
 
@@ -366,6 +373,7 @@
   year          = {2003},
   pages         = {63--67},
   __markedentry = {[blee:2]},
+  groups        = {Changelogs},
 }
 
 @InProceedings{uel1037,
@@ -398,6 +406,7 @@ dynamics of open source development.
 The initial results of this analysis, especially growth in
 code size and tendency to stability in modularity, seem to
 be in line with traditional close source development.},
+  groups        = {Changelogs},
   url           = {http://roar.uel.ac.uk/1037/},
 }
 
@@ -414,6 +423,7 @@ be in line with traditional close source development.},
   acmid         = {990391},
   address       = {Hingham, MA, USA},
   doi           = {10.1023/B:EMSE.0000027779.70556.d0},
+  groups        = {Changelogs},
   issn          = {1382-3256},
   issue_date    = {September 2004},
   keywords      = {GCC-g++, GNUJSP, Jikes, Open-source software, change log},
@@ -431,6 +441,7 @@ be in line with traditional close source development.},
   month         = {Nov},
   __markedentry = {[blee:2]},
   doi           = {10.1109/ISSRE.2011.16},
+  groups        = {Changelogs},
   issn          = {1071-9458},
   keywords      = {data mining;program verification;software reliability;cause effect chain mining;change genealogy;model checking;pending development activities;software process;software reliability;temporal process patterns;version histories;Analytical models;Cognition;Couplings;Data mining;History;Software;Software reliability;Distribution;Enhancement;Life cycle;Maintenance;Software process models},
 }
@@ -540,6 +551,7 @@ be in line with traditional close source development.},
   __markedentry = {[blee:3]},
   abstract      = {Inexact graph matching has been one of the significant research foci in the area of pattern analysis. As an important way to measure the similarity between pairwise graphs error-tolerantly, graph edit distance (GED) is the base of inexact graph matching. The research advance of GED is surveyed in order to provide a review of the existing literatures and offer some insights into the studies of GED. Since graphs may be attributed or non-attributed and the definition of costs for edit operations is various, the existing GED algorithms are categorized according to these two factors and described in detail. After these algorithms are analyzed and their limitations are identified, several promising directions for further research are proposed.},
   doi           = {10.1007/s10044-008-0141-y},
+  groups        = {Edge Distance},
   issn          = {1433-755X},
   url           = {http://dx.doi.org/10.1007/s10044-008-0141-y},
 }
@@ -557,6 +569,7 @@ be in line with traditional close source development.},
   acmid         = {246972},
   address       = {Amsterdam, The Netherlands, The Netherlands},
   doi           = {10.1016/0012-365X(95)00073-6},
+  groups        = {Edge Distance},
   issn          = {0012-365X},
   issue_date    = {Dec. 5, 1996},
   numpages      = {12},
@@ -573,6 +586,7 @@ be in line with traditional close source development.},
   number        = {1L},
   pages         = {169-175},
   __markedentry = {[blee:3]},
+  groups        = {Edge Distance},
 }
 
 @Article{Ma2014191,
@@ -622,4 +636,17 @@ be in line with traditional close source development.},
   url       = {http://dx.doi.org/10.1007/978-3-642-34222-6_28},
 }
 
+@IEEEtranBSTCTL{BSTcontrol,
+  ctluse_alt_spacing     = {no},
+  ctldash_repeated_names = {no},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}
+
+@Comment{jabref-meta: groupstree:
+0 AllEntriesGroup:;
+1 ExplicitGroup:Provenance\;0\;;
+1 ExplicitGroup:Edge Distance\;0\;;
+1 ExplicitGroup:Changelogs\;0\;;
+1 ExplicitGroup:Version Management\;0\;;
+}
