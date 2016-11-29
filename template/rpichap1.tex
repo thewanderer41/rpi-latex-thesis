@@ -6,14 +6,28 @@
 
 \chapter{INTRODUCTION}
 
-Software development followed a stiff production cycle prior to the early 2000s.
-However, as technology developed, software development required a system to adapt and change to evolving conditions leading to the Agile Manifesto.
-Likewise, data collected by researchers grew at an astounding rate with new technology.
-NASA's Atmospheric Science Data Center reported a growth from hosting around five million files to twenty million files between 2001 and 2004\footnote{Agencies and research groups have collected new data at an incredible rate.
-The amount of data housed by NASA quadrupled from 2001 to 2004 \cite{Barkstrom_digitallibrary} and high energy physics labs can generate on the order of 4000 new datasets every day \cite{Flouris04clotho:transparent}.}.
+%%%%%%  Data changes and grows, we have to track it --> Data Quality?
+John C. Maxwell once said, "Change is inevitable.  Growth is optional."
+While this inspirational quote may hold true for the human character, it does not, unfortunately, hold true for scientific datasets.
+With changing technology, data collected by researchers grew at an astounding rate with new technology.
+NASA's Atmospheric Science Data Center reported a growth from hosting around five million files to twenty million files between 2001 and 2004 \cite{Barkstrom_digitallibrary}.
+A project at CERN reports that it generates on the order of four thousand new datasets per day \cite{Branco2008}.
+This explosion of data marks a change in the perspective of research from a software driven approach, where programs are used to confirm results using data, to a data driven approach, where programs are used to extract trends and conclusions from existing data.
+The proliferation of powerful and mobile computing devices has allowed researchers to generate data faster than it can be tracked \cite{Bose:2005:LRS:1057977.1057978}.
+
+Data processing is automated so data quality needs to be ensured since a human will not be able to determine data quality for each data entry individually.
+
+Highlights a shift from software driven research to data driven research, meaning that versioning techniques must also shift from a software focused method to a data focused method.
+
+\section{Types of data sets}
+I/O Block level versioning \cite{Flouris04clotho:transparent}
+\subsection{Digital Libraries}
 Many datasets have required reprocessings of their data, either to improve data quality or to correct for errors \cite{barkstrom2014earth}.
 Due to the rapid growth of new technologies, the need for proper data versioning extends beyond major agencies and even applies to smaller projects \cite{burrows2006review} \cite{Tagger2005} \cite{Stuckenholz:2005:CEV:1039174.1039197}.
 Indeed, version control systems can provide contexts for modifications when combined with error detection systems, providing a more complete picture of the system's behavior \cite{Fischer2003}.
+
+\section{Long tradition with software}
+\subsection{Transition to data driven systems}
 
 Dataset versioning tracks and documents the changes which occur in datasets.
 There exists a tendancy to model dataset change using methods from software versioning \cite{Chacon:2009:PG:1618548} \cite{cederqvist2002version} \cite{tichy1985rcs}.
