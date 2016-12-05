@@ -7,45 +7,76 @@
 \chapter{PREVIOUS WORK}
 %\resetfootnote %this command starts footnote numbering with 1 again.
 \section{Spreadsheets}
-Early work in the field of digital data versioning begins in the library sciences.
-As the computing field grows, many data publications are now being provided in digital formats as well as print.
-The challenges of tracking a digital library are often the same as those faced in data repository management \cite{Wiil:2000:RDH:338407.338517}.
-Not only do librarians often have to simultaneously work with several versions of the same material, but they also must pay attention to the structure of their collection as well as its content.
-Digital Object Identifiers (DOI) and other identifiers evolved to help digitally track the growing number of electronic documents.
-They have also been used to track and cite datasets, but unlike documents, datasets have a tendancy to change after publication.
-As a result, new versions of data would get a new DOI to prevent confusion, and this unnecessarily consumes the available handles and the time of institutions assigning handles \cite{Lyons2005}.
-Other identifier systems have also had problems with maintaining healthy links to data as it changes and moves, but systems using newer technology have been able to achieve success in localized networks.
-Built on XML and web service technology, the Mellon Fedora project linked together various disparate digital library collections at the University of Virginia  \cite{Payette2002}.
-Digital publications not only include books and journals, but also grew to include web pages and wikis, requiring new scalable methods to track changes on these publications \cite{Berberich:2007:TMT:1277741.1277831}.
+
+In this project, spreadsheets were chosen for study as they resemble text-like data objects while still maintaining a level of complexities.
+Though not as well encapsulated as other data format types such as the Hierarchical Data Format (HDF) or Network Common Data Form (NetCDF), spreadsheets provide many helpful tools that scientist favor for quick data storage and distribution over comma separated values (CSV).
+There also exists other document-like formats that are not discussed in this paper such as eXtensible Markup Language (XML).
+The initial work was done with the "Noble gas isotope abundances in terrestrial fluids" workbook (Noble Gas) \cite{Polyak2015}.
+The "Paragenetic Mode for Copper Minerals" workbook (Copper Data) was used to give better insight into data changes due to collaboration with the data set's author \cite{Morrison2016}.
+
+The Noble Gas data set was initially published on June 11, 2013 and then released a second version on March 8, 2015.
+Many significant changes were made to the data set between the two versions, which makes this data set particularly challenging to version.
+The physical structure of the data set changed from eight separate Excel spreadsheets to a single spreadsheet.
+The second version also trimmed 195 columns to 54 columns in the second release.
+In addition, many new locations were surveyed and added to the second release.
+Documentation accompanied the data set explaining different components of the spreadsheet and its usage, but it included no versioning information.
+This lack of versioning or transitioning information indicates a focus on data usage rather than data maturation, which is not a particularly bad approach.
+It makes logical sense to simply download the latest data set when it becomes available and not worry about the format of the invalidated data set.
+This approach convenient for new users of the data as the cost to consumer the new version of the data is the same cost they would have spent to acquire the data in the first place.
+However, users of the old data are disproportionately effected by the change in versions since old code and workflows may need to be updated to accommodate the changes in addition to the cost of consuming the architecture of the old data set.
+In this case, users would need to read the documentation to understand whether 182 from the June data set is still available in the March data and, if it is, in which column it resides in the March spreadsheet.
+This brings to light the additional concern for the Noble Gas data that the documentation is not easily machine consumable, meaning that all mapping activities will need to be performed manually.
+Not only is this approach time consuming, but it also does not scale well into larger data sets.
+
+The Copper data set was acquired during the process of a workshop to generate new methods of visualizing mineralogy data, initially on June 8, 2016.
+The process entailed trying various orders and organization for the data and results in various new versions of the data that depend on varying filtering requirements, acquired on August 21, 2016.
+Unlike the Noble Gas data set, the Copper Data had no accompanying documentation, since the primary consumers of the data at the workshop were also mineralogy experts.
+However, this data set had more stable characteristics including physical and logical structure.
+Only two columns were removed from the transition to the second version, but sixteen new columns were added to the data collection.
+It also demonstrates a change in orientation with respect to data usage since the previous data set was designed to be distributed for general usage and discovery.
+In this case, the structure and organization of the data within the set was driven for a specific purpose in the development of more expressive visualizations.
+As a result, versioning information is driven by developmental needs instead of the other way around with versioning information bridging the gap between software migrations.
+
+The data files from both data sets can easily be tracked using standard version management services such as GIT or SVN.
+Likewise, there exist comparison tools like Spreadsheet Compare from Microsoft Corporation that can generate diff-like outputs for each of the data sets.
+In conjunction with commit logs, the comparison outputs provide a basic versioning methodology that describes the data set's evolution.
+However, these applications rely on human attention and interaction to operate, and with larger data sets, proper documentation becomes difficult to maintain.
+With the Copper Data, the demand for new versions of the spreadsheets exceeded the time necessary to document version history as a result of rapid product evolution during the workshop.
+In consequence, the process to manually commit and annotate changed data impairs the natural progression of scientific development.
 
 \section{Database Systems}
-\subsection{Temporal Databases}
 
-Many organizations rely on databases to provide large segments of data to their consumers.
+Databases remain the most relied upon technology for storing and searching large quantities of data rapidly.
+While the dynamic combination of tables means that data bases remain flexible enough to represent complex objects, it also means that they represent a much more complicated case for attribution.
+Since tables may be combined in different ways to answer complex queries, indexes do not remain constant across requests to the database.
+The approaches to database versioning typically focus on ensuring the reproducibility of queries to the database.
+This can often be difficult as with spreadsheets since changes to the content or structure can result in different solutions from the database for the same query even using time stamps.
+For example, consider the query to select all columns of row A from a database on March 1st, then the database undergoes a schema change to add a new column to the table on April 1st.
+A subsequent request for all columns of row A would include the new column which does not represent the response on March 1st.
+In addition, even if the data is timestamped, the time signature is associated with the row and not the schema, meaning that the query may still return row A with the new column with a NULL value, depending on the distribution.
+The query, not the data, would need to be modified to exclude the new column.
+
+This presents as a challenge because unlike data files and spreadsheets, databases are generally not instanced.
+Databases often store massive quantities of data and replication of that data to archive snapshots or distribution frequently proves too costly to be feasible.
+Instead, interaction with the database occurs from a centralized source through transactions.
 Various methods have been studied to manage changes within these systems focusing primarily on schema versioning, emphasizing data's structural component \cite{roddick1996model}.
+This provides a method to enact a transactional rollback on the database to execute queries in an environment reminiscent of the original execution.
 The framework of the resulting database environment can become quite complicated as a result of the complexity of the tables representing intricate data objects \cite{Klahold:1986:GMV:645913.671314}.
-More recently, new methods have been developed to adjust to the enormous quantities of data populating modern databases \cite{Proell2013} \cite{DBLP:conf/data/2013}.
-The focus for this method emphasizes the focus on scalability of solutions and notes that a significant challenge to proper data referencing is proper subset description \cite{proellBigData}.
-The solution suggested by Proell suggests that some of the complexities of the system structure can be abstracted through the query language.
+This results from the need to manage the time instances of realization, storage, and validity.
+The datum becomes realized at collection, then stored upon entry into the database, and finally valid until the present or new data replaces it.
+More recently, new methods have been developed to adjust to the enormous quantities of data populating modern databases, focusing on query citation rather than data citation \cite{Proell2013} \cite{DBLP:conf/data/2013}.
+Citation by query avoids the complexities involved with referencing data that can grow and move.
+However, this method relies on the existence of a versioning system for data.
+This method also recognizes that modifying queries to operate on the current state of the database may often be easier than rolling back transactions or schema to reproduce the results of a query \cite{proellBigData}.
+As a result, to versioning a database system may be more feasible as data size increases by applying methods to the query results and not to the data.
 
-\section{Unifying multiple systems}
-\subsection{Grid}
-In the early 2000s, versionings systems were being prepared for the future of grid technologies.
-The grid provided a unique environment that had to handle a variety of inputs, and therefore, different input data could run on distinct sets of grid services.
-This meant that different versions of the same data could be generated by differing services on the same grid \cite{Kovse2003VGridAVS}.
-A versioning environment would also have to be general enough to accommodate disparate input types.
-CERN grid for the Compact Muon Solenoid experiment separates the physical and logical storage of files, allowing multiple users to refer to the same file without needing to copy the file across the grid \cite{Holtman:687353}.
-Versioning policy could not exist in this case if a clear replication policy did not exist since changes to the underlying file can have repercussions with its replications across the grid.
-The versioning method relies on predictable replication in order to reliably communicate change to grid users.
-\subsection{Heterogeneous systems}
-While innovative, the grid was neglected in favor of networked heterogeneous systems.
-The proliferation of mobile computational devices such as laptops and smart phones created a supply of small data repositories that were too compact to warrant the use of grid technologies.
-Baker and Yarmey describe a method of networking together small, volatile datasets with larger, versioned data distribution centers for environmental data \cite{Baker2009}.
-Heterogeneous systems encounter challenges with data integration resulting from non-uniform data interfaces.
-Autonomous solutions to understanding change grows in importance as evidence grows that speedy and relevant changes play a significant role in successful system function \cite{Bouzeghoub:2004:FAD:1012453.1012464}.
-The key often seems to be using XML to provide an common language propagating change across heterogenous systems.
-The need to propagate changes becomes more apparent as autonomous units grow and share data \cite{Systems02champagne:data}.
-Semantic technology's growth now provides a new method of propagating data change that can not only be universally consumed in formats like XML but also encodes meaning to each of these changes.
+The RRUFF Database is "an integrated database of Raman spectra, X-ray diffraction and chemistry data for minerals" \cite{Lafuente}.
+It features a web accessible change log using the transactional log generated by the database software\footnote{\url{http://rruff.info/index.php/r=rruff_log_display}}.
+As the records in specific tables change, the log reports these changes, supplying persistent access to the modifications made to the RRUFF data.
+The approach to this alteration information highlights the always on-line approach to moder databases where changes to the data do not constitute a new database.
+The log demonstrates strong versioning characteristics with not only a breakdown of the change components, but also a commentary on the motivation for the difference.
+In addition, its HTML structure allows automated web crawlers to systematically consume the version information.
+With the integration of web ontologies, the change log would also be intelligible to automated agents.
 
 \section{Ontologies}
 The web also provides a new venue for computational versioning in addition to offering a new means to communicate change.

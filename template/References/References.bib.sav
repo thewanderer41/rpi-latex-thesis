@@ -623,15 +623,43 @@ be in line with traditional close source development.},
 }
 
 @InProceedings{6906868,
-  author    = {M. Macduff and B. Lee and S. Beus},
-  title     = {Versioning Complex Data},
-  booktitle = {2014 IEEE International Congress on Big Data},
-  year      = {2014},
-  pages     = {788-791},
-  month     = {June},
-  doi       = {10.1109/BigData.Congress.2014.124},
-  issn      = {2379-7703},
-  keywords  = {atmospheric radiation;data handling;geophysics computing;ARM program;Atmospheric Radiation Measurement;complex data versioning;historical ARM data set;software versioning;Atmospheric measurements;Data models;Documentation;Electronic mail;History;Manuals;Object recognition;curation;version},
+  author        = {M. Macduff and B. Lee and S. Beus},
+  title         = {Versioning Complex Data},
+  booktitle     = {2014 IEEE International Congress on Big Data},
+  year          = {2014},
+  pages         = {788-791},
+  month         = {June},
+  __markedentry = {[blee:1]},
+  doi           = {10.1109/BigData.Congress.2014.124},
+  issn          = {2379-7703},
+  keywords      = {atmospheric radiation;data handling;geophysics computing;ARM program;Atmospheric Radiation Measurement;complex data versioning;historical ARM data set;software versioning;Atmospheric measurements;Data models;Documentation;Electronic mail;History;Manuals;Object recognition;curation;version},
+}
+
+@Misc{Polyak2015,
+  author = {Boris Polyak and Edward Prasolov and Igor Tolstikhin and L Yakovlev and Alex Ioffe and Olga Kikvadze and Olga Vereina and Margarite Vetrina},
+  title  = {Noble gas isotope abundances in terrestrial fluids},
+  year   = {2015},
+  url    = {https://info.deepcarbon.net/vivo/display/n6225},
+}
+
+@InProceedings{Morrison2016,
+  author    = {Shaunna Morrison and Robert Downs and Joshua Golden and Alex Pires and Peter Fox and Xiaogang Ma and Stephan Zednik and Ahmed Eleish and Anirudh Prabhu and Daniel Hummer and Chao Liu and Michael Meyer and Jolyon Ralph and Grethe Hystad and Robert Hazen},
+  title     = {Exploiting mineral data: applications to the diversity, distribution, and social networks of copper mineral},
+  booktitle = {AGU Fall Meeting},
+  year      = {2016},
+}
+
+@InCollection{Lafuente,
+  author    = {Barbara Lafuente and R. T. Downs and H. Yang and N. Stone},
+  title     = {1. The power of databases: The {RRUFF} project},
+  booktitle = {Highlights in Mineralogical Crystallography},
+  publisher = {Walter de Gruyter {GmbH}},
+  year      = {2015},
+  editor    = {Thomas Armbruster and Rosa Micaela Danisi},
+  pages     = {1--30},
+  doi       = {10.1515/9783110417104-003},
+  journal   = {HighliHigh in Mineralogical Crystallography},
+  url       = {http://dx.doi.org/10.1515/9783110417104-003},
 }
 
 @Comment{jabref-meta: databaseType:bibtex;}
