@@ -662,6 +662,13 @@ be in line with traditional close source development.},
   url       = {http://dx.doi.org/10.1515/9783110417104-003},
 }
 
+@Misc{Ubuntu,
+  title        = {Common Questions: Ubuntu Release and Version Numbers},
+  note         = {Accessed: December 12, 2016},
+  organization = {Canonical Ltd.},
+  url          = {https://help.ubuntu.com/community/CommonQuestions##Ubuntu%20Releases%20and%20Version%20Numbers},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}
 
 @Comment{jabref-meta: groupstree:

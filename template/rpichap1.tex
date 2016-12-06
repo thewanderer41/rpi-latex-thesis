@@ -25,18 +25,41 @@ In this document, data versioning is approached using technology provided by sem
 \section{Data Set Proliferation}
 
 \subsection{Explain why we choose the data types that we did}
-Data has existed long before computers, populating the storage space of filing cabinets and data closets.
+Data has existed long before computers, populating the storage space of filing cabinets and data closets the first transistor radio.
 It then comes as no surprise that libraries and library sciences provide the early methods of data management.
 The challenges and goals that face physical libraries remain valid even as data collection migrates to electronic alternatives.
-Digital storage and the Internet has opened new opportunities and methods to administer book data as logical representation and physical representation can now be separated \cite{Barkstrom_digitallibrary}.
-A significant amount of scientific data still resembles the books managed by librarians.
-Spreadsheets 
+Digital storage and the Internet has opened new opportunities and methods to administer book data by separating logical representations and physical representations \cite{Barkstrom_digitallibrary}.
+However, the migration has not been without its problems.
+Early citations used stagnant Uniform Resource Locators (URL) to refer to online documents, but this would lead to a condition known as link rot where moving the document would invalidate the URL \cite{Lyons2005}.
+This eventually led to the development of Persistent URLs (PURL) which also succumbed to link rot, and this eventually led to the distributed Digital Object Identifier (DOI) system used to track documents today.
+The DOI network provides a robust system to track documents, but when tracking data, it faces difficulty following the rate of change with some more volatile data sets.
+Distribution organizations assign a DOI whenever a new edition of a document becomes available, and due to the publication process, documents change very rarely so a new DOIs are rarely necessary.
+However, data sets are products and thus succumb to the iterative process of error correction and growth.
+Data collection often continues on after initial publication.
+DOI distributors treat new files like new sections to a paper and changes to files as edits so a new identifier must be issued to the data set.
 
-\subsection{Transition to data driven systems}
+For similar reasons, treating data as documents produces problems when applying technologies from software management \cite{tichy1985rcs}\cite{Chien:2000:VMX:646544.696357}.
+Structure provides the most significant distinguisher between data and software since a data set with a removed file remains usable but a software project would break.
+The function of code comes from its content, but the function of data comes from its ability to store and organize data.
+This should not be confused with data formats which impose structure onto data in much the same way programming languages provides a medium to express actions.
+However, exporting data in different formats is currently easier than exporting code into different languages.
+Data sets do not represent a single object, unlike a software project\cite{Chacon:2009:PG:1618548}.
+Data sets are compact representations of all possible subsets of the data set, which are also datasets.
+For this reason, the structures of data sets and software becomes incompatible and software versioning technologies are insufficient to capture this nuance.
 
-\subsection{How much does data grow?}
+The techniques employed by these technologies, however, can remain applicable to data sets and are often necessary when communicating change data to users.
+Version producers often refer to versions using numbers in the dot-decimal style.
+While the values often signify the Major-minor numbers associated with the version, the names remain meaningless and can arbitrary assignment such as Ubuntu released numbered by Year-month values \cite{Ubuntu}.
+The arbitrary nature of the numbers often entails referring to versions by English nicknames instead.
+Such a regular method of naming release versions also means that determining the magnitude of change between two releases becomes impossible.
+Numbering the version this way, however, does allow computers and readers to quickly parse the version name and discern that a change has occurred, but little value exists beyond that \cite{Dijkstra1994}.
+The technique of distributed and federated employed by GIT does provide significant value to modern methods of versioning data \cite{cederqvist2002version}.
+As data workflows and data set dependencies grow, their volatility also expands, meaning that they become more likely to generate new versions.
+The federated approach available in the GIT environment allows developers to establish change dams that collect modifications and releasing the data at regular intervals,reducing the changes to a manageable flow.
 
 \subsection{Digital Libraries}
+Data as documents vs Data of documents.
+
 Data spreadsheets resemble books because they have a clear hierarchical structure.
 Each spreadsheet is a full unit by itself.  The Excel files themselves are known as workbooks.
 XML documents also have a clear hierarchy.
@@ -47,7 +70,6 @@ Early work in the field of digital data versioning begins in the library science
 As the computing field grows, many data publications are now being provided in digital formats as well as print.
 The challenges of tracking a digital library are often the same as those faced in data repository management \cite{Wiil:2000:RDH:338407.338517}.
 Not only do librarians often have to simultaneously work with several versions of the same material, but they also must pay attention to the structure of their collection as well as its content.
-Digital Object Identifiers (DOI) and other identifiers evolved to help digitally track the growing number of electronic documents.
 They have also been used to track and cite datasets, but unlike documents, datasets have a tendancy to change after publication.
 As a result, new versions of data would get a new DOI to prevent confusion, and this unnecessarily consumes the available handles and the time of institutions assigning handles \cite{Lyons2005}.
 Other identifier systems have also had problems with maintaining healthy links to data as it changes and moves, but systems using newer technology have been able to achieve success in localized networks.
@@ -73,6 +95,9 @@ Autonomous solutions to understanding change grows in importance as evidence gro
 The key often seems to be using XML to provide an common language propagating change across heterogenous systems.
 The need to propagate changes becomes more apparent as autonomous units grow and share data \cite{Systems02champagne:data}.
 Semantic technology's growth now provides a new method of propagating data change that can not only be universally consumed in formats like XML but also encodes meaning to each of these changes.
+\subsection{Transition to data driven systems}
+
+\subsection{How much does data grow?}
 
 \section{Data Quality/Provenance}
 
@@ -84,20 +109,6 @@ However, recent advances in storage methods has produced devices, even on a pers
 It is then no surprise that the development of versioning management tools for software 
 However, the proliferation of powerful and mobile computing devices has allowed researchers to generate data faster than it can be tracked \cite{Bose:2005:LRS:1057977.1057978}.
 Data processing is automated so data quality needs to be ensured since a human will not be able to determine data quality for each data entry individually.
-
-\subsection{Long tradition with software}
-Dataset versioning tracks and documents the changes which occur in datasets.
-There exists a tendancy to model dataset change using methods from software versioning \cite{Chacon:2009:PG:1618548} \cite{cederqvist2002version} \cite{tichy1985rcs}.
-When applied to such data formats as XML documents, version management systems disturb important data properties such as structure \cite{Chien:2000:VMX:646544.696357}
-Dot-decimal style version numbers are commonly seen in relation to new releases of software such as MATLAB or R, and current version naming schemes in data often use dot-decimal notation.
-However, this convention results in semantically poor version names as the decimal numbers generally function solely as counts \cite{Dijkstra1994}.
-The Ubuntu versioning scheme appears to follow a major-minor numbering pattern, but the major and minor numbers correspond to the year and month of the release, respectively.
-As a result, the version name holds no significance as the extent of difference between two versions.
-Additionally, this method breaks down since it is difficult to predict the impact changes in data will have on data consumers.
-Depending on how the data is processed or what subsets are used, dataset changes that the producers perceives as minor changes may have significant repercussions for the consumer.
-This demonstrates the structural difference between software and datasets in that a revision in data only constitutes an adjustment to the relevant subsets.
-An alteration to a software file constitutes a change to the project as a whole.
-As a result, datasets provide a context which does not completely translate from software project versioning.
 
 The information that details the activities and agents involved in generating a data entity is known as provenance.
 Studying the structure of a data's provenance has provided insight into behavior and quality by revealing the qualities of the contributing data sources and code sources \cite{dai2014provenance} \cite{Cavanaugh2002}.
@@ -147,7 +158,6 @@ If the reference sources have been changed, then it is expected that there would
 This reasoning motivates the development of a versioning method that utilizes changelogs and RDFa to determine versioning distance.
 
 \section{Data Versioning Operations}
-Data ranges across a wide array of disciplines.
 
 Architecture has a principle that says form follows function, but, for data, form equals function.
 As a result, data has as many different forms as it has functions.
