@@ -24,11 +24,12 @@ In this document, data versioning is approached using technology provided by sem
 
 \section{Data Set Proliferation}
 
-\subsection{Explain why we choose the data types that we did}
 Data has existed long before computers, populating the storage space of filing cabinets and data closets the first transistor radio.
 It then comes as no surprise that libraries and library sciences provide the early methods of data management.
-The challenges and goals that face physical libraries remain valid even as data collection migrates to electronic alternatives.
+The challenges and goals that face physical libraries remain valid even as data collection migrates to electronic alternatives \cite{rohtua}.
 Digital storage and the Internet has opened new opportunities and methods to administer book data by separating logical representations and physical representations \cite{Barkstrom_digitallibrary}.
+It has also added a plethora of new content types such as wikis, blogs, and other document formats which have never seen physical print.
+All these new documents need a form of data management \cite{Berberich:2007:TMT:1277741.1277831}.
 However, the migration has not been without its problems.
 Early citations used stagnant Uniform Resource Locators (URL) to refer to online documents, but this would lead to a condition known as link rot where moving the document would invalidate the URL \cite{Lyons2005}.
 This eventually led to the development of Persistent URLs (PURL) which also succumbed to link rot, and this eventually led to the distributed Digital Object Identifier (DOI) system used to track documents today.
@@ -48,7 +49,7 @@ Data sets are compact representations of all possible subsets of the data set, w
 For this reason, the structures of data sets and software becomes incompatible and software versioning technologies are insufficient to capture this nuance.
 
 The techniques employed by these technologies, however, can remain applicable to data sets and are often necessary when communicating change data to users.
-Version producers often refer to versions using numbers in the dot-decimal style.
+Version producers often refer to versions using numbers in the dot-decimal style \cite{Stuckenholz:2005:CEV:1039174.1039197}.
 While the values often signify the Major-minor numbers associated with the version, the names remain meaningless and can arbitrary assignment such as Ubuntu released numbered by Year-month values \cite{Ubuntu}.
 The arbitrary nature of the numbers often entails referring to versions by English nicknames instead.
 Such a regular method of naming release versions also means that determining the magnitude of change between two releases becomes impossible.
@@ -57,49 +58,40 @@ The technique of distributed and federated employed by GIT does provide signific
 As data workflows and data set dependencies grow, their volatility also expands, meaning that they become more likely to generate new versions.
 The federated approach available in the GIT environment allows developers to establish change dams that collect modifications and releasing the data at regular intervals,reducing the changes to a manageable flow.
 
-\subsection{Digital Libraries}
-Data as documents vs Data of documents.
+\subsection{Unified Systems}
 
-Data spreadsheets resemble books because they have a clear hierarchical structure.
-Each spreadsheet is a full unit by itself.  The Excel files themselves are known as workbooks.
-XML documents also have a clear hierarchy.
-Due to the rapid growth of new technologies, the need for proper data versioning extends beyond major agencies and even applies to smaller projects \cite{burrows2006review} \cite{Tagger2005} \cite{Stuckenholz:2005:CEV:1039174.1039197}.
-Indeed, version control systems can provide contexts for modifications when combined with error detection systems, providing a more complete picture of the system's behavior \cite{Fischer2003}.
+Working with data as documents leads to the shortfall of technologies, but working with the data of documents has led to significantly greater contributions.
+Many libraries often work in collaboration in order to provide a wide selection of texts over a limited number of physically available documents.
+The University of Virginia demonstrates the ability to achieve a unified library system using a combination of XML and web service technologies of their disparate assemblage of libraries \cite{Payette2002}.
+The challenge involves providing a common landscape in order to compare the quality requirements imposed on the repositories.
+Versioning systems provide a notable mechanism to make this decision as quality determines when to generate new versions and what items belong to the same groupings of data.
+The comprehensiveness of XML and web technologies also allows this approach to apply to other systems and research areas as well.
+This becomes particularly relevant as innovations in computation technology generates small, volatile data sets to integrate into larger data managers \cite{Baker2009}.
+In this application, the data food chain then becomes represented by smaller applications generated in situ and then unified with other data sets as they move up the food chain to a large, unified data distribution center.
 
-Early work in the field of digital data versioning begins in the library sciences.
-As the computing field grows, many data publications are now being provided in digital formats as well as print.
-The challenges of tracking a digital library are often the same as those faced in data repository management \cite{Wiil:2000:RDH:338407.338517}.
-Not only do librarians often have to simultaneously work with several versions of the same material, but they also must pay attention to the structure of their collection as well as its content.
-They have also been used to track and cite datasets, but unlike documents, datasets have a tendancy to change after publication.
-As a result, new versions of data would get a new DOI to prevent confusion, and this unnecessarily consumes the available handles and the time of institutions assigning handles \cite{Lyons2005}.
-Other identifier systems have also had problems with maintaining healthy links to data as it changes and moves, but systems using newer technology have been able to achieve success in localized networks.
-Built on XML and web service technology, the Mellon Fedora project linked together various disparate digital library collections at the University of Virginia  \cite{Payette2002}.
-Digital publications not only include books and journals, but also grew to include web pages and wikis, requiring new scalable methods to track changes on these publications \cite{Berberich:2007:TMT:1277741.1277831}.
-
-\section{Unifying multiple systems}
-\subsection{Grid}
-In the early 2000s, versionings systems were being prepared for the future of grid technologies.
+Unified libraries represent a part of a larger collection of systems that rely on the propagation of data through heterogeneous systems to produce rapid complex solutions.
 The grid provided a unique environment that had to handle a variety of inputs, and therefore, different input data could run on distinct sets of grid services.
 This meant that different versions of the same data could be generated by differing services on the same grid \cite{Kovse2003VGridAVS}.
-A versioning environment would also have to be general enough to accommodate disparate input types.
-CERN grid for the Compact Muon Solenoid experiment separates the physical and logical storage of files, allowing multiple users to refer to the same file without needing to copy the file across the grid \cite{Holtman:687353}.
-Versioning policy could not exist in this case if a clear replication policy did not exist since changes to the underlying file can have repercussions with its replications across the grid.
-The versioning method relies on predictable replication in order to reliably communicate change to grid users.
-
-\subsection{Heterogeneous systems}
-While innovative, the grid was neglected in favor of networked heterogeneous systems.
-The proliferation of mobile computational devices such as laptops and smart phones created a supply of small data repositories that were too compact to warrant the use of grid technologies.
-Baker and Yarmey describe a method of networking together small, volatile datasets with larger, versioned data distribution centers for environmental data \cite{Baker2009}.
-Heterogeneous systems encounter challenges with data integration resulting from non-uniform data interfaces.
-Autonomous solutions to understanding change grows in importance as evidence grows that speedy and relevant changes play a significant role in successful system function \cite{Bouzeghoub:2004:FAD:1012453.1012464}.
-The key often seems to be using XML to provide an common language propagating change across heterogenous systems.
-The need to propagate changes becomes more apparent as autonomous units grow and share data \cite{Systems02champagne:data}.
-Semantic technology's growth now provides a new method of propagating data change that can not only be universally consumed in formats like XML but also encodes meaning to each of these changes.
-\subsection{Transition to data driven systems}
-
-\subsection{How much does data grow?}
+The CERN grid for the Compact Muon Solenoid experiment separates the physical and logical storage of files, allowing multiple users to refer to the same file without needing to copy the file across the grid \cite{Holtman:687353}.
+While the structure and construction of the grid reduced the uncertainty introduced by varying hardware, it raised questions on data quality by abstracting the transparency to underlying services.
+Cloud services have recently replaced the grid due to its flexibility in the services available to its autonomous systems.
+As the scale and complexity of autonomous systems grow, it becomes more difficult for one system or organization to manage all the circles necessary to produce data deliverables.
+The ability to propagate relevant data change data across autonomous systems then assures valid quality in interactions between domains \cite{Systems02champagne:data}.
+Not only does this ensure uniformity through system interaction, but it also ensures transparency with respect to the data and methods used to produce conclusions \cite{Tagger2005}.
+This often means that systems will need to negotiate a contract and establish a mutual interface to exchange data.
+Occasionally, this contract can be formal, but more ideally, the establishment of a standard lineage model or format would allow a greater variety of systems to interact with each other without needing lengthy contractual exchanges.
 
 \section{Data Quality/Provenance}
+
+The fundamental challenge to determining data quality, its subjectivity, needs clarification.
+Conceptually, a data set on desert climate likely has very poor data quality and relevancy to a study in whale biology.
+However, in a more quantitative sense, that same desert climate data can have excellent quality with respect to its correctness, expression, and traceability.
+With the hybridization of data sets from disparate agencies to provide big data solutions, collaborations plays an ever present role in achieving broad, valid findings.
+This requires good quality data and the ability to determine when data with better quality becomes available. \cite{Wiil:2000:RDH:338407.338517}.
+The primary focus, generally, involves tracing the lineage of artifacts and activities that lead to the current data.
+This provides insight into possible sources of error as well as validating the assumptions made in generating a data set for future use.
+
+Indeed, version control systems can provide contexts for modifications when combined with error detection systems, providing a more complete picture of the system's behavior \cite{Fischer2003}.
 
 Provenance describes the sequence of actions and the individuals involved in generating a particular artifact.
 In the case of art, provenance would include a history of previous owners to ensure the validity of the work, in short, to ensure its quality.
@@ -125,6 +117,13 @@ It has played a significant contribution in maintaining the quality and reproduc
 PROV expresses relationships between versions with the wasRevisionOf or alternateOf property.
 The properties do not allow for more elaboration as to what changes were made to transform from one version into its alternate.
 Versioning provides the context for a change by providing the comparison between data objects.
+
+PROV is a W3C recommendation that deliniates a method to express data provenance with semantic technologies \cite{Belhajjame2013}.
+Using the model of relating activities, agents, and entities, data managers can express the origins of their datasets.
+However, when an entity is revised, the PROV data model can only express the relationship as a revision or that the new dataset was derived from the original.
+This leaves
+
+Open Provenance Model \cite{moreau2008open}.
 
 \subsection{Changelogs}
 
@@ -169,7 +168,7 @@ The challenge no longer becomes generating data, but instead, fitting the data i
 
 The challenge of data versioning systems is to provide a unifying environment that can handle the plethora of forms and functions of its data.
 At its core, versioning systems only need to concern themselves with three operations: addition, deletion, and modification.
-Most literature surveys do not realize the significance of this commonality as this means that versioning methods can be described by delineating how each operation is approached by a system \cite{Tagger2005} \cite{burrows2006review}.
+Most literature surveys do not realize the significance of this commonality as this means that versioning methods can be described by delineating how each operation is approached by a system \cite{Tagger2005} \cite{rohtua}.
 Data addition generally constitutes the least complicated versioning operation because it interacts the least with pre-existing data.
 However, new data does share context with pre-existing data and provides a method of measuring data set growth.
 Since data sets no longer have to be used in its entirety and can be freely subsetted, a data set's complexity increases significantly with its growth.
@@ -222,7 +221,16 @@ As a result, this means that data versioning systems must communicate a dynamic 
 
 \section{Conclusion - Thesis Statement}
 
-\section{RDFa}
+\section{NEEDS EDITING}
+
+\subsection{Heterogeneous systems}
+Heterogeneous systems encounter challenges with data integration resulting from non-uniform data interfaces.
+Autonomous solutions to understanding change grows in importance as evidence grows that speedy and relevant changes play a significant role in successful system function \cite{Bouzeghoub:2004:FAD:1012453.1012464}.
+The key often seems to be using XML to provide an common language propagating change across heterogenous systems.
+The need to propagate changes becomes more apparent as autonomous units grow and share data .
+Semantic technology's growth now provides a new method of propagating data change that can not only be universally consumed in formats like XML but also encodes meaning to each of these changes.
+
+\subsection{RDFa}
 
 The modifications to implement a machine readable changelog should still remain in a form viewable by a human user.
 The subjectivity of versioning information means that domain scientists should still be able to interpret changes as they relate to their application.
