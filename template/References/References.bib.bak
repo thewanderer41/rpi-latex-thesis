@@ -702,7 +702,7 @@ be in line with traditional close source development.},
   url       = {http://doi.acm.org/10.1145/372202.372324},
 }
 
-@Misc{,
+@Misc{GCMDKey,
   title        = {Keyword FAQ},
   year         = {2016},
   note         = {Accessed: December 12, 2016},

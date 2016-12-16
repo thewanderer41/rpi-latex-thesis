@@ -45,7 +45,10 @@ The function of code comes from its content, but the function of data comes from
 This should not be confused with data formats which impose structure onto data in much the same way programming languages provides a medium to express actions.
 However, exporting data in different formats is currently easier than exporting code into different languages.
 Data sets do not represent a single object, unlike a software project\cite{Chacon:2009:PG:1618548}.
-Data sets are compact representations of all possible subsets of the data set, which are also datasets.
+They are compact representations of all possible subsets of the data set, which are also datasets.
+This can be demonstrated simply in considering a data set where a user orders a file Y and over the course of a year all files but Y are modified and replaced.
+The user only wants to know when their file Y changes but remains unconcerned when other files change within the data set.
+This is not so with software projects.
 For this reason, the structures of data sets and software becomes incompatible and software versioning technologies are insufficient to capture this nuance.
 
 The techniques employed by these technologies, however, can remain applicable to data sets and are often necessary when communicating change data to users.
@@ -91,54 +94,74 @@ This requires good quality data and the ability to determine when data with bett
 The primary focus, generally, involves tracing the lineage of artifacts and activities that lead to the current data.
 This provides insight into possible sources of error as well as validating the assumptions made in generating a data set for future use.
 
-Indeed, version control systems can provide contexts for modifications when combined with error detection systems, providing a more complete picture of the system's behavior \cite{Fischer2003}.
+There are several characteristics that can describe a data's quality, but the one most relevant to data versioning is provenance.
+It describes the sequence of events that lead to the construction of an object  \cite{dai2014provenance}.
+In art this describes the sequence of people who have had ownership of a piece of artwork.
+For data, provenance relates the history inputs and operations that result in a data object such as a plot or data set.
+NASA defines three levels of data processing, for example, that encompass the stages required to turn a raw signal from satellite instruments into physical measurements into global aggregate summaries \cite{Barkstrom2003}.
+Each stage computes a dataset using a collection of input data, processing scripts, and calibration values.
+This collection forms the provenance for the resulting level of data, but because lower level data become inputs for higher level data, its provenance assimilates into the lineage of all resultant data sets.
+For example, Level 1 data's provenance is described by Level 0 data and the scripts and the calibration inputs that were required to turn Level 0 data into Level 1.
+Because Level 1 data is then used to generate Level 2 data, which in turn is used to generate a Level 3 data set, the Level 1 provenance is also included in Level 3 data's provenance.
+It is part of the sequence of events that led to the generation of the Level 3 data set.
 
-Provenance describes the sequence of actions and the individuals involved in generating a particular artifact.
-In the case of art, provenance would include a history of previous owners to ensure the validity of the work, in short, to ensure its quality.
+As data sets grow, this process becomes even more confusing to coordinate so version control systems often manage provenance.
+The focus of a majority of versioning research focuses on lineage retrieval which becomes ever important as evidence grows that researchers generate data faster than they can reasonably track \cite{Bose:2005:LRS:1057977.1057978}.
+This poses a particularly difficult problem as provenance provides a potent means of data auditing.
+With provenance, data producers ensure the trustability of their data inputs, either ingested from external sources or integrated from internal data sets.
+Fairly reassuring results have been found when combining lineage management and error reporting systems \cite{Fischer2003}.
+The errors provide a context for the changes made to advance the lineage of the data set and the version manager demonstrates that a problem has been addressed and how it was corrected.
+This system becomes extremely important when considering that agency funding often depends on the ability to account for the value of a project's dataset \cite{Cavanaugh2002}.
+The data analytics required to determine the value of data collected by a project also requires the provenance to ensure that the analysis is also reproducible.
+The basic provenance often collected by hand now needs to be collected automatically in order to facilitate collaboration, especially with projects that are farther away from the data.
 
-In the early days of computing, hardware constraints restricted the size of data to very manageable quantities.
-However, recent advances in storage methods has produced devices, even on a personal level, with the capability to store data that far exceeds the size of the programs that utilize them.
-It is then no surprise that the development of versioning management tools for software 
-However, the proliferation of powerful and mobile computing devices has allowed researchers to generate data faster than it can be tracked \cite{Bose:2005:LRS:1057977.1057978}.
-Data processing is automated so data quality needs to be ensured since a human will not be able to determine data quality for each data entry individually.
 
-The information that details the activities and agents involved in generating a data entity is known as provenance.
-Studying the structure of a data's provenance has provided insight into behavior and quality by revealing the qualities of the contributing data sources and code sources \cite{dai2014provenance} \cite{Cavanaugh2002}.
-Provenance management differs from organization to organization, but most generally agree the core factors of scripts, calibrations, and inputs form the core components of lineage tracking \cite{Barkstrom2003} \cite{Branco2008}.
-Software revision management tools such as Git and SVN also keep track of provenance information when logging new commits to a project, using branches and merges  \cite{Chacon:2009:PG:1618548}.
-Provenance is a powerful mechanism to follow data quality changes or error introduction .
+Autonomous solutions to understanding change grows in importance as evidence grows that speedy and relevant changes play a significant role in successful system function \cite{Bouzeghoub:2004:FAD:1012453.1012464}.
 The information also gives data warehouses a mechanism to evolve and adjust their ability to provide better data \cite{Vassiliadis1999}.
-It is, however, important to distinguish between the contributions of provenance to change tracking and the contributions of versioning.
-Provenance allows for the identification of change localities; it signals where changes in data have occurred.
-However, provenance does not elaborate on the extent of the alterations made, not should it.
-The priority of provenance tracking is understanding where and how a data object was generated, not it's relationship to other data products \cite{Bose:2005:LRS:1057977.1057978}.
+
+
+Early attempts at encoding provenance data into semantic models include the development of the Proof Markup Language \cite{daSilva2006381}.
+While was originally developed to express inference reasoning through traceable graph relations, the model can also be used to express the provenance of products using the same transitions.
+The power is that it is able to use terms defined on the Semantic Web to construct inferences.
+
+Not long after began the development of the Open Provenance Model (OPM) \cite{moreau2008open}.
+Driven by the uncertain needs and sometimes conflicting conventions of different scientific domains, the model sought to find a method to standardized the way in which provenance data is captured while also keeping the specification open to accommodate current data sets through the change.
+In an experimental case, the model has been applied to sensor networks to automate and unify their provenance capture even as they grow \cite{5478496}.
+To aid in the adoption of the OPM, the framework Karma2 was developed to assist integrating provenance capture into scientific workflows \cite{simmhan2010karma2}.
+
+
+PROV is a W3C recommendation that deliniates a method to express data provenance with semantic technologies \cite{Belhajjame2013}.
+Using the model of relating activities, agents, and entities, data managers can express the origins of their datasets.
 In the field of semantic technologies, the W3C recommendation, PROV provides a data model to encode provenance information into searchable graphs.
 It has played a significant contribution in maintaining the quality and reproducibility of datasets and reporting in the National Climate Assessment \cite{Tilmes2012,Ma2014191,Ma2014}.
 PROV expresses relationships between versions with the wasRevisionOf or alternateOf property.
 The properties do not allow for more elaboration as to what changes were made to transform from one version into its alternate.
 Versioning provides the context for a change by providing the comparison between data objects.
-
-PROV is a W3C recommendation that deliniates a method to express data provenance with semantic technologies \cite{Belhajjame2013}.
-Using the model of relating activities, agents, and entities, data managers can express the origins of their datasets.
 However, when an entity is revised, the PROV data model can only express the relationship as a revision or that the new dataset was derived from the original.
 This leaves
-
-Open Provenance Model \cite{moreau2008open}.
 
 \subsection{Changelogs}
 
 Changelogs, sometimes called patch notes, are artifacts resulting from the versioning process often found in major software projects.
-They detail the changes made within the system and some will have explanations on the motivations behind changes \cite{uel1037}.
-These logs provide a great source of value to developers as they can be used to give insight to the health of a software project \cite{German03automatingthe} \cite{6132954}.
-Changelogs also allow developers to link bugs and errors with their corrections in later versions \cite{Chen:2004:OCL:990374.990391}.
-Despite these contributions, changelogs are rarely found along with data.
-Possible reasons for this omission may include the size of data  as it may become difficult to scalably communicate data change (Data exceeds ability to track reference) or that the ease of data acquisition and storage inclines towards simply using the latest version.
-As a result, new dataset versions are often accompanied by usage documents, but documentation on version transitions are omitted.
-This creates a impediment to making data forward and backwards compatible, costing data consumers both time and money.
+They document the changes made within the system and seek to explain, in human language, the motivations behind changes \cite{uel1037}.
+The logs provide significant utility to both users and producers as it can serve as both documentation and tutorials.
+Many users will often refer to the patch notes in order to decide how to adapt to changes made to the system they use, either data or software.
+Meanwhile, changelogs aid producers through team transitions by keeping a history of decisions made to improve the project.
+This is particularly evident in the realm of open-source projects as developers can contribute without having been part of the original development team.
+The need for documentation to bring new programmers up to speed for a project drives the ability to keep the project alive.
 
-Changelogs are also difficult to consume as they are often built to be read only by humans.
+Open source projects have much more consistent adoption of changelogs than data sets, possibly resulting from complex code techniques emerging earlier than large data methods.
+These logs provide a great source of value to developers as they can be used to give insight to the health of a software project \cite{German03automatingthe}.
+These projects have a tendency to die rather quickly after initial enthusiasm and with the rather low overhead cost to start new open-source projects, some automated methods of determining the progress of a project is needed.
+It would give insight into the maturity of a project's development team as well as the likelihood that team members will correct errors within the code.
+However, readability proves to remain a significant hurdle as current development change logs contain solely human readable text.
+While machines may still be significantly removed from the ability to comprehend the impact of changes made to a data set or software code, they are currently opaquely blocked from consuming any of the content within logs more than understanding they contain text.
 The transition between different versions of large datasets is then left largely up to the human user's ability to understand and process the modifications mentioned within the change log.
-In the absence of any sort of change notes, it is up to the consumer to be able to locate the points of differences between the versions they are working among.
+
+As mentioned previously, changelogs also allow developers to link bugs and errors with their corrections in new versions of the code \cite{Chen:2004:OCL:990374.990391}.
+This gives feedback to the user community that corrections have been addressed as well as ensuring that modifications to the code base are driven by improving the project.
+It also has the added benefit of creating a system that can be used to link the introduction of new features with the emergence of new bugs \cite{6132954}.
+The resulting discoveries help reveal patterns of development and prevent further occurrences of problematic code.
 Therefore, providing an machine consumable changelog would accelerate and assist in navigating through dataset changes and error corrections.
 
 \section{Provenance Distance}
@@ -220,15 +243,9 @@ Meanwhile, a consumer will analyze the historical changes and determine the impa
 As a result, this means that data versioning systems must communicate a dynamic view of the changes in a system contextualized by the user of that data.
 
 \section{Conclusion - Thesis Statement}
+The priority of provenance tracking is understanding where and how a data object was generated, not it's relationship to other data products \cite{Bose:2005:LRS:1057977.1057978}.
 
 \section{NEEDS EDITING}
-
-\subsection{Heterogeneous systems}
-Heterogeneous systems encounter challenges with data integration resulting from non-uniform data interfaces.
-Autonomous solutions to understanding change grows in importance as evidence grows that speedy and relevant changes play a significant role in successful system function \cite{Bouzeghoub:2004:FAD:1012453.1012464}.
-The key often seems to be using XML to provide an common language propagating change across heterogenous systems.
-The need to propagate changes becomes more apparent as autonomous units grow and share data .
-Semantic technology's growth now provides a new method of propagating data change that can not only be universally consumed in formats like XML but also encodes meaning to each of these changes.
 
 \subsection{RDFa}
 

@@ -710,6 +710,41 @@ be in line with traditional close source development.},
   url          = {https://wiki.earthdata.nasa.gov/display/CMR/Keyword+FAQ},
 }
 
+@Article{daSilva2006381,
+  author   = {Paulo Pinheiro da Silva and Deborah L. McGuinness and Richard Fikes},
+  title    = {A proof markup language for Semantic Web services},
+  journal  = {Information Systems},
+  year     = {2006},
+  volume   = {31},
+  number   = {4–5},
+  pages    = {381 - 395},
+  note     = {The Semantic Web and Web Services},
+  doi      = {http://dx.doi.org/10.1016/j.is.2005.02.003},
+  issn     = {0306-4379},
+  keywords = {PML, Semantic Web, Web services, Proofs, Provenance },
+  url      = {http://www.sciencedirect.com/science/article/pii/S0306437905000281},
+}
+
+@InProceedings{5478496,
+  author    = {Y. Liu and J. Futrelle and J. Myers and A. Rodriguez and R. Kooper},
+  title     = {A provenance-aware virtual sensor system using the Open Provenance Model},
+  booktitle = {2010 International Symposium on Collaborative Technologies and Systems},
+  year      = {2010},
+  pages     = {330-339},
+  month     = {May},
+  doi       = {10.1109/CTS.2010.5478496},
+  keywords  = {Internet;application program interfaces;decision support systems;real-time systems;virtual reality;OPM;SWE;cyberenvironments;open provenance model;original sensor design;provenance aware virtual sensor system;real-time environmental decision support systems;sensor Web applications;sensor Web enablement;Acoustic sensors;Biosensors;Chemical and biological sensors;Computational modeling;Decision support systems;Real time systems;Sensor phenomena and characterization;Sensor systems;Sensor systems and applications;Temperature sensors;Open Provenance Model;Sensor Web;Streaming Data;Virtual Sensor},
+}
+
+@Article{simmhan2010karma2,
+  author    = {Simmhan, Yogesh L and Plale, Beth and Gannon, Dennis},
+  title     = {Karma2: Provenance management for data-driven workflows},
+  journal   = {Web Services Research for Emerging Applications: Discoveries and Trends: Discoveries and Trends},
+  year      = {2010},
+  pages     = {317},
+  publisher = {IGI Global},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}
 
 @Comment{jabref-meta: groupstree:
