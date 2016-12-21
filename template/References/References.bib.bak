@@ -710,6 +710,172 @@ be in line with traditional close source development.},
   url          = {https://wiki.earthdata.nasa.gov/display/CMR/Keyword+FAQ},
 }
 
+@Article{daSilva2006381,
+  author   = {Paulo Pinheiro da Silva and Deborah L. McGuinness and Richard Fikes},
+  title    = {A proof markup language for Semantic Web services},
+  journal  = {Information Systems},
+  year     = {2006},
+  volume   = {31},
+  number   = {4–5},
+  pages    = {381 - 395},
+  note     = {The Semantic Web and Web Services},
+  doi      = {http://dx.doi.org/10.1016/j.is.2005.02.003},
+  issn     = {0306-4379},
+  keywords = {PML, Semantic Web, Web services, Proofs, Provenance },
+  url      = {http://www.sciencedirect.com/science/article/pii/S0306437905000281},
+}
+
+@InProceedings{5478496,
+  author    = {Y. Liu and J. Futrelle and J. Myers and A. Rodriguez and R. Kooper},
+  title     = {A provenance-aware virtual sensor system using the Open Provenance Model},
+  booktitle = {2010 International Symposium on Collaborative Technologies and Systems},
+  year      = {2010},
+  pages     = {330-339},
+  month     = {May},
+  doi       = {10.1109/CTS.2010.5478496},
+  keywords  = {Internet;application program interfaces;decision support systems;real-time systems;virtual reality;OPM;SWE;cyberenvironments;open provenance model;original sensor design;provenance aware virtual sensor system;real-time environmental decision support systems;sensor Web applications;sensor Web enablement;Acoustic sensors;Biosensors;Chemical and biological sensors;Computational modeling;Decision support systems;Real time systems;Sensor phenomena and characterization;Sensor systems;Sensor systems and applications;Temperature sensors;Open Provenance Model;Sensor Web;Streaming Data;Virtual Sensor},
+}
+
+@Article{simmhan2010karma2,
+  author    = {Simmhan, Yogesh L and Plale, Beth and Gannon, Dennis},
+  title     = {Karma2: Provenance management for data-driven workflows},
+  journal   = {Web Services Research for Emerging Applications: Discoveries and Trends: Discoveries and Trends},
+  year      = {2010},
+  pages     = {317},
+  publisher = {IGI Global},
+}
+
+@InBook{Casati1996,
+  pages     = {438--455},
+  title     = {Workflow evolution},
+  publisher = {Springer Berlin Heidelberg},
+  year      = {1996},
+  author    = {Casati, F. and Ceri, S. and Pernici, B. and Pozzi, G.},
+  editor    = {Thalheim, Bernhard},
+  address   = {Berlin, Heidelberg},
+  booktitle = {Conceptual Modeling --- ER '96: 15th International Conference on Conceptual Modeling Cottbus, Germany, October 7--10, 1996 Proceedings},
+  doi       = {10.1007/BFb0019939},
+  isbn      = {978-3-540-70685-4},
+  url       = {http://dx.doi.org/10.1007/BFb0019939},
+}
+
+@Misc{Belhajjame2013a,
+  author = {Khalid Belhajjame and Reza B'Far and James Cheney and Sam Coppens and Stephen Cresswell and Yolanda Gil and Paul Groth and Graham Klyne and Timothy Lebo and Jim McCusker and Simon Miles and James Myers and Satya Sahoo and Curt Tilmes},
+  title  = {PROV-DM: The PROV Data Model},
+  month  = {April},
+  year   = {2013},
+  note   = {Accessed: December 17, 2016},
+  editor = {Luc Moreau and Paolo Missier},
+  url    = {https://www.w3.org/TR/2013/REC-prov-dm-20130430/},
+}
+
+@Misc{Belhajjame2013b,
+  author = {Khalid Belhajjame and James Cheney and David Corsar and Daniel Garijo and Stian Soiland-Reyes and Stephan Zednik and Jun Zhao},
+  title  = {PROV-O: The PROV Ontology},
+  month  = {April},
+  year   = {2013},
+  note   = {Accessed: December 17, 2016},
+  editor = {Timothy Lebo and Satya Sahoo and Deborah McGuinness},
+  url    = {https://www.w3.org/TR/2013/REC-prov-o-20130430/},
+}
+
+@Misc{Cheney2013,
+  author = {James Cheney and Stian Soiland-Reyes},
+  title  = {PROV-N: The Provenance Notation},
+  month  = {April},
+  year   = {2013},
+  note   = {Accessed: December 17, 2016},
+  editor = {Luc Moreau and Paolo Missier},
+  url    = {https://www.w3.org/TR/2013/REC-prov-n-20130430/},
+}
+
+@Misc{Miles2013,
+  author = {Simon Miles and Craig M. Trim and Michael Panzer},
+  title  = {Dublin Core to PROV Mapping},
+  month  = {April},
+  year   = {2013},
+  note   = {Accessed: December 17, 2016},
+  editor = {Daniel Garijo and Kai Eckert},
+  url    = {https://www.w3.org/TR/2013/NOTE-prov-dc-20130430/},
+}
+
+@Misc{Moreau2013,
+  title  = {LInking Across Provenance Bundles},
+  month  = {April},
+  year   = {2013},
+  note   = {Accessed: December 17, 2016},
+  editor = {Luc Moreau and Timothy Lebo},
+  url    = {https://www.w3.org/TR/2013/NOTE-prov-links-20130430/},
+}
+
+@Misc{Nies2013,
+  author = {Tom De Nies},
+  title  = {Constraints of the PROV Data Model},
+  month  = {April},
+  year   = {2013},
+  note   = {Accessed: December 17, 2016},
+  editor = {James Cheney and Paolo Missier and Luc Moreau},
+  url    = {https://www.w3.org/TR/2013/REC-prov-constraints-20130430/},
+}
+
+@Misc{Groth2013,
+  title  = {PROV-Overview},
+  month  = {April},
+  year   = {2013},
+  note   = {Accessed: December 17, 2016},
+  editor = {Paul Groth and Luc Moreau},
+  url    = {https://www.w3.org/TR/2013/NOTE-prov-overview-20130430/},
+}
+
+@Misc{Belhajjame2013c,
+  author = {Khalid Belhajjame and Helena Deus and Daniel Garijo and Graham Klyne and Paolo Missier and Stian Soiland-Reyes and Stephan Zednik},
+  title  = {PROV Model Primer},
+  month  = {April},
+  year   = {2013},
+  note   = {Accessed: December 17, 2016},
+  editor = {Yolanda Gil and Simon Miles},
+  url    = {https://www.w3.org/TR/2013/NOTE-prov-primer-20130430/},
+}
+
+@Misc{Moreau2013a,
+  author = {Luc Moreau},
+  title  = {PROV-XML: The PROV XML Schema},
+  month  = {April},
+  year   = {2013},
+  note   = {Accessed: December 17, 2016},
+  editor = {Hook Hua and Curt Tilmes and Stephan Zednik},
+  url    = {https://www.w3.org/TR/2013/NOTE-prov-xml-20130430/},
+}
+
+@Misc{Moreau2013b,
+  author = {Luc Moreau and Olaf Hartig and Yogesh L. Simmhan and James Myers and Timothy Lebo and Khalid Belhajjame and Simon Miles and Stian Soiland-Reyes},
+  title  = {PROV-AQ: Provenance Access and Query},
+  month  = {April},
+  year   = {2013},
+  note   = {Accessed: December 17, 2016},
+  editor = {Graham Klyne and Paul Groth},
+  url    = {https://www.w3.org/TR/2013/NOTE-prov-aq-20130430/},
+}
+
+@Misc{Missier2013,
+  author = {Paolo Missier and Luc Moreau and James Cheney and Timothy Lebo and Stian Soiland-Reyes},
+  title  = {PROV-Dictionary: Modeling Provenance for Dictionary Data Structures},
+  month  = {April},
+  year   = {2013},
+  note   = {Accessed: December 17, 2016},
+  editor = {Tom De Nies and Sam Coppens},
+  url    = {https://www.w3.org/TR/2013/NOTE-prov-dictionary-20130430/},
+}
+
+@Misc{,
+  title  = {SSemantic of the PROV Data Model},
+  month  = {April},
+  year   = {2013},
+  note   = {Accessed: December 17, 2016},
+  editor = {James Cheney},
+  url    = {https://www.w3.org/TR/2013/NOTE-prov-sem-20130430/},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}
 
 @Comment{jabref-meta: groupstree:
