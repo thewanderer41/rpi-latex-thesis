@@ -85,13 +85,15 @@ They form graphs, relating a vocabulary of terms and relationships together to m
 Since the ontology is represented as a graph, it has more expressiveness than relational databases.
 The objects no longer need to share uniform structure and fields when entered into the database.
 Ontologies improve interoperability between scientific data sets by allowing differing data to share a common vocabulary and be comparable.
-Like other data, ontologies change regularly as definitions and relationships update to better represent their source material.
+Like other data, ontologies change regularly as definitions and relationships update to better represent their source material \cite{Ochs:2015:SVS:2826733.2826866}.
 As a connected graph, they easily lend themselves to providing mappings between changes and versions within the ontology.
 New transitions would be represented as a simple link between new and old concepts.
 This is particularly important on the Semantic Web since most reasoning and interactions are handled automatically by underlying services.
 Ontologies, thus, benefit the most when providing both forward and backward mapping as it allows more up to date systems to interact with entities that haven't migrated yet \cite{Klein01ontologyversioning}.
 Incomplete mappings, where transitions exclude either forward or exclude backward mappings, retain value as backward mappings inform traceability and forward mappings communicate advances in the domain.
 However, the uncertain landscape of web services means that full ontology mappings prove invaluable to making data inter-operable.
+Advances in ontology change detection have made tools which automatically generate mappings between versions of an ontology available \cite{Hartung201315}.
+However, in this project, the focus remains on improving the description of these mappings to provide not only descriptions but also explanations for the transition.
 
 The Global Change Master Directory (GCMD) is a metadata repository used by NASA to story records of its available data sets \cite{Miled:2001:GCM:372202.372324}.
 It employs a keyword ontology to search for Earth science data in NASA data sets.

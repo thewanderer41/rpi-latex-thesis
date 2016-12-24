@@ -32,12 +32,13 @@ It has also added a plethora of new content types such as wikis, blogs, and othe
 All these new documents need a form of data management \cite{Berberich:2007:TMT:1277741.1277831}.
 However, the migration has not been without its problems.
 Early citations used stagnant Uniform Resource Locators (URL) to refer to online documents, but this would lead to a condition known as link rot where moving the document would invalidate the URL \cite{Lyons2005}.
-This eventually led to the development of Persistent URLs (PURL) which also succumbed to link rot, and this eventually led to the distributed Digital Object Identifier (DOI) system used to track documents today.
+This eventually led to the development of Persistent URLs (PURL) which also succumbed to link rot, and this eventually led to the distributed Digital Object Identifier (DOI) system used to track documents today \cite{Duerr2011}.
 The DOI network provides a robust system to track documents, but when tracking data, it faces difficulty following the rate of change with some more volatile data sets.
 Distribution organizations assign a DOI whenever a new edition of a document becomes available, and due to the publication process, documents change very rarely so a new DOIs are rarely necessary.
 However, data sets are products and thus succumb to the iterative process of error correction and growth.
 Data collection often continues on after initial publication.
 DOI distributors treat new files like new sections to a paper and changes to files as edits so a new identifier must be issued to the data set.
+This behavior becomes entirely too slow as data providers begin to allow users to dynamically generate data products from existing data according to their needs \cite{Barkstrom2003}.
 
 For similar reasons, treating data as documents produces problems when applying technologies from software management \cite{tichy1985rcs}\cite{Chien:2000:VMX:646544.696357}.
 Structure provides the most significant distinguisher between data and software since a data set with a removed file remains usable but a software project would break.
@@ -173,10 +174,39 @@ Therefore, providing an machine consumable changelog would accelerate and assist
 
 \section{Provenance Distance}
 
-Data workflows have become complex and sized in such a way that even subtle changes may have meaningful effects \cite{TILMES2011548}.
-One approach is following the provenance of the new data and identifying potential differences between how the data has become generated.
-Since provenance graphs have both directed edges and labeled nodes, there are a few methods of measuring similarity available beyond basic isomorphism \cite{Cao2013} \cite{Gao2010} \cite{Goddard:1996:DGU:246962.246972} .
-This similarity measure is known as the provenance distance between the two data objects.
+Understanding provenance and workflows only provide only a portion of the view into a data set's lineage landscape.
+The workflow provides an understanding of how a data set fits into the bigger picture of data analysis and the provenance gives a method to reproduce the data set for data quality purposes.
+As such, workflow and provenance describe data sets in a very flat and static manner, allowing for prospective reasoning as to how it may respond to changes made by the data producers.
+However, this places the burden of determining the magnitude of change in quality, as changes in provenance mean changes in quality, on the data producer.
+Consider again that data quality is subjective with respect to the data consumer's usage, and the difficulty in determining the significance of a new version becomes apparent.
+With increasing complexity, data workflows have developed in such a way that even subtle changes have serious implications for other parts of the workflow \cite{TILMES2011548}.
+The responsibility of determining and communicating the magnitude of data alterations falls to versioning systems.
+
+A very rudimentary way to communicate change distance uses the version number of the data set.
+Returning to discussing the dot-decimal notation often used to number versions, version numbering follows a hierarchical method of systematically counting the changes made to a data set or system based on the perceived magnitude of the change.
+Generally, this causes no problems, but when a modification rests close to the border between classes of change, researchers often struggle in determining how to classify such a change.
+These cases become challenging since some users will experience larger perturbations resulting from the change than others.
+As a result, using fewer well-established categories avoids this problem, but it loses many details in resolution of the extent to which the data set may change.
+In addition, there is no standardization as to what each of the numerals used in a version number represents, and this significantly hinders interoperability between information systems.
+Data managers will often discuss whether data sets are qualitatively different enough to warrant incrementing one of the version numerals.
+While the dot-decimal method is easy to implement and use, its broad categorization severely impairs its ability to express version information beyond a basic functional extent.
+
+Another approach is following the provenance of two data sets and identifying  differences between the lineages of the two data sets.
+The total difference between the data is known as their provenance distance.
+This distance measure is very new as the availability of computable provenance has been developed fairly recent.
+One endeavor to compute over provenance has shown a marked ability to predict disk usage based on the lineage of a data object \cite{dai2014provenance}.
+Efforts have also been made to summarize provenance representations to improve consumption \cite{Ainy:2015:ASD:2806416.2806429}.
+While the ability to compute over provenance data has been demonstrated, the comparison of two provenance graphs has yet to be widely studied.
+
+Using PROV to represent provenance data in a semantic model produces an acyclic directed graph with labeled nodes.
+As a result, the provenance distance problem reduces to the similarity measurement problem.
+When measuring similarity, algorithms determine how far two graphs are from being isomorphic \cite{Cao2013}.
+General graphs have similar complexity to determine similarity, but node labeling simplifies this process by providing a method to match nodes together.
+Other methods also exist to determine similarity under different conditions such as edits necessary to transform one graph into another  \cite{Gao2010}.
+Some methods focus primarily on edge changes \cite{Goddard:1996:DGU:246962.246972}.
+This kind of analysis strong resembles similarity measures employed in determining semantic similarity.
+
+
 A concern that arises with this approach is that, as previously stated, provenance only provides a context for versioning.
 Consider an example where there are versions 1 and 2 of a data object, both compiled from a reference source.
 Since there are two versions, it is understood that the versions are different so the comparison extends to their reference sources.
@@ -186,6 +216,8 @@ In the case of the NASA datasets, those methods should not have changed and no f
 If the reference sources have been changed, then it is expected that there would be a new version or data object and no new information has been found.
 This reasoning motivates the development of a versioning method that utilizes changelogs and RDFa to determine versioning distance.
 
+Reasoning across versions \cite{tan2004research}.
+
 \section{Data Versioning Operations}
 
 Architecture has a principle that says form follows function, but, for data, form equals function.
@@ -194,7 +226,7 @@ Biological experiments often use data within cyclical data workflows where outpu
 Even though the goal of the experiment is the final data set, all the intermediary data sets provide significant value in reaching the goal.
 Libraries store data about their collections in large databases where both old and new versions of literature need to be maintained \cite{Wiil:2000:RDH:338407.338517}.
 Some data exist in such a highly constrained environment that it must be managed at near the hardware level \cite{Flouris04clotho:transparent}.
-The challenge no longer becomes generating data, but instead, fitting the data into a format that users find useful and can consume.
+The struggle no longer becomes generating data, but instead, fitting the data into a format that users find useful and can consume.
 
 The challenge of data versioning systems is to provide a unifying environment that can handle the plethora of forms and functions of its data.
 At its core, versioning systems only need to concern themselves with three operations: addition, deletion, and modification.
