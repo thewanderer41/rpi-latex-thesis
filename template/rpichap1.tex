@@ -24,7 +24,7 @@ In this document, data versioning is approached using technology provided by sem
 
 \section{Data Set Proliferation}
 
-Data has existed long before computers, populating the storage space of filing cabinets and data closets the first transistor radio.
+Data has existed long before computers, populating the storage space of filing cabinets and data closets, before the first transistor radio.
 It then comes as no surprise that libraries and library sciences provide the early methods of data management.
 The challenges and goals that face physical libraries remain valid even as data collection migrates to electronic alternatives \cite{rohtua}.
 Digital storage and the Internet has opened new opportunities and methods to administer book data by separating logical representations and physical representations \cite{Barkstrom_digitallibrary}.
@@ -172,6 +172,20 @@ It also has the added benefit of creating a system that can be used to link the 
 The resulting discoveries help reveal patterns of development and prevent further occurrences of problematic code.
 Therefore, providing an machine consumable changelog would accelerate and assist in navigating through dataset changes and error corrections.
 
+\subsection{RDFa}
+
+In order address the human readability of data change logs, this project considers the use of the Resource Description Framework in Attributes (RDFa) framework \cite{Adida2015}.
+The benefits of embedding RDFa into change logs is twofold.
+First, the change log would need to be marked up in HTML in order to accept RDFa.
+As a result, the log would also become available online and thus, more openly accessible to data users.
+This would allow data users to better determine personally how a change applies to their specific application.
+Second, the simple application of RDFa attributes encodes the entries within the change log in a format consumable by machines \cite{Herman2015}.
+RDFa has already had significant success in adoption across a variety of web publication platform and eases the search for their content \cite{Bizer2013}.
+In these applications, however, the developers use RDFa to describe the content on the page, to indicate a string is actually a name for example.
+This project endeavors to use RDFa to embed an RDF graph into the web page instead, and therefore, the data becomes captured instead of described.
+The language does have the ability to transform into RDF, but the slight nuance between intended use means that a more complicated deployment of the attributes will be required.
+Using a previously established standard eases the adoption of encoding required to communication change information to autonomous systems.
+
 \section{Provenance Distance}
 
 Understanding provenance and workflows only provide only a portion of the view into a data set's lineage landscape.
@@ -204,19 +218,26 @@ When measuring similarity, algorithms determine how far two graphs are from bein
 General graphs have similar complexity to determine similarity, but node labeling simplifies this process by providing a method to match nodes together.
 Other methods also exist to determine similarity under different conditions such as edits necessary to transform one graph into another  \cite{Gao2010}.
 Some methods focus primarily on edge changes \cite{Goddard:1996:DGU:246962.246972}.
-This kind of analysis strong resembles similarity measures employed in determining semantic similarity.
+This kind of analysis resembles similarity measures employed in determining semantic similarity \cite{Hliaoutakis06informationretrieval}.
+The main difference lies in semantic similarity comparing the distance between two concepts within a graph as opposed to the distances between the graphs themselves.
+However, it does reveal that using semantic graphs can have incredible impact in extracting implied relations between data they store.
 
+There already exist methods which compare workflows based on quality criteria that leverages provenance to bound quality of service \cite{2015:CAA:2778374.2778504}.
+However, these procedures focus primarily on quick retrieval and efficient storage instead of leveraging the latent information accessed by reasoning across data set versions \cite{tan2004research}.
+The distance measures previously mentioned rely solely on provenance graphs to compute results, but this is obviously insufficient.
+When considering the provenance of a data object, methods only consider the activities and entities that took an active role in the production of it.
+A new version of an object has a familial relationship with its previous versions, but in most cases, they do not take an active role in its generation.
+For this reason, detailed change information falls outside of provenance's scope and it can be seen in PROV using a single relation to link different versions of a data object.
+Without detailed change information, determining the difference between two data objects in a metric beyond broad strokes becomes difficult if not impossible.
 
-A concern that arises with this approach is that, as previously stated, provenance only provides a context for versioning.
-Consider an example where there are versions 1 and 2 of a data object, both compiled from a reference source.
-Since there are two versions, it is understood that the versions are different so the comparison extends to their reference sources.
-If both versions were compiled from the same source, it can only be concluded that the compilation methods were different.
-There also exist methods that compare workflows based on quality criteria that leverages provenance to bound quality of service \cite{2015:CAA:2778374.2778504}.
-In the case of the NASA datasets, those methods should not have changed and no further insight has been found.
-If the reference sources have been changed, then it is expected that there would be a new version or data object and no new information has been found.
-This reasoning motivates the development of a versioning method that utilizes changelogs and RDFa to determine versioning distance.
-
-Reasoning across versions \cite{tan2004research}.
+This is not to say that provenance becomes useless in computing change distance, but it largely serves as an indicator than a measure.
+If there is any difference in provenance, then something must have changed.
+For example, if workflow uses a new script to generate a data set, changes can be expected in this new data set.
+However, what this script does differently than the old one requires a more detailed understanding and description than lineage can provide  \cite{Bose:2005:LRS:1057977.1057978}.
+Additionally, if no changes were made to the script, but new data was produced, it likely indicates that some inputs have changed.
+The ramifications for the resulting data set will be difficult to determine without understanding how the original inputs have changed.
+Only knowing that they have changes is insufficient.
+Being able to understand the extent that modifications to data or workflows impact the results greatly improve a producer's ability to generate high quality data.
 
 \section{Data Versioning Operations}
 
@@ -256,43 +277,46 @@ While other functions exist commonly in versioning systems such as object lockin
 
 \subsection{Types of Change}
 
-Focus on change types because focusing on the values has comparably less value.
-When working with large data sets, individual changes are less important than changes made to the set abstractly.
+The study of versioning operations further breaks down into categorization of change types data sets may undergo.
+While the meaning of operations are fairly easy to understand, not all changes have the same impact.
+As mentioned previously, version numbering separates perturbations into categories based on the impact the producer believes it has on the project.
+In this project, changes are categorized into scientific, technical, and lexical changes.
+The granularity of the categorization does not consider the magnitude of change within the individual values stored by a data set as actual values vary depending on application and domain.
+Focusing on a more abstract representation of kinds of change allows for a better understanding of its impact while not being too precise to be domain specific.
 
-Change is the fundamental characteristic in the study of versioning.
-Continuing the comparison with software, the measure of change in applications is primarily functional.
-Data, on the other hand, has not only function but also structure.
-While swapping the ordering of columns in a spreadsheet may not effect the usability of the data, it could cause issues with codes that use the data.
-This highlights the idea that many different forms of change exist with differing degrees of intensity.
-In this document, change is viewed as having three general categories: scientific, technical, and lexical.
-The most impactful change, scientific, denotes changes that have modified the fundamental science used to generate the dataset.
-Changes in algorithms or sampling methods generally fall under scientific modifications as they effect the base assumptions and possible error within the dataset.
+Scientific changes comprise the family of changes which have the greatest impact on a project or data set.
+It indicates that modifications have been made to the most fundamental methods used to create a data set.
+These can include changes to algorithms used or sampling methods which may require a change in how users consume the new data.
+These changes have the largest implications for data consumers as it can have serious consequences for the soundness of their results.
+However, these kinds of changes is not always caught on the production end of data generation.
+While very large modifications can easily be determined to produce a scientific change, more subtle changes or interactions can also have larger ramifications, and data producers may initially view this as a technical change due to data quality's subjectivity.
 Technical impacts do not change the underlying science of the data, but impose a large enough change as to warrant notice.
 Structure alteration and unit conversions count as technical changes since the dataset now needs to be consumed differently but remains valid for use.
+In one of the data sets used by this projects, concentration units were originally reported in parts per million and then in cc isotope ratios.
+This would constitute a technical change since the data presents the same scientific measurements but in a different manner.
 Lexical changes belie the transformations that can best be described as corrections.
 Filling in previously missing values or fix erroneous values may be lexical changes.
+While they have the smallest impact on results and conclusions, these changes can allow computations to be performed when previously missing data discouraged such behavior.
 
 The exact category that a particular change falls into can be controversial.
 The decision to change concentration units from parts per million to milligrams per milliliter poses a Technical change for a data producer.
 However, for a data consumer, the change may be viewed as a Scientific change as it invalidates the methods they had previously used.
 This conflict in view illustrates the data consumer-producer dynamic.
 In general, data producers are in control of the methods of versioning, but data consumers determine the classification of a data change.
-Reference 19 demonstrates the viewpoint as producers tend to use versioning systems to ensure data quality of service through audits and recovery tools.
+Producers tend to use versioning systems to ensure data quality of service through audits and recovery tools \cite{Cavanaugh2002}.
 Meanwhile, a consumer will analyze the historical changes and determine the impact this may have to their data use.
 As a result, this means that data versioning systems must communicate a dynamic view of the changes in a system contextualized by the user of that data.
 
-\section{Conclusion - Thesis Statement}
-The priority of provenance tracking is understanding where and how a data object was generated, not it's relationship to other data products \cite{Bose:2005:LRS:1057977.1057978}.
+\section{Thesis Statement}
 
-\section{NEEDS EDITING}
-
-\subsection{RDFa}
-
-The modifications to implement a machine readable changelog should still remain in a form viewable by a human user.
-The subjectivity of versioning information means that domain scientists should still be able to interpret changes as they relate to their application.
-Resource Description Framework in Attributes (RDFa) allows web developers encode information XHTML and HTML documents using standardized ontologies.
-The developer would use the attributes in RDFa to augment the existing HTML tags to provide extra meaning that a web crawler can extract.
-The displayed text would remain unchanged signifying that if a changelog could be produced in HTML, then data producers can embed machine readable versioning information into a changelog using RDFa while still leaving it human readable as well.
+The growth of new data capturing and storage technologies has led to new challenges in properly tracking the changes data sets undergo while stored.
+Researchers store data in a variety of formats, from documents to databases, but since the growth in the scope of projects, many have relied on versioning methods from software management technologies to track their data's evolution.
+However, these techniques fail to properly capture the changes data undergoes because they do not take into account the impact that a data's structure has on its function.
+In order to maintain data quality, data producers use provenance meta-data capture the series of activities and agents involved in generating a data entity.
+New technologies and frameworks have been developed to digitally capture this information including OPM and PROV.
+This data can be used to give insight to the magnitude of change a data entity has undergone by comparing the differences in provenance between the two entities, but this can only be done in broad strokes without more detailed change data.
+By looking at the versioning transactions operating on a data set, data consumers can have a better idea as to the extent their data changes.
+This project uses automatically generated change logs embedded with RDFa to capture detailed change information to develop a method to provide detailed change measure for scientific data set.
 
 
 %%% Local Variables:

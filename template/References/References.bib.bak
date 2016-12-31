@@ -964,6 +964,45 @@ be in line with traditional close source development.},
   url      = {http://dx.doi.org/10.1007/s12145-011-0083-6},
 }
 
+@Article{Barkstrom2003,
+  author   = {Barkstrom, Bruce R. and Hinke, Thomas H. and Gavali, Shradha and Smith, Warren and Seufzer, William J. and Hu, Chaumin and Cordner, David E.},
+  title    = {Distributed Generation of NASA Earth Science Data Products},
+  journal  = {Journal of Grid Computing},
+  year     = {2003},
+  volume   = {1},
+  number   = {2},
+  pages    = {101--116},
+  abstract = {The objective of this work is the development of Grid-based approaches through which NASA data centers can become active participants in serving data users by transforming archived data into the specific form needed by the user. This approach involves generating custom data products from data stored in multiple NASA data centers. We describe a prototype developed to explore how Grid technology can facilitate this multi-center product generation. Our initial example of a custom data product is phenomena-based subsetting. This example involves production of a subset of a large collection of data based on the subset's association with some phenomena, such as a mesoscale convective system (severe storm) or a hurricane. We demonstrate that this subsetting can be performed on data located at a single data center or at multiple data centers. We also describe a system that performed customized data product generation using a combination of commodity processors deployed at a NASA data center, Grid technology to access these processors, and data mining software that intelligently selects where to perform processing based on data location and availability of compute resources. This demonstration also suggests that we could create a catalog of phenomena related data at multiple data centers, in which the catalog can contain references to the original data in different locations. The catalog is important to providing other users with efficient access to the data belonging to the identified phenomenon.},
+  doi      = {10.1023/B:GRID.0000024069.33399.ee},
+  issn     = {1572-9184},
+  url      = {http://dx.doi.org/10.1023/B:GRID.0000024069.33399.ee},
+}
+
+@InProceedings{Hliaoutakis06informationretrieval,
+  author    = {Angelos Hliaoutakis and Giannis Varelas and Epimeneidis Voutsakis and Euripides G. M. Petrakis and Evangelos Milios},
+  title     = {Information Retrieval by Semantic Similarity},
+  booktitle = {Intern. Journal on Semantic Web and Information Systems (IJSWIS), 3(3):55–73, July/Sept. 2006. Special Issue of Multimedia Semantics},
+  year      = {2006},
+}
+
+@Misc{Adida2015,
+  title  = {RDFa Core 1.1 - Third Edition: Syntax and processing rules for embedding RDF through attributes},
+  month  = {March},
+  year   = {2015},
+  note   = {Accessed: December 24, 2016},
+  editor = {Ben Adida and Mark Birbeck and Shane McCarron and Ivan Herman},
+  url    = {http://www.w3.org/TR/2015/REC-rdfa-core-20150317/},
+}
+
+@Misc{,
+  title  = {RDFa 1.1 Primer - Third Edition: Rich Structured Data Markup for Web Documents},
+  month  = {March},
+  year   = {2015},
+  note   = {Accessed: December 24, 2016},
+  editor = {Ivan Herman and Ben Adida and Manu Sporny and Mark Birbeck},
+  url    = {http://www.w3.org/TR/2015/NOTE-rdfa-primer-20150317/},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}
 
 @Comment{jabref-meta: groupstree:
