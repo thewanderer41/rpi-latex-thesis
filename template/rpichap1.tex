@@ -315,10 +315,15 @@ However, these techniques fail to properly capture the changes data undergoes be
 In order to maintain data quality, producers use provenance meta-data capture the series of activities and agents involved in generating a data entity.
 Emergent technologies and frameworks have been developed to digitally capture this information including OPM and PROV.
 This data can be used to give insight into the magnitude of change a data entity has undergone by comparing the differences in provenance between the two entities, but this can only be done in broad strokes without more detailed change data.
+
 By looking at the versioning transactions operating on a data set, data consumers can have a better idea as to the extent their data changes.
 This thesis document develops a concept model to formally characterize the activities and relationships among data objects when transitioning between versions.
+The model would improve current discussion on data versioning by providing a common understanding of terms and activities, changing versioning from a rule of thumb chore to a valuable research activity.
 It then demonstrates the model's utility by applying it to tabular spreadsheets, and then generalizes it to other contexts.
+In addition, this contribution addresses in more detail the problem of measuring change distance, which using only provenance data could not accomplish, by utilizing the graph structure of linked data.
 Through this process, it creates and makes accessible machine readable change logs which allows for clearer deductions when comparing the extent of changes.
+This enriches the version documentation process without developing new artifacts, but now allows for the introduction of automation into part of the data auditing workflow.
+In addition, the method reinforces the need for dynamic, publicly available change information as data becomes more flexible to accommodate research in more diverse fields.
 
 
 %%% Local Variables:
