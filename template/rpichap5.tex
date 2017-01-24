@@ -6,8 +6,11 @@
 
 \chapter{DATABASE VERSIONING}
 
-The framework for communicating change information resembles the spreadsheet context.  However, the main difference is the method to refer to the Attributes as they are mapped across versions.  Database tables do not have strict identifiers for rows and columns as spreadsheets do.  Row identification relies on indexed keys to uniquely identify entries, but these entries can also be arranged and presented in different orderings depending on the queries used to view the database.  From Reference 24, elements within the database do not have to be digitally organized in the same way that it is physically presented.
-
-Databases are also meant to be kept online for extended periods of time.  Spreadsheets must be entirely republished in order for a change to the data to be made public.  Changes in a database are therefore more sparse in between each version.  In order to make changelogs more comprehensive, they can describe changes by day or other increment of time or describe the latest particular subset of time.
-
-Once the changes within the database are encoded into the versioning conceptual model, publishing the changes can follow the methods detailed in Chapter~\ref{ch:spreadsheet}
+Databases already maintain a part of versioning history with a transactional log.
+However, they pose an interesting change in context compared to spreadsheets.
+Often version comparisons occur between instances of spreadsheet files, but with databases, modifying transactions do not generate a new instance of the database.
+Identifying a version would then need to adapt and link transactions to versions.
+This can be done through query based citations as described by Proll and Rauber \cite{Proell2013}.
+The transaction log also more specifically states the attribute involved, making detection of new attributes into the database more straightforward.
+This addresses a particular concern in spreadsheet rows since their attributes have a tendency to be less consistent.
+Since RRUFF already possesses an automatically, web accessible change log, the work in this area focuses primarily on deconstructing their code to hook in the concept model with RDFa.

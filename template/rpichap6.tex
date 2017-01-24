@@ -4,7 +4,16 @@
 %                                                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{ONTOLOGY VERSIONING}
+\chapter{GCMD KEYWORD VERSIONING}
 
+GCMD Keywords do not qualify as a standard web ontology since it does not constitute a class hierarchy.
+As a result, the addition, removal, or modification of any term within the keywords has a significant impact on the semantics of using a keyword to describe a data set.
+More recent editions of the keywords, available through the Key Management Service (KMS), distributes they keywords in RDF format, and this allows them to be referenced through a unique web identifier.
+The identifier drastically simplifies the attribution of changes between versions of the keyword list.
+However, older editions of were stored and distributed using Excel spreadsheets.
+This provides an interesting juxtaposition between versioning the spreadsheet as mentioned in a previous chapter and tracking the keyword changes.
+Results from this activity enables data sets described with different versions of the GCMD Keywords to remain discoverable within the same system.
 
-Since there exists an implementation of the GCMD Keywords in RDF, the URIs can be used as references for the Attributes in the concept model.  As mentioned in Reference 8, in order for a data consumer to understand how to use a new version of an ontology, they need not only understand what concepts are new and what concepts are old, but also how to map the old ontology onto the new ontology.  The mapping then informs the migration of Keyword labeling of datasets between versions.
+Better quality data for the early versions of the keywords needs to be acquired before scripts can make mappings to newer releases.
+While easy to reference, the identifiers used to store the newer keywords are not immediately interpretable so further work needs to be done in order to form a mapping.
+Once the versions have been mapped, the workflow for publishing the change data follows the same process as in the previous chapter.

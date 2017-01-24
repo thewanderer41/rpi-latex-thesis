@@ -5,3 +5,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{FUTURE WORK}
+
+
+While much has been expounded upon to develop the framework to conduct version distance calculations, nothing has been said as to how such a calculation would work.
+The concept model specifically relates objects in a single direction from attributes in older versions to the corresponding one in newer editions.
+Once values are assigned to each of the change types, a flux-like calculation can be performed to characterize the change moving from one side to another.
+However, the resulting calculation may need to be more complex since the length of change logs is not standardized.
+For example, a long list of small changes could over-shadow a few significant modifications.
+Possible solutions could include sub-classing the change types to give a wider range of weights or normalizing the values across a range to give comparable results.
+
+Generating results for database and keyword versioning fall largely on applying attributes to its data since the remaining workflow remains the same across contexts.
