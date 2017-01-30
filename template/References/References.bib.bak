@@ -994,13 +994,27 @@ be in line with traditional close source development.},
   url    = {http://www.w3.org/TR/2015/REC-rdfa-core-20150317/},
 }
 
-@Misc{,
+@Misc{Herman2015,
   title  = {RDFa 1.1 Primer - Third Edition: Rich Structured Data Markup for Web Documents},
   month  = {March},
   year   = {2015},
   note   = {Accessed: December 24, 2016},
   editor = {Ivan Herman and Ben Adida and Manu Sporny and Mark Birbeck},
   url    = {http://www.w3.org/TR/2015/NOTE-rdfa-primer-20150317/},
+}
+
+@InBook{Bizer2013,
+  pages     = {17--32},
+  title     = {Deployment of RDFa, Microdata, and Microformats on the Web -- A Quantitative Analysis},
+  publisher = {Springer Berlin Heidelberg},
+  year      = {2013},
+  author    = {Bizer, Christian and Eckert, Kai and Meusel, Robert and M{\"u}hleisen, Hannes and Schuhmacher, Michael and V{\"o}lker, Johanna},
+  editor    = {Alani, Harith and Kagal, Lalana and Fokoue, Achille and Groth, Paul and Biemann, Chris and Parreira, Josiane Xavier and Aroyo, Lora and Noy, Natasha and Welty, Chris and Janowicz, Krzysztof},
+  address   = {Berlin, Heidelberg},
+  booktitle = {The Semantic Web -- ISWC 2013: 12th International Semantic Web Conference, Sydney, NSW, Australia, October 21-25, 2013, Proceedings, Part II},
+  doi       = {10.1007/978-3-642-41338-4_2},
+  isbn      = {978-3-642-41338-4},
+  url       = {http://dx.doi.org/10.1007/978-3-642-41338-4_2},
 }
 
 @Comment{jabref-meta: databaseType:bibtex;}

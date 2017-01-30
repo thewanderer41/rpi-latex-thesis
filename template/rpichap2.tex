@@ -6,6 +6,16 @@
 
 \chapter{PREVIOUS WORK}
 %\resetfootnote %this command starts footnote numbering with 1 again.
+
+The concept model builds on the forms of several different versioning models.
+The versioning model employed by NASA organizes its satellite data into homogeneous units \cite{Barkstrom2003}
+The implications and relationships between data objects can be quite intricate, but the model aims for a structure similar to the PROV Ontology with a small tightly knit set of objects that can express a wide variety of change relationships.
+The model deviates from the software versioning structure as often branches do not necessarily merge back with the master stream.
+When objects are added to a data set, it does not immediately seem necessary to link the to the older version since the new attribute does not act on the old object.
+However, it becomes necessary in order to maintain the history of the flow of changes to the particular work, resulting in the current version as reinforced by PAV
+PAV tracks explanations for changes with natural language text comments
+PAV directs its trace backwards, whereas this model seeks to communicate forward compatibility
+
 \section{Spreadsheets}
 
 In this project, spreadsheets were chosen for study as they resemble text-like data objects while still maintaining a level of complexities.
