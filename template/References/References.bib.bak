@@ -964,7 +964,7 @@ be in line with traditional close source development.},
   url      = {http://dx.doi.org/10.1007/s12145-011-0083-6},
 }
 
-@Article{Barkstrom2003,
+@Article{Barkstrom2003a,
   author   = {Barkstrom, Bruce R. and Hinke, Thomas H. and Gavali, Shradha and Smith, Warren and Seufzer, William J. and Hu, Chaumin and Cordner, David E.},
   title    = {Distributed Generation of NASA Earth Science Data Products},
   journal  = {Journal of Grid Computing},
@@ -1015,6 +1015,14 @@ be in line with traditional close source development.},
   doi       = {10.1007/978-3-642-41338-4_2},
   isbn      = {978-3-642-41338-4},
   url       = {http://dx.doi.org/10.1007/978-3-642-41338-4_2},
+}
+
+@InProceedings{Dummontier2016,
+  author    = {Michel Dummontier and Alasdair J. G. Gray and M. Scott Marshall},
+  title     = {The HCLS Community Profile: Describing DataData, VVersion, and Distributions},
+  booktitle = {Smart Descriptions \& Smarter Vocabularies},
+  year      = {2016},
+  url       = {https://www.w3.org/2016/11/sdsvoc/SDSVoc16_paper_3},
 }
 
 @Comment{jabref-meta: databaseType:bibtex;}
