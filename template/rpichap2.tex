@@ -7,6 +7,28 @@
 \chapter{PREVIOUS WORK}
 %\resetfootnote %this command starts footnote numbering with 1 again.
 
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.75]{figures/RCSCommitTree.png}
+	\caption{Commit history of an object in RCS with changes in the main line stored as back deltas and side branches stored as forward deltas.  Figure 5 in \cite{tichy1985rcs}}
+	\label{RCSTree}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.5]{figures/ProvO.png}
+	\caption{Diagram of the PROV Ontology.  Figure 1 from \cite{Belhajjame2013b}}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{adjustbox}{addcode={\begin{minipage}{\width}}{
+					\caption{Provenance graph of a Level 3 data product, showing the inter-relations between different data products in generating the final product.  Figure 2 from \cite{TILMES2011548}}\end{minipage}},rotate=90,center}
+		\includegraphics[scale=0.5]{figures/OzoneProvGraph.png}
+	\end{adjustbox}
+	\label{ProvGraph}
+\end{figure}
+
 The concept model builds on the forms of several different versioning models.
 The versioning model employed by NASA organizes its satellite data into homogeneous units \cite{Barkstrom2003}
 The implications and relationships between data objects can be quite intricate, but the model aims for a structure similar to the PROV Ontology with a small tightly knit set of objects that can express a wide variety of change relationships.
