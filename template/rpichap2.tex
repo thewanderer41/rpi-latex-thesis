@@ -7,17 +7,39 @@
 \chapter{PREVIOUS WORK}
 %\resetfootnote %this command starts footnote numbering with 1 again.
 
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.75]{figures/RCSCommitTree.png}
-	\caption{Commit history of an object in RCS with changes in the main line stored as back deltas and side branches stored as forward deltas.  Figure 5 in \cite{tichy1985rcs}}
-	\label{RCSTree}
-\end{figure}
+A number of instances in the literature mentioned previously uses the term versioning and provenance interchangeably.
+The version model introduced by Barkstrom in Figure \ref{NASALevels} to organize NASA's satellite data collection actually refers to a simplified workflow describes the provenance used to produce each level of data \cite{Barkstrom2003}.
+The diagram does not compare objects from the same level since changes to contributing components are only used as an indicator for version change.
+In actuality, objects have much more complicated development structures than the one dimensional lifespan indicated by the transition from Level 0 data to Level 3.
+The PROV Ontology model in Figure \ref{PROVO} outlines more explicit inter-relations between data objects, and it provides a new dimension with which to consider the interactions of data objects.
+More specifically, it outlines the explicit process of an agent performing an activity using an entity to produce a new entity.
+In the context of the level system, an agent (either a program or individual) performs a "Produce Instantaneous Fields" activity using "L1 Data" to produce "L2 Data."
+However, higher level data sets rarely use only one instance of lower level data.
+Calibration values may result from daily readings collected from another data set, but the generality of the ontology allows these relationships to be explicitly expressed.
+A more realistic provenance graph looks like the one in Figure \ref{ProvGraph} of an ozone indicator in which a Level 3 object results from the interrelation of multiple lower level products.
+An interesting observation of note is that Tilmes remarks in 2011 \cite{TILMES2011548}, 
+\begin{quotation}
+	Consider the relatively common case of the calibration table, which is an input to the L1B process, changing. Even though the version of the L2 or L3 software hasn’t changed, the data files in the whole process have been affected by the change in the calibration.
+\end{quotation}
+which Barkstrom already observes in 2003 \cite{Barkstrom2003}
+\begin{quotation}
+	If scientific data production were easy, instruments would
+	have stable calibrations and validation activities would discover no need for
+	corrections that vary with time. Unfortunately, validation invariably shows that
+	instrument calibrations drift and that algorithms need a better physical basis. Within a Data Set, we can think of a Data Set Version as a collection of files in
+	a Data Set that have a homogeneous Data Production Strategy. Within a Data
+	Set Version, we expect the code producing the files to be stable. We also expect
+	that the algorithm input coefficients will be stable as well. The intent of data
+	production is to produce data whose uncertainties are statistically similar under
+	similar conditions of observation.
+\end{quotation}
+indicating a basic view that despite eight years in difference, the continuation of software focused versioning resulting in difficulties of data oriented collections.
 
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.5]{figures/ProvO.png}
 	\caption{Diagram of the PROV Ontology.  Figure 1 from \cite{Belhajjame2013b}}
+	\label{PROVO}
 \end{figure}
 
 \begin{figure}
@@ -29,10 +51,18 @@
 	\label{ProvGraph}
 \end{figure}
 
-The concept model builds on the forms of several different versioning models.
-The versioning model employed by NASA organizes its satellite data into homogeneous units \cite{Barkstrom2003}
-The implications and relationships between data objects can be quite intricate, but the model aims for a structure similar to the PROV Ontology with a small tightly knit set of objects that can express a wide variety of change relationships.
-The model deviates from the software versioning structure as often branches do not necessarily merge back with the master stream.
+If the level system provides a length and provenance indicates a breadth of a workflow, a version system can be considered to provide a height to a total workflow.
+Refering back to the HCLS data model in Figure \ref{HCLSModel}, as objects within a workflow, as in Figure \ref{ProvGraph}, change versions, the structure of the workflow as well as the Summary Description of the final object, in this case the L3 Ozone product, remains the same.
+Instead, the new versions add layers like building blocks over the foundations of the original workflow structure.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.75]{figures/RCSCommitTree.png}
+	\caption{Commit history of an object in RCS with changes in the main line stored as back deltas and side branches stored as forward deltas.  Figure 5 in \cite{tichy1985rcs}}
+	\label{RCSTree}
+\end{figure}
+
+
 When objects are added to a data set, it does not immediately seem necessary to link the to the older version since the new attribute does not act on the old object.
 However, it becomes necessary in order to maintain the history of the flow of changes to the particular work, resulting in the current version as reinforced by PAV
 PAV tracks explanations for changes with natural language text comments
