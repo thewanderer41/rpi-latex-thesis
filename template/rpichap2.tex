@@ -52,10 +52,13 @@ indicating a basic view that despite eight years in difference, the continuation
 \end{figure}
 
 If the level system provides a length and provenance indicates a breadth of a workflow, a version system can be considered to provide a height to a total workflow.
-Refering back to the HCLS data model in Figure \ref{HCLSModel}, as objects within a workflow, as in Figure \ref{ProvGraph}, change versions, the structure of the workflow as well as the Summary Description of the final object, in this case the L3 Ozone product, remains the same.
+Referring back to the HCLS data model terminology in Figure \ref{HCLSModel}, as objects within a workflow, as in Figure \ref{ProvGraph}, change versions, the structure of the workflow as well as the Summary Description of the final object, in this case the L3 Ozone product, remains the same.
 Instead, the new versions add layers like building blocks over the foundations of the original workflow structure.
+Version control systems then provide the mortar linking the blocks together to give the lineage capture procedure a solid structure.
+The PAV Ontology provides a means to track versioning information through linked data by introducing \textit{pav:version} to cite versions and \textit{pav:previousVersion} to link them together in order \cite{Ciccarese2013}.
+Of note is the retrospective nature \cite{DCMI2012}
 
-\begin{figure}
+\begin{figure}[b]
 	\centering
 	\includegraphics[scale=0.75]{figures/RCSCommitTree.png}
 	\caption{Commit history of an object in RCS with changes in the main line stored as back deltas and side branches stored as forward deltas.  Figure 5 in \cite{tichy1985rcs}}

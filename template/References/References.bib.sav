@@ -1040,6 +1040,16 @@ be in line with traditional close source development.},
   url      = {http://dx.doi.org/10.1186/2041-1480-4-37},
 }
 
+@Electronic{DCMI2012,
+  month        = jun,
+  year         = {2012},
+  title        = {DCMI Metadata Terms},
+  organization = {DCMI Usage Board},
+  note         = {Accessed: February 8, 2017},
+  url          = {http://dublincore.org/documents/2012/06/14/dcmi-terms/},
+  comment      = {DCMI Recommendation},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}
 
 @Comment{jabref-meta: groupstree:
