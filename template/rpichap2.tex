@@ -8,7 +8,8 @@
 %\resetfootnote %this command starts footnote numbering with 1 again.
 
 A number of instances in the literature mentioned previously uses the term versioning and provenance interchangeably.
-The version model introduced by Barkstrom in Figure \ref{NASALevels} to organize NASA's satellite data collection actually refers to a simplified workflow describes the provenance used to produce each level of data \cite{Barkstrom2003}.
+Mayernik et al. also notice a similar phenomenon although they use the term lineage instead of versioning \cite{MatthewS.Mayernik201312-039}.
+The version model introduced by Barkstrom in Figure \ref{NASALevels} to organize NASA's satellite data collection actually refers to a simplified workflow describing the provenance used to produce each level of data \cite{Barkstrom2003}.
 The diagram does not compare objects from the same level since changes to contributing components are only used as an indicator for version change.
 In actuality, objects have much more complicated development structures than the one dimensional lifespan indicated by the transition from Level 0 data to Level 3.
 The PROV Ontology model in Figure \ref{PROVO} outlines more explicit inter-relations between data objects, and it provides a new dimension with which to consider the interactions of data objects.
@@ -57,12 +58,15 @@ Instead, the new versions add layers like building blocks over the foundations o
 Version control systems then provide the mortar linking the blocks together to give the lineage capture procedure a solid structure.
 The PAV Ontology provides a means to track versioning information through linked data by introducing \textit{pav:version} to cite versions and \textit{pav:previousVersion} to link them together in order \cite{Ciccarese2013}.
 It does so in comparison to the Dublin Core concept \textit{dc:isVersionOf} which records, "Changes in version imply substantive changes in content rather than differences in format" \cite{DCMI2012}.
-PAV covers the case where new versions do not have to be substantive but can still be alternate editions of the original object
+PAV argues that a new concept becomes necessary to cover cases where new versions do not have to be substantive but can still be alternate editions of the original object.
 Of note is the retrospective nature of the PAV ontology and PROV-O since it places primary emphasis on the most recent edition of an object.
 Figure \ref{RCSTree}, shows how RCS stores older versions as back deltas and branches as forward differences.
 The retrospective nature of back deltas results from development focus on the latest version, in this case 2.2.
 However, the forward differences provide a method to migrate from version 1.3 to the front of the branch.
 This characterizes the difference between a focus on data tracking, like that performed by provenance, to data migration, which users must undergo in order to consume the latest version.
+Mayernik et al. also find that, "Prospective records document a process that must be followed to generate a given class of products whereas retrospective records document a process that has already been executed" \cite{MatthewS.Mayernik201312-039}.
+Retrospective provenance and versioning provides the ability to ensure data trustability and data quality among resources.
+However, researchers must follow a prospective versioning record in order to keep their research up to date.
 
 \begin{figure}[b]
 	\centering
@@ -71,11 +75,14 @@ This characterizes the difference between a focus on data tracking, like that pe
 	\label{RCSTree}
 \end{figure}
 
-A version is something that cannot be considered an entirely different or new work. --> Business layer Duerr
-When objects are added to a data set, it does not immediately seem necessary to link the to the older version since the new attribute does not act on the old object.
-However, it becomes necessary in order to maintain the history of the flow of changes to the particular work, resulting in the current version as reinforced by PAV
-PAV tracks explanations for changes with natural language text comments
-PAV directs its trace backwards, whereas this model seeks to communicate forward compatibility
+To bring the discussion to an actual application, the GCMD released version 8.4 of their keywords, adding a slew of new values and modifying a select few \cite{Stevens2016}.
+At the time of release, many data repositories can be currently assumed to be using the previous or older versions of the keywords.
+As the taxonomy is not a class-based ontology, changes to the keywords have significant implications to the semantics of a data set described by those keywords.
+A data producer wishing to expose their data sets using the new version of the GCMD Keywords must use a prospective method to translate their current descriptions to the new version.
+By comparison, the GCMD would use a retrospective measure to record the changes made to their keywords.
+PAV would not be able to address the prospective problem as a result of it is, "a lightweight vocabulary, for capturing “just enough” descriptions essential for web resources representing digitized knowledge" \cite{Ciccarese2013}.
+A detailed transition from GCMD Keywords 8.3 to 8.4 would significantly undermine the lightweight nature of the vocabulary.
+GCMD does provide a short summary of changes made in a version, but this would come in the form of text rather than structured data.
 
 \section{Spreadsheets}
 

@@ -1050,6 +1050,25 @@ be in line with traditional close source development.},
   comment      = {DCMI Recommendation},
 }
 
+@Article{MatthewS.Mayernik201312-039,
+  author  = {Matthew S. Mayernik and Tim DiLauro and Ruth Duerr and Elliot Metsger and Anne E. Thessen and G. Sayeed Choudhury},
+  title   = {Data Conservancy Provenance, Context, and Lineage Services: Key Components for Data Preservation and Curation},
+  journal = {Data Science Journal},
+  year    = {2013},
+  volume  = {12},
+  pages   = {158-171},
+  doi     = {10.2481/dsj.12-039},
+}
+
+@Misc{Stevens2016,
+  author = {Tyler Stevens},
+  title  = {NASA GCMD KKeyword Version 8.4 Released},
+  month  = aug,
+  year   = {2016},
+  note   = {Accessed: February 10, 2017},
+  url    = {https://wiki.earthdata.nasa.gov/display/CMR/NASA+GCMD+Keywords+Version+8.4+Released},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}
 
 @Comment{jabref-meta: groupstree:
