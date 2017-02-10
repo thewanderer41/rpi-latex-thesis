@@ -56,7 +56,13 @@ Referring back to the HCLS data model terminology in Figure \ref{HCLSModel}, as 
 Instead, the new versions add layers like building blocks over the foundations of the original workflow structure.
 Version control systems then provide the mortar linking the blocks together to give the lineage capture procedure a solid structure.
 The PAV Ontology provides a means to track versioning information through linked data by introducing \textit{pav:version} to cite versions and \textit{pav:previousVersion} to link them together in order \cite{Ciccarese2013}.
-Of note is the retrospective nature \cite{DCMI2012}
+It does so in comparison to the Dublin Core concept \textit{dc:isVersionOf} which records, "Changes in version imply substantive changes in content rather than differences in format" \cite{DCMI2012}.
+PAV covers the case where new versions do not have to be substantive but can still be alternate editions of the original object
+Of note is the retrospective nature of the PAV ontology and PROV-O since it places primary emphasis on the most recent edition of an object.
+Figure \ref{RCSTree}, shows how RCS stores older versions as back deltas and branches as forward differences.
+The retrospective nature of back deltas results from development focus on the latest version, in this case 2.2.
+However, the forward differences provide a method to migrate from version 1.3 to the front of the branch.
+This characterizes the difference between a focus on data tracking, like that performed by provenance, to data migration, which users must undergo in order to consume the latest version.
 
 \begin{figure}[b]
 	\centering
@@ -65,7 +71,7 @@ Of note is the retrospective nature \cite{DCMI2012}
 	\label{RCSTree}
 \end{figure}
 
-
+A version is something that cannot be considered an entirely different or new work. --> Business layer Duerr
 When objects are added to a data set, it does not immediately seem necessary to link the to the older version since the new attribute does not act on the old object.
 However, it becomes necessary in order to maintain the history of the flow of changes to the particular work, resulting in the current version as reinforced by PAV
 PAV tracks explanations for changes with natural language text comments
