@@ -4,8 +4,42 @@
 %                                                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{GCMD KEYWORD VERSIONING}
+\chapter{ONTOLOGY VERSIONING}
 
+\section{Sea Ice Ontology}
+
+A great many annotations were made to Version 2 of the Sea Ice Ontology.
+Maintaining those notes after migration to the new version would provide great value to the project.
+From the color code in Table \ref{ColorTable}, yellow and blue changes correspond directly to Modification and Addition transitions, respectively.
+In theory, the green concepts would also qualify for a Modify categorization since they would likely have a new URI, meaning that an attribute exists between two versions and something has changed.
+However, this would result in a product that is at least the size of the union of the two versions, greatly hindering the scalability of the approach.
+The obvious solution would be to leave the attributes unlinked, as in the approach with the spreadsheet application where no change was detected.
+The Invalidation change would cover concepts which do not have a mapping into Version 3.
+Therefore, the remaining transition types, purple and red require more specific attention than a usual Modify.
+
+\begin{table}
+	\newcommand*{\thead}[1]{\multicolumn{1}{|c|}{\bfseries #1}}
+	\centering
+	\begin{tabular}{ | c | l |}
+		\hline
+		\textbf{Color} & \thead{Description} \\
+		\hline
+		Purple & Moved since the previous version of the ontology.\\
+		\hline
+		Green & Still the same.\\
+		\hline
+		Yellow & In the same place; but perhaps the name or definition have changed.\\
+		\hline
+		Red & Suggest changes to be made to both the ontologies and the nomenclature.\\
+		\hline
+		Blue & New concepts to be added to the ontologies.\\
+		\hline
+	\end{tabular}
+	\label{ColorTable}
+	\caption{Color code used by the concept maps made by Ruth Duerr during the planning phase of the Sea Ice Ontology's development.}
+\end{table}
+
+\section{GCMD Keywords}
 GCMD Keywords do not qualify as a standard web ontology since it does not constitute a class hierarchy.
 As a result, the addition, removal, or modification of any term within the keywords has a significant impact on the semantics of using a keyword to describe a data set.
 More recent editions of the keywords, available through the Key Management Service (KMS), distributes they keywords in RDF format, and this allows them to be referenced through a unique web identifier.

@@ -173,6 +173,22 @@ However, the uncertain landscape of web services means that full ontology mappin
 Advances in ontology change detection have made tools which automatically generate mappings between versions of an ontology available \cite{Hartung201315}.
 However, in this project, the focus remains on improving the description of these mappings to provide not only descriptions but also explanations for the transition.
 
+The Semantic Sea Ice Interoperability Initiative (SSIII) is a project combining the efforts of the National Snow and Ice Data Center (NSIDC) and the Rensselaer Polytechnic Institution (RPI) Tetherless World Constellation \cite{SSIII}.
+In their initiative, they developed an ontology to describe a core set of sea ice terms \cite{SSIIIOnto}.
+They have made available the second version of their ontology.
+The next edition of the ontology follows some adjusted best practices to improve modularity and coverage of the sea ice vocabulary.
+The new formulation would require the movement and addition of new concepts as well as the modification of other ontological entities.
+As of this writing, the ontology does not have a method to provide mappings between versions of the ontology even though the concepts are managed through GitHub.
+Currently, Ruth Duerr has developed a color coded visualization of the new ontology's layout using a CMap seen in Figure \ref{WaterIce}.
+The maps use a five color system with green representing no change, purple showing a moved concept, yellow coding an unmoved entity with changes to its name or definition, red showing a change to the ontology or nomenclature, and blue representing an entirely new concept.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1]{figures/NaturalIceinWater.png}
+	\caption{Concept map created by Ruth Duerr to organize the Sea Ice Ontology's Version 3 development.}
+	\label{WaterIce}
+\end{figure}
+
 The Global Change Master Directory (GCMD) is a metadata repository used by NASA to story records of its available data sets \cite{Miled:2001:GCM:372202.372324}.
 It employs a keyword ontology to search for Earth science data in NASA data sets.
 These keywords tag and label datasets into strictly defined categories in order to make them more discoverable \cite{GCMDKey}.

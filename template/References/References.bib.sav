@@ -1069,6 +1069,20 @@ be in line with traditional close source development.},
   url    = {https://wiki.earthdata.nasa.gov/display/CMR/NASA+GCMD+Keywords+Version+8.4+Released},
 }
 
+@Misc{SSIII,
+  title = {Overview},
+  note  = {Accessed: February 14, 2017},
+  owner = {National Snow & Ice Data Center},
+  url   = {https://nsidc.org/ssiii/},
+}
+
+@Electronic{SSIIIOnto,
+  title        = {SSIII Ontologies},
+  organization = {National Snow \& Ice Data Center},
+  note         = {Accessed: February 14, 2017},
+  url          = {https://nsidc.org/ssiii/ontology.html},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}
 
 @Comment{jabref-meta: groupstree:
