@@ -4,7 +4,7 @@
 %                                                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{VERSIONING SPREADSHEETS}\label{ch:spreadsheet}
+\chapter{VERSIONING TABULAR DATA}\label{ch:spreadsheet}
 
 The initial goal of the research sought to develop the method of calculating provenance distance between two data objects.
 The value in this measure lies in determining whether similarity of the activities responsible for producing the objects provides context for reproducibility and result comparisons.
@@ -50,6 +50,23 @@ In addition, similar text entries appear close together, such as pairing column 
 However, this does not follow the order in which objects appear to encode them into the model, meaning that relationships must often be explicitly defined.
 The resulting source thus directly defines the entire relationship of the entries and objects into the graph without using any of the human readable parts of the log.
 However, this means that RDFa parsers can directly extract the full linked data graph similar to the one in Figure \ref{CopperGraphVerGraph}.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.30]{figures/NobleVersion.png}
+	\caption{Some initial entries from versions 1 and 2 of the Noble Gas dataset}
+	\label{NobleGraph1}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{adjustbox}{addcode={\begin{minipage}{\width}}{
+					\caption{Versioning Graph representing the linked data graph with selected entries of additions, invalidations, and modifications after the publication of the third version. 
+			}\end{minipage}},rotate=90,center}
+		\includegraphics[scale=0.5]{figures/NobleVersion2.png}%
+	\end{adjustbox}
+	\label{NobleGraph2}
+\end{figure}
 
 \begin{figure}
 	\centering
