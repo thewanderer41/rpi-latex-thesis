@@ -6,6 +6,21 @@
 
 \chapter{CONCEPTUAL MODEL}\label{ch:model}
 
+The goal of dataset versioning is to expose the relationships between versions of a dataset.
+To do this, we create a mapping between an original set and a new dataset.
+As mentioned previously, the operations conducted by data versioning systems boil down to primarily three operations: addition, invalidation, and modification.
+Since these operations are so prevalent, we use these three procedures to characterize the relationships between versions.
+A modification is straight forward to model because it maps together two attributes of the version that exist, but addition and invalidation are a little different.
+Because the item doesn't exist in one version or the other for addition and invalidation, it forms a '0 to 1' relationship between the attributes.
+This causes a problem conceptually because without a concept on one end, there is nothing to connect on one end.
+The chosen solution was to use the version concept as the anchor in place of the non-existant attribute.
+This observation leads to the structure of the conceptual model used in this dissertation.
+The construction of the relationship decides the kind of change that is occurring.
+It then becomes easier to identify which change is occurring based off of whether attributes exist or not in which version.
+
+From the discussion above, three kinds of objects appear: versions, attributes, and change.
+
+
 The conceptual model used within this thesis is built around the expression of three core versioning operations: addition, invalidation, and modification.  These three activities can be represented by interacting with three types of concepts: versions, attributes, and changes.  Versions represent the data entities being compared.  These could be two different editions of a book or versions of software.  It is important to understand that a version is an abstraction as it can be represented by multiple physical files.  In the sections that follow, operations will only consider the interaction between two versions and will be explained later in the chapter.  Versions then contain attributes representing a quantity being modified.  Specifically for tabular data, attributes would correspond to an identifier that refers to particular rows or columns within the data.  Attributes of the two versions are then connected by a change.  This link functions as a very general concept which can be subclassed into more informative types such as unit changes, improving the expressiveness of the model beyond PROV's revisionOf concept.
 
 \section{ADDITION}
