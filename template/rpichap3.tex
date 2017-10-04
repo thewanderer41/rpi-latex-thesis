@@ -7,6 +7,7 @@
 \chapter{CONCEPTUAL MODEL}\label{ch:model}
 
 The goal of dataset versioning is to expose the relationships between versions of a dataset.
+To do this, the concept model relates three kinds of objects, versions, attributes, and changes, with three kinds of changes, addition, invalidation, and modification.
 To do this, we create a mapping between an original set and a new dataset.
 As mentioned previously, the operations conducted by data versioning systems boil down to primarily three operations: addition, invalidation, and modification.
 Since these operations are so prevalent, we use these three procedures to characterize the relationships between versions.
@@ -17,11 +18,23 @@ The chosen solution was to use the version concept as the anchor in place of the
 This observation leads to the structure of the conceptual model used in this dissertation.
 The construction of the relationship decides the kind of change that is occurring.
 It then becomes easier to identify which change is occurring based off of whether attributes exist or not in which version.
+In addition, while the figures in this chapter only show the attribute relationships as 0 to 1, 1 to 0, and 1 to 1, it is more valid to consider the relationships as 0 to X, X to 0, and X to Y in cardinality.
+A modification may change a single location attribute into two separate latitude and longitude entries, for example.
 
 From the discussion above, three kinds of objects appear: versions, attributes, and change.
+That is to say we cannot properly represent versioning with versions alone.
+The changes which we are interested in result from comparing the parts or attributes of the versions.
+The Dublin Core Term hasPart provides a sufficient property to relate versions and their attributes together.
+An observation that will not be further explored in this research is that attributes can also be versions.
+For example, when comparing two revisions of a dataset, the attributes would be data files.
+However, these files will be versions of each other, and their attributes will be, if tabular data, the rows of each file.
+This nesting speaks towards the granularity by which an individual desires to perform version, but also demonstrates the challenge of using major and minor numbers to capture version change with the current dot-decimal identifier scheme.
 
-
-The conceptual model used within this thesis is built around the expression of three core versioning operations: addition, invalidation, and modification.  These three activities can be represented by interacting with three types of concepts: versions, attributes, and changes.  Versions represent the data entities being compared.  These could be two different editions of a book or versions of software.  It is important to understand that a version is an abstraction as it can be represented by multiple physical files.  In the sections that follow, operations will only consider the interaction between two versions and will be explained later in the chapter.  Versions then contain attributes representing a quantity being modified.  Specifically for tabular data, attributes would correspond to an identifier that refers to particular rows or columns within the data.  Attributes of the two versions are then connected by a change.  This link functions as a very general concept which can be subclassed into more informative types such as unit changes, improving the expressiveness of the model beyond PROV's revisionOf concept.
+An obvious concern about using this method of mapping, of finding attributes that are common and uncommon, between two or more objects is not unique two versioning.
+In order to ensure that the relationships being exposed by the mapping is valid, we must go back to the definition of versions.
+By requiring that the objects to have common provenance, we establish that performing a comparison to make a mapping compares related objects and information.
+The second requirements, that the objects share the same workflow step, establishes that when we do make a mapping, that the attributes actually are the same.
+This also addresses the possibility that we are comparing objects that have different purposes at separate points in a workflow, but share provenance as a result.
 
 \section{ADDITION}
 
