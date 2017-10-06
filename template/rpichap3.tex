@@ -36,11 +36,46 @@ By requiring that the objects to have common provenance, we establish that perfo
 The second requirements, that the objects share the same workflow step, establishes that when we do make a mapping, that the attributes actually are the same.
 This also addresses the possibility that we are comparing objects that have different purposes at separate points in a workflow, but share provenance as a result.
 
+\section{MODIFICATION}
+
+The simplest operation to model is Modification because it has no missing parts.
+It maps a change from one attribute of version one to its corresponding attribute in version two.
+Notice that the model captures neither the change's magnitude, nor the values of the attributes involved in the change.
+These are not included because too much domain knowledge will be required to interpret the significance of the value.
+In addition, the model would essentially begin storing a copy of the dataset, leading to space and redundancy concerns.
+If an application needs to include this information, they can be added as a property of the attributes involved.
+Simply knowing that the attribute has changed provides valuable information to identify the relationship between the two attributes from a versioning standpoint.
+Sometimes it may be necessary to distinguish between modification changes.
+For this reason, the change concept in this relationship may be sub-classed to differentiate between different kinds of change that map one attribute to another.
+For example, in order to distinguish a modification in which the units of a measurement changes, a unit change concept, which sub-classes the modify change concept, can be used to connect the attributes from two different version.
+
+\begin{figure}
+	\centering
+	\vspace{0.0in} % normally the command here would be \includegraphics
+	%	\includegraphics{figures/Addition.png}
+	\begin{tikzpicture}[every node/.style={draw, rectangle}]
+	\begin{scope}[node distance=20mm and 20mm]
+	\node (c) [scale=1.25] at (1,0) {Change M};
+	\node (1) [above left=of c, scale=1.25] {Version 1};
+	\node (2) [above right=of c, scale=1.25] {Version 2};
+	\node (a1) [below =of 1, scale=1.25] {Attribute 1};
+	\node (a2) [below =of 2, scale=1.25] {Attribute 2};
+	
+	\draw [line width=2pt,->] (a1) -- (c);
+	\draw [line width=2pt,->] (c) -- (a2);
+	\draw [line width=2pt, ->] (1) -- (a1);
+	\draw [line width=2pt, ->] (2) -- (a2);
+	\end{scope}
+	\end{tikzpicture}
+	\caption{Model of the relationships between Versions 1 and 2 when modifying Attribute 1 from Version 1 as a result of Change M, resulting in Attribute 2 from Version 2}
+	\label{ModificationFig}  % the \label command comes AFTER the caption
+\end{figure}
+
 \section{ADDITION}
 
 When a change adds a new attribute to a version, it only needs to refer to version two and its corresponding attribute.  The reasoning should be fairly obvious as the attribute never existed in version one, and therefore, there is nothing to refer to and no need to form a relationship between the change and version one.  However, by linking the addition change to version one, we address a difficulty with comparing provenance graphs.  When two data objects have identical structures, it is difficult to determine what time the objects were added to the dataset and which version they belong to.  As a result, determining the compatability of the two objects becomes difficult.  The change contributions to the dataset evolution appears naturally using this construction. The resulting model can be seen in Figure~\ref{AdditionFig}.  Some relationships are specifically left out, such as that between Change A and Version 2, to not confuse identification of other types of changes.  The relationship between Change A and Version 2 can still be implied from Attribute 2.
 
-\begin{figure}[t]
+\begin{figure}[b]
 	\centering
 	\vspace{0.0in} % normally the command here would be \includegraphics
 %	\includegraphics{figures/Addition.png}
@@ -59,7 +94,6 @@ When a change adds a new attribute to a version, it only needs to refer to versi
 	\caption{Model of the relationships between Versions 1 and 2 when adding an Attribute 2 to Version 2 as a result of Change A}
 	\label{AdditionFig}  % the \label command comes AFTER the caption
 \end{figure}
-
 
 
 \section{INVALIDATION}
@@ -89,31 +123,6 @@ From Figure \ref{AdditionFig}, we can see the confusion that could result from r
 \end{figure}
 
 
-\section{MODIFICATION}
-
-The final operation is Modification, and it maps a change from one attribute from version one to its corresponding attribute in version two.  The particular type of change in this case is purposely left out in order to allow data producers to subclass and customize the resulting graph to properly reflect the versioning that they desire.
-
-\begin{figure}[b]
-	\centering
-	\vspace{0.0in} % normally the command here would be \includegraphics
-	%	\includegraphics{figures/Addition.png}
-	\begin{tikzpicture}[every node/.style={draw, rectangle}]
-		\begin{scope}[node distance=20mm and 20mm]
-			\node (c) [scale=1.25] at (1,0) {Change M};
-			\node (1) [above left=of c, scale=1.25] {Version 1};
-			\node (2) [above right=of c, scale=1.25] {Version 2};
-			\node (a1) [below =of 1, scale=1.25] {Attribute 1};
-			\node (a2) [below =of 2, scale=1.25] {Attribute 2};
-
-			\draw [line width=2pt,->] (a1) -- (c);
-			\draw [line width=2pt,->] (c) -- (a2);
-			\draw [line width=2pt, ->] (1) -- (a1);
-			\draw [line width=2pt, ->] (2) -- (a2);
-		\end{scope}
-	\end{tikzpicture}
-	\caption{Model of the relationships between Versions 1 and 2 when modifying Attribute 1 from Version 1 as a result of Change M, resulting in Attribute 2 from Version 2}
-	\label{ModificationFig}  % the \label command comes AFTER the caption
-\end{figure}
 
 \section{MULTIPLE LINKED VERSIONS}
 
