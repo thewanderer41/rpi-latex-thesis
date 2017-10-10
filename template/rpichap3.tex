@@ -40,6 +40,10 @@ This also addresses the possibility that we are comparing objects that have diff
 
 The simplest operation to model is Modification because it has no missing parts.
 It maps a change from one attribute of version one to its corresponding attribute in version two.
+In Figure \ref{ModificationFig}, a versioning comparison is being performed between two objects, Version 1 and Version 2.
+Each version has an attribute, Attribute 1 and Attribute 2, respectively.
+Finally, a change object connects the two attributes, denoting that the values described by the attribute are different.
+
 Notice that the model captures neither the change's magnitude, nor the values of the attributes involved in the change.
 These are not included because too much domain knowledge will be required to interpret the significance of the value.
 In addition, the model would essentially begin storing a copy of the dataset, leading to space and redundancy concerns.
@@ -48,6 +52,8 @@ Simply knowing that the attribute has changed provides valuable information to i
 Sometimes it may be necessary to distinguish between modification changes.
 For this reason, the change concept in this relationship may be sub-classed to differentiate between different kinds of change that map one attribute to another.
 For example, in order to distinguish a modification in which the units of a measurement changes, a unit change concept, which sub-classes the modify change concept, can be used to connect the attributes from two different version.
+
+
 
 \begin{figure}
 	\centering
@@ -72,6 +78,9 @@ For example, in order to distinguish a modification in which the units of a meas
 \end{figure}
 
 \section{ADDITION}
+
+When discussing additions, a new attribute is added to version one, leading to its appearance as an attribute in version two.
+In this case, it makes sense that since the attribute is not in version one, then it should not appear on that version's side in the model.
 
 When a change adds a new attribute to a version, it only needs to refer to version two and its corresponding attribute.  The reasoning should be fairly obvious as the attribute never existed in version one, and therefore, there is nothing to refer to and no need to form a relationship between the change and version one.  However, by linking the addition change to version one, we address a difficulty with comparing provenance graphs.  When two data objects have identical structures, it is difficult to determine what time the objects were added to the dataset and which version they belong to.  As a result, determining the compatability of the two objects becomes difficult.  The change contributions to the dataset evolution appears naturally using this construction. The resulting model can be seen in Figure~\ref{AdditionFig}.  Some relationships are specifically left out, such as that between Change A and Version 2, to not confuse identification of other types of changes.  The relationship between Change A and Version 2 can still be implied from Attribute 2.
 
