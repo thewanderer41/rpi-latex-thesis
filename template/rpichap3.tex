@@ -98,6 +98,14 @@ When a change adds a new attribute to a version, it only needs to refer to versi
 
 \section{INVALIDATION}
 
+The invalidation relationship has a missing attribute object on the other side of the relation, contrary to the addition construction.
+As seen in Figure \ref{InvalidationFig}, the invalidation change concept matches to the Version 2 object.
+Just like in addition model, this construction maintains a link between the two version objects.
+However, in this case, it makes more conceptual sense because Version 2 invalidates Attribute 1 by omitting it.
+
+Related concepts include Schema.org's RemoveAction and PROV's Invalidation.
+PROV defines the property as the "start of the destruction, cessation, or expiry of an existing entity by an activity," but since nothing actively creates versioning relationships, this property is inappropriate for this application \cite{Lebo2013}.
+
 The Invalidation operation corresponds to the delete concept found in other applications.  The choice of invalidation over delete results from the policy that, in versioning, data should never be deleted.  In practicality, this may not be particularly feasible due to space limitations and relative validity.  In either case, the change invalidates an attribute in version one, resulting in version two.  Unlike the Addition operation, Invalidation forms a clear relationship between both versions, which can be seen in Figure \ref{InvalidationFig}.  Notice again that since Attribute 1 no longer exists in Version 2, there is no corresponding Attribute 2 to refer to.
 
 From Figure \ref{AdditionFig}, we can see the confusion that could result from requiring explicit relationships between versions and changes in both the Addition and Invalidation operations.  Linking Change A to Version 2 would create a duplicate connection and provides a mechanism to identify when items specifically enter or leave a version.
