@@ -84,7 +84,7 @@ In this case, it makes sense that since the attribute is not in version one, the
 
 When a change adds a new attribute to a version, it only needs to refer to version two and its corresponding attribute.  The reasoning should be fairly obvious as the attribute never existed in version one, and therefore, there is nothing to refer to and no need to form a relationship between the change and version one.  However, by linking the addition change to version one, we address a difficulty with comparing provenance graphs.  When two data objects have identical structures, it is difficult to determine what time the objects were added to the dataset and which version they belong to.  As a result, determining the compatability of the two objects becomes difficult.  The change contributions to the dataset evolution appears naturally using this construction. The resulting model can be seen in Figure~\ref{AdditionFig}.  Some relationships are specifically left out, such as that between Change A and Version 2, to not confuse identification of other types of changes.  The relationship between Change A and Version 2 can still be implied from Attribute 2.
 
-\begin{figure}[b]
+\begin{figure}
 	\centering
 	\vspace{0.0in} % normally the command here would be \includegraphics
 %	\includegraphics{figures/Addition.png}
@@ -108,18 +108,24 @@ When a change adds a new attribute to a version, it only needs to refer to versi
 \section{INVALIDATION}
 
 The invalidation relationship has a missing attribute object on the other side of the relation, contrary to the addition construction.
+As a result of the invalidation, an attribute no longer exists in the following version.
 As seen in Figure \ref{InvalidationFig}, the invalidation change concept matches to the Version 2 object.
 Just like in addition model, this construction maintains a link between the two version objects.
 However, in this case, it makes more conceptual sense because Version 2 invalidates Attribute 1 by omitting it.
 
-Related concepts include Schema.org's RemoveAction and PROV's Invalidation.
+Related concepts include Schema.org's DeleteAction and PROV's Invalidation.
 PROV defines the property as the "start of the destruction, cessation, or expiry of an existing entity by an activity," but since nothing actively creates versioning relationships, this property is inappropriate for this application \cite{Lebo2013}.
+There is no activity to credit with removing the property in this comparison, and the absence results from a state-based property.
+Schema.org defines the DeleteAction as, "The act of editing a recipient by removing one of its objects," \cite{SchemaRem}.
+This definition assumes that an actor will perform an action upon an object or collection, removing one of its members, producing a new result.
+This follows the provenance mentality, but when versioning, the resulting object has already been created.
+Cases exist, as shown in Chapter 4, where an attribute is not included in a new version, thus indicating that it has been removed.
+However, the most important point of contention in this definition is the idea of removal and deletion.
+Although an object is no longer valid, it does not mean the data has been deleted.
+Invalid data often gets removed, but this is not always the case.
+As a result, naming the concept invalidation is more general and inclusive.
 
-The Invalidation operation corresponds to the delete concept found in other applications.  The choice of invalidation over delete results from the policy that, in versioning, data should never be deleted.  In practicality, this may not be particularly feasible due to space limitations and relative validity.  In either case, the change invalidates an attribute in version one, resulting in version two.  Unlike the Addition operation, Invalidation forms a clear relationship between both versions, which can be seen in Figure \ref{InvalidationFig}.  Notice again that since Attribute 1 no longer exists in Version 2, there is no corresponding Attribute 2 to refer to.
-
-From Figure \ref{AdditionFig}, we can see the confusion that could result from requiring explicit relationships between versions and changes in both the Addition and Invalidation operations.  Linking Change A to Version 2 would create a duplicate connection and provides a mechanism to identify when items specifically enter or leave a version.
-
-\begin{figure}[t]
+\begin{figure}
 	\centering
 	\vspace{0.0in} % normally the command here would be \includegraphics
 	%	\includegraphics{figures/Addition.png}
