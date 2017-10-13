@@ -47,13 +47,21 @@ Finally, a change object connects the two attributes, denoting that the values d
 Notice that the model captures neither the change's magnitude, nor the values of the attributes involved in the change.
 These are not included because too much domain knowledge will be required to interpret the significance of the value.
 In addition, the model would essentially begin storing a copy of the dataset, leading to space and redundancy concerns.
-If an application needs to include this information, they can be added as a property of the attributes involved.
+If an application needs to include this information, they can be added as a property of the attributes involved, but this is outside the scope of this thesis.
 Simply knowing that the attribute has changed provides valuable information to identify the relationship between the two attributes from a versioning standpoint.
 Sometimes it may be necessary to distinguish between modification changes.
 For this reason, the change concept in this relationship may be sub-classed to differentiate between different kinds of change that map one attribute to another.
 For example, in order to distinguish a modification in which the units of a measurement changes, a unit change concept, which sub-classes the modify change concept, can be used to connect the attributes from two different version.
 
-
+The modification relationship is simple enough to understand, and a couple of well developed alternatives exist.
+Schema.org supplies a subclass of the UpdateAction labeled ReplaceAction.
+This concept has two properties, replacee and replacer which indicates that a new object replaces an old one.
+This provides a structure very similar to the one found in Figure \ref{ModificationFig} with the only difference being the relationship between Attribute 1 and Change M reversed.
+While this difference is subtle, it demonstrates a disagreement in view as to how change works in a system.
+Schema.org's perspective looks at a single replacement action in isolation and models that quite well.
+However, this versioning model views change as a quantity that flows through attributes from one version to another.
+Unlike ReplaceAction, ModifyChange does not attribute changes to an actor, but rather it acts as a medium to convey change between objects.
+PROV's 
 
 \begin{figure}
 	\centering
@@ -144,9 +152,3 @@ As a result, naming the concept invalidation is more general and inclusive.
 	\caption{Model of the relationships between Versions 1 and 2 when invalidating Attribute 1 from Version 1 as a result of Change I}
 	\label{InvalidationFig}  % the \label command comes AFTER the caption
 \end{figure}
-
-
-
-\section{MULTIPLE LINKED VERSIONS}
-
-Using the construction outlined in the previous three sections, many changes can be compiled together into a graph in a changelog.  After all additions, invalidations, and modifications have been compiled into a single graph, a complete mapping from version one to version two may be developed.  The orientation of the relationships in the graph allows a flow to be created from attributes in version one to corresponding attributes in version two.  Taking version two and performing the same graph construction to a version three results in not only a flow from version two to version three, but also from version one to version three.  As a result, the flow can be used to construct a mapping from version one to version three or any future version.

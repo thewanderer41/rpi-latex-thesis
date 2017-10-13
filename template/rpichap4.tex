@@ -68,6 +68,10 @@ However, this means that RDFa parsers can directly extract the full linked data 
 	\label{NobleGraph2}
 \end{figure}
 
+\section{MULTIPLE LINKED VERSIONS}
+
+Using the construction outlined in the previous three sections, many changes can be compiled together into a graph in a changelog.  After all additions, invalidations, and modifications have been compiled into a single graph, a complete mapping from version one to version two may be developed.  The orientation of the relationships in the graph allows a flow to be created from attributes in version one to corresponding attributes in version two.  Taking version two and performing the same graph construction to a version three results in not only a flow from version two to version three, but also from version one to version three.  As a result, the flow can be used to construct a mapping from version one to version three or any future version.
+
 \begin{figure}
 	\centering
 	\begin{adjustbox}{addcode={\begin{minipage}{\width}}{
