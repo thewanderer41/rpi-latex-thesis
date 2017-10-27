@@ -62,26 +62,38 @@ The version map is then computed from this data structure.
 The database also uses multi-line headers which makes a basic automated approach difficult since the cells are not well aligned.
 This means that the columns for this database also had to be mapped manually to find the matching columns.
 
-
 \section{GENERATE VERSIONING GRAPH}
 
-An encoding can now be generated after a method of mapping has been determined.
-In current practice, the method of publishing version information comes in the form of a change log.
-In this application, the data is published as a versioning graph, leveraging the structure of the concept model.
-This allows the data to be stored into a triple store and then retrieved through queries.
-In addition, change log and linked data technologies can be combined together into a hybrid artifact using different encoding schemes that embed linked data graphs into documents.
-Execution of these hybrid logs had mixed results as very large graphs with many changes became very difficult to load.
-As optimization methods are outside the scope of this application, efficiently merging versioning graphs into change logs is not pursued further.
-However, in change logs, changes are presented in sections by type.
-As a result, when generating the triples, the changes are collected and organized first, then output.
+A versioning graph is now generated using the mapping method determined in the previous section.
+Since the attributes in sets \(\mathcal{A}\) and \(\mathcal{I}\) guarantee a change, each item is encoded into linked data and output to a document.
 
-A selection of triples have been extracted from the larger Noble Gas versioning graph in Figure \ref{NobleGraph1}, demonstrating how entries appear.
-The graph reads, EGY001 was added, ANC001 no longer appears, and column 11 of CAM001 underwent a modification.
-In the case of Figure \ref{NobleGraph1} and \ref{CopperGraphVerGraph}, the graph was extracted from linked data embedded into a change log.
-As a result of limitations in the encoding, a unique attribute combining the column number and the row identifier was used to identify the column attribute.
-The decision to combine them was to produce an easier graph to run a flow computation on.
-An alternative construction would be to use just the column identifier and share it with other entries.
-This results in the graph more similar to Figure \ref{NobleGraph2} where column 11 links to multiple changes.
+\begin{lstlisting}[language=SPARQL, caption=Noble Gas Add Turle, label=NGA]
+<http://rdfa.info/play/Version1> a vo:Version ;
+	vo:absentFrom <http://rdfa.info/play/AddChange21> .
+<http://rdfa.info/play/AddChange21> a <https://orion.tw.rpi.edu/~blee/VersionOntology.owl#AddChange> ;
+	vo:resultsIn <http://rdfa.info/play/Attribute21> .
+<http://rdfa.info/play/Attribute21> a <https://orion.tw.rpi.edu/~blee/VersionOntology.owl#Attribute> ;
+	rdfs:label "EGY001"
+<http://rdfa.info/play/Version2> a vo:Version ;
+	vo:hasAttribute <http://rdfa.info/play/Attribute21>
+\end{lstlisting}
+Listing \ref{NGA} presents the statements in turtle format necessary to express that the entry EGY001 has been added to the dataset from Version 1 to Version 2 as shown in Figure \ref{NobleGraph1}.
+Notice that the namespace for many of the URIs is \textlangle http://rdfa.info/play/\textrangle.
+This results from the triples being extracted out of an HTML change log with embedded linked data, and this is used as the default namespace for the page.
+Since we know the number of additions, each change instance can be easily numbered.
+Add changes are also kept separate to allow for individual annotation.
+Likewise, the graph generator iterates over the set of invalidations and generates a set of statements to instantiate each invalidate change.
+
+However, Figure \ref{NobleGraph1} also demonstrates an interesting set of decisions made early in the generation process regarding modifications.
+Firstly, the relation presented in the figure is unbalanced and the right-hand side of ChangeCAM00111 links only to the column identifier but not to the corresponding row attribute.
+This links from a mismatch between the model's structure, the order in which data appears in the change log, and the way RDFa links properties together.
+Because the row label forms the outermost encapsulation, it cannot instantiate both row identifiers and implicitly link them separately.
+To do so would require explicitly instantiating the attribute in a non-visible part of the document which would defeat the purpose of using RDFa to implicitly encode the versioning graph into the document.
+Secondly, the column identifier AttributeCAM00111v1 combines together the row label and the column number, making it unique to just the CAM001 row.
+This was a decision to properly identify the attribute as it appears in the change log document.
+Since the item is not a generic column 11 element in the log, but a specific item of CAM001, the entry id is included in the column identifier.
+This formulation poses a problem when trying to query the graph and determine how many rows have a column 11 modify change for example.
+When the versioning triples are not extracted from a change log and printed as linked data, the structure has greater freedom as seen in Figure \ref{NobleGraph2}.
 
 \begin{figure}
 	\centering
@@ -102,8 +114,7 @@ This results in the graph more similar to Figure \ref{NobleGraph2} where column 
 
 \section{MULTIPLE LINKED VERSIONS}
 
-Versions do not always appear in pairs.
-While the figures in this document so far have depicted a comparison between only two versions, versioning often involves more than two objects, either in sequence or parallel.
+The figures in this document so far have depicted a comparison between only two versions, versioning often involves more than two objects, either in sequence or parallel.
 Figure \ref{NobleGraph2} shows a graph that follows change as it moves through three versions of the Noble Gas data set.
 From the first to second version of the data, EGY001 becomes introduced as an attribute into the dataset.
 This entry then undergoes a modification change in columns 29, 31, and 43 when comparing versions two and three.

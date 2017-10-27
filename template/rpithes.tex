@@ -34,6 +34,8 @@
 \makeatother
 \usepackage{graphicx}
 \usepackage{adjustbox}
+\usepackage{listings}
+\usepackage{textcomp}
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 \usepackage{bibentry}
@@ -53,6 +55,15 @@
 \newcommand{\nobibentry}[1]{{\let\nocite\ignore\bibentry{#1}}}
 % ------------------------
 
+\lstset{
+	basicstyle=\ttfamily,
+	captionpos=b,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	numbers=left,
+	numbersep=5pt,
+}
 
 \begin{document}
 
