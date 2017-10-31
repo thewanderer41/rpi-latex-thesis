@@ -32,7 +32,7 @@ This process helps to determine the confidence that using the model to encode th
 	\label{CAM001ProvGraph}
 \end{figure}
 
-\section{FORM A MAPPING}
+\section{FORM A MAPPING} \label{mapping}
 
 The next step involves formulating a method to determine whether a relationship constitutes an add, invalidate, or modify mapping.
 As discussed in the previous chapter, this relies on determining whether an attribute exists in one version, the other, or both.
@@ -62,12 +62,114 @@ The version map is then computed from this data structure.
 The database also uses multi-line headers which makes a basic automated approach difficult since the cells are not well aligned.
 This means that the columns for this database also had to be mapped manually to find the matching columns.
 
+\section{PRODUCE CHANGE LOG}
+
+While a linked data versioning graph can now be generated using the mapping method, it is difficult to visualize without using more specialized software.
+The solution is to create a human readable change log to both validate the mapping matches and generate human readable change documentation.
+This addresses a gap in the Noble Gas data set's documentation which describes data use, but not data changes.
+The log is divided into three sections corresponding to the sets generated in Section \ref{mapping}.
+However, this provides an opportunity to address a weakness in modern change logs in that they are only human readable.
+Two technologies previously introduced, RDFa and JSON-LD, provide a means of embedding linked data into HTML documents, allowing the log to be both human and machine readable.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.80]{figures/Changelog-zoomed.png}
+	\caption{Abswurmbachite entry in the Copper Dataset Change Log}
+	\label{changelog_zoomed}
+\end{figure}
+
+Consider the entry in Figure \ref{changelog_zoomed} from a change log of the Copper data set.
+RDFa uses the attributes in HTML documents to include linked data describing content on the page.
+This means that an automated web agent can read the document and extract the associated versioning graph.
+A selection of the marked up source from Figure \ref{changelog_zoomed} appears in Listing \ref{rdfa_list}.
+Only the lines displaying table headers and the second data line have been removed.
+Immediately, it can be seen that the markup is quite cluttered as a result of the clash between RDFa's intent and its use.
+The goal of this technology is to describe the content on a page and give context to particular values, marking a string of digits as a phone number for example.
+However, in this application, very little of the content is used in the model except for line 3, which uses the mineral name as an attribute label.
+It is instead used to encode the versioning model into the HTML document's lattice, leveraging the ability to imply relationships in nested tags.
+Unfortunately, RDFa interpreters are very particular in the way they resolve implications, and the order in which data appears in a change log to be human readable does not match the order they need to be for RDFa to encode the model.
+In lines 10 and 11, two triples have to be explicitly included in order to conform with the model outlined in Chapter \ref{ch:model}.
+
+\begin{lstlisting}[language=HTML, caption=Abswurmbachite RDFa, label=rdfa_list]
+<h3>Change Log</h3>
+<div about="Version1" rel="vo:hasAttribute">
+  <div resource="v2:Abswurmbachite" typeof="vo:Attribute">
+    <span style="font-weight:bold" property="http://www.w3.org/2000/01/rdf-schema#label">Abswurmbachite</span>
+    <table rel="vo:Undergoes">
+      <tr  about="ChangeAbswurmbachite12" typeof="vo:Change">
+        <td align="right" rev="vo:Undergoes" resource="v1:AttributeAbswurmbachite12v1" typeof="vo:Attribute"> 9</td>
+        <td property="vo:resultsIn" resource="v2:AttributeAbswurmbachite12v2" typeof="vo:Attribute">(12)</td>
+        <td>          </td>
+        <td>       0.0</td>
+        <span about="Version1" property="vo:hasAttribute" resource="v1:AttributeAbswurmbachite12v1"></span>
+        <span about="Version2" property="vo:hasAttribute" resource="v2:AttributeAbswurmbachite12v2"></span>
+      </tr>
+    </table></div></div><br>
+\end{lstlisting}
+
+The difficulties adopting RDFa into the change log arise from a misalignment in intent and use.
+Alternatively, a technology meant to store data in web documents, such as JSON-LD, may produce better results.
+Listing \ref{json_list} provides the alternative encoding of the Abswurmbachite entry from RDFa.
+While significantly longer, the number of triples is not limited by the tag count within a change.
+It also separates the human-readable content from the model data, making the source easier to code and modify.
+Additionally, a decision was made to divide each change's linked data into it's associated row instead of collecting them all at the bottom or top of the page in a single script node.
+The practice of a one node collection is generally helpful for many web applications to load data quickly, but since this is not an application, it makes more sense to break the content up.
+Changes to individual attributes can be identified using anchors on the web page, then agents need only extract and parse the link data to these specific entries.
+This way, a subgraph of only the pertinent attributes can be created without first ingesting the entire versioning graph.
+However, a problem both of these change logs struggle with is size.
+The Copper Minerals data set encoded in RDFa is 1.7 MB and JSON-LD is 3.3 MB.
+In the Noble Gas data set, the RDFa and JSON-LD change log sizes are 59 and 60 MB, respectively.
+The Noble Gas change logs often do not load in a browser.
+
+\begin{lstlisting}[language=HTML, caption=Abswurmbachite JSON-LD, label=json_list]
+<h3>Change Log</h3>
+<div about="v1:Abswurmbachite">
+  <span style="font-weight:bold" property="http://www.w3.org/2000/01/rdf-schema#label">Abswurmbachite</span>
+  <table>
+    <tr  id="ModifyChangeAbswurmbachite12">
+      <td align="right"> 9</td>
+      <td >(12)</td>
+      <td>          </td>
+      <td>       0.0</td>
+      <script type="application/ld+json">
+[
+{
+	"@context": "https://orion.tw.rpi.edu/~blee/provdist/GCMD/VO.jsonld", 
+	"@id": "http://CUdb.com/v1/AttributeAbswurmbachite9", 
+	"@reverse": {
+		"hasAttribute": "Version1"
+	}, 
+	"@type": "vo:Attribute", 
+	"label": "Primary", 
+	"undergoes": "http://orion.tw.rpi.edu/~blee/provdist/CU/DTDI/CUjsonlog.html#ModifyChangeAbswurmbachite12"
+}, 
+{
+	"@context": "https://orion.tw.rpi.edu/~blee/provdist/GCMD/VO.jsonld", 
+	"@id": "http://orion.tw.rpi.edu/~blee/provdist/CU/DTDI/CUjsonlog.html#ModifyChangeAbswurmbachite12", 
+	"@type": "vo:ModifyChange", 
+	"resultsIn": "http://CUdb.com/v2/AttributeAbswurmbachite12"
+}, 
+{
+	"@context": "https://orion.tw.rpi.edu/~blee/provdist/GCMD/VO.jsonld", 
+	"@id": "http://CUdb.com/v2/AttributeAbswurmbachite12", 
+	"@reverse": {
+		"hasAttribute": "Version2"
+	}, 
+	"@type": "vo:Attribute", 
+	"label": "Primary"
+}
+]
+      </script>
+    </tr>
+  </table></div><br>
+\end{lstlisting}
+
 \section{GENERATE VERSIONING GRAPH}
 
-A versioning graph is now generated using the mapping method determined in the previous section.
+A versioning graph is now generated using the mapping method determined in Section \ref{mapping}.
 Since the attributes in sets \(\mathcal{A}\) and \(\mathcal{I}\) guarantee a change, each item is encoded into linked data and output to a document.
 
-\begin{lstlisting}[language=SPARQL, caption=Noble Gas Add Turle, label=NGA]
+\begin{lstlisting}[language=SPARQL, caption=Noble Gas Add in Turtle, label=NGA]
 <http://rdfa.info/play/Version1> a vo:Version ;
 	vo:absentFrom <http://rdfa.info/play/AddChange21> .
 <http://rdfa.info/play/AddChange21> a <https://orion.tw.rpi.edu/~blee/VersionOntology.owl#AddChange> ;
@@ -114,19 +216,21 @@ When the versioning triples are not extracted from a change log and printed as l
 
 \section{MULTIPLE LINKED VERSIONS}
 
-The figures in this document so far have depicted a comparison between only two versions, versioning often involves more than two objects, either in sequence or parallel.
+The figures in this document so far have depicted a comparison between only two versions, but versioning often involves more than two objects, either in sequence or parallel.
 Figure \ref{NobleGraph2} shows a graph that follows change as it moves through three versions of the Noble Gas data set.
 From the first to second version of the data, EGY001 becomes introduced as an attribute into the dataset.
 This entry then undergoes a modification change in columns 29, 31, and 43 when comparing versions two and three.
 The construction results in a format naturally oriented to show the flow of change from version one to three.
-The advantage of this formation is that now many versions can be related together using a unified set of semantics that cannot be achieved through combining the other concepts and properties in the previous chapter.
+The advantage of this formation is that now many versions can be related together using a unified set of semantics that cannot be achieved through combining the other concepts and properties in Chapter \ref{ch:model}.
+Versioning forms a continuous relationship even into later versions without introducing new semantics.
 This is important since many versioning linked data alternatives view version change as a single contained activity.
 
-Using the construction outlined in the previous three sections, many changes can be compiled together into a graph in a changelog.
-After all additions, invalidations, and modifications have been compiled into a single graph, a complete mapping from version one to version two may be developed.
-The orientation of the relationships in the graph allows a flow to be created from attributes in version one to corresponding attributes in version two.
-Taking version two and performing the same graph construction to a version three results in not only a flow from version two to version three, but also from version one to version three.
-As a result, the flow can be used to construct a mapping from version one to version three or any future version.
+When considering multiple versions, a particular challenge is when an attribute does not change.
+In that particular case, no links are created, but if this occurs between two transitions, the flow of change is broken.
+For example, in Figure \ref{NobleGraph2}, column 31 of EGY001 becomes modified transitioning into the third version.
+If that column underwent no activity in the next transition but changed from version four to five, the connection between all the column 31s would no longer be continuous.
+This poses a problem for executing queries in a triple store which rely on graph traversals, but no path exists between the two modification changes in the example.
+
 
 \begin{figure}
 	\centering
