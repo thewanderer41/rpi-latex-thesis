@@ -4,13 +4,33 @@
 %                                                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{DATABASE VERSIONING}
+\chapter{ONTOLOGY AND TAXONOMY VERSIONING}
 
-Databases already maintain a part of versioning history with a transactional log.
-However, they pose an interesting change in context compared to spreadsheets.
-Often version comparisons occur between instances of spreadsheet files, but with databases, modifying transactions do not generate a new instance of the database.
-Identifying a version would then need to adapt and link transactions to versions.
-This can be done through query based citations as described by Proll and Rauber \cite{Proell2013}.
-The transaction log also more specifically states the attribute involved, making detection of new attributes into the database more straightforward.
-This addresses a particular concern in spreadsheet rows since their attributes have a tendency to be less consistent.
-Since RRUFF already possesses an automatically, web accessible change log, the work in this area focuses primarily on deconstructing their code to hook in the concept model with RDFa.
+This chapter extensively uses the GCMD Keywords data set to study methods of determining the extent of change in a data set.
+The keywords have a long sequence of versions, allowing trends to be observed over the course of releases.
+
+\section{GCMD Keywords}
+
+\subsection{Creating the Versioning Graph}
+
+The keywords can be acquired in a number of different formats, but the one chosen was RDF.  In the file, each concept uses a unique URI as an identifier and uses the concepts skos:Broader and skos:Narrower to establish the hierarchy.  When the GCMD group release a new version, they reuse the same URI for reused concepts.  To create a mapping, new and old concepts can be easily filtered out by finding URIs which are also skos:Concepts but only exist in one version or the other.  The remaining concepts must therefore be modification changes or unchanged.  Since, the primary data the hierarchy contains is its parent and children nodes, modifications occur when the concept moves around in the hierarchy.  To determine this, the values of a concept's skos:Broader relationship is checked.
+
+Since the URIs are reused, the history of a concept can be tracked through the versioned lifespan of the concept.
+
+\begin{figure}%[b]
+	\centering
+	\includegraphics[scale=1]{figures/GCMDChart1.png}
+	\caption{Add, Invalidate, and Modify counts in Version 8.5.  The counts show change magnitudes and indicate that major and minor changes differ by orders of magnitude.}
+	\label{GCMDC1}
+\end{figure}
+
+In Figure \ref{GCMDC1}, we can see that changing from version 8.4.1 to 8.5, there is a large spike in changes.  Note that the number of each adds and invalidates number to approximately the size of the entire keyword list.  This is a result of a NASA policy change requiring web resources to use the https protocol.  As a result, all the URIs of the concepts changed, and the entire list was essentially removed and then re-added.  Without the breakdown of the magnitude of changes into the three subtypes, the total reported change would be both difficult to interpret and exceed the size of the dataset significantly.
+
+In Figure \ref{GCMDC2}, we can see an accounting of the changes with the URI namespace.  After controlling for the namespace change, we can see that the dataset is dominated by add changes.  In addition, in migrations across major numbers, the magnitude of adds range in the hundreds.  This is an order of magnitude different than the numbers of add changes while stepping across minor number differences.  From the identifier scheme and the change counts, it is clear that the keyword management team expected only minor changes and names the version as such even though changes to namespace constitute significant differences according to linked data definitions.
+
+\begin{figure}%[b]
+	\centering
+	\includegraphics[scale=1]{figures/GCMDChart2.png}
+	\caption{Add, Invalidate, and Modify counts ignoring the namespace changes in Version 8.5.  The counts show change magnitudes appropriate for the identifier.}
+	\label{GCMDC2}
+\end{figure}
