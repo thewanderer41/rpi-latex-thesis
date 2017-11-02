@@ -8,7 +8,7 @@
 
 This chapter uses the Copper and Noble Gas databases to demonstrate the implementation of the model presented in the previous chapter.
 
-\section{VALIDATE COMPARISONS}
+\section{Validate Comparisons}
 
 The first step in any versioning endeavor is to first establish that the two objects being compared meet the requirements of being each other's versions.
 For the copper dataset, the objects result from a compilation effort from the same sources of data.
@@ -32,7 +32,7 @@ This process helps to determine the confidence that using the model to encode th
 	\label{CAM001ProvGraph}
 \end{figure}
 
-\section{FORM A MAPPING} \label{mapping}
+\section{Form a Mapping} \label{mapping}
 
 The next step involves formulating a method to determine whether a relationship constitutes an add, invalidate, or modify mapping.
 As discussed in the previous chapter, this relies on determining whether an attribute exists in one version, the other, or both.
@@ -62,7 +62,7 @@ The version map is then computed from this data structure.
 The database also uses multi-line headers which makes a basic automated approach difficult since the cells are not well aligned.
 This means that the columns for this database also had to be mapped manually to find the matching columns.
 
-\section{PRODUCE CHANGE LOG}
+\section{Produce Change Log}
 
 While a linked data versioning graph can now be generated using the mapping method, it is difficult to visualize without using more specialized software.
 The solution is to create a human readable change log to both validate the mapping matches and generate human readable change documentation.
@@ -164,7 +164,7 @@ The Noble Gas change logs often do not load in a browser.
   </table></div><br>
 \end{lstlisting}
 
-\section{GENERATE VERSIONING GRAPH}
+\section{Generate Versioning Graph}
 
 A versioning graph is now generated using the mapping method determined in Section \ref{mapping}.
 Since the attributes in sets \(\mathcal{A}\) and \(\mathcal{I}\) guarantee a change, each item is encoded into linked data and output to a document.
@@ -214,7 +214,7 @@ When the versioning triples are not extracted from a change log and printed as l
 	\label{CopperGraphVerGraph}
 \end{figure}
 
-\section{MULTIPLE LINKED VERSIONS}
+\section{Multiple Linked Versions}
 
 The figures in this document so far have depicted a comparison between only two versions, but versioning often involves more than two objects, either in sequence or parallel.
 Figure \ref{NobleGraph2} shows a graph that follows change as it moves through three versions of the Noble Gas data set.
