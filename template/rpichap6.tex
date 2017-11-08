@@ -4,47 +4,29 @@
 %                                                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{ONTOLOGY VERSIONING}
+\chapter{MBVL CLASSIFICATION}
 
-Databases already maintain a part of versioning history with a transactional log.
-However, they pose an interesting change in context compared to spreadsheets.
-Often version comparisons occur between instances of spreadsheet files, but with databases, modifying transactions do not generate a new instance of the database.
-Identifying a version would then need to adapt and link transactions to versions.
-This can be done through query based citations as described by Proll and Rauber \cite{Proell2013}.
-The transaction log also more specifically states the attribute involved, making detection of new attributes into the database more straightforward.
-This addresses a particular concern in spreadsheet rows since their attributes have a tendency to be less consistent.
-Since RRUFF already possesses an automatically, web accessible change log, the work in this area focuses primarily on deconstructing their code to hook in the concept model with RDFa.
+\section{Versioning Graph}
 
-\section{Sea Ice Ontology}
+The experiment undergoes two phases of comparison in this procedure.
+The first phase compares the initial species content with the classifications by a particular algorithm/taxonomy combination.
+Since the classification results from a population selected according to the initial species list, these two datasets share a common provenance.
+However, the list cannot be used in place of the classifier results because not only does it have only 21 entries, but also it does not have a clear correspondence with the DNA chains sent to the classifier.
+As a result, these two sets are no versions of each other, and versioning results will have weak implications.
+A labeling of the initial input data, alternatively would be considered a version of the results, but that data product is not available.
 
-A great many annotations were made to Version 2 of the Sea Ice Ontology.
-Maintaining those notes after migration to the new version would provide great value to the project.
-From the color code in Table \ref{ColorTable}, yellow and blue changes correspond directly to Modification and Addition transitions, respectively.
-In theory, the green concepts would also qualify for a Modify categorization since they would likely have a new URI, meaning that an attribute exists between two versions and something has changed.
-However, this would result in a product that is at least the size of the union of the two versions, greatly hindering the scalability of the approach.
-The obvious solution would be to leave the attributes unlinked, as in the approach with the spreadsheet application where no change was detected.
-The Invalidation change would cover concepts which do not have a mapping into Version 3.
-Therefore, the remaining transition types, purple and red require more specific attention than a usual Modify.
+Each taxonomy and classifier combination outputs a taxonomic classification for each entry from the same source.
+Shared input data indicates the results share common provenance.
+The classifications also share the same workflow step because their results have similar formats, reporting a specific taxonomic name for each entry.
+Since classifications occur over the same set of entries, their identifiers can be used to match outputs together for comparison.
+However, the classifiers do not identify entries to the same specificity.
+If it determines that the confidence at a particular rank is too low, it marks that level as ambiguous and computes no further ranks.
+As a result, versioning can determine additions and invalidations based on whether a classifier can ascertain more or less of an entry's taxonomic name.
+This method of mapping the versions together allows the results to give insight into the accuracy of different algorithm and taxonomy combinations.
 
-\begin{table}
-	\newcommand*{\thead}[1]{\multicolumn{1}{|c|}{\bfseries #1}}
+\begin{figure}
 	\centering
-	\begin{tabular}{ | c | l |}
-		\hline
-		\textbf{Color} & \thead{Description} \\
-		\hline
-		Purple & Moved since the previous version of the ontology.\\
-		\hline
-		Green & Still the same.\\
-		\hline
-		Yellow & In the same place; but perhaps the name or definition have changed.\\
-		\hline
-		Red & Suggest changes to be made to both the ontologies and the nomenclature.\\
-		\hline
-		Blue & New concepts to be added to the ontologies.\\
-		\hline
-	\end{tabular}
-	\label{ColorTable}
-	\caption{Color code used by the concept maps made by Ruth Duerr during the planning phase of the Sea Ice Ontology's development.}
-\end{table}
-
+	\includegraphics[scale=0.80]{figures/mbvl_chart.png}
+	\caption{Compiled counts of adds, invalidates, and modifies grouped by taxonomic rank across algorithm and taxonomy combinations.}
+	\label{mbvl_chart}
+\end{figure}
