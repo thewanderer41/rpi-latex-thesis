@@ -4,14 +4,54 @@
 %                                                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{FUTURE WORK}
+\chapter{DISCUSSION}
 
+\section{Model}
 
-While much has been expounded upon to develop the framework to conduct version distance calculations, nothing has been said as to how such a calculation would work.
-The concept model specifically relates objects in a single direction from attributes in older versions to the corresponding one in newer editions.
-Once values are assigned to each of the change types, a flux-like calculation can be performed to characterize the change moving from one side to another.
-However, the resulting calculation may need to be more complex since the length of change logs is not standardized.
-For example, a long list of small changes could over-shadow a few significant modifications.
-Possible solutions could include sub-classing the change types to give a wider range of weights or normalizing the values across a range to give comparable results.
+The model takes a version's generation from a provenance activity and disentangles it from the results of a versioning comparison.
+The key lies in focusing on the version's attributes in order to explain changes between the version.
+Compared to PROV's derivation property, involving 3 triples, or it's qualified form, which involves 5 triples, the versioning model uses 9 triples in the worst case with a single modification relationship.
+In addition, the space usage grows linearly with respect to the number of changes while the PROV relation stays constant at 3 or 5.
+The trade-off is in the extra machine-computable characterization of changes which would normally be contained in a solely human-readable change log.
 
-Generating results for database and keyword versioning fall largely on applying attributes to its data since the remaining workflow remains the same across contexts.
+In the case where existing ontologies are repurposed to implement the model, both PROV and Schema.org ontologies view versioning as an active practice rather than a study.
+In both, an agent actively interacts with a set or collection.
+This model follows a different view of versioning where the relationships observed result from state-based properties, not an actor.
+
+This model combines the observations that the core operations implemented by versioning systems is add, invalidate, and modify.
+
+\section{Implementation}
+
+The versioning process breaks down to three formal steps.
+The first activity verifies that the objects being compared are actually versions of each other.
+This exercise is often left out of details in practice since a data producer is often fairly certain as to the state of their versions.
+However, this establishes the foundation and validity of further actions taken to version the objects.
+This ensures that a mapping can be performed and will be meaningful.
+The next step is generating the mapping to identify addition, invalidation, and modification relationships.
+The resultant mapping in spreadsheet comparisons followed very similar rules, but when looking at the MBVL dataset, the definitions were changed to achieve a specific goal.
+The final step involves publishing the change information using the mapping.
+In this thesis, the resulting product is published into a versioning graph.
+
+One of the desired contributions was to study the possibility of a machine readable change log.
+In this implementation, the number of triples necessary to implement the model significantly impairs the ability of the log to remain human readable.
+One drawback is that the modification of an entire column would result in multiple entries equal to the number of rows in the table.
+JSON-LD proves to be a better mechanism for encoding than RDFa due to the data storage goal in the change log.
+
+With regards to the resulting versioning graph, it highlights an important concept of state-based properties.
+An activity does not actively impose change relationships between two versions.
+This also means that connections will also develop with prior versions.
+An activity based view of versioning captures only a single step and loses the larger view of continued change implications between versions farther than one step apart.
+
+\section{Version Identification}
+
+Version identifiers provide a very important role in communicating change information because users see it first.
+However, their application is subjective as can be seen in the case of GCMD Keywords.
+The producers created a change in their data set which they did not report in their change log or capture in their identifier.
+By connecting indicators to change measures such as the versioning model of this thesis, they better convey the change within a data set.
+A poor understanding of the amount of change between two versions can lead to flawed expectations in migrating across them.
+This can lead to extra or unexpected costs in using the newer data set.
+
+Another thing to consider is that counters in magnitudes by themselves may not characterize data set change well.
+In Figure \ref{GCMDC2}, the yellow line indicates the total changes made to the data set, performing a similar function as the major/minor/revision version identifier.
+However, breaking up the changes into types reveals the dominant contribution of additions to the data set.
+This understanding of the data's behavior cannot be revealed with a three number dot decimal identifier system.
