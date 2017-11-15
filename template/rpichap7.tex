@@ -8,17 +8,18 @@
 
 \section{Model}
 
-The model takes a version's generation from a provenance activity and disentangles it from the results of a versioning comparison.
+The model makes a case for taking a state-based view on data set versioning.
+This view disentangles the goals of provenance, which uses activities to explain changes, from our models.
 The key lies in focusing on the version's attributes in order to explain changes between the version.
-Compared to PROV's derivation property, involving 3 triples, or it's qualified form, which involves 5 triples, the versioning model uses 9 triples in the worst case with a single modification relationship.
+PROV uses only one relation to describe two objects as versions of each other, but this model looks at changes to each attribute within the versions.
+However, this approach leads to concerns regarding space utilization.
+Compared to PROV's derivation property, involving 3 triples, or it's qualified form which involves 5 statements, the versioning model uses 9 triples minimum to explain a single modification relationship.
 In addition, the space usage grows linearly with respect to the number of changes while the PROV relation stays constant at 3 or 5.
 The trade-off is in the extra machine-computable characterization of changes which would normally be contained in a solely human-readable change log.
 
-In the case where existing ontologies are repurposed to implement the model, both PROV and Schema.org ontologies view versioning as an active practice rather than a study.
-In both, an agent actively interacts with a set or collection.
-This model follows a different view of versioning where the relationships observed result from state-based properties, not an actor.
-
-This model combines the observations that the core operations implemented by versioning systems is add, invalidate, and modify.
+When considering to reuse existing ontologies to implement the model, both PROV and Schema.org ontologies raise concerns semantically more than structurally.
+In both, an agent actively interacts with a set to either add or remove its members.
+This model allows the exploration a different view of versioning where the observed relationships result from state-based properties, not an actor.
 
 \section{Implementation}
 
@@ -48,10 +49,17 @@ Version identifiers provide a very important role in communicating change inform
 However, their application is subjective as can be seen in the case of GCMD Keywords.
 The producers created a change in their data set which they did not report in their change log or capture in their identifier.
 By connecting indicators to change measures such as the versioning model of this thesis, they better convey the change within a data set.
-A poor understanding of the amount of change between two versions can lead to flawed expectations in migrating across them.
+This is not to say that change counts should always be used since a single modification can have greater implications.
+However, a poor understanding in the amount of change between two versions can lead to flawed expectations in migrating across them.
 This can lead to extra or unexpected costs in using the newer data set.
 
 Another thing to consider is that counters in magnitudes by themselves may not characterize data set change well.
 In Figure \ref{GCMDC2}, the yellow line indicates the total changes made to the data set, performing a similar function as the major/minor/revision version identifier.
 However, breaking up the changes into types reveals the dominant contribution of additions to the data set.
 This understanding of the data's behavior cannot be revealed with a three number dot decimal identifier system.
+
+\section{Change Analysis}
+
+In Chapter \ref{ch:mbvl}, the versioning process was used to compare the performance of different taxonomy and algorithm combinations.
+This shows that versioning methods go beyond standard documentation goals, and provide a method to record decision justifications.
+Clever use of the mapping procedure allows the analysis to be performed.
