@@ -8,25 +8,30 @@
 
 \section{Model}
 
-The model makes a case for taking a state-based view on data set versioning.
-This view disentangles the goals of provenance, which uses activities to explain changes, from our models.
-The key lies in focusing on the version's attributes in order to explain changes between the version.
-PROV uses only one relation to describe two objects as versions of each other, but this model looks at changes to each attribute within the versions.
-However, this approach leads to concerns regarding space utilization.
-Compared to PROV's derivation property, involving 3 triples, or it's qualified form which involves 5 statements, the versioning model uses 9 triples minimum to explain a single modification relationship.
-In addition, the space usage grows linearly with respect to the number of changes while the PROV relation stays constant at 3 or 5.
-The trade-off is in the extra machine-computable characterization of changes which would normally be contained in a solely human-readable change log.
+The resulting model addresses versioning by looking at the attributes of each version.
+Other ontologies takes a higher level view in terms of version modeling.
+While it is more specific, this implementation forces some space requirements.
+PROV only requires 3 to 5 triples in order to make a versioning statement.
+This model uses 9 triples for a mod change and 7 to encode addition and invalidation.
+To model a version has space complexity of \(O(7M+5(A+I))\) since the version declaration statements overlap.
+However, a similar structure can be achieved using prov:wasDerivedFrom to replace modifications and schema:AddAction and schema:DeleteAction to replace additions and invalidations.
+The resulting space complexity is \(O(7M+3A+5I)\).
+This is fairly similar with additions seeing a reduction since the left-hand version no longer contributes to the AddAction.
+Thus the primary benefit of using this model comes from semantics.
 
-When considering to reuse existing ontologies to implement the model, both PROV and Schema.org ontologies raise concerns semantically more than structurally.
-In both, an agent actively interacts with a set to either add or remove its members.
-This model allows the exploration a different view of versioning where the observed relationships result from state-based properties, not an actor.
+The reason prov:Generation and prov:Invalidation are not used is because they expect an activity to be responsible for an object.
+However, it is not generally true that an action actively added or removed an attribute from an object in the left-hand version to produce the right-hand revision.
+That mentality denies the ability to conduct versioning comparisons between objects that are not sequentially adjacent.
+The activity producing a far away object may not immediately relate to the original data in a version comparison, resulting in a situation where it would be inappropriate to use the two PROV concepts.
+When considering versioning in a state-based sense, relationships exist as a result of two objects being versions of each other.
 
 \section{Implementation}
 
-The versioning process breaks down to three formal steps.
+The versioning process breaks down to three formal steps which appear in all contexts of versioning studied in this thesis.
 The first activity verifies that the objects being compared are actually versions of each other.
 This exercise is often left out of details in practice since a data producer is often fairly certain as to the state of their versions.
-However, this establishes the foundation and validity of further actions taken to version the objects.
+Mechanisms are otherwise employed to enforce a strict documentation procedure to ensure the data's comparability as seen in version control software.
+However, this step establishes the foundation and validity of further actions taken to version the objects.
 This ensures that a mapping can be performed and will be meaningful.
 The next step is generating the mapping to identify addition, invalidation, and modification relationships.
 The resultant mapping in spreadsheet comparisons followed very similar rules, but when looking at the MBVL dataset, the definitions were changed to achieve a specific goal.
@@ -34,14 +39,16 @@ The final step involves publishing the change information using the mapping.
 In this thesis, the resulting product is published into a versioning graph.
 
 One of the desired contributions was to study the possibility of a machine readable change log.
-In this implementation, the number of triples necessary to implement the model significantly impairs the ability of the log to remain human readable.
-One drawback is that the modification of an entire column would result in multiple entries equal to the number of rows in the table.
-JSON-LD proves to be a better mechanism for encoding than RDFa due to the data storage goal in the change log.
+In this implementation, the number of triples necessary to implement the model significantly impairs the log's ability to remain human readable.
+The Noble Gas data set's change logs could not be loaded using a web browser.
+One contributor to this problem is that the modification of an entire column would result in multiple entries equal to the number of rows in the table.
+These entries could be combined together into a single statement relating just the effected columns.
+However, this optimization would greatly impact the resulting change counts, reinforcing that version analysis depends largely on the mapping method, but this would likely allow the log to become readable.
+JSON-LD proves to be a better mechanism for encoding the versioning graph than RDFa since it is intended to encode data while the latter primarily contextualizes visible content.
 
-With regards to the resulting versioning graph, it highlights an important concept of state-based properties.
-An activity does not actively impose change relationships between two versions.
-This also means that connections will also develop with prior versions.
-An activity based view of versioning captures only a single step and loses the larger view of continued change implications between versions farther than one step apart.
+When linking together multiple versions using a versioning graph, the relationship between non-adjacent editions remains implied in the graph's structure.
+The natural pathway between attributes in non-adjacent versions holistically considers the relationships among all attributes along that path.
+In comparison, other models only capture activity between the adjacent versions.
 
 \section{Version Identification}
 
