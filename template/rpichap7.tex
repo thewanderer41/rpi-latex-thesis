@@ -52,18 +52,22 @@ In comparison, other models only capture activity between the adjacent versions.
 
 \section{Version Identification}
 
-Version identifiers provide a very important role in communicating change information because users see it first.
-However, their application is subjective as can be seen in the case of GCMD Keywords.
-The producers created a change in their data set which they did not report in their change log or capture in their identifier.
-By connecting indicators to change measures such as the versioning model of this thesis, they better convey the change within a data set.
-This is not to say that change counts should always be used since a single modification can have greater implications.
-However, a poor understanding in the amount of change between two versions can lead to flawed expectations in migrating across them.
-This can lead to extra or unexpected costs in using the newer data set.
+The versioning process discovered a discrepancy in the identifier assignment in the GCMD Keywords taxonomy.
+The original analysis was intended to determine if dot-decimal identifiers could be predicted using the change counts of the versioning graph.
+However, version 8.5 was named with respect to perceived taxonomy changes and did not consider underlying linked data practice revisions.
+This brings into question the accuracy of all prior names and the any relationships observed between identifier and change counts.
+It would explain how 8.4.1 had more additions than any previous minor change but obtains a third bracket identifier
+However, assuming that the observed relationship remains, it can be shown that the keyword management team did not consider the namespace change as a major modification in their data set.
+This is seen after accounting for namespace differences to show that the change count magnitude resembles other versions in the same identifier bracket.
+This brings into concern the practice of version name assignment based on producer perception and not on more concrete measures.
+A poor understanding in the amount of change between two versions can lead to flawed expectations in migrating across them.
 
-Another thing to consider is that counters in magnitudes by themselves may not characterize data set change well.
+This is not to claim that change magnitudes should be the sole mechanism in determining version identifiers.
+However, it can provide a more quantitative characterization of changes within the system.
 In Figure \ref{GCMDC2}, the yellow line indicates the total changes made to the data set, performing a similar function as the major/minor/revision version identifier.
 However, breaking up the changes into types reveals the dominant contribution of additions to the data set.
 This understanding of the data's behavior cannot be revealed with a three number dot decimal identifier system.
+However, it also does not take into account the possibility that single or small changes can have significant implications scientifically.
 
 \section{Change Analysis}
 
