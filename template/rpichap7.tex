@@ -72,5 +72,12 @@ However, it also does not take into account the possibility that single or small
 \section{Change Analysis}
 
 In Chapter \ref{ch:mbvl}, the versioning process was used to compare the performance of different taxonomy and algorithm combinations.
-This shows that versioning methods go beyond standard documentation goals, and provide a method to record decision justifications.
-Clever use of the mapping procedure allows the analysis to be performed.
+This diverges from many of the common understandings of derivations since each of the versions are not sequential and are largely independent.
+The application demonstrated a case in which two data sets do not form versions.
+Since they are not in a state of being revisions, implementing the version model on these two data sets would produce largely meaningless relations.
+The criteria of determining valid states may seem rather dubious, and there are likely other criteria which decide more conclusively.
+The data sets in this work, however, only reveal these two requirements to justify the use of versioning relationships. 
+
+Versioning models often provide documentation on changes between versions so it is interesting applying it actively to perform analytics.
+The results are able to provide a multi-lateral characterization of differences between modifications to either the choice in taxonomy or algorithm.
+In order to achieve more specificity, each of the core operation concepts had to be sub-classed in order to also consider taxonomic rank.
