@@ -1,50 +1,75 @@
 
 \chapter{DATASETS UTILIZED}
 
-\section{Copper Dataset}
-
-The Paragenetic Mode for Copper Minerals database did not have these same constraints and also featured a more limited set of change.
-With the process's validity now verifiable, the versioning model could now apply to the resulting change log, but at that point, the model still included capturing the actual values in the data object that changed.
-Including the actual data into the change log gives concrete details as to how the object behaves when it changes, and is common practice.
-However, when modeling the version, data within the object provides a level of granularity that does not transport well from one information system to the next.
-In addition, the resulting linked data graph stores double the amount of data than the actual change, once for the linked data and again for the values.
-As a result, the model leaves out including the data.
-This allows the model to remain open and adapt to more complex versioning procedures.
-
 \section{Noble Gas Dataset}
 
-The "Noble gas isotopes in hydrocarbon gases, oils and related ground waters" database has the desirable qualities for this comparison of varied sizable provenance and multiple versions to provide comparable changes.
-However, gaps appeared to hinder the approach with using provenance data to measure change distance.
-To begin, each of the spreadsheet database's rows were considered to be a separate data object, as opposed to the individual file since this structure changes in the subsequent version, as explained later.
-Each row contained an entry indicating the reference used to compile the readings stored, and this entry was used as the data entity to produce a provenance graph with the PROV model as seen in Figure \ref{CAM001ProvGraph}.
-An important challenge to note when creating these graphs is that in version 1, the references were stored in a very human readable fashion.
-The entry could be stored as a string or numeral even though all values were numbers.
-In addition, the values were both comma separated and ranges indicated by a dash.
-Version 2 of the database corrects many of these problems with consistent content type and presentation.
-The documentation which accompanies the data set does not detail any changes to the compilation procedure that would indicate this improvement.
-The conclusion then follows that even though the two data objects have essentially the same provenance graph, it does not capture the operational change which has occurred within the data.
+The ``Global Database on \textsuperscript{3}He/\textsuperscript{4}He in on-shore free-circulated subsurface fluids" is a tumultuous database \cite{noble}.
+The first version, published in June 11, 2013, contains 8 files with 194 columns each.
+The next version of the database, published March 8, 2015, compiles all the data into a single file and reduces the number of columns to 54, marking a drastic change.
+In addition, several columns changed the units with which they reported measurements.
+While usage documentation, explaining the content and use of the data, accompanied each version, no records indicating what changed between versions were included.
+A change log would be valuable guide with such drastic structural and content changes.
+The third and most recent publication came in July 11, 2017, with no changes to the number of files or columns, but many new rows.
 
-Version 2 also imposes many new changes that improve the data's readability.
-This can be seen with the unification from files per region to a single file, reduction of columns, and better standardization of value format within a column.
-The accompanying documentation includes instructions on how to read each column within the spreadsheet, but makes no mention as to the changes made to the original version to produce the current release.
-In software, this would take the form of a change log, but they also provide the developer a chance to explain his or her motivation for making those changes.
-In this case, an example would be the two versions reporting concentration in different units.
-As a result, the first goal to quantify the amount of modification between the first and second versions needed a change log document to codify the differences. For small applications, a listing of modifications sufficiently explains the transition to a new data set, but for larger applications a machine-readable change log demonstrates potential for significant value as previously mentioned.
+\section{Copper Dataset}
 
-Lack of familiarity with the data set and it's authors immediately posed a challenge to verifying the resulting change log's validity.
+The Paragenetic Mode for Copper Minerals database became available through collaboration with the author's lab to create new methods of visualizing mineralogy relationships \cite{copper}.
+The first version was collected June 8, 2016, with the update following soon after on August 8, 2016.
+Major edits are fairly limited with only 16 column additions and 2 removals between the versions.
+Value formats remain consistent from one version to the next, resulting in a much more condensed body of changes, making transitions more easily verifiable.
+Compared to the Noble Gas data set, it provides a more stable data platform to implement the versioning model in Chapter \ref{ch:model}.
+The data from this work is also more processing friendly, making it agreeable to automatic change log generation.
 
 \section{GCMD Keywords}
 
 GCMD Keywords do not qualify as a standard web ontology since it does not constitute a class hierarchy.
-As a result, the addition, removal, or modification of any term within the keywords has a significant impact on the semantics of using a keyword to describe a data set.
-More recent editions of the keywords, available through the Key Management Service (KMS), distributes they keywords in RDF format, and this allows them to be referenced through a unique web identifier.
-The identifier drastically simplifies the attribution of changes between versions of the keyword list.
-However, older editions of were stored and distributed using Excel spreadsheets.
-This provides an interesting juxtaposition between versioning the spreadsheet as mentioned in a previous chapter and tracking the keyword changes.
-Results from this activity enables data sets described with different versions of the GCMD Keywords to remain discoverable within the same system.
+The management team stored early versions of the keywords in Excel spreadsheets, and a centralized distribution system was not used until June 12, 2012.
+The Key Management Service now serves the keywords directly in a variety of formats.
+This work downloaded each version of the keywords encoded in RDF into separate files.
+Only versions from June 12, 2012 and after were available, resulting in 9 version files.
+Each keyword corresponds to a unique identifier, and when combined with a web namespace, resolves to a data description of the keyword.
+Every identifier can be referred to per version by including the version's number at the web identifier's end, meaning that identifiers are consistent across versions.
+The taxonomy uses the concepts skos:Broader and skos:Narrower, where skos refers to the Simple Knowledge Organization System ontology name space, to form a tree hierarchy \cite{skos}.
+The tree's root is the keyword, "Science Keywords."
+The data set provides an interesting study case due its long sequence of versions and ready use of linked data technology.
 
-Better quality data for the early versions of the keywords needs to be acquired before scripts can make mappings to newer releases.
-While easy to reference, the identifiers used to store the newer keywords are not immediately interpretable so further work needs to be done in order to form a mapping.
-Once the versions have been mapped, the workflow for publishing the change data follows the same process as in the previous chapter.
+\begin{table}
+	\caption{List of versions available in the KMS.}
+	\label{gcmd_table}
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+		\hline
+		June 12, 2012 & 7.0 & 8.0 & 8.1 & 8.2 & 8.3 & 8.4 & 8.4.1 & 8.5 \\
+		\hline
+	\end{tabular}
+\end{table}
 
 \section{MBVL Classifications}
+
+The Marine Biodiversity Virtual Laboratory (MBVL) provides data and services for the study of marine biology with an integrative approach \cite{mbvl}.
+In the application studied, a choice of algorithm and taxonomy pairings must be tested on a known population in order to estimate their performance with an unknown microbial population.
+The original sequences belong only to the species listed in Table \ref{species_table}.
+However, this data is not available to the author, and only the list of species are known, forming the first data set in this section.
+These sequences are then grouped and classified by a specific taxonomy and algorithm pairing.
+The workflow utilizes two taxonomies, the Ribosomal Database Project (RDP) and the Silva taxonomy.
+Using these databases, the Species-level IdentificatioN of metaGenOmic amplicons (SPINGO) or the Global Alignment for Sequence Taxonomy (GAST) algorithms assign taxonomic ranks to each sequence.
+This produces four data sets, each using the same grouping identifiers and having the same size in each group.
+This means that the only difference between the data sets are the ranks assigned to each group.
+
+\begin{table}
+	\caption{List of species in the original population.}
+	\label{species_table}
+	\centering
+	\setlength{\tabcolsep}{2pt}
+	\begin{tabular}{|c|c|c|}
+			\hline
+			Acinetobacter baumannii & Actinomyces odontolyticus & Bacillus cereus \\
+			Bacteroides vulgatus & Clostridium beijerinckii & Deinococcus radiodurans \\
+			Enterococcus faecalis & Escherichia coli & Helicobacter pylori \\
+			Lactobacillus gasseri & Listeria monocytogenes & Neisseria meningitidis\\
+			Porphyromonas gingivalis & Propionibacterium acnes & Pseudomonas aeruginosa \\
+			Rhodobacter sphaeroides & Staphylococcus aureus & Staphylococcus epidermidis\\
+			Streptococcus agalactiae & Streptococcus mutans & Streptococcus pneumoniae \\
+			\hline
+	\end{tabular}
+\end{table}
