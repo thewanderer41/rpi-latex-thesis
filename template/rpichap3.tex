@@ -34,7 +34,7 @@ In addition, if the objects also can share the same workflow step it establishes
 This also addresses the possibility that we are comparing objects that have different purposes at separate points in a workflow, but share provenance as a result.
 Therefore, before applying the methods in this model, it must be first established that the two objects satisfy the requirements to be versions of each other.
 
-\section{MODIFICATION}
+\section{Modification}
 
 The simplest operation to model is Modification because it has no missing parts.
 It maps a change from one attribute of version one to its corresponding attribute in version two.
@@ -88,7 +88,7 @@ PROV assumes derivations to be part of a sequence, but situations exist, as seen
 	\label{ModificationFig}  % the \label command comes AFTER the caption
 \end{figure}
 
-\section{ADDITION}
+\section{Addition}
 
 In Figure \ref{AdditionFig}, the Addition model differs from the Modification construction by the absence of Attribute 1.
 This should mean that there does not exist a relationship between Version 1 and the concept Change A as the inclusion of Attribute 2 into Version 2 does not in general use content from the previous object.
@@ -129,7 +129,7 @@ In the versioning model used here, each added attribute connects to a particular
 \end{figure}
 
 
-\section{INVALIDATION}
+\section{Invalidation}
 
 The invalidation relationship has a missing attribute object on the other side of the relation, contrary to the addition construction.
 As a result of the invalidation, an attribute no longer exists in the following version.

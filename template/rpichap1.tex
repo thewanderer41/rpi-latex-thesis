@@ -6,6 +6,9 @@
 
 \chapter{INTRODUCTION}
 
+Consider the example... --> Bugzilla.
+Requirements for Development of Hypermedia Technology for a Digital Library Supporting Scholarly Work \cite{Wiil:2000:RDH:338407.338517}.
+
 %%%%%%  Data changes and grows, we have to track it --> Data Quality?
 John C. Maxwell once said, "Change is inevitable.  Growth is optional."
 While this inspirational quote refers to the human character, it also holds true for scientific datasets.
@@ -50,137 +53,6 @@ In this document, data versioning is approached using technology provided by sem
 	\label{table:Atlas}
 \end{table}
 
-\section{Data Set Proliferation}
-
-An interesting statistic to note in Table \ref{table:Atlas} is the order of versions per dataset.
-While it does not indicate that the data have marked volatility, it does communicate that the data has a tendency to change over time.
-This means that not only does an archive maintain a data set, but it may need to maintain multiple instances of that work over time.
-Therefore scientists need the ability to discern between instances of the data they use when comparing results from other researchers.
-With the web's development, libraries and library sciences provide a steady evolution in methods to identify data collections.
-The challenges and goals that face physical libraries remain valid even as data collection migrates to electronic alternatives \cite{rohtua}.
-Digital storage and the Internet has opened new opportunities and methods to administer book data by separating logical representations and physical representations \cite{Barkstrom_digitallibrary}.
-Publications, for instance, may be sorted and rearranged in a digital view along a wide array of characteristics to provide the most logical presentation for searching.
-Comparatively, users search a physical collection by conforming to a rigid organizational system adapted to the provider's needs, not the user. 
-It has also added a plethora of new content types such as wikis, blogs, and other document formats which have never seen physical print.
-All these new documents need a form of data management \cite{Berberich:2007:TMT:1277741.1277831}.
-However, the migration has not been without its problems.
-Early citations used stagnant Uniform Resource Locators (URL) to refer to online documents, but this would lead to a condition known as link rot where moving the document would invalidate the URL \cite{Lyons2005}.
-This eventually led to the development of Persistent URLs (PURL) which also succumbed to link rot, and this eventually led to the distributed Digital Object Identifier (DOI) system used to track documents today \cite{Duerr2011}.
-In the table taken from Duerr et al. \cite{Duerr2011}, DOIs represent the most suitable identifier used for science.
-It's origins begin in the Handle system, which can be seen as a generalization of the DOI system.
-The DOI network provides a robust system to track documents, but when tracking data, it faces difficulty following the rate of change with some more volatile data sets.
-Distribution organizations assign a DOI whenever a new edition of a document becomes available, and due to the publication process, documents change very rarely so a new DOIs are rarely necessary.
-However, data sets are products and thus succumb to the iterative process of error correction and growth.
-Data collection often continues on after initial publication.
-DOI distributors treat new files like new sections to a paper and changes to files as edits so a new identifier must be issued to the data set.
-This behavior becomes entirely too slow as data providers begin to allow users to dynamically generate data products from existing data according to their needs \cite{Barkstrom2003a}.
-
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.30]{figures/DigitalIdentifierTable.png}
-	\caption{Table of predominant identifiers used in science.  From Duerr et al. \cite{Duerr2011}}
-	\label{table:Duerr}
-\end{figure}
-
-With respect to Figure \ref{table:Duerr}, no identification scheme fits the description of a scientific identifier.
-Duerr et al. define a use case to make the argument that scientifically unique identifiers are necessary, ``to be able to tell that two data instances contain the same information even if the formats are different" \cite{Duerr2011}.
-This highlights the necessity of being able to discern between the logical content of a dataset and the physical form of that object.
-As identifiers often use physical characteristics of the data to make comparisons and determine similarity, a proper representation becomes difficult.
-However, a model recently released model by the Health Care and Life Sciences (HCLS) Interest Group may provide a solution when used in conjunction with other identifiers \cite{Dummontier2016}.
-Their model, shown in Figure \ref{HCLSModel}, separates the concept of a dataset into three parts.
-The highest level summarizes the data as an abstract work, perhaps better described as a topic or title.
-This data topic can have multiple versions as it changes over time.
-The version can then be instantiated into various distributions with different formats.
-Such a set of linked data would provide sufficient data to discern between two data instances of the same information.
-However, it is unclear as to whether a single identifier would be able to encompass such complete information.
-
-\begin{figure}%[b]
-	\centering
-	\includegraphics[scale=0.35]{figures/HCLSModel.png}
-	\caption{Data model from the Health Care and Life Sciences Interest Group separating data into three levels: works, versions, and instances.  From Dummontier et al. \cite{Dummontier2016}}
-	\label{HCLSModel}
-\end{figure}
-
-The organization of the model has interesting parallels with Plato's theory of Forms where he proposes that there exists a perfect idea of an object which has imperfect realizations in the physical world.
-Likewise, the summary description of the data set represents the ideal which the data seeks to capture.
-The model then uses a series of versions represented using the Provenance, Authoring, and Versioning (PAV) ontology to document the physical change of the data as it approaches the ideal\cite{Ciccarese2013}.
-PAV produces an interesting entry point into explaining the data set's development as well as recognizing the imperfection inherent in data capture.
-As a concept in the model, linked data can further extend the description to provide details necessary in identifying a particular version of data.
-However, PAV only has retrospective views of data versions since a version can only point back to previous instances.
-
-For similar reasons, treating data as documents produces problems when applying technologies from software management \cite{tichy1985rcs}\cite{Chien:2000:VMX:646544.696357}.
-Structure provides the most significant distinguisher between data and software since a data set with a removed file remains usable but a software project would break.
-The function of code comes from its content, but the function of data comes from its ability to store and organize data.
-This should not be confused with data formats which impose structure onto data in much the same way programming languages provides a medium to express actions.
-However, exporting data in different formats is currently easier than exporting code into different languages.
-Data sets do not represent a single object, unlike a software project\cite{Chacon:2009:PG:1618548}.
-They are compact representations of all possible subsets of the data set, which are also datasets.
-The Atmospheric Radiation Measurement (ARM) Program publishes data daily from sensors deployed across the globe, but a user may only desire files from a specific region, files from only the year 2012 in the Southern Great Plains region, or from only the month of February for the collection site's lifespan \cite{6906868}.
-These can all be considered arbitrary subsets from the data sets generated by the data collection program, but a software project would not be able to sustain such arbitrary filtering.
-GIT stores the files comprising a repository as snapshots of each file in the store, and when developers make changes to a file, the store creates a new snapshot of that files as seen in Figure \ref{GITFile}.
-A version then becomes defined by the complete collection of snapshots within the repository at the time, and the files cannot be subsetted due to the dependencies between the files in the version.
-As a result, when modeling the commit history, or the history of versions, the set of files can be compacted since all components are necessary to produce the object.
-Demonstrated in Figure \ref{GITTree}, a developer creates a branch of the master line with commit C3 from C2.
-The entire repository at C2 gets copied into the branch, and when the work is done, it gets merged back into the master branch.
-When a user then orders the software generated by this repository, it results from the compilation of the entire commit whereas a data set does not require the same completeness to be used.
-For this reason, the structures of data sets and software becomes incompatible and software versioning technologies are insufficient to capture this nuance.
-
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.50]{figures/GITFiles.png}
-	\caption{GIT stores changes in the repository as snapshots of individual files. Figure 1.5 from \cite{Chacon:2009:PG:1618548}}
-	\label{GITFile}
-\end{figure}
-
-Furthermore, returning to Figure \ref{GITFile}, GIT actually can be considered a reduction in terms of software versioning methodology.
-The constant dynamic in play with tracking versions, perhaps with Computer Science in general, is the trade off between space and time.
-Maintaining full snapshots of repositories proves extremely space consuming, but retrieving these snapshots occurs near instantaneously.
-In general, prior to this, the conventional wisdom was to instead store one snapshot and a set of deltas or differences between software documents and then use processing time to reconstruct a particular commit by applying the differences \cite{tichy1985rcs}.
-Deltas can further break down into forward or backward changes, reflecting the importance of keeping the snapshot of the oldest or newest instance.
-This produced very lean versioning systems, but after a long string of changes, applying deltas becomes very time consuming so periodical snapshots become necessary.
-With costs for storage space compared to the relative size of software files dropping, GIT prioritizes the ability to quickly swap between and develop different branches of the system.
-This interplay between space and computation time can also be seen within the data management space as keeping snapshots of large databases will be intensely costly but less so for spreadsheets.
-
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.75]{figures/GITCommitTree.png}
-	\caption{Example of a commit history with branching stored in GIT.  Figure 3.17 from \cite{Chacon:2009:PG:1618548}}
-	\label{GITTree}
-\end{figure}
-
-The techniques employed by these technologies, however, can remain applicable to data sets and are often necessary when communicating change data to users.
-Version producers often refer to versions using numbers in the dot-decimal style \cite{Stuckenholz:2005:CEV:1039174.1039197}.
-While the values often signify the Major-minor numbers associated with the version, the names remain meaningless and can arbitrary assignment such as Ubuntu released numbered by Year-month values \cite{Ubuntu}.
-The arbitrary nature of the numbers often entails referring to versions by English nicknames instead.
-Such a regular method of naming release versions also means that determining the magnitude of change between two releases becomes impossible.
-Numbering the version this way, however, does allow computers and readers to quickly parse the version name and discern that a change has occurred, but little value exists beyond that \cite{Dijkstra1994}.
-The technique of distributed and federated employed by GIT does provide significant value to modern methods of versioning data \cite{cederqvist2002version}.
-As data workflows and data set dependencies grow, their volatility also expands, meaning that they become more likely to generate new versions.
-The federated approach available in the GIT environment allows developers to establish change dams that collect modifications and releasing the data at regular intervals,reducing the changes to a manageable flow.
-
-\subsection{Unified Systems}
-
-Working with data as documents leads to the shortfall of technologies, but working with the data of documents has led to significantly greater contributions.
-Many libraries often work in collaboration in order to provide a wide selection of texts over a limited number of physically available documents.
-The University of Virginia demonstrates the ability to achieve a unified library system using a combination of XML and web service technologies of their disparate assemblage of libraries \cite{Payette2002}.
-The challenge involves providing a common landscape in order to compare the quality requirements imposed on the repositories.
-Versioning systems provide a notable mechanism to make this decision as quality determines when to generate new versions and what items belong to the same groupings of data.
-The comprehensiveness of XML and web technologies also allows this approach to apply to other systems and research areas as well.
-This becomes particularly relevant as innovations in computation technology generates small, volatile data sets to integrate into larger data managers \cite{Baker2009}.
-In this application, the data food chain then becomes represented by smaller applications generated in situ and then unified with other data sets as they move up the food chain to a large, unified data distribution center.
-
-Unified libraries represent a part of a larger collection of systems that rely on the propagation of data through heterogeneous systems to produce rapid complex solutions.
-The grid provided a unique environment that had to handle a variety of inputs, and therefore, different input data could run on distinct sets of grid services.
-This meant that different versions of the same data could be generated by differing services on the same grid \cite{Kovse2003VGridAVS}.
-The CERN grid for the Compact Muon Solenoid experiment separates the physical and logical storage of files, allowing multiple users to refer to the same file without needing to copy the file across the grid \cite{Holtman:687353}.
-While the structure and construction of the grid reduced the uncertainty introduced by varying hardware, it raised questions on data quality by abstracting the transparency to underlying services.
-Cloud services have recently replaced the grid due to its flexibility in the services available to its autonomous systems.
-As the scale and complexity of autonomous systems grow, it becomes more difficult for one system or organization to manage all the circles necessary to produce data deliverables.
-The ability to propagate relevant data change data across autonomous systems then assures valid quality in interactions between domains \cite{Systems02champagne:data}.
-Not only does this ensure uniformity through system interaction, but it also ensures transparency with respect to the data and methods used to produce conclusions \cite{Tagger2005}.
-This often means that systems will need to negotiate a contract and establish a mutual interface to exchange data.
-Occasionally, this contract can be formal, but more ideally, the establishment of a standard lineage model or format would allow a greater variety of systems to interact with each other without needing lengthy contractual exchanges.
-
 \section{Defining Versions and Versioning}
 
 Researchers often use the words version and versioning without needing to explicitly defining them because they appear ubiquitously in data management systems.  As a result, the definition of a version varies depending on the application, but they all try to capture a common idea.  Barkstrom describes versions as homogeneous groupings used to control, "production volatility induced by changes in algorithms and coefficients as result of validation and reprocessing," \cite{Barkstrom2003}.  He separates groupings by the granularity at which observations are collected.  This construction allows users to easily determine the similarity or dissimilarity of objects within the grouping.  However, NASA employs a rigid data processing structure with well defined levels.  This means that the resulting hierarchy is well balanced.
@@ -191,79 +63,7 @@ It is more constructive to define versions as a matter of purpose.  When two obj
 
 Versioning is the activity of exposing changes relating two or more versions of an object.  Versioning differs from provenance because an activity does not establish an object as a version of another even though the activity may create it.  The relationships exist as a matter of state-based properties which are exposed through versioning.  These relationships have greater significance if the objects are versions of each other.
 
-\section{Data Quality/Provenance}
-
-The fundamental challenge to determining data quality, its subjectivity, needs clarification.
-Conceptually, a data set on desert climate likely has very poor data quality and relevancy to a study in whale biology.
-However, in a more quantitative sense, that same desert climate data can have excellent quality with respect to its correctness, expression, and traceability.
-With the hybridization of data sets from disparate agencies to provide big data solutions, collaborations plays an ever present role in achieving broad, valid findings.
-This requires good quality data and the ability to determine when data with better quality becomes available. \cite{Wiil:2000:RDH:338407.338517}.
-The primary focus, generally, involves tracing the lineage of artifacts and activities that lead to the current data.
-This provides insight into possible sources of error as well as validating the assumptions made in generating a data set for future use.
-
-There are several characteristics that can describe a data's quality, but the one most relevant to data versioning is provenance.
-It describes the sequence of events that lead to the construction of an object  \cite{dai2014provenance}.
-In art this describes the sequence of people who have had ownership of a piece of artwork.
-For data, provenance relates the history of inputs and operations that result in a data object such as a plot or data set.
-NASA defines three levels of data processing, seen in Figure \ref{NASALevels}, that encompass the stages required to turn a raw signal from satellite instruments into physical measurements into global aggregate summaries \cite{Barkstrom2003}.
-Each stage computes a dataset using a collection of input data, processing scripts, and calibration values.
-This collection forms the provenance for the resulting level of data, and it contributes to the production history of the higher level products it feeds into.
-More specifically, scripts and code which "Produce Instantaneous Fields" operates on "L1 Data" using "Geophysical Conversion Coefficients."
-The diagram clearly illustrates that should "Calibration Coefficients" used to generate "L1 Data" change, the resulting data would cause "Produce Instantaneous Fields" to yield different "L2 Data."
-As such, strong ties lie between identifying versions and locating differences between provenance changes.
-
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.40]{figures/NASALevels.png}
-	\caption{NASA organizes its data into three levels depending on the amount of aggregation and the distance the data is removed from the original sensor measurements. Figure 1 from \cite{Barkstrom2003}}
-	\label{NASALevels}
-\end{figure}
-
-As data sets grow, this process becomes even more confusing to coordinate so version control systems often manage provenance.
-Current research endeavors to provide high quality data clearly becomes more formalized as data becomes concentrated in massive data warehouses \cite{Vassiliadis1999}.
-The focus of a majority of versioning research focuses on lineage retrieval which becomes ever important as evidence grows that researchers generate data faster than they can reasonably track \cite{Bose:2005:LRS:1057977.1057978}.
-This poses a particularly difficult problem as provenance provides a potent means of data auditing.
-With provenance, data producers ensure the trustability of their data inputs, either ingested from external sources or integrated from internal data sets.
-Fairly reassuring results have been found when combining lineage management and error reporting systems \cite{Fischer2003}.
-The errors provide a context for the changes made to advance the lineage of the data set and the version manager demonstrates that a problem has been addressed and how it was corrected.
-This system becomes extremely important when considering that agency funding often depends on the ability to account for the value of a project's dataset \cite{Cavanaugh2002}.
-The data analytics required to determine the value of data collected by a project also requires the provenance to ensure that the analysis is also reproducible.
-The basic provenance often collected by hand now needs to be collected automatically in order to facilitate collaboration, especially with projects that are farther away from the data.
-
-Early attempts at encoding provenance data into semantic models include the development of the Proof Markup Language \cite{daSilva2006381}.
-While this was originally developed to express inference reasoning through traceable graph relations, the model can also be used to express the provenance of products using the same transitions.
-The power is that it is able to use terms defined on the Semantic Web to construct inferences.
-This early demonstration of the ability for web based semantic technologies also expresses complex relations in a way that can be reasoned over and computed.
-It then allows for autonomous solutions to understanding change as data freshness begins playing a significant role in successful system function \cite{Bouzeghoub:2004:FAD:1012453.1012464}.
-
-Not long after began the development of the Open Provenance Model (OPM) \cite{moreau2008open}.
-Driven by the uncertain needs and sometimes conflicting conventions of different scientific domains, the model sought to find a method to standardized the way in which provenance data is captured while also keeping the specification open to accommodate current data sets through the change.
-In an experimental case, the model has been applied to sensor networks to automate and unify their provenance capture even as they grow \cite{5478496}.
-To aid in the adoption of the OPM, the framework Karma2 was developed to assist integrating provenance capture into scientific workflows \cite{simmhan2010karma2}.
-It reduces the amount of modifications required to adopt the OPM through web services and, more importantly, integrates into scientific workflows.
-With the magnitude of data collection endeavors, it is no longer feasible for scientists to stay close to the data and must take a more abstract view of their data collection activities.
-Scientific workflows provides this high level view of complex data collection, curation, and analysis \cite{Casati1996}.
-The value then of integrating provenance capture and workflow design is that lineage planning can then take place at a high level of scientific work.
-This gives insight into how different parts of the workflow fit together and how new exploratory expansions may occur.
-
-Following the OPM, PROV is a W3C recommendation that deliniates a method to express data provenance with semantic technologies that has been accepted as a World Wide Web Consortium (W3C) Recommendation \cite{Gil2013} \cite{Gil2013a} \cite{Groth2013}.
-The recommendation uses a conceptual model relating activities, agents, and entities together to describe data production lineage \cite{Moreau2013c} \cite{Nies2013} \cite{Nies2013a}.
-Intended as a high level abstraction, it describes data as entities that are generated by activities enacted by agents.
-This basic relationship is very powerful in its ability to describe data production activities.
-The expression of the conceptual model occurs through the PROV Ontology (PROV-O), which can be conveyed through various resource description languages \cite{Lebo2013} \cite{Hua2013} \cite{Klyne2013}.
-The ontology is further formalized into a functional notation for easier human consumption \cite{Moreau2013b} \cite{Cheney2013a}.
-One particular strength that has contributed to the adoption of PROV is its ability to link into other ontlogies, making it easier for existing semantically enriched data sets to adopt PROV \cite{Miles2013} \cite{Moreau2013}.
-Like the OPM, a framework has also been developed to alleviate workflow integration through Komadu \cite{Suriarachchi_2015}.
-The framework improves over its predecessor, Karma, by no longer utilizing global context identifiers that were no necessarily shared throughout the workflow.
-
-The PROV Ontology provides four different concepts that begin to encapsulate the provenance relationship between data versions.  The ontology defines a prov:Generation as "the completion of production of a new entity by an activity," \cite{Lebo2013}.  This means that the generation must result from a prov:Activity.  In versioning, activities play a much less active role since changes become exposed from comparing like objects.  It creates a relationship between an entity and an activity, but such a relationship may lead to an implication that a change in the activity resulted in changes in the resulting version.  Changes could also result from modifications in the input data, leading to an entirely new generating activity rather than a modified one.  Prov:Invalidation likewise makes a similar connection between activities and entities.  This means that PROV-O does not have the direct means to communicate the addition and invalidation relationships which exist in a versioning context.  Since versioning relationships result from state-based effects between version entities, a more contextually appropriate relationship would connect two entities together.  The property prov:Derivation does relate together two entities and the ontology defines it as, "a transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a pre-existing entity. " \cite{Lebo2013}.  In the case of the MBVL dataset, none of these three assertions hold true.  The four versions are being simultaneously considered so one is not being transformed into another as would a sequential set of versions.  Additionally, since we do not know which version is the best, we cannot consider any version an update of the others.  Finally, no entity pre-existed as the data sets resulted from an ongoing analysis and further steps have not been developed.
-
-PROV has played a significant contribution in maintaining the quality and reproducibility of datasets and reporting in the National Climate Assessment (NCA) \cite{Ma2014191}.
-This implication signifies that there is an increased likelihood of adoption through other scientific fields as a result of this reporting.
-The Global Change Information System, which houses the data used to generate the NCA, uses PROV to meticulously track the generation of its artifacts and results as they are used in the report \cite{Tilmes2012}.
-This means that not only does the data have a traceable lineage to verify quality, but the content of documents can have the same verifiability \cite{Ma2014}.
-
-\subsection{Changelogs}
+\section{Changelogs}
 
 Changelogs, sometimes called patch notes, are artifacts resulting from the versioning process often found in major software projects.
 They document the changes made within the system and seek to explain, in human language, the motivations behind changes \cite{uel1037}.
@@ -312,73 +112,82 @@ Using a previously established standard eases the adoption of encoding required 
 	\label{RDFa}
 \end{figure}
 
-\section{Provenance Distance}
+\section{Modeling}
 
-Understanding provenance and workflows only provide only a portion of the view into a data set's lineage landscape.
-The workflow provides an understanding of how a data set fits into the bigger picture of data analysis and the provenance gives a method to reproduce the data set for data quality purposes.
-As such, workflow and provenance describe data sets in a very flat and static manner, allowing for prospective reasoning as to how it may respond to changes made by the data producers.
-However, this places the burden of determining the magnitude of change in quality, as changes in provenance mean changes in quality, on the data producer.
-Consider again that data quality is subjective with respect to the data consumer's usage, and the difficulty in determining the significance of a new version becomes apparent.
-With increasing complexity, data workflows have developed in such a way that even subtle changes have serious implications for other parts of the workflow \cite{TILMES2011548}.
-The responsibility of determining and communicating the magnitude of data alterations falls to versioning systems.
+It describes the sequence of events that lead to the construction of an object  \cite{dai2014provenance}.
 
-A very rudimentary way to communicate change distance uses the version number of the data set.
-Returning to discussing the dot-decimal notation often used to identify versions, version numbering follows a hierarchical method of systematically counting the releases made to a data set or system based on the perceived magnitude of the change.
-The problem lies with identifying the extent of perturbations performed upon the data set.
-The primary function of the number is to indicate compatibility not changes.
-Therefore, a release can result from five perturbations or fifty modifications.
-These cases become challenging since some users will experience larger perturbations resulting from a change than others.
-As a result, using fewer well-established categories avoids this problem, but it loses many details in resolution of the extent to which the data set may change.
-In addition, there is no standardization as to what each of the numerals used in a version number represents, and this significantly hinders interoperability between information systems.
-Data managers will often discuss whether data sets are qualitatively different enough to warrant incrementing one of the version numerals.
-While the dot-decimal method is easy to implement and use, its broad categorization severely impairs its ability to express version information beyond a basic functional extent.
+However, a model recently released model by the Health Care and Life Sciences (HCLS) Interest Group may provide a solution when used in conjunction with other identifiers \cite{Dummontier2016}.
+Their model, shown in Figure \ref{HCLSModel}, separates the concept of a dataset into three parts.
+The highest level summarizes the data as an abstract work, perhaps better described as a topic or title.
+This data topic can have multiple versions as it changes over time.
+The version can then be instantiated into various distributions with different formats.
+Such a set of linked data would provide sufficient data to discern between two data instances of the same information.
+However, it is unclear as to whether a single identifier would be able to encompass such complete information.
 
-Another approach is following the provenance of two data sets and identifying  differences between the lineages of the two data sets.
-The total difference between the data is known as their provenance distance.
-This distance measure is very new as the availability of computable provenance has been developed fairly recent.
-One endeavor to compute over provenance has shown a marked ability to predict disk usage based on the lineage of a data object \cite{dai2014provenance}.
-Efforts have also been made to summarize provenance representations to improve consumption \cite{Ainy:2015:ASD:2806416.2806429}.
-While the ability to compute over provenance data has been demonstrated, the comparison of two provenance graphs has yet to be widely studied.
+\begin{figure}%[b]
+	\centering
+	\includegraphics[scale=0.35]{figures/HCLSModel.png}
+	\caption{Data model from the Health Care and Life Sciences Interest Group separating data into three levels: works, versions, and instances.  From Dummontier et al. \cite{Dummontier2016}}
+	\label{HCLSModel}
+\end{figure}
 
-Using PROV to represent provenance data in a semantic model produces an acyclic directed graph with labeled nodes.
-As a result, the provenance distance problem reduces to the similarity measurement problem.
-When measuring similarity, algorithms determine how far two graphs are from being isomorphic \cite{Cao2013}.
-General graphs have similar complexity to determine similarity, but node labeling simplifies this process by providing a method to match nodes together.
-Other methods also exist to determine similarity under different conditions such as edits necessary to transform one graph into another  \cite{Gao2010}.
-Some methods focus primarily on edge changes \cite{Goddard:1996:DGU:246962.246972}.
-In Figure \ref{GraphEdit}, the left graph transforms through a move of edge 1 and a rotation of edge 4, resulting in an edit distance of two.
-Such changes in a provenance graph would demonstrate a change in dependencies between objects used to generate a final product of note.
-A difference in provenance distance would then provide context for differences between conclusions.
-Similar results from data with small provenance distance would ensure reproducibility, while large distances signals reinforcing confirmation of a result.
-However, differences can always be expected when considering different versions with more detailed comparisons required to determine the implications of changes made to a data set as a result of a provenance change.
-Meanwhile, when results disagree, a small provenance distance indicates that findings may not be reproducible.
-This kind of analysis resembles comparison measures employed in determining semantic similarity \cite{Hliaoutakis06informationretrieval}.
-The main difference lies in semantic similarity comparing the distance between two concepts within a graph as opposed to the distances between the graphs themselves.
-However, it does reveal that using semantic graphs can have incredible impact in extracting implied relations between data they store.
+The organization of the model has interesting parallels with Plato's theory of Forms where he proposes that there exists a perfect idea of an object which has imperfect realizations in the physical world.
+Likewise, the summary description of the data set represents the ideal which the data seeks to capture.
+The model then uses a series of versions represented using the Provenance, Authoring, and Versioning (PAV) ontology to document the physical change of the data as it approaches the ideal\cite{Ciccarese2013}.
+PAV produces an interesting entry point into explaining the data set's development as well as recognizing the imperfection inherent in data capture.
+As a concept in the model, linked data can further extend the description to provide details necessary in identifying a particular version of data.
+However, PAV only has retrospective views of data versions since a version can only point back to previous instances.
 
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.40]{figures/GraphEdit.png}
-	\caption{The labeled graph on the left transforms into the right graph under two edge edits. Figure 2 from \cite{Goddard:1996:DGU:246962.246972}}
-	\label{GraphEdit}
+	\includegraphics[scale=0.40]{figures/NASALevels.png}
+	\caption{NASA organizes its data into three levels depending on the amount of aggregation and the distance the data is removed from the original sensor measurements. Figure 1 from \cite{Barkstrom2003}}
+	\label{NASALevels}
 \end{figure}
 
-There already exist methods which compare workflows based on quality criteria that leverages provenance to bound quality of service \cite{2015:CAA:2778374.2778504}.
-However, these procedures focus primarily on quick retrieval and efficient storage instead of leveraging the latent information accessed by reasoning across data set versions \cite{tan2004research}.
-The distance measures previously mentioned rely solely on provenance graphs to compute results, but this is obviously insufficient.
-When considering the provenance of a data object, methods only consider the activities and entities that took an active role in the production of it.
-A new version of an object has a familial relationship with its previous versions, but in most cases, they do not take an active role in its generation.
-For this reason, detailed change information falls outside of provenance's scope and it can be seen in PROV using a single relation to link different versions of a data object.
-Without detailed change information, determining the difference between two data objects in a metric beyond broad strokes becomes difficult if not impossible.
+NASA defines three levels of data processing, seen in Figure \ref{NASALevels}, that encompass the stages required to turn a raw signal from satellite instruments into physical measurements into global aggregate summaries \cite{Barkstrom2003}.
 
-This is not to say that provenance becomes useless in computing change distance, but it largely serves as an indicator than a measure.
-If there is any difference in provenance, then something must have changed.
-For example, if workflow uses a new script to generate a data set, changes can be expected in this new data set.
-However, what this script does differently than the old one requires a more detailed understanding and description than lineage can provide  \cite{Bose:2005:LRS:1057977.1057978}.
-Additionally, if no changes were made to the script, but new data was produced, it likely indicates that some inputs have changed.
-The ramifications for the resulting data set will be difficult to determine without understanding how the original inputs have changed.
-Only knowing that they have changes is insufficient.
-Being able to understand the extent that modifications to data or workflows impact the results greatly improve a producer's ability to generate high quality data.
+\section{Identifiers}
+
+Early citations used stagnant Uniform Resource Locators (URL) to refer to online documents, but this would lead to a condition known as link rot where moving the document would invalidate the URL \cite{Lyons2005}.
+This eventually led to the development of Persistent URLs (PURL) which also succumbed to link rot, and this eventually led to the distributed Digital Object Identifier (DOI) system used to track documents today \cite{Duerr2011}.
+In the table taken from Duerr et al. \cite{Duerr2011}, DOIs represent the most suitable identifier used for science.
+It's origins begin in the Handle system, which can be seen as a generalization of the DOI system.
+The DOI network provides a robust system to track documents, but when tracking data, it faces difficulty following the rate of change with some more volatile data sets.
+Distribution organizations assign a DOI whenever a new edition of a document becomes available, and due to the publication process, documents change very rarely so a new DOIs are rarely necessary.
+However, data sets are products and thus succumb to the iterative process of error correction and growth.
+Data collection often continues on after initial publication.
+DOI distributors treat new files like new sections to a paper and changes to files as edits so a new identifier must be issued to the data set.
+This behavior becomes entirely too slow as data providers begin to allow users to dynamically generate data products from existing data according to their needs \cite{Barkstrom2003a}.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.30]{figures/DigitalIdentifierTable.png}
+	\caption{Table of predominant identifiers used in science.  From Duerr et al. \cite{Duerr2011}}
+	\label{table:Duerr}
+\end{figure}
+
+With respect to Figure \ref{table:Duerr}, no identification scheme fits the description of a scientific identifier.
+Duerr et al. define a use case to make the argument that scientifically unique identifiers are necessary, ``to be able to tell that two data instances contain the same information even if the formats are different" \cite{Duerr2011}.
+This highlights the necessity of being able to discern between the logical content of a dataset and the physical form of that object.
+As identifiers often use physical characteristics of the data to make comparisons and determine similarity, a proper representation becomes difficult.
+
+\begin{figure}[b]
+	\centering
+	\includegraphics[scale=0.75]{figures/RCSCommitTree.png}
+	\caption{Commit history of an object in RCS with changes in the main line stored as back deltas and side branches stored as forward deltas.  Figure 5 in \cite{tichy1985rcs}}
+	\label{RCSTree}
+\end{figure}
+
+The techniques employed by these technologies, however, can remain applicable to data sets and are often necessary when communicating change data to users.
+Version producers often refer to versions using numbers in the dot-decimal style \cite{Stuckenholz:2005:CEV:1039174.1039197}.
+While the values often signify the Major-minor numbers associated with the version, the names remain meaningless and can arbitrary assignment such as Ubuntu released numbered by Year-month values \cite{Ubuntu}.
+The arbitrary nature of the numbers often entails referring to versions by English nicknames instead.
+Such a regular method of naming release versions also means that determining the magnitude of change between two releases becomes impossible.
+Numbering the version this way, however, does allow computers and readers to quickly parse the version name and discern that a change has occurred, but little value exists beyond that \cite{Dijkstra1994}.
+The technique of distributed and federated employed by GIT does provide significant value to modern methods of versioning data \cite{cederqvist2002version}.
+As data workflows and data set dependencies grow, their volatility also expands, meaning that they become more likely to generate new versions.
+The federated approach available in the GIT environment allows developers to establish change dams that collect modifications and releasing the data at regular intervals,reducing the changes to a manageable flow.
 
 \section{Data Versioning Operations}
 
@@ -447,6 +256,115 @@ In general, data producers are in control of the methods of versioning, but data
 Producers tend to use versioning systems to ensure data quality of service through audits and recovery tools \cite{Cavanaugh2002}.
 Meanwhile, a consumer will analyze the historical changes and determine the impact this may have to their data use.
 As a result, this means that data versioning systems must communicate a dynamic view of the changes in a system contextualized by the user of that data.
+
+\section{Data Set Proliferation}
+
+An interesting statistic to note in Table \ref{table:Atlas} is the order of versions per dataset.
+While it does not indicate that the data have marked volatility, it does communicate that the data has a tendency to change over time.
+This means that not only does an archive maintain a data set, but it may need to maintain multiple instances of that work over time.
+Therefore scientists need the ability to discern between instances of the data they use when comparing results from other researchers.
+With the web's development, libraries and library sciences provide a steady evolution in methods to identify data collections.
+The challenges and goals that face physical libraries remain valid even as data collection migrates to electronic alternatives \cite{rohtua}.
+Digital storage and the Internet has opened new opportunities and methods to administer book data by separating logical representations and physical representations \cite{Barkstrom_digitallibrary}.
+Publications, for instance, may be sorted and rearranged in a digital view along a wide array of characteristics to provide the most logical presentation for searching.
+Comparatively, users search a physical collection by conforming to a rigid organizational system adapted to the provider's needs, not the user. 
+It has also added a plethora of new content types such as wikis, blogs, and other document formats which have never seen physical print.
+All these new documents need a form of data management \cite{Berberich:2007:TMT:1277741.1277831}.
+However, the migration has not been without its problems.
+
+For similar reasons, treating data as documents produces problems when applying technologies from software management \cite{tichy1985rcs}\cite{Chien:2000:VMX:646544.696357}.
+Structure provides the most significant distinguisher between data and software since a data set with a removed file remains usable but a software project would break.
+The function of code comes from its content, but the function of data comes from its ability to store and organize data.
+This should not be confused with data formats which impose structure onto data in much the same way programming languages provides a medium to express actions.
+However, exporting data in different formats is currently easier than exporting code into different languages.
+Data sets do not represent a single object, unlike a software project\cite{Chacon:2009:PG:1618548}.
+They are compact representations of all possible subsets of the data set, which are also datasets.
+The Atmospheric Radiation Measurement (ARM) Program publishes data daily from sensors deployed across the globe, but a user may only desire files from a specific region, files from only the year 2012 in the Southern Great Plains region, or from only the month of February for the collection site's lifespan \cite{6906868}.
+These can all be considered arbitrary subsets from the data sets generated by the data collection program, but a software project would not be able to sustain such arbitrary filtering.
+GIT stores the files comprising a repository as snapshots of each file in the store, and when developers make changes to a file, the store creates a new snapshot of that files as seen in Figure \ref{GITFile}.
+A version then becomes defined by the complete collection of snapshots within the repository at the time, and the files cannot be subsetted due to the dependencies between the files in the version.
+As a result, when modeling the commit history, or the history of versions, the set of files can be compacted since all components are necessary to produce the object.
+Demonstrated in Figure \ref{GITTree}, a developer creates a branch of the master line with commit C3 from C2.
+The entire repository at C2 gets copied into the branch, and when the work is done, it gets merged back into the master branch.
+When a user then orders the software generated by this repository, it results from the compilation of the entire commit whereas a data set does not require the same completeness to be used.
+For this reason, the structures of data sets and software becomes incompatible and software versioning technologies are insufficient to capture this nuance.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.50]{figures/GITFiles.png}
+	\caption{GIT stores changes in the repository as snapshots of individual files. Figure 1.5 from \cite{Chacon:2009:PG:1618548}}
+	\label{GITFile}
+\end{figure}
+
+Furthermore, returning to Figure \ref{GITFile}, GIT actually can be considered a reduction in terms of software versioning methodology.
+The constant dynamic in play with tracking versions, perhaps with Computer Science in general, is the trade off between space and time.
+Maintaining full snapshots of repositories proves extremely space consuming, but retrieving these snapshots occurs near instantaneously.
+In general, prior to this, the conventional wisdom was to instead store one snapshot and a set of deltas or differences between software documents and then use processing time to reconstruct a particular commit by applying the differences \cite{tichy1985rcs}.
+Deltas can further break down into forward or backward changes, reflecting the importance of keeping the snapshot of the oldest or newest instance.
+This produced very lean versioning systems, but after a long string of changes, applying deltas becomes very time consuming so periodical snapshots become necessary.
+With costs for storage space compared to the relative size of software files dropping, GIT prioritizes the ability to quickly swap between and develop different branches of the system.
+This interplay between space and computation time can also be seen within the data management space as keeping snapshots of large databases will be intensely costly but less so for spreadsheets.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.75]{figures/GITCommitTree.png}
+	\caption{Example of a commit history with branching stored in GIT.  Figure 3.17 from \cite{Chacon:2009:PG:1618548}}
+	\label{GITTree}
+\end{figure}
+
+\subsection{Unified Systems}
+
+Working with data as documents leads to the shortfall of technologies, but working with the data of documents has led to significantly greater contributions.
+Many libraries often work in collaboration in order to provide a wide selection of texts over a limited number of physically available documents.
+The University of Virginia demonstrates the ability to achieve a unified library system using a combination of XML and web service technologies of their disparate assemblage of libraries \cite{Payette2002}.
+The challenge involves providing a common landscape in order to compare the quality requirements imposed on the repositories.
+Versioning systems provide a notable mechanism to make this decision as quality determines when to generate new versions and what items belong to the same groupings of data.
+The comprehensiveness of XML and web technologies also allows this approach to apply to other systems and research areas as well.
+This becomes particularly relevant as innovations in computation technology generates small, volatile data sets to integrate into larger data managers \cite{Baker2009}.
+In this application, the data food chain then becomes represented by smaller applications generated in situ and then unified with other data sets as they move up the food chain to a large, unified data distribution center.
+
+Unified libraries represent a part of a larger collection of systems that rely on the propagation of data through heterogeneous systems to produce rapid complex solutions.
+The grid provided a unique environment that had to handle a variety of inputs, and therefore, different input data could run on distinct sets of grid services.
+This meant that different versions of the same data could be generated by differing services on the same grid \cite{Kovse2003VGridAVS}.
+The CERN grid for the Compact Muon Solenoid experiment separates the physical and logical storage of files, allowing multiple users to refer to the same file without needing to copy the file across the grid \cite{Holtman:687353}.
+While the structure and construction of the grid reduced the uncertainty introduced by varying hardware, it raised questions on data quality by abstracting the transparency to underlying services.
+Cloud services have recently replaced the grid due to its flexibility in the services available to its autonomous systems.
+As the scale and complexity of autonomous systems grow, it becomes more difficult for one system or organization to manage all the circles necessary to produce data deliverables.
+The ability to propagate relevant data change data across autonomous systems then assures valid quality in interactions between domains \cite{Systems02champagne:data}.
+Not only does this ensure uniformity through system interaction, but it also ensures transparency with respect to the data and methods used to produce conclusions \cite{Tagger2005}.
+This often means that systems will need to negotiate a contract and establish a mutual interface to exchange data.
+Occasionally, this contract can be formal, but more ideally, the establishment of a standard lineage model or format would allow a greater variety of systems to interact with each other without needing lengthy contractual exchanges.
+
+\section{Data Quality/Provenance}
+
+The fundamental challenge to determining data quality, its subjectivity, needs clarification.
+Conceptually, a data set on desert climate likely has very poor data quality and relevancy to a study in whale biology.
+However, in a more quantitative sense, that same desert climate data can have excellent quality with respect to its correctness, expression, and traceability.
+With the hybridization of data sets from disparate agencies to provide big data solutions, collaborations plays an ever present role in achieving broad, valid findings.
+This requires good quality data and the ability to determine when data with better quality becomes available.
+The primary focus, generally, involves tracing the lineage of artifacts and activities that lead to the current data.
+This provides insight into possible sources of error as well as validating the assumptions made in generating a data set for future use.
+
+There are several characteristics that can describe a data's quality, but the one most relevant to data versioning is provenance.
+In art this describes the sequence of people who have had ownership of a piece of artwork.
+For data, provenance relates the history of inputs and operations that result in a data object such as a plot or data set.
+
+Each stage computes a dataset using a collection of input data, processing scripts, and calibration values.
+This collection forms the provenance for the resulting level of data, and it contributes to the production history of the higher level products it feeds into.
+More specifically, scripts and code which "Produce Instantaneous Fields" operates on "L1 Data" using "Geophysical Conversion Coefficients."
+The diagram clearly illustrates that should "Calibration Coefficients" used to generate "L1 Data" change, the resulting data would cause "Produce Instantaneous Fields" to yield different "L2 Data."
+As such, strong ties lie between identifying versions and locating differences between provenance changes.
+
+As data sets grow, this process becomes even more confusing to coordinate so version control systems often manage provenance.
+Current research endeavors to provide high quality data clearly becomes more formalized as data becomes concentrated in massive data warehouses \cite{Vassiliadis1999}.
+The focus of a majority of versioning research focuses on lineage retrieval which becomes ever important as evidence grows that researchers generate data faster than they can reasonably track \cite{Bose:2005:LRS:1057977.1057978}.
+This poses a particularly difficult problem as provenance provides a potent means of data auditing.
+With provenance, data producers ensure the trustability of their data inputs, either ingested from external sources or integrated from internal data sets.
+Fairly reassuring results have been found when combining lineage management and error reporting systems \cite{Fischer2003}.
+The errors provide a context for the changes made to advance the lineage of the data set and the version manager demonstrates that a problem has been addressed and how it was corrected.
+This system becomes extremely important when considering that agency funding often depends on the ability to account for the value of a project's dataset \cite{Cavanaugh2002}.
+The data analytics required to determine the value of data collected by a project also requires the provenance to ensure that the analysis is also reproducible.
+The basic provenance often collected by hand now needs to be collected automatically in order to facilitate collaboration, especially with projects that are farther away from the data.
 
 \section{Thesis Statement}
 

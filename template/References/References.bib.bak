@@ -841,7 +841,7 @@ be in line with traditional close source development.},
   url    = {https://www.w3.org/TR/2013/NOTE-prov-primer-20130430/},
 }
 
-@Misc{Moreau2013a,
+@Misc{Hua2013,
   author = {Hook Hua and Curt Tilmes and Stephan Zednik},
   title  = {PROV-XML: The PROV XML Schema},
   month  = {April},
