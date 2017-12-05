@@ -58,9 +58,14 @@ In this document, data versioning is approached using technology provided by sem
 
 \section{Defining Versions and Versioning}
 
-Researchers often use the words version and versioning without needing to explicitly defining them because they appear ubiquitously in data management systems.  As a result, the definition of a version varies depending on the application, but they all try to capture a common idea.  Barkstrom describes versions as homogeneous groupings used to control, "production volatility induced by changes in algorithms and coefficients as result of validation and reprocessing," \cite{Barkstrom2003}.  He separates groupings by the granularity at which observations are collected.  This construction allows users to easily determine the similarity or dissimilarity of objects within the grouping.  However, NASA employs a rigid data processing structure with well defined levels.  This means that the resulting hierarchy is well balanced.
+Using versions in the vernacular has become so pervasive that few documents formally define it.
+Barkstrom describes versions as homogeneous groupings used to control, "production volatility induced by changes in algorithms and coefficients as result of validation and reprocessing," \cite{Barkstrom2003}.
+He separates groupings by the granularity at which observations are collected.  This construction allows users to easily determine the similarity or dissimilarity of objects within the grouping.  However, NASA employs a rigid data processing structure with well defined levels.  This means that the resulting hierarchy is well balanced.
 
 Another application defines a version as a "semantically meaningful snapshot of a design object," \cite{Tagger2005}.  
+
+A version is itself a work.
+The question becomes how to determine if two or more works are versions of each other.
 
 It is more constructive to define versions as a matter of purpose.  When two objects are versions of each other, they are considered to still serve the same purpose.  For data production services, this would translate to there they exist in the workflow. Two objects must, therefore, share provenance, and the more they share, the more likely versioning practices will provide meaningful results.
 
