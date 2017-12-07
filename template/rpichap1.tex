@@ -100,6 +100,26 @@ Therefore, versioning is the activity of identifying two objects as versions of 
 
 \section{Identifiers}
 
+Data managers often impose a sequential ordering in conjunction with logical groupings to form an object's historical lineage.
+As a result, they often employ version identifiers in the dot-decimal style where a decimal point connects together a series of numbers \cite{Stuckenholz:2005:CEV:1039174.1039197}.
+Whenever, a new version is made, it receives an identifier with one of the numbers incremented as seen in Figure \ref{RCSTree}.
+Changes to the left-most number often signify a more important change.
+Many software applications consider the 3-number Major.minor.revision format to be a best practice in labeling software releases.
+Computers can quickly and easily process this form of identifier and determine where the numbers differ.
+However, this is little standardization or formal requirements in naming methods.
+Ubuntu utilizes a dot-decimal version labeling scheme where the two number identifier corresponds to the year-month values of the release \cite{Ubuntu}.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.75]{figures/RCSCommitTree.png}
+	\caption{Commit history of an object in RCS with changes in the main line stored as back deltas and side branches stored as forward deltas.  Figure 5 in \cite{tichy1985rcs}}
+	\label{RCSTree}
+\end{figure}
+
+
+
+In many ways, versioned objects behave similarly to books or documents that have multiple editions.
+
 Early citations used stagnant Uniform Resource Locators (URL) to refer to online documents, but this would lead to a condition known as link rot where moving the document would invalidate the URL \cite{Lyons2005}.
 This eventually led to the development of Persistent URLs (PURL) which also succumbed to link rot, and this eventually led to the distributed Digital Object Identifier (DOI) system used to track documents today \cite{Duerr2011}.
 In the table taken from Duerr et al. \cite{Duerr2011}, DOIs represent the most suitable identifier used for science.
@@ -123,17 +143,6 @@ Duerr et al. define a use case to make the argument that scientifically unique i
 This highlights the necessity of being able to discern between the logical content of a dataset and the physical form of that object.
 As identifiers often use physical characteristics of the data to make comparisons and determine similarity, a proper representation becomes difficult.
 
-\begin{figure}[b]
-	\centering
-	\includegraphics[scale=0.75]{figures/RCSCommitTree.png}
-	\caption{Commit history of an object in RCS with changes in the main line stored as back deltas and side branches stored as forward deltas.  Figure 5 in \cite{tichy1985rcs}}
-	\label{RCSTree}
-\end{figure}
-
-The techniques employed by these technologies, however, can remain applicable to data sets and are often necessary when communicating change data to users.
-Version producers often refer to versions using numbers in the dot-decimal style \cite{Stuckenholz:2005:CEV:1039174.1039197}.
-While the values often signify the Major-minor numbers associated with the version, the names remain meaningless and can arbitrary assignment such as Ubuntu released numbered by Year-month values \cite{Ubuntu}.
-The arbitrary nature of the numbers often entails referring to versions by English nicknames instead.
 Such a regular method of naming release versions also means that determining the magnitude of change between two releases becomes impossible.
 Numbering the version this way, however, does allow computers and readers to quickly parse the version name and discern that a change has occurred, but little value exists beyond that \cite{Dijkstra1994}.
 The technique of distributed and federated employed by GIT does provide significant value to modern methods of versioning data \cite{cederqvist2002version}.
