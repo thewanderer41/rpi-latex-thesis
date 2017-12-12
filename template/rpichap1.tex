@@ -105,9 +105,13 @@ As a result, they often employ version identifiers in the dot-decimal style wher
 Whenever, a new version is made, it receives an identifier with one of the numbers incremented as seen in Figure \ref{RCSTree}.
 Changes to the left-most number often signify a more important change.
 Many software applications consider the 3-number Major.minor.revision format to be a best practice in labeling software releases.
-Computers can quickly and easily process this form of identifier and determine where the numbers differ.
-However, this is little standardization or formal requirements in naming methods.
+Numbering the version this way, however, does allow computers and readers to quickly parse the version name and discern that a change has occurred, but not much value exists beyond that \cite{Dijkstra1994}.
+Most importantly, it groups together changes from the lower spectrum of minor or major change with those in the upper, more impactful, changes.
+It is therefore, difficult to obtain a clear characterization of a version change without a longer series of numbers.
+This method of identification also has issues since small changes in the current data set may have larger implications for data farther down the workflow, which is not communicated by the identifier.
+There is also little standardization or formal requirements in naming methods.
 Ubuntu utilizes a dot-decimal version labeling scheme where the two number identifier corresponds to the year-month values of the release \cite{Ubuntu}.
+A common method used to address the distinction between versions is a human-readable change log, further discussed in Section \ref{sec:changelog}.
 
 \begin{figure}
 	\centering
@@ -118,18 +122,24 @@ Ubuntu utilizes a dot-decimal version labeling scheme where the two number ident
 
 
 
-In many ways, versioned objects behave similarly to books or documents that have multiple editions.
-
-Early citations used stagnant Uniform Resource Locators (URL) to refer to online documents, but this would lead to a condition known as link rot where moving the document would invalidate the URL \cite{Lyons2005}.
+In many ways, versioned objects resemble multi-edition books or documents.
+Digital librarians have faced many challenges when searching for an identifier due to evolving web technologies.
+Early citations used stagnant Uniform Resource Locators (URL) to refer to on-line documents, but this would lead to a condition known as link rot where moving the document would invalidate the URL \cite{Lyons2005}.
+Locators required a system to manage changes of old identifiers to new locations when people attempted to utilize references from print.
 This eventually led to the development of Persistent URLs (PURL) which also succumbed to link rot, and this eventually led to the distributed Digital Object Identifier (DOI) system used to track documents today \cite{Duerr2011}.
-In the table taken from Duerr et al. \cite{Duerr2011}, DOIs represent the most suitable identifier used for science.
-It's origins begin in the Handle system, which can be seen as a generalization of the DOI system.
+The PURL used a centralized system that would translate dead links and redirect to a document's latest location.
+However, the system would still need to be manually updated, meaning links would rot if a document was lost or overlooked.
+DOIs rely on a network of managing agencies to collect and host submitted documents.
+A more specialized Handle system, the network has member agencies internally assign an unique name and concatenate it to the end of their host name.
+In Figure \ref{table:Duerr}, DOIs represent the most suitable identifier used for citation in scholarly literature \cite{Duerr2011}.
 The DOI network provides a robust system to track documents, but when tracking data, it faces difficulty following the rate of change with some more volatile data sets.
-Distribution organizations assign a DOI whenever a new edition of a document becomes available, and due to the publication process, documents change very rarely so a new DOIs are rarely necessary.
-However, data sets are products and thus succumb to the iterative process of error correction and growth.
-Data collection often continues on after initial publication.
-DOI distributors treat new files like new sections to a paper and changes to files as edits so a new identifier must be issued to the data set.
-This behavior becomes entirely too slow as data providers begin to allow users to dynamically generate data products from existing data according to their needs \cite{Barkstrom2003a}.
+Under current definitions, distribution organizations assign different DOIs to separate editions of a document
+Documents often do not need new identifiers since they change very rarely as a result of the publication process.
+However, the data set production and distribution cycle moves more quickly and reacts more sensitively to small content changes.
+This includes when data collection continues on after initial publication.
+This behavior becomes entirely too slow as data providers begin allowing users to dynamically generate data products from existing data according to their needs \cite{Barkstrom2003a}.
+Some agencies have begun assigning versioned DOIs, but this has not become common practice.
+Other groups do not assign a new DOI, but reference to the latest release of the document or object \cite{Ands2017}.
 
 \begin{figure}
 	\centering
@@ -144,12 +154,12 @@ This highlights the necessity of being able to discern between the logical conte
 As identifiers often use physical characteristics of the data to make comparisons and determine similarity, a proper representation becomes difficult.
 
 Such a regular method of naming release versions also means that determining the magnitude of change between two releases becomes impossible.
-Numbering the version this way, however, does allow computers and readers to quickly parse the version name and discern that a change has occurred, but little value exists beyond that \cite{Dijkstra1994}.
+
 The technique of distributed and federated employed by GIT does provide significant value to modern methods of versioning data \cite{cederqvist2002version}.
 As data workflows and data set dependencies grow, their volatility also expands, meaning that they become more likely to generate new versions.
 The federated approach available in the GIT environment allows developers to establish change dams that collect modifications and releasing the data at regular intervals,reducing the changes to a manageable flow.
 
-\section{Changelogs}
+\section{Changelogs} \label{sec:changelog}
 
 Changelogs, sometimes called patch notes, are artifacts resulting from the versioning process often found in major software projects.
 They document the changes made within the system and seek to explain, in human language, the motivations behind changes \cite{uel1037}.
