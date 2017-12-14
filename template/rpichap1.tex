@@ -159,17 +159,18 @@ The technique of distributed and federated employed by GIT does provide signific
 As data workflows and data set dependencies grow, their volatility also expands, meaning that they become more likely to generate new versions.
 The federated approach available in the GIT environment allows developers to establish change dams that collect modifications and releasing the data at regular intervals,reducing the changes to a manageable flow.
 
-\section{Changelogs} \label{sec:changelog}
+\section{Change Logs} \label{sec:changelog}
 
-Changelogs, sometimes called patch notes, are artifacts resulting from the versioning process often found in major software projects.
-They document the changes made within the system and seek to explain, in human language, the motivations behind changes \cite{uel1037}.
-The logs provide significant utility to both users and producers as it can serve as both documentation and tutorials.
-Many users will often refer to the patch notes in order to decide how to adapt to changes made to the system they use, either data or software.
-Meanwhile, changelogs aid producers through team transitions by keeping a history of decisions made to improve the project.
-This is particularly evident in the realm of open-source projects as developers can contribute without having been part of the original development team.
-The need for documentation to bring new programmers up to speed for a project drives the ability to keep the project alive.
+Change logs, artifacts resulting from the versioning process, play a major role filling in the gaps between versions.
+They document the changes made within the system and explain, in human language, the motivations behind these modifications \cite{uel1037}.
+Since identifiers denote that a change has occurred, the logs provide details on how the changes modify an object's attributes.
+While some data sets will provide a change log, software projects have normalized their use in version release documentation.
+As a result, these projects provide a basis for understanding the value these logs can supply data sets with multiple versions.
+The change log's common drawback is the limitation to only human readable text.
+Wider adoption among data sets may be possible by making these texts machine computable.
 
 Open source projects have much more consistent adoption of changelogs than data sets, possibly resulting from complex code techniques emerging earlier than large data methods.
+*This is particularly evident in the realm of open-source projects as developers can contribute without having been part of the original development team.
 These logs provide a great source of value to developers as they can be used to give insight to the health of a software project \cite{German03automatingthe}.
 These projects have a tendency to die rather quickly after initial enthusiasm and with the rather low overhead cost to start new open-source projects, some automated methods of determining the progress of a project is needed.
 It would give insight into the maturity of a project's development team as well as the likelihood that team members will correct errors within the code.
@@ -207,6 +208,8 @@ Using a previously established standard eases the adoption of encoding required 
 	\caption{Illustration of the difference in what autonomous systems see when crawling a web page and what humans see when reading the same material. Figure 1 from \cite{Herman2015}}
 	\label{RDFa}
 \end{figure}
+
+\subsection{JSON-LD}
 
 \section{Modeling}
 
