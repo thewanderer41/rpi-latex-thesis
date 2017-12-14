@@ -152,38 +152,48 @@ The discourse on DOIs highlights the importance of understanding the limitations
 With respect to Figure \ref{table:Duerr}, no identification scheme fits the description of a scientific identifier.
 Duerr et al. define a use case to make the argument that scientifically unique identifiers are necessary, ``to be able to tell that two data instances contain the same information even if the formats are different" \cite{Duerr2011}.
 A possibility to consider is that identifiers may require incorporation into a data model to discern between scientific differences.
-An identifier works well in uniquely 
+An identifier works well in revealing the characteristics of an individual object, but it should not be expected to explain its relationship with other objects.
+A data model provides better insight into the different roles objects play in a relationship.
+Further discussion on versioning models will be found in Section \ref{sec:models}.
 
-Such a regular method of naming release versions also means that determining the magnitude of change between two releases becomes impossible.
+Using identifiers to convey extended versioning information becomes more difficult with the adoption of distributed version managers like GIT \cite{cederqvist2002version}.
+Each participant in the federated repository is the master of their personal copy of the code.
+Upon completion of their distribution's part, they may request that it be pulled into another participant's distribution.
+While each developer's individual repository can follow a linear identifier scheme, this would not work as the overall project bounces around different primary repositories with mismatching sequential identifiers.
+The dot-decimal identifier scheme could be made to work in such an environment by severely limiting the distributed manager's utilized features.
+Figure \ref{fig:federated}, illustrates a workflow which utilizes distributed repositories to manage very active public software projects.
+Each lieutenant developer manages a section of the overall code, and they dampen the number of requests made to the dictator by collecting changes and submitting them over longer intervals.
+As a result, relying on identifiers to convey and contain versioning information limits the evolution of new and valuable methods of processing change in digital objects.
 
-The technique of distributed and federated employed by GIT does provide significant value to modern methods of versioning data \cite{cederqvist2002version}.
-As data workflows and data set dependencies grow, their volatility also expands, meaning that they become more likely to generate new versions.
-The federated approach available in the GIT environment allows developers to establish change dams that collect modifications and releasing the data at regular intervals,reducing the changes to a manageable flow.
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.85]{figures/federatedGit.png}
+	\caption{A distributed workflow to control for volatile versioning behavior.  From  \cite{cederqvist2002version}.}
+	\label{fig:federated}
+\end{figure}
 
 \section{Change Logs} \label{sec:changelog}
 
-Change logs, artifacts resulting from the versioning process, play a major role filling in the gaps between versions.
-They document the changes made within the system and explain, in human language, the motivations behind these modifications \cite{uel1037}.
+Change logs, artifacts resulting from the versioning process, play a major role filling in gaps between versions.
+They document changes and explain, in human language, the motivations behind these modifications \cite{uel1037}.
 Since identifiers denote that a change has occurred, the logs provide details on how the changes modify an object's attributes.
+They demonstrate a need and utility in understanding the deeper content of change beyond knowing that an object did transform.
 While some data sets will provide a change log, software projects have normalized their use in version release documentation.
 As a result, these projects provide a basis for understanding the value these logs can supply data sets with multiple versions.
 The change log's common drawback is the limitation to only human readable text.
 Wider adoption among data sets may be possible by making these texts machine computable.
 
-Open source projects have much more consistent adoption of changelogs than data sets, possibly resulting from complex code techniques emerging earlier than large data methods.
-*This is particularly evident in the realm of open-source projects as developers can contribute without having been part of the original development team.
-These logs provide a great source of value to developers as they can be used to give insight to the health of a software project \cite{German03automatingthe}.
-These projects have a tendency to die rather quickly after initial enthusiasm and with the rather low overhead cost to start new open-source projects, some automated methods of determining the progress of a project is needed.
-It would give insight into the maturity of a project's development team as well as the likelihood that team members will correct errors within the code.
-However, readability proves to remain a significant hurdle as current development change logs contain solely human readable text.
+Open source projects have much more consistent adoption of change logs than data sets which usually sport only use documentation.
+Logs play an important communication role in these projects since developers can contribute without having been part of the original development team.
+They allow developers to link bugs and errors with their corrections in new versions of the code \cite{Chen:2004:OCL:990374.990391}.
+This gives insight into motivations behind particular design decisions.
+It also provides feedback to the user community that corrections have been addressed in addition to ensuring that improvements drive modifications to the code base.
+An identifier cannot communicate these qualities while remaining succinct.
+Some research has been done to determine the health of a development project based on the number and length of change logs released over time \cite{German03automatingthe}.
+However, little work has been done to make change logs machine computable as many of these documents remain in human-readable text only.
+Research done involving change log content must manually link entries with computable meta-data such as the introduction of new features with the emergence of new bugs \cite{6132954}.
 While machines may still be significantly removed from the ability to comprehend the impact of changes made to a data set or software code, they are currently opaquely blocked from consuming any of the content within logs more than understanding they contain text.
 The transition between different versions of large datasets is then left largely up to the human user's ability to understand and process the modifications mentioned within the change log.
-
-As mentioned previously, changelogs also allow developers to link bugs and errors with their corrections in new versions of the code \cite{Chen:2004:OCL:990374.990391}.
-This gives feedback to the user community that corrections have been addressed as well as ensuring that modifications to the code base are driven by improving the project.
-It also has the added benefit of creating a system that can be used to link the introduction of new features with the emergence of new bugs \cite{6132954}.
-The resulting discoveries help reveal patterns of development and prevent further occurrences of problematic code.
-Therefore, providing an machine consumable changelog would accelerate and assist in navigating through dataset changes and error corrections.
 
 \subsection{RDFa}
 
@@ -212,7 +222,7 @@ Using a previously established standard eases the adoption of encoding required 
 
 \subsection{JSON-LD}
 
-\section{Modeling}
+\section{Modeling} \label{sec:models}
 
 It describes the sequence of events that lead to the construction of an object  \cite{dai2014provenance}.
 
