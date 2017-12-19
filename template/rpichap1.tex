@@ -197,21 +197,23 @@ The transition between different versions of large datasets is then left largely
 
 \subsection{RDFa}
 
-In order address the human readability of data change logs, this project considers the use of the Resource Description Framework in Attributes (RDFa) framework \cite{Adida2015}.
+The Resource Description Framework in Attributes (RDFa) framework encodes linked data vocabularies into HTML documents, and provides an opportunity to make change logs machine interpretable. \cite{Adida2015}.
+Linked data technologies utilize web ontologies to standardize terms and semantics across domain applications.
+Automated agents can reason over a graph formed by linking together these terms.
+Encoding HTML documents with linked data better unlocks the content stored within.
 Figure \ref{RDFa} illustrates the semantic difference between what web crawlers and what humans see when they consume web pages.
-People intuitively understand that certain strings represent meaningful information, and RDFa seeks to encode that understanding natively into the document in order to allow them the ability to consume the information more effectively.
-The framework leverages the existence of various established vocabularies in order to provide a standardized understanding of web documents, and it opens the ability for them to interact with the web pages more intelligently.
-The benefits of embedding RDFa into change logs is twofold.
-First, the change log would need to be marked up in HTML in order to accept RDFa.
-As a result, the log would also become available on-line and thus, more openly accessible to data users through the utilization of web based search engines.
-This would allow data users to better determine personally how a change applies to their specific application.
+People intuitively understand that certain strings represent meaningful information based on location and style.
+RDFa seeks to encode that understanding natively for effective machine consumption.
+Extending this approach into publishing change logs, will allow linked data to capture the metaphorical meat of change content.
+
+The implementation requires changing publishing practices from plain-text documents to something structured data compatible such as HTML.
+The change also has the added benefit of making the logs available on-line, and thus, more openly accessible to data users through the utilization of web based search engines.
 Large companies such as Google have already begun making endeavors in equipping their web crawlers to consume structured data such as RDFa from web pages.
-Second, the simple application of RDFa attributes encodes the entries within the change log in a format consumable by machines \cite{Herman2015}.
 RDFa has already had significant success in adoption across a variety of web publication platform and eases the search for their content \cite{Bizer2013}.
-In these applications, however, the developers use RDFa to describe the content on the page, to indicate a string is actually a name for example.
-This project endeavors to use RDFa to embed an RDF graph into the web page instead, and therefore, the data becomes captured instead of described.
-The language does have the ability to transform into RDF, but the slight nuance between intended use means that a more complicated deployment of the attributes will be required.
-Using a previously established standard eases the adoption of encoding required to communication change information to autonomous systems.
+However, the design of RDFa focuses around describing the web page's content through markup \cite{Herman2015}.
+The underlying or resulting versioning data model may not conform with the format of content presented in the change log.
+This would lead to a poorly structured graph or missing content, undermining the value gained by encoding linked data into the change log.
+As a result, another method using JavaScript Object Notation for Linked Data (JSON-LD) was pursued since it's purpose is to store data separate from visible content.
 
 \begin{figure}
 	\centering
