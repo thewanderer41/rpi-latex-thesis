@@ -195,7 +195,7 @@ Research done involving change log content must manually link entries with compu
 While machines may still be significantly removed from the ability to comprehend the impact of changes made to a data set or software code, they are currently opaquely blocked from consuming any of the content within logs more than understanding they contain text.
 The transition between different versions of large datasets is then left largely up to the human user's ability to understand and process the modifications mentioned within the change log.
 
-\subsection{RDFa}
+\subsection{Structured Data}
 
 The Resource Description Framework in Attributes (RDFa) framework encodes linked data vocabularies into HTML documents, and provides an opportunity to make change logs machine interpretable. \cite{Adida2015}.
 Linked data technologies utilize web ontologies to standardize terms and semantics across domain applications.
@@ -206,6 +206,13 @@ People intuitively understand that certain strings represent meaningful informat
 RDFa seeks to encode that understanding natively for effective machine consumption.
 Extending this approach into publishing change logs, will allow linked data to capture the metaphorical meat of change content.
 
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.40]{figures/RDFaSemantics.png}
+	\caption{Illustration of the difference in what autonomous systems see when crawling a web page and what humans see when reading the same material. Figure 1 from \cite{Herman2015}}
+	\label{RDFa}
+\end{figure}
+
 The implementation requires changing publishing practices from plain-text documents to something structured data compatible such as HTML.
 The change also has the added benefit of making the logs available on-line, and thus, more openly accessible to data users through the utilization of web based search engines.
 Large companies such as Google have already begun making endeavors in equipping their web crawlers to consume structured data such as RDFa from web pages.
@@ -215,26 +222,26 @@ The underlying or resulting versioning data model may not conform with the forma
 This would lead to a poorly structured graph or missing content, undermining the value gained by encoding linked data into the change log.
 As a result, another method using JavaScript Object Notation for Linked Data (JSON-LD) was pursued since it's purpose is to store data separate from visible content.
 
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.40]{figures/RDFaSemantics.png}
-	\caption{Illustration of the difference in what autonomous systems see when crawling a web page and what humans see when reading the same material. Figure 1 from \cite{Herman2015}}
-	\label{RDFa}
-\end{figure}
-
-\subsection{JSON-LD}
+The JSON data format allows web pages to store data for JavaScript applications within the document.
+It utilizes a simple and robust syntax to accommodate a wide variety of content.
+JSON-LD extends the original specification by defining rules which allow entries to resolve as web vocabularies, giving them a meaningful context \ref{JSONLD}.
+Because it stores data separate from visible content, JSON-LD does not need to adhere with the constraints of visible content.
+However, every linked data triple must be explicitly defined, meaning that resulting documents may likely be much larger than their RDFa counterparts.
 
 \section{Modeling} \label{sec:models}
 
-It describes the sequence of events that lead to the construction of an object  \cite{dai2014provenance}.
-
-However, a model recently released model by the Health Care and Life Sciences (HCLS) Interest Group may provide a solution when used in conjunction with other identifiers \cite{Dummontier2016}.
-Their model, shown in Figure \ref{HCLSModel}, separates the concept of a dataset into three parts.
+Data models allow the capture of complicated relationships between data objects within a system without needing to look into sizable datasets.
+Many data models include versioning concepts in their specifications, but they are often provenance models which describe the sequence of events that lead to the construction of an object \cite{dai2014provenance}.
+However, as discussed previously, versioning seeks to expose relationships between objects which may not describe how to construct either one.
+The Health Care and Life Sciences (HCLS) Interest Group recently released a model which may provide a solution when used in conjunction with other identifiers \cite{Dummontier2016}.
+Their model, shown in Figure \ref{HCLSModel}, separates the concept of a dataset into three groupings.
 The highest level summarizes the data as an abstract work, perhaps better described as a topic or title.
 This data topic can have multiple versions as it changes over time.
 The version can then be instantiated into various distributions with different formats.
-Such a set of linked data would provide sufficient data to discern between two data instances of the same information.
-However, it is unclear as to whether a single identifier would be able to encompass such complete information.
+Compare this to the diagram in Figure \ref{hierarchy} which features more tiers.
+In this case, the basis for diverging groups is changes in identifier and physical formating of that version.
+This model also demonstrates how it can better communicate scientific similarity than an identifier.
+The model logically links together, under a single version, representations of that data adjusting for physical perturbations.
 
 \begin{figure}%[b]
 	\centering
@@ -243,21 +250,31 @@ However, it is unclear as to whether a single identifier would be able to encomp
 	\label{HCLSModel}
 \end{figure}
 
-The organization of the model has interesting parallels with Plato's theory of Forms where he proposes that there exists a perfect idea of an object which has imperfect realizations in the physical world.
-Likewise, the summary description of the data set represents the ideal which the data seeks to capture.
-The model then uses a series of versions represented using the Provenance, Authoring, and Versioning (PAV) ontology to document the physical change of the data as it approaches the ideal\cite{Ciccarese2013}.
-PAV produces an interesting entry point into explaining the data set's development as well as recognizing the imperfection inherent in data capture.
-As a concept in the model, linked data can further extend the description to provide details necessary in identifying a particular version of data.
-However, PAV only has retrospective views of data versions since a version can only point back to previous instances.
+The HCLS data model captures version information using the Provenance, Authoring, and Versioning (PAV) ontology \cite{Ciccarese2013}.
+As explained in their document, PAV addresses versioning as a result of disagreements with other ontologies' definitions such as PROV.
+They enumerate specific situations relating to health care data requiring broader conceptual coverage.
+As a result, their model provides basic properties to identify a previous version and its corresponding identifier.
+They do not provide methods to identify motivations or discuss the role attribute differences effect changing versions.
+The existence and widespread adoption of change logs demonstrate the importance of this information in understanding modifications between versions.
+However, PAV does adopt a state-based perspective regarding versioning since it only seeks to identify a previous version without attributing a responsible activity.
+
+The PROV data model is a World Wide Web Consortium (W3C) recommendation which defines linked data properties to capture data provenance \cite{Gil2013}.
+While a subtree of terms deal with versions, the ontology takes an activity based view of data.
+This makes sense since it seeks to explain what activities led to the creation of an object.
+This focus on activities results in a very shallow definition of methods to capture entity-to-entity relationships within the model.
 
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.40]{figures/NASALevels.png}
+	\includegraphics[scale=0.35]{figures/NASALevels.png}
 	\caption{NASA organizes its data into three levels depending on the amount of aggregation and the distance the data is removed from the original sensor measurements. Figure 1 from \cite{Barkstrom2003}}
 	\label{NASALevels}
 \end{figure}
 
-NASA defines three levels of data processing, seen in Figure \ref{NASALevels}, that encompass the stages required to turn a raw signal from satellite instruments into physical measurements into global aggregate summaries \cite{Barkstrom2003}.
+In his discourse on version management, Barkstrom introduces NASA's workflow model as seen in Figure \ref{NASALevels}.
+It describes the formal stages of processing to turn a raw remote sensing signal from satellite instruments into global aggregate summaries \cite{Barkstrom2003}.
+Understanding this model reveals that changes to either the algorithms or parameter files will force a change in the resulting data.
+This explains the new result's provenance, but it would not capture the differences between these objects.
+The key to understanding version modeling lies in recognizing provenance and versioning are intimately entwined, but seek to explain different properties about data objects.
 
 \section{Data Versioning Operations}
 
