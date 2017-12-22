@@ -278,11 +278,13 @@ The key to understanding version modeling lies in recognizing provenance and ver
 
 \section{Data Versioning Operations}
 
-Architecture has a principle that says form follows function, but, for data, form equals function.
-As a result, data has as many different forms as it has functions.
-Biological experiments often use data within cyclical data workflows where outputs are immediately fed back into new experiments \cite{Tagger2005}.
-Even though the goal of the experiment is the final data set, all the intermediary data sets provide significant value in reaching the goal.
-Libraries store data about their collections in large databases where both old and new versions of literature need to be maintained \cite{Wiil:2000:RDH:338407.338517}.
+Versioning systems come in a variety of different forms as a result of the assorted applications they must manage.
+Experimental biology data require tracking as they pass through a scientific workflow \cite{Tagger2005}.
+Libraries curate multiple editions of the same work, sometimes with significant revisions \cite{Wiil:2000:RDH:338407.338517}.
+What these activities demonstrate is the wide range of settings and expectations that versioning systems operate under.
+While this work cannot hope to explore all these applications, all the systems studied share three common functions: addition, deletion, and modification.
+These three operations plausibly form the core set of relationships when versioning.
+
 Some data exist in such a highly constrained environment that it must be managed at near the hardware level \cite{Flouris04clotho:transparent}.
 The struggle no longer becomes generating data, but instead, fitting the data into a format that users find useful and can consume.
 
