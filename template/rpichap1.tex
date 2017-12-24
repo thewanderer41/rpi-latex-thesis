@@ -276,77 +276,74 @@ Understanding this model reveals that changes to either the algorithms or parame
 This explains the new result's provenance, but it would not capture the differences between these objects.
 The key to understanding version modeling lies in recognizing provenance and versioning are intimately entwined, but seek to explain different properties about data objects.
 
+Klein and Fensel determined versioning systems needed to capture compatibility as a major characteristic while performing a study of different ontology versioning methods \cite{Klein01ontologyversioning}.
+There are two types of compatibility, forwards which explains how to modify old data to work with new content and backwards which allows new data to interact with old data.
+Knowing one type of compatibility does not always entail the means of deriving the other.
+Having full forwards and backwards compatibility allows interoperability between a variety of applications which may use different versions of the same ontology.
+However, it often depends on the application as to whether full compatibility is necessary.
+
 \section{Data Versioning Operations}
 
 Versioning systems come in a variety of different forms as a result of the assorted applications they must manage.
 Experimental biology data require tracking as they pass through a scientific workflow \cite{Tagger2005}.
 Libraries curate multiple editions of the same work, sometimes with significant revisions \cite{Wiil:2000:RDH:338407.338517}.
-What these activities demonstrate is the wide range of settings and expectations that versioning systems operate under.
-While this work cannot hope to explore all these applications, all the systems studied share three common functions: addition, deletion, and modification.
+What these activities demonstrate is the wide range of settings and expectations under which versioning systems operate.
+While this work cannot hope to explore all these applications, every system studied share three common functions: addition, deletion, and modification.
 These three operations plausibly form the core set of relationships when versioning.
 
-Some data exist in such a highly constrained environment that it must be managed at near the hardware level \cite{Flouris04clotho:transparent}.
-The struggle no longer becomes generating data, but instead, fitting the data into a format that users find useful and can consume.
+Literature surveys often expect versioning systems to interact with data uniformly because they are asked to perform the same functions \cite{Tagger2005}.
+However, different data sets may utilize each of the three core operations at different rates \cite{rohtua}.
+This helps to characterize the data set in ways such as a growing set with many additions, a stable collection featuring occasional corrections, or a wildly volatile data set consisting of often deleted and replaced data files.
+Understanding these would give insight into the maturity and health of a dataset, but most major provenance ontologies do not heavily feature these relationships.
+Versioning information, of course, does not give insight into the origins of an object, and therefore, would not be expected to play a major role in provenance documentation.
 
-The challenge of data versioning systems is to provide a unifying environment that can handle the plethora of forms and functions of its data.
-At its core, versioning systems only need to concern themselves with three operations: addition, deletion, and modification.
-Most literature surveys do not realize the significance of this commonality as this means that versioning methods can be described by delineating how each operation is approached by a system \cite{Tagger2005} \cite{rohtua}.
-Data addition generally constitutes the least complicated versioning operation because it interacts the least with pre-existing data.
-However, new data does share context with pre-existing data and provides a method of measuring data set growth.
-Since data sets no longer have to be used in its entirety and can be freely subsetted, a data set's complexity increases significantly with its growth.
-Every new file added to a data set doubles the number of available subsets.
-
-Data deletion, however, has a more philosophical difference between systems.
-From the perspective of a versioning specialist, data should never be deleted since knowing why data was excluded is as important as knowing why data was included.
+While data addition and modification remain fairly uncontroversial, there is a mild division between practical and theoretical approaches to data deletion.
+A removed object provides evidence as an erroneous activity's results or intermediary steps leading to a final product.
+As a result, version management should maintain and track invalidated data.
 The software versioning manager GIT uses a method of compressing older data to conserve space without deleting the data \cite{Chacon:2009:PG:1618548}.
 Pragmatically, this is not always possible due, generally, to the physical constraints of storage space.
-In high energy physics, observational data often cannot be re-collected due to cost, and as a result, poor quality data cannot be re-processed or replaced \cite{Cavanaugh2002}.
-The decision in this document is to use the term invalidation when referring to data removal operations as it implies that whether permanently deleted or not, there exists a more valid alternative.
+In other cases, applications cannot recover erroneous data nor use it as documentation artifacts.
+Some high energy physics experiments cannot re-collect observational data due to cost, and as a result, they cannot replace or re-process poor quality data \cite{Cavanaugh2002}.
+While the distinction between deletion and invalidations remains largely semantic, the terms' use in this document reflects an understanding of the different constraints and requirements placed on versioning systems.
+As a result, invalidation is adopted as a broad, general term to also encompass data deletions.
 
-Data modification encompasses the most involved data versioning operation.
-As a result, it often comprises a majority of the description of a data versioning service.
-In truth, data modification can be summarized as the invalidation of an instance of a data object - which can be a file, a record, or anything in a data set - followed by the addition of a new instance of that data object.
-However, this kind of operation is used so often to fix errors and update data sets that it is considered a unique operation.
-Modification owes its complexity to interacting with both pre-existing data from the invalidation stage and new data from the addition stage.
-However, this compound relationship fully contextualizes the relationship the operation has in relating the old data and the new data.
-In some cases, this only provides forward or backwards references between data versions, but having both gives users context for data's current state and update to new data \cite{Klein01ontologyversioning}.
+A handful of other operations exist among version managers, but they do not prove ubiquitous across most applications.
+Software versioning tools like RCS commonly feature branching and merging functions to create a versioning line separate from the stable master branch \cite{tichy1985rcs}.
+This mostly provides an organizational role in development by allowing developers to experiment without contaminating a stable software release.
+It allows for more orderly management of versions, but does not conduct versioning itself.
+Other activities provide functional operations such as locking and unlocking files from edits to prevent race conditions in branch mergers.
+It does not introduce any new relationships but allows the tool to operate more smoothly.
+Likewise, many version control tools include functions to display the versioning tree, but this is also an ease-of-use function \cite{Dijkstra1994}.
 
-Due to the ubiquity of the data addition, invalidation, and modification operations in versioning systems, the conceptual versioning model presented in Chapter 3 centers around capturing the relationships established by each of the operations.
-While other functions exist commonly in versioning systems such as object locking to prevent simultaneous conflicting changes, viewing to see the version an object belongs to, and branching to allow distributed modifications, these functions comprise the space of utility operations that support the three core processes.
 
 \subsection{Types of Change}
 
-The study of versioning operations further breaks down into categorization of change types data sets may undergo.
-While the meaning of operations are fairly easy to understand, not all changes have the same impact.
-As mentioned previously, version numbering separates perturbations into categories based on the impact the producer believes it has on the project.
-In this project, changes are categorized into scientific, technical, and lexical changes.
-The granularity of the categorization does not consider the magnitude of change within the individual values stored by a data set as actual values vary depending on application and domain.
-Focusing on a more abstract representation of kinds of change allows for a better understanding of its impact while not being too precise to be domain specific.
-
-Scientific changes comprise the family of changes which have the greatest impact on a project or data set.
-It indicates that modifications have been made to the most fundamental methods used to create a data set.
-These can include changes to algorithms used or sampling methods which may require a change in how users consume the new data.
-These changes have the largest implications for data consumers as it can have serious consequences for the soundness of their results.
-However, these kinds of changes is not always caught on the production end of data generation.
-While very large modifications can easily be determined to produce a scientific change, more subtle changes or interactions can also have larger ramifications, and data producers may initially view this as a technical change due to data quality's subjectivity.
-Technical impacts do not change the underlying science of the data, but impose a large enough change as to warrant notice.
-Structure alteration and unit conversions count as technical changes since the dataset now needs to be consumed differently but remains valid for use.
-In one of the data sets used by this projects, concentration units were originally reported in parts per million and then in cc isotope ratios.
-This would constitute a technical change since the data presents the same scientific measurements but in a different manner.
-Lexical changes belie the transformations that can best be described as corrections.
-Filling in previously missing values or fix erroneous values may be lexical changes.
-While they have the smallest impact on results and conclusions, these changes can allow computations to be performed when previously missing data discouraged such behavior.
+Barkstrom uses the ability to scientifically distinguish between two data sets as a criteria for major divisions among groupings \cite{Barkstrom2003}.
+At lower levels, he notes that science teams can no longer discern scientific differences between data sets.
+Instead, they observe changes to format and structure contribute significant alterations without changing any values withing the data.
+As a result, these technical changes form a second boundary to meaningfully separate minor version groupings.
+Finally, the explicit values may need occasional revisions to correct lexical errors such as spelling or formatting.
+Of course, these terms were chosen carefully as they reflect the three value dot-decimal identifier system.
+However, data producers will often use qualitative measures to determine the type of change occurring between versions.
+Versioning system users wish to achieve insight into the type of change that occurs between versions, and quantitative analysis on versioning operations will provide quantifiable evidence in characterizing the impact of a change.
 
 The exact category that a particular change falls into can be controversial.
-The decision to change concentration units from parts per million to milligrams per milliliter poses a Technical change for a data producer.
-However, for a data consumer, the change may be viewed as a Scientific change as it invalidates the methods they had previously used.
+The decision to provide concentration units from parts per million to milligrams per milliliter poses a Technical change for a data producer.
+However, for a data consumer, the alteration may be viewed as a Scientific change as it invalidates the methods they had previously used.
 This conflict in view illustrates the data consumer-producer dynamic.
-In general, data producers are in control of the methods of versioning, but data consumers determine the classification of a data change.
+In general, data producers control the versioning methods, but data consumers determine the classification of a data change.
 Producers tend to use versioning systems to ensure data quality of service through audits and recovery tools \cite{Cavanaugh2002}.
-Meanwhile, a consumer will analyze the historical changes and determine the impact this may have to their data use.
+Meanwhile, a consumer will analyze the historical changes and determine the impact this may have on their data use.
 As a result, this means that data versioning systems must communicate a dynamic view of the changes in a system contextualized by the user of that data.
 
+Version managers often disagree at the point many technical changes sufficiently modifies a data set that it comprises a scientific change.
+As determining changes in science requires expert understanding over a domain, different measures should be explored to address the distinction.
+This document's approach studies add, invalidate, and modify counts to quantify the impact of changes and how they relate to the producer's observations.
+As previously mentioned, different systems utilize the operations at varying rates so absolute cutoffs will be unlikely in comparison to relative results.
+
 \section{Data Set Proliferation}
+
+Some data exist in such a highly constrained environment that it must be managed at near the hardware level \cite{Flouris04clotho:transparent}.
 
 An interesting statistic to note in Table \ref{table:Atlas} is the order of versions per dataset.
 While it does not indicate that the data have marked volatility, it does communicate that the data has a tendency to change over time.
