@@ -313,6 +313,7 @@ This mostly provides an organizational role in development by allowing developer
 It allows for more orderly management of versions, but does not conduct versioning itself.
 Other activities provide functional operations such as locking and unlocking files from edits to prevent race conditions in branch mergers.
 It does not introduce any new relationships but allows the tool to operate more smoothly.
+Clotho, a versioning application managing versions at the block level, coordinates constrained spaces using intermittent compact and un-compact methods when retrieving or storing old objects \cite{Flouris04clotho:transparent}.
 Likewise, many version control tools include functions to display the versioning tree, but this is also an ease-of-use function \cite{Dijkstra1994}.
 
 
@@ -342,8 +343,6 @@ This document's approach studies add, invalidate, and modify counts to quantify 
 As previously mentioned, different systems utilize the operations at varying rates so absolute cutoffs will be unlikely in comparison to relative results.
 
 \section{Data Set Proliferation}
-
-Some data exist in such a highly constrained environment that it must be managed at near the hardware level \cite{Flouris04clotho:transparent}.
 
 An interesting statistic to note in Table \ref{table:Atlas} is the order of versions per dataset.
 While it does not indicate that the data have marked volatility, it does communicate that the data has a tendency to change over time.

@@ -270,42 +270,6 @@ However, the uncertain landscape of web services means that full ontology mappin
 Advances in ontology change detection have made tools which automatically generate mappings between versions of an ontology available \cite{Hartung201315}.
 However, in this project, the focus remains on improving the description of these mappings to provide not only descriptions but also explanations for the transition.
 
-The Semantic Sea Ice Interoperability Initiative (SSIII) is a project combining the efforts of the National Snow and Ice Data Center (NSIDC) and the Rensselaer Polytechnic Institution (RPI) Tetherless World Constellation \cite{SSIII}.
-In their initiative, they developed an ontology to describe a core set of sea ice terms \cite{SSIIIOnto}.
-They have made available the second version of their ontology.
-The next edition of the ontology follows some adjusted best practices to improve modularity and coverage of the sea ice vocabulary.
-The new formulation would require the movement and addition of new concepts as well as the modification of other ontological entities.
-As of this writing, the ontology does not have a method to provide mappings between versions of the ontology even though the concepts are managed through GitHub.
-Currently, Ruth Duerr has developed a color coded visualization of the new ontology's layout using a CMap seen in Figure \ref{WaterIce}.
-The maps use a five color system with green representing no change, purple showing a moved concept, yellow coding an unmoved entity with changes to its name or definition, red showing a change to the ontology or nomenclature, and blue representing an entirely new concept.
-
-\begin{figure}
-	\centering
-	\includegraphics[scale=1]{figures/NaturalIceinWater.png}
-	\caption{Concept map created by Ruth Duerr to organize the Sea Ice Ontology's Version 3 development.}
-	\label{WaterIce}
-\end{figure}
-
-The Global Change Master Directory (GCMD) is a metadata repository used by NASA to story records of its available data sets \cite{Miled:2001:GCM:372202.372324}.
-It employs a keyword ontology to search for Earth science data in NASA data sets.
-These keywords tag and label datasets into strictly defined categories in order to make them more discoverable \cite{GCMDKey}.
-Version 1.0.0 of the GCMD Keywords was published on April 24, 1995, and as of the time of writing, the most recent version of the keywords is 8.5.
-As can be seen, the naming scheme of the versions changed since the first publication of the keywords.
-In the initial scheme, each part of the decimal system represented a different level of the GCMD Keyword hierarchy: category, topic, and term, respectively.
-Incrementing a number in the version name indicates a change occurring in that level of the ontology.
-However, this gave very little information on compatibility between versions, and the ontology currently employs a more standard Major.minor release naming scheme.
-
-The data set provides a very interesting case to study because of its history of medium storage.
-The GCMD originally distributed the keywords in a spreadsheet format, but later migrated onto database services as the scope and demand grew.
-The data may currently be accessed through a dynamic web service that can provide results in a variety of linked data formats.
-As a result, it leverages the endeavors made towards the environments mentioned in the previous two sections.
-The keywords have an accompanying change log, but due to the variety of mediums, the early logs are difficult to interpret.
-Since they attempt to use web technologies, the keywords each have unique identifiers that can be dereferenced using a Universal Resource Identifier (URI).
-Attribution, therefore, has mostly addressed by the source material.
-This is to be expected as a result of curated application of linked data principles.
-Due to the shift from spreadsheet to databases, there exists a disconnect between the early versions of the ontology and modern editions.
-The work done in this project will be able to link them and provide a road map through the evolution and migration of the vocabulary as well as guide future evolutions of the keywords.
-
 
 %%% Local Variables:
 %%% mode: latex
