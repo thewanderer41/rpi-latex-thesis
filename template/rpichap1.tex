@@ -6,11 +6,11 @@
 
 \chapter{INTRODUCTION}
 
-Consider the example... --> Bugzilla.
-Requirements for Development of Hypermedia Technology for a Digital Library Supporting Scholarly Work \cite{Wiil:2000:RDH:338407.338517}.
 Anyone who has used an iPhone or owned a video game console understands the basics of versioning.
-Companies brand sequential devices to indicate that there has been an improvement in performance or capabilities.
-
+Companies brand sequential devices to indicate improvements in performance or capabilities.
+This basic identification method has given rise to versioning system used widely across a landscape of software and data.
+Scientific workflows avoid losing work by changing while in operation, and version systems help accomplish this \cite{Casati1996}.
+They provide necessary documentation which informs the transition to new methods and procedures - Requirements for Development of Hypermedia Technology for a Digital Library Supporting Scholarly Work \cite{Wiil:2000:RDH:338407.338517}.
 
 %%%%%%  Data changes and grows, we have to track it --> Data Quality?
 John C. Maxwell once said, "Change is inevitable.  Growth is optional."
@@ -190,7 +190,8 @@ This gives insight into motivations behind particular design decisions.
 It also provides feedback to the user community that corrections have been addressed in addition to ensuring that improvements drive modifications to the code base.
 An identifier cannot communicate these qualities while remaining succinct.
 Some research has been done to determine the health of a development project based on the number and length of change logs released over time \cite{German03automatingthe}.
-However, little work has been done to make change logs machine computable as many of these documents remain in human-readable text only.
+This becomes particularly significant as data freshness plays a growing role in successful system function \cite{Bouzeghoub:2004:FAD:1012453.1012464}.
+However, little work has been done to make change logs machine-computable as many of these documents remain in human-readable text only.
 Research done involving change log content must manually link entries with computable meta-data such as the introduction of new features with the emergence of new bugs \cite{6132954}.
 While machines may still be significantly removed from the ability to comprehend the impact of changes made to a data set or software code, they are currently opaquely blocked from consuming any of the content within logs more than understanding they contain text.
 The transition between different versions of large datasets is then left largely up to the human user's ability to understand and process the modifications mentioned within the change log.
@@ -230,7 +231,8 @@ However, every linked data triple must be explicitly defined, meaning that resul
 
 \section{Modeling} \label{sec:models}
 
-Data models allow the capture of complicated relationships between data objects within a system without needing to look into sizable datasets.
+Data models allow the capture of complicated relationships between data objects within a system without needing to physically look over sizable datasets.
+The Proof Markup Language, one of the first semantic models to capture provenance information, expressed these relationships using inference reasoning through traceable graphs \cite{daSilva2006381}.
 Many data models include versioning concepts in their specifications, but they are often provenance models which describe the sequence of events that lead to the construction of an object \cite{dai2014provenance}.
 However, as discussed previously, versioning seeks to expose relationships between objects which may not describe how to construct either one.
 The Health Care and Life Sciences (HCLS) Interest Group recently released a model which may provide a solution when used in conjunction with other identifiers \cite{Dummontier2016}.
