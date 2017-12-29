@@ -34,7 +34,7 @@ In this document, data versioning is approached using technology provided by sem
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.40]{figures/ASDCHoldings.png}
-	\caption{Summary of ASDC Holdings for the years 2001 to 2004 from Barkstrom and Bates \cite{Barkstrom_digitallibrary}}
+	\caption[Summary of ASDC Holdings for the years 2001 to 2004.]{Summary of ASDC Holdings for the years 2001 to 2004.  From Barkstrom and Bates \cite{Barkstrom_digitallibrary}}
 	\label{table:ASDC}
 \end{figure}
 
@@ -52,7 +52,7 @@ In this document, data versioning is approached using technology provided by sem
 		Files per Dataset & O(100) \\
 		\hline
 	\end{tabular}
-	\caption{Summary of ATLAS data set generation in 2008 from Branco et al.\cite{Branco2008}}
+	\caption[Summary of ATLAS data set generation in 2008]{Summary of ATLAS data set generation in 2008.  From Branco et al.\cite{Branco2008}}
 	\label{table:Atlas}
 \end{table}
 
@@ -74,7 +74,7 @@ Therefore, a version definition cannot rely on provenance alone.
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.50]{figures/hierarchy.png}
-	\caption{Visual representation of grouping hierarchy from \cite{Barkstrom2003}}
+	\caption[Visual representation of grouping hierarchy.]{Visual representation of grouping hierarchy.  From \cite{Barkstrom2003}}
 	\label{hierarchy}
 \end{figure}
 
@@ -116,7 +116,7 @@ A common method used to address the distinction between versions is a human-read
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.75]{figures/RCSCommitTree.png}
-	\caption{Commit history of an object in RCS with changes in the main line stored as back deltas and side branches stored as forward deltas.  Figure 5 in \cite{tichy1985rcs}}
+	\caption[Commit history of an object in RCS with changes in the main line stored as back deltas and side branches stored as forward deltas.]{Commit history of an object in RCS with changes in the main line stored as back deltas and side branches stored as forward deltas.  Figure 5 in \cite{tichy1985rcs}}
 	\label{RCSTree}
 \end{figure}
 
@@ -140,11 +140,12 @@ This includes when data collection continues on after initial publication.
 This behavior becomes entirely too slow as data providers begin allowing users to dynamically generate data products from existing data according to their needs \cite{Barkstrom2003a}.
 Some agencies have begun assigning versioned DOIs, but this has not become common practice.
 Other groups do not assign a new DOI, but reference to the latest release of the document or object \cite{Ands2017}.
+As data sets continue to grow in size, it may become impractical to look towards data as the driving source for identifiers as Proell and Rauber suggest that database queries may provide a more scalable means of citing datasets \cite{proellBigData}.
 
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.30]{figures/DigitalIdentifierTable.png}
-	\caption{Table of predominant identifiers used in science.  From Duerr et al. \cite{Duerr2011}}
+	\caption[Table of predominant identifiers used in science.]{Table of predominant identifiers used in science.  From Duerr et al. \cite{Duerr2011}}
 	\label{table:Duerr}
 \end{figure}
 
@@ -168,7 +169,7 @@ As a result, relying on identifiers to convey and contain versioning information
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.85]{figures/federatedGit.png}
-	\caption{A distributed workflow to control for volatile versioning behavior.  From  \cite{cederqvist2002version}.}
+	\caption[A distributed workflow to control for volatile versioning behavior.]{A distributed workflow to control for volatile versioning behavior.  From  \cite{cederqvist2002version}.}
 	\label{fig:federated}
 \end{figure}
 
@@ -210,7 +211,7 @@ Extending this approach into publishing change logs, will allow linked data to c
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.40]{figures/RDFaSemantics.png}
-	\caption{Illustration of the difference in what autonomous systems see when crawling a web page and what humans see when reading the same material. Figure 1 from \cite{Herman2015}}
+	\caption[Illustration of the difference in what autonomous systems see when crawling a web page and what humans see when reading the same material.]{Illustration of the difference in what autonomous systems see when crawling a web page and what humans see when reading the same material. Figure 1 from \cite{Herman2015}}
 	\label{RDFa}
 \end{figure}
 
@@ -231,6 +232,17 @@ However, every linked data triple must be explicitly defined, meaning that resul
 
 \section{Modeling} \label{sec:models}
 
+Initial research in version modeling occurred with databases, studying ways to track and migrate schema changes.
+Capturing periodic snapshots or copies becomes unfeasible with increasingly large centralized database systems.
+This gave rise to the first temporal databases where schemas included time and dated transactions modifying the schema \cite{roddick1996model}.
+This provides the database a method to transactionally rollback the environment to recreate a search.
+As databases grew more complex, the intricate relationships between objects made rollbacks more difficult.
+This results from the need to manage the time instances of realization, storage, and validity.
+The datum becomes realized at collection, then stored upon entry into the database, and finally valid until the present or new data replaces it.
+Klahold et al. introduced using abstract versioning environments to separate the temporal features and organize them into related groupings \cite{Klahold:1986:GMV:645913.671314}.
+As publications more often include citations to data, researchers adjust to enormous modern databases with new methods changing queries rather than transforming schemas \cite{Proell2013} \cite{DBLP:conf/data/2013}.
+This method, however, relies on an abstract model capturing data changes to inform query modifications.
+
 Data models allow the capture of complicated relationships between data objects within a system without needing to physically look over sizable datasets.
 The Proof Markup Language, one of the first semantic models to capture provenance information, expressed these relationships using inference reasoning through traceable graphs \cite{daSilva2006381}.
 Many data models include versioning concepts in their specifications, but they are often provenance models which describe the sequence of events that lead to the construction of an object \cite{dai2014provenance}.
@@ -248,7 +260,7 @@ The model logically links together, under a single version, representations of t
 \begin{figure}%[b]
 	\centering
 	\includegraphics[scale=0.35]{figures/HCLSModel.png}
-	\caption{Data model from the Health Care and Life Sciences Interest Group separating data into three levels: works, versions, and instances.  From Dummontier et al. \cite{Dummontier2016}}
+	\caption[Data model from the Health Care and Life Sciences Interest Group separating data into three levels: works, versions, and instances.]{Data model from the Health Care and Life Sciences Interest Group separating data into three levels: works, versions, and instances.  From Dummontier et al. \cite{Dummontier2016}}
 	\label{HCLSModel}
 \end{figure}
 
@@ -261,6 +273,10 @@ The existence and widespread adoption of change logs demonstrate the importance 
 However, PAV does adopt a state-based perspective regarding versioning since it only seeks to identify a previous version without attributing a responsible activity.
 
 The PROV data model is a World Wide Web Consortium (W3C) recommendation which defines linked data properties to capture data provenance \cite{Gil2013}.
+PROV has played a significant contribution in maintaining the quality and reproducibility of datasets and reporting in the National Climate Assessment (NCA) \cite{Ma2014191}.
+This implication signifies that there is an increased likelihood of adoption through other scientific fields as a result of this reporting.
+The Global Change Information System, which houses the data used to generate the NCA, uses PROV to meticulously track the generation of its artifacts and results as they are used in the report \cite{Tilmes2012}.
+This means that not only does the data have a traceable lineage to verify quality, but the content of documents can have the same verifiability \cite{Ma2014}.
 While a subtree of terms deal with versions, the ontology takes an activity based view of data.
 This makes sense since it seeks to explain what activities led to the creation of an object.
 This focus on activities results in a very shallow definition of methods to capture entity-to-entity relationships within the model.
@@ -268,7 +284,7 @@ This focus on activities results in a very shallow definition of methods to capt
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.35]{figures/NASALevels.png}
-	\caption{NASA organizes its data into three levels depending on the amount of aggregation and the distance the data is removed from the original sensor measurements. Figure 1 from \cite{Barkstrom2003}}
+	\caption[NASA organizes its data into three levels depending on the amount of aggregation and the distance the data is removed from the original sensor measurements.]{NASA organizes its data into three levels depending on the amount of aggregation and the distance the data is removed from the original sensor measurements. Figure 1 from \cite{Barkstrom2003}}
 	\label{NASALevels}
 \end{figure}
 
@@ -283,6 +299,9 @@ There are two types of compatibility, forwards which explains how to modify old 
 Knowing one type of compatibility does not always entail the means of deriving the other.
 Having full forwards and backwards compatibility allows interoperability between a variety of applications which may use different versions of the same ontology.
 However, it often depends on the application as to whether full compatibility is necessary.
+Once concern which is very rarely discussed is the compatibility of files and objects which do not change at all.
+Take, for example, some biological ontologies, which must update terms and definitions to better capture the field \cite{Ochs:2015:SVS:2826733.2826866}.
+They mention very little on how to migrate terms which do not change, but these can contribute to a majority of copied content and pose significant scaling issues.
 
 \section{Data Versioning Operations}
 
@@ -312,12 +331,19 @@ As a result, invalidation is adopted as a broad, general term to also encompass 
 A handful of other operations exist among version managers, but they do not prove ubiquitous across most applications.
 Software versioning tools like RCS commonly feature branching and merging functions to create a versioning line separate from the stable master branch \cite{tichy1985rcs}.
 This mostly provides an organizational role in development by allowing developers to experiment without contaminating a stable software release.
+Figure \ref{GITTree} models this, showing versions C3 and C5 in branch iss53 before being merged back into the production line as C6.
 It allows for more orderly management of versions, but does not conduct versioning itself.
 Other activities provide functional operations such as locking and unlocking files from edits to prevent race conditions in branch mergers.
 It does not introduce any new relationships but allows the tool to operate more smoothly.
 Clotho, a versioning application managing versions at the block level, coordinates constrained spaces using intermittent compact and un-compact methods when retrieving or storing old objects \cite{Flouris04clotho:transparent}.
 Likewise, many version control tools include functions to display the versioning tree, but this is also an ease-of-use function \cite{Dijkstra1994}.
 
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.75]{figures/GITCommitTree.png}
+	\caption[Example of a commit history with branching stored in GIT.]{Example of a commit history with branching stored in GIT.  Figure 3.17 from \cite{Chacon:2009:PG:1618548}}
+	\label{GITTree}
+\end{figure}
 
 \subsection{Types of Change}
 
@@ -360,44 +386,6 @@ All these new documents need a form of data management \cite{Berberich:2007:TMT:
 However, the migration has not been without its problems.
 
 For similar reasons, treating data as documents produces problems when applying technologies from software management \cite{tichy1985rcs}\cite{Chien:2000:VMX:646544.696357}.
-Structure provides the most significant distinguisher between data and software since a data set with a removed file remains usable but a software project would break.
-The function of code comes from its content, but the function of data comes from its ability to store and organize data.
-This should not be confused with data formats which impose structure onto data in much the same way programming languages provides a medium to express actions.
-However, exporting data in different formats is currently easier than exporting code into different languages.
-Data sets do not represent a single object, unlike a software project\cite{Chacon:2009:PG:1618548}.
-They are compact representations of all possible subsets of the data set, which are also datasets.
-The Atmospheric Radiation Measurement (ARM) Program publishes data daily from sensors deployed across the globe, but a user may only desire files from a specific region, files from only the year 2012 in the Southern Great Plains region, or from only the month of February for the collection site's lifespan \cite{6906868}.
-These can all be considered arbitrary subsets from the data sets generated by the data collection program, but a software project would not be able to sustain such arbitrary filtering.
-GIT stores the files comprising a repository as snapshots of each file in the store, and when developers make changes to a file, the store creates a new snapshot of that files as seen in Figure \ref{GITFile}.
-A version then becomes defined by the complete collection of snapshots within the repository at the time, and the files cannot be subsetted due to the dependencies between the files in the version.
-As a result, when modeling the commit history, or the history of versions, the set of files can be compacted since all components are necessary to produce the object.
-Demonstrated in Figure \ref{GITTree}, a developer creates a branch of the master line with commit C3 from C2.
-The entire repository at C2 gets copied into the branch, and when the work is done, it gets merged back into the master branch.
-When a user then orders the software generated by this repository, it results from the compilation of the entire commit whereas a data set does not require the same completeness to be used.
-For this reason, the structures of data sets and software becomes incompatible and software versioning technologies are insufficient to capture this nuance.
-
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.50]{figures/GITFiles.png}
-	\caption{GIT stores changes in the repository as snapshots of individual files. Figure 1.5 from \cite{Chacon:2009:PG:1618548}}
-	\label{GITFile}
-\end{figure}
-
-Furthermore, returning to Figure \ref{GITFile}, GIT actually can be considered a reduction in terms of software versioning methodology.
-The constant dynamic in play with tracking versions, perhaps with Computer Science in general, is the trade off between space and time.
-Maintaining full snapshots of repositories proves extremely space consuming, but retrieving these snapshots occurs near instantaneously.
-In general, prior to this, the conventional wisdom was to instead store one snapshot and a set of deltas or differences between software documents and then use processing time to reconstruct a particular commit by applying the differences \cite{tichy1985rcs}.
-Deltas can further break down into forward or backward changes, reflecting the importance of keeping the snapshot of the oldest or newest instance.
-This produced very lean versioning systems, but after a long string of changes, applying deltas becomes very time consuming so periodical snapshots become necessary.
-With costs for storage space compared to the relative size of software files dropping, GIT prioritizes the ability to quickly swap between and develop different branches of the system.
-This interplay between space and computation time can also be seen within the data management space as keeping snapshots of large databases will be intensely costly but less so for spreadsheets.
-
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.75]{figures/GITCommitTree.png}
-	\caption{Example of a commit history with branching stored in GIT.  Figure 3.17 from \cite{Chacon:2009:PG:1618548}}
-	\label{GITTree}
-\end{figure}
 
 \subsection{Unified Systems}
 
