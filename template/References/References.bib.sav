@@ -1099,6 +1099,19 @@ be in line with traditional close source development.},
   venue      = {Portoro{\v z}, Slovenia},
 }
 
+@Electronic{SchemaRem,
+  title        = {DeleteAction},
+  organization = {Schema.org},
+  note         = {Accessed: January 19, 2017},
+  url          = {http://schema.org/DeleteAction},
+}
+
+@Electronic{Schema,
+  organization = {Schema.org},
+  note         = {A},
+  url          = {http://schema.org/UpdateAction},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}
 
 @Comment{jabref-meta: grouping:

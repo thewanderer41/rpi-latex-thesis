@@ -7,64 +7,12 @@
 \chapter{PREVIOUS WORK}
 %\resetfootnote %this command starts footnote numbering with 1 again.
 
-A number of instances in the literature mentioned previously uses the term versioning and provenance interchangeably.
-Mayernik et al. also notice a similar phenomenon although they use the term lineage instead of versioning \cite{MatthewS.Mayernik201312-039}.
-The version model introduced by Barkstrom in Figure \ref{NASALevels} to organize NASA's satellite data collection actually refers to a simplified workflow describing the provenance used to produce each level of data \cite{Barkstrom2003}.
-The diagram does not compare objects from the same level since changes to contributing components are only used as an indicator for version change.
-In actuality, objects have much more complicated development structures than the one dimensional lifespan indicated by the transition from Level 0 data to Level 3.
-The PROV Ontology model in Figure \ref{PROVO} outlines more explicit inter-relations between data objects, and it provides a new dimension with which to consider the interactions of data objects.
-More specifically, it outlines the explicit process of an agent performing an activity using an entity to produce a new entity.
-In the context of the level system, an agent (either a program or individual) performs a "Produce Instantaneous Fields" activity using "L1 Data" to produce "L2 Data."
-However, higher level data sets rarely use only one instance of lower level data.
-Calibration values may result from daily readings collected from another data set, but the generality of the ontology allows these relationships to be explicitly expressed.
-A more realistic provenance graph looks like the one in Figure \ref{ProvGraph} of an ozone indicator in which a Level 3 object results from the interrelation of multiple lower level products.
-An interesting observation of note is that Tilmes remarks in 2011 \cite{TILMES2011548}, 
-\begin{quotation}
-	Consider the relatively common case of the calibration table, which is an input to the L1B process, changing. Even though the version of the L2 or L3 software hasn’t changed, the data files in the whole process have been affected by the change in the calibration.
-\end{quotation}
-which Barkstrom already observes in 2003 \cite{Barkstrom2003}
-\begin{quotation}
-	If scientific data production were easy, instruments would
-	have stable calibrations and validation activities would discover no need for
-	corrections that vary with time. Unfortunately, validation invariably shows that
-	instrument calibrations drift and that algorithms need a better physical basis. Within a Data Set, we can think of a Data Set Version as a collection of files in
-	a Data Set that have a homogeneous Data Production Strategy. Within a Data
-	Set Version, we expect the code producing the files to be stable. We also expect
-	that the algorithm input coefficients will be stable as well. The intent of data
-	production is to produce data whose uncertainties are statistically similar under
-	similar conditions of observation.
-\end{quotation}
-indicating a basic view that despite eight years in difference, the continuation of software focused versioning resulting in difficulties of data oriented collections.
-
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.5]{figures/ProvO.png}
-	\caption[Diagram of the PROV Ontology.]{Diagram of the PROV Ontology.  Figure 1 from \cite{Lebo2013}}
-	\label{PROVO}
-\end{figure}
-
-\begin{figure}
-	\centering
-	\begin{adjustbox}{addcode={\begin{minipage}{\width}}{
-					\caption[Provenance graph of a Level 3 data product, showing the inter-relations between different data products in generating the final product.]{Provenance graph of a Level 3 data product, showing the inter-relations between different data products in generating the final product.  Figure 2 from \cite{TILMES2011548}}\end{minipage}},rotate=90,center}
-		\includegraphics[scale=0.5]{figures/OzoneProvGraph.png}
-	\end{adjustbox}
-	\label{ProvGraph}
-\end{figure}
-
-If the level system provides a length and provenance indicates a breadth of a workflow, a version system can be considered to provide a height to a total workflow.
-Referring back to the HCLS data model terminology in Figure \ref{HCLSModel}, as objects within a workflow, as in Figure \ref{ProvGraph}, change versions, the structure of the workflow as well as the Summary Description of the final object, in this case the L3 Ozone product, remains the same.
-Instead, the new versions add layers like building blocks over the foundations of the original workflow structure.
-Version control systems then provide the mortar linking the blocks together to give the lineage capture procedure a solid structure.
-
-To bring the discussion to an actual application, the GCMD released version 8.4 of their keywords, adding a slew of new values and modifying a select few \cite{Stevens2016}.
-At the time of release, many data repositories can be currently assumed to be using the previous or older versions of the keywords.
-As the taxonomy is not a class-based ontology, changes to the keywords have significant implications to the semantics of a data set described by those keywords.
-A data producer wishing to expose their data sets using the new version of the GCMD Keywords must use a prospective method to translate their current descriptions to the new version.
-By comparison, the GCMD would use a retrospective measure to record the changes made to their keywords.
-PAV would not be able to address the prospective problem as a result of it is, "a lightweight vocabulary, for capturing “just enough” descriptions essential for web resources representing digitized knowledge" \cite{Ciccarese2013}.
-A detailed transition from GCMD Keywords 8.3 to 8.4 would significantly undermine the lightweight nature of the vocabulary.
-GCMD does provide a short summary of changes made in a version, but this would come in the form of text rather than structured data.
+The data versioning landscape produces a variety of different approaches and standards towards change capture.
+Collection into larger unified repositories will likely require a multi-tiered approach to synchronize the varied practices  \cite{Baker2009}.
+Baker notes that differences depend on the sociotechnical distance of a repository from the data's origin.
+Local stores closer to the collection site better understand data capture conditions, but must also adapt to changing environments.
+This work provides a basis for understanding the formal underlying properties which will allow consistent versioning practices.
+Science agencies and organizations are only beginning to formally codify and standardize methods to capture and publish lineage information \cite{MatthewS.Mayernik201312-039}.
 
 \section{Provenance}
 
@@ -84,6 +32,13 @@ The ontology is further formalized into a functional notation for easier human c
 One particular strength that has contributed to the adoption of PROV is its ability to link into other ontologies, making it easier for existing semantically enriched data sets to adopt PROV \cite{Miles2013} \cite{Moreau2013}.
 Komadu, a framework developed to alleviate workflow integration, through improves over its predecessor, Karma, by no longer utilizing global context identifiers that were no necessarily shared throughout the workflow. \cite{Suriarachchi_2015}.
 
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.5]{figures/ProvO.png}
+	\caption[Diagram of the PROV Ontology.]{Diagram of the PROV Ontology.  Figure 1 from \cite{Lebo2013}}
+	\label{PROVO}
+\end{figure}
+
 The PROV Ontology provides three different concepts that begin to encapsulate the provenance relationship between data versions.
 It defines a prov:Generation as "the completion of production of a new entity by an activity," \cite{Lebo2013}.
 This means that the generation, which corresponds to the version addition operation, must result from a prov:Activity.
@@ -99,17 +54,16 @@ The process simultaneously considers all four versions so one is not transformed
 Additionally, since we do not know which version is the best, we cannot consider any data set as an update of the others.
 Finally, no entity preexisted as the data sets resulted from an ongoing analysis and further steps have not been developed.
 
-The PAV Ontology provides a means to track versioning information through linked data by introducing \textit{pav:version} to cite versions and \textit{pav:previousVersion} to link them together in order \cite{Ciccarese2013}.
+The Provenance, Authorship, and Versioning (PAV) Ontology is, "a lightweight vocabulary, for capturing ``just enough” descriptions essential for web resources representing digitized knowledge" \cite{Ciccarese2013}.
+It provides a means to track versioning information through linked data by introducing \textit{pav:version} to cite versions and \textit{pav:previousVersion} to link them together in order \cite{Ciccarese2013}.
 It does so in comparison to the Dublin Core concept \textit{dc:isVersionOf} which records, "Changes in version imply substantive changes in content rather than differences in format" \cite{DCMI2012}.
 PAV argues that a new concept becomes necessary to cover cases where new versions do not have to be substantive but can still be alternate editions of the original object.
-Of note is the retrospective nature of the PAV ontology and PROV-O since it places primary emphasis on the most recent edition of an object.
-Figure \ref{RCSTree}, shows how RCS stores older versions as back deltas and branches as forward differences.
-The retrospective nature of back deltas results from development focus on the latest version, in this case 2.2.
-However, the forward differences provide a method to migrate from version 1.3 to the front of the branch.
-This characterizes the difference between a focus on data tracking, like that performed by provenance, to data migration, which users must undergo in order to consume the latest version.
-Mayernik et al. also find that, "Prospective records document a process that must be followed to generate a given class of products whereas retrospective records document a process that has already been executed" \cite{MatthewS.Mayernik201312-039}.
-Retrospective provenance and versioning provides the ability to ensure data trustability and data quality among resources.
-However, researchers must follow a prospective versioning record in order to keep their research up to date.
+While it documents related versions well, PAV does not dive deeper in explaining the circumstances behind version differences.
+
+Schema.org UpdateAction largely reflect the relationships adopted by this work, and are defined as "the act of managing by changing/editing the state of the object" \cite{Schema}.
+The remaining subclasses include the AddAction, DeleteAction, and UpdateAction.
+The function of these terms is to provide a means to supply searchable web pages with standardized microdata.
+As a result, they orient their properties towards definitions and characterization but do not provide the right structure for a standardized change capture model.
 
 \section{Provenance Distance}
 
@@ -121,7 +75,17 @@ Changes to the process creating an object signals the development of a new versi
 Therefore, studying the magnitude of this deviation should give some idea into the resulting object's impact.
 This idea, known as provenance distance, seeks to determine the impact of changes in provenance on new data versions through measuring graph edit distances.
 
-The first ingredient necessary to calculate provenance distance is a linked data graph capturing the sequence of events leading to the old and new objects' creation.
+\begin{figure}
+	\centering
+	\begin{adjustbox}{addcode={\begin{minipage}{\width}}{
+					\caption[Provenance graph of a Level 3 data product, showing the inter-relations between different data products in generating the final product.]{Provenance graph of a Level 3 data product, showing the inter-relations between different data products in generating the final product.  Figure 2 from \cite{TILMES2011548}}\end{minipage}},rotate=90,center}
+		\includegraphics[scale=0.5]{figures/OzoneProvGraph.png}
+	\end{adjustbox}
+	\label{ProvGraph}
+\end{figure}
+
+The first ingredient necessary to calculate provenance distance is a linked data graph capturing the sequence of events leading to the old and new objects' creation like the one shown in \ref{ProvGraph}.
+It shows the multiple lower level products involved in creating a Level 3 ozone indicator.
 This can be accomplished through the use of previously mentioned provenance models, but these graphs are not widely available.
 Using PROV to represent provenance data in a semantic model produces an acyclic directed graph with labeled nodes.
 As a result, the provenance distance problem reduces to similarity measurement.
@@ -131,13 +95,14 @@ Graph Edit Distance, counting the edits necessary to transform one graph into an
 Some variations count edge changes \cite{Goddard:1996:DGU:246962.246972}.
 
 In Figure \ref{GraphEdit}, the left graph transforms through a move of edge 1 and a rotation of edge 4, resulting in an edit distance of two.
-Such changes in a provenance graph would demonstrate a change in dependencies between objects used to generate a final notable product.
-Similar results from data with small provenance distance would ensure reproducibility, while large distances signals reinforcing confirmation of a result.
-More specifically, scientists should expect similar results from datasets which share a lot of provenance if their conclusions are valid and reproducible.
-However, large distances and similar results would indicate that the findings are not limited to a single data source.
+Such changes in a provenance graph would demonstrate an alteration in dependencies between objects used to generate a final notable product.
 This kind of analysis resembles comparison measures employed in determining semantic similarity \cite{Hliaoutakis06informationretrieval}.
-The main difference lies in comparing the distance between two concepts within a graph as opposed to the graphs' distances.
-Captured impact with these methods rely on the significance of changes to contributing activities towards the new version.
+However, isolating changes responsible for differences in provenance can become difficult in complex environments as Tilmes observes in 2011, 
+\begin{quotation}
+	Consider the relatively common case of the calibration table, which is an input to the L1B process, changing. Even though the version of the L2 or L3 software hasn’t changed, the data files in the whole process have been affected by the change in the calibration.
+\end{quotation} \cite{TILMES2011548}.
+L-number, of course, is shorthand for the level system featured in Figure \ref{NASALevels}.
+While provenance distance may be straight-forward to calculate, the indicator hides many insights into an object's behavior.
 
 \begin{figure}
 	\centering
@@ -167,6 +132,9 @@ The software manager GIT employs this method and Figure \ref{GITFile} demonstrat
 The squares with dotted outlines indicate unmodified files and instead of copying the old object, the system stores a pointer to it instead.
 In addition, GIT compresses and separately stores very old versions which are unlikely to be accessed.
 This versioning style may not be ideal for larger or often modified data sets as the size requirements will quickly grow unmanageable.
+However, for many library or catalog environments, they cannot predict the target volume a user desires and must prioritize availability \cite{Payette2002} \cite{Barkstrom_digitallibrary}.
+Some methods like the inverted file index have been developed to balance space and retrieval performance on web documents, especially since wikis and news feeds have grown in deployment \cite{Berberich:2007:TMT:1277741.1277831}.
+Searches over these text media may require execution on older archived web pages.
 
 \begin{figure}
 	\centering
@@ -179,9 +147,18 @@ The delta method entails calculating and storing only the differences between on
 Back delta variations store a snapshot of the most recent version and compute deltas towards older releases.
 The forward delta variation stores the oldest data's snapshot and has deltas going forwards.
 This method uses the minimum amount of space but trades it in for computation time to recreate any given version.
-Properly detecting the addition or modification of a file into a system plays a major role in versioning (ARM)\cite{6906868}.
-Ontology Diff \cite{Hartung201315}.
+Particularly long running versioning systems occasionally save an intermittent snapshot to cut down on this processing time.
+The setup proves ideal for data sets which prioritize service to their most recent versions \cite{Stuckenholz:2005:CEV:1039174.1039197}.
+Because change documentation captures information between version objects, they most resemble differences calculated by the delta method.
 
+Properly detecting changes in a system's files allows file managers to correctly group them into versions as seen in research conducted by the Atmospheric Radiation Measurements (ARM) group \cite{6906868}.
+Difference or diff applications must first properly map data between objects and align them for comparison.
+Many text based data sets rely on well established algorithms to perform this alignment  \cite{Chien:2000:VMX:646544.696357} \cite{Hartung201315}.
+Sequential scientific data largely avoids this problem since developers already know the files or objects they replaced.
+However, users do not have this advantage and system managers are starting to recognize the difference in versioning usage patterns between users and producers \cite{Branco2008}.
+Mayernik et al. probably gives the best description saying, "Prospective records document a process that must be followed to generate a given class of products whereas retrospective records document a process that has already been executed" \cite{MatthewS.Mayernik201312-039}.
+While producers take a retrospective approach to version usage, consumers of new versions must take a prospective view, adapting to new changes.
+This indicates that the orientation of versioning information reflects the imagined customer of that data.
 
 
 %%% Local Variables:
