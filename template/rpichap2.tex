@@ -8,11 +8,14 @@
 %\resetfootnote %this command starts footnote numbering with 1 again.
 
 The data versioning landscape produces a variety of different approaches and standards towards change capture.
+However, massive centralized data stores have become more prevalent as data distribution methods advance  \cite{Vassiliadis1999}.
 Collection into larger unified repositories will likely require a multi-tiered approach to synchronize the varied practices  \cite{Baker2009}.
 Baker notes that differences depend on the sociotechnical distance of a repository from the data's origin.
 Local stores closer to the collection site better understand data capture conditions, but must also adapt to changing environments.
 This work provides a basis for understanding the formal underlying properties which will allow consistent versioning practices.
 Science agencies and organizations are only beginning to formally codify and standardize methods to capture and publish lineage information \cite{MatthewS.Mayernik201312-039}.
+This seems to be a recurring cycle of attention with rapidly developing technologies such as the grid or parallel computing \cite{Kovse2003VGridAVS}.
+The CERN grid for the Compact Muon Solenoid experiment carefully developed necessary processes which allow references by multiple users to the same file without copying that file across the grid \cite{Holtman:687353}.
 
 \section{Provenance}
 
@@ -27,7 +30,7 @@ PROV, a World Wide Web Consortium (W3C) Recommendation, delineates a method to e
 The recommendation uses a conceptual model relating activities, agents, and entities together to describe data production lineage \cite{Moreau2013c} \cite{Nies2013} \cite{Nies2013a}.
 Intended as a high level abstraction, it takes an activity oriented approach to provenance modeling.
 Every data entity results from the actions of some activity.
-The conceptual model's expression occurs through the PROV Ontology (PROV-O), which can be conveyed through various resource description languages \cite{Lebo2013} \cite{Hua2013} \cite{Klyne2013}.
+The conceptual model's expression occurs through the PROV Ontology (PROV-O), which can be conveyed through various resource description languages \cite{Hua2013} \cite{Klyne2013}.
 The ontology is further formalized into a functional notation for easier human consumption \cite{Moreau2013b} \cite{Cheney2013a}.
 One particular strength that has contributed to the adoption of PROV is its ability to link into other ontologies, making it easier for existing semantically enriched data sets to adopt PROV \cite{Miles2013} \cite{Moreau2013}.
 Komadu, a framework developed to alleviate workflow integration, through improves over its predecessor, Karma, by no longer utilizing global context identifiers that were no necessarily shared throughout the workflow. \cite{Suriarachchi_2015}.
@@ -62,7 +65,7 @@ While it documents related versions well, PAV does not dive deeper in explaining
 
 Schema.org UpdateAction largely reflect the relationships adopted by this work, and are defined as "the act of managing by changing/editing the state of the object" \cite{Schema}.
 The remaining subclasses include the AddAction, DeleteAction, and UpdateAction.
-The function of these terms is to provide a means to supply searchable web pages with standardized microdata.
+The function of these terms is to provide a means to supply searchable web pages with standardized micro-data.
 As a result, they orient their properties towards definitions and characterization but do not provide the right structure for a standardized change capture model.
 
 \section{Provenance Distance}

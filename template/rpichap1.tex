@@ -64,7 +64,7 @@ Therefore, versioning is the activity of identifying two objects as versions of 
 
 \section{Identifiers}
 
-Data managers often impose a sequential ordering in conjunction with logical groupings to form an object's historical lineage.
+Data managers often impose a sequential ordering in conjunction with logical groupings to form an object's historical lineage \cite{barkstrom2014earth}.
 As a result, they often employ version identifiers in the dot-decimal style where a decimal point connects together a series of numbers \cite{Stuckenholz:2005:CEV:1039174.1039197}.
 Whenever, a new version is made, it receives an identifier with one of the numbers incremented as seen in Figure \ref{RCSTree}.
 Changes to the left-most number often signify a more important change.
@@ -73,9 +73,14 @@ Numbering the version this way, however, does allow computers and readers to qui
 Most importantly, it groups together changes from the lower spectrum of minor or major change with those in the upper, more impactful, changes.
 It is therefore, difficult to obtain a clear characterization of a version change without a longer series of numbers.
 This method of identification also has issues since small changes in the current data set may have larger implications for data farther down the workflow, which is not communicated by the identifier.
+In addition, version numbers capture the overall change of a data set, but users may not interact with collections that way.
+Data on a hurricane sometimes occupy only a small portion of a data set, and the files may not even adjacent in the collection \cite{Barkstrom_digitallibrary}.
 There is also little standardization or formal requirements in naming methods.
 Ubuntu utilizes a dot-decimal version labeling scheme where the two number identifier corresponds to the year-month values of the release \cite{Ubuntu}.
+Fischer et. al demonstrate the importance of having a regular standardized version identification system as it provides a mechanism to track errors being addressed \cite{Fischer2003}.
+The ability to link bug reports and versions thus gives producers and customers metrics to understand how developers fix errors and how long it will take.
 A common method used to address the distinction between versions is a human-readable change log, further discussed in Section \ref{sec:changelog}.
+
 
 \begin{figure}
 	\centering
@@ -118,6 +123,7 @@ A possibility to consider is that identifiers may require incorporation into a d
 An identifier works well in revealing the characteristics of an individual object, but it should not be expected to explain its relationship with other objects.
 A data model provides better insight into the different roles objects play in a relationship.
 Further discussion on versioning models will be found in Section \ref{sec:models}.
+This proves increasingly important as the ability to propagate relevant data change across autonomous systems then assures valid quality in interactions between domains \cite{Systems02champagne:data}.
 
 Using identifiers to convey extended versioning information becomes more difficult with the adoption of distributed version managers like GIT \cite{cederqvist2002version}.
 Each participant in the federated repository is the master of their personal copy of the code.
@@ -332,105 +338,15 @@ As determining changes in science requires expert understanding over a domain, d
 This document's approach studies add, invalidate, and modify counts to quantify the impact of changes and how they relate to the producer's observations.
 As previously mentioned, different systems utilize the operations at varying rates so absolute cutoffs will be unlikely in comparison to relative results.
 
-\subsection{Unified Systems}
-
-Working with data as documents leads to the shortfall of technologies, but working with the data of documents has led to significantly greater contributions.
-Many libraries often work in collaboration in order to provide a wide selection of texts over a limited number of physically available documents.
-The University of Virginia demonstrates the ability to achieve a unified library system using a combination of XML and web service technologies of their disparate assemblage of libraries .
-The challenge involves providing a common landscape in order to compare the quality requirements imposed on the repositories.
-Versioning systems provide a notable mechanism to make this decision as quality determines when to generate new versions and what items belong to the same groupings of data.
-The comprehensiveness of XML and web technologies also allows this approach to apply to other systems and research areas as well.
-This becomes particularly relevant as innovations in computation technology generates small, volatile data sets to integrate into larger data managers 
-In this application, the data food chain then becomes represented by smaller applications generated in situ and then unified with other data sets as they move up the food chain to a large, unified data distribution center.
-
-Unified libraries represent a part of a larger collection of systems that rely on the propagation of data through heterogeneous systems to produce rapid complex solutions.
-The grid provided a unique environment that had to handle a variety of inputs, and therefore, different input data could run on distinct sets of grid services.
-This meant that different versions of the same data could be generated by differing services on the same grid \cite{Kovse2003VGridAVS}.
-The CERN grid for the Compact Muon Solenoid experiment separates the physical and logical storage of files, allowing multiple users to refer to the same file without needing to copy the file across the grid \cite{Holtman:687353}.
-While the structure and construction of the grid reduced the uncertainty introduced by varying hardware, it raised questions on data quality by abstracting the transparency to underlying services.
-Cloud services have recently replaced the grid due to its flexibility in the services available to its autonomous systems.
-As the scale and complexity of autonomous systems grow, it becomes more difficult for one system or organization to manage all the circles necessary to produce data deliverables.
-The ability to propagate relevant data change data across autonomous systems then assures valid quality in interactions between domains \cite{Systems02champagne:data}.
-Not only does this ensure uniformity through system interaction, but it also ensures transparency with respect to the data and methods used to produce conclusions \cite{Tagger2005}.
-This often means that systems will need to negotiate a contract and establish a mutual interface to exchange data.
-Occasionally, this contract can be formal, but more ideally, the establishment of a standard lineage model or format would allow a greater variety of systems to interact with each other without needing lengthy contractual exchanges.
-
-\section{Data Quality/Provenance}
-
-With changing technology, data collected by researchers grew at an astounding rate.
-NASA's Atmospheric Science Data Center (ASDC) reported a growth from hosting around five million files to twenty million files between 2001 and 2004 as seen in Figure \ref{table:ASDC} \cite{Barkstrom_digitallibrary}.
-The ATLAS project at CERN reports that it generates on the order of four thousand new datasets per day from experimental tests alone shown in Table \ref{table:Atlas} .
-The sheer volume of data generated per year by each of these organizations easily demonstrates the futility of managing these data archives manually.
-The desire and ease in which data transparency can be provided to not only researchers but also the public lies behind the drive of expanding the availability of high quality data holdings.
-The key to meeting these demands is automation, not only in distribution, but also in data quality management.
-However, these two dynamics are at odds with each other.
-Many NASA datasets have required re-processing of their data, either to improve data quality or to correct for errors \cite{barkstrom2014earth}.
-However, we can also see that the number of distinct users doubled over the course of three years at the ASDC while the amount of data distributed more than triples.
-As such, the strain of informing and providing updated data to this body of users grows tremendously.
-The solution, thus, lies in passing on the ability to verify data quality to the users.
-Data traceability now becomes particularly important to identify sources that contribute to improved data quality.
-It creates a need to understand not only that a data set has changed, but to also understand how much a data set has changed.
-Data versioning is the method of tracking the changes performed on a data set and determining the extent to which it has changed.
-In this document, data versioning is approached using technology provided by semantic technologies and applying them to artifacts currently generated by scientific data sets.
-
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.40]{figures/ASDCHoldings.png}
-	\caption[Summary of ASDC Holdings for the years 2001 to 2004.]{Summary of ASDC Holdings for the years 2001 to 2004.  From Barkstrom and Bates \cite{Barkstrom_digitallibrary}}
-	\label{table:ASDC}
-\end{figure}
-
-\begin{table}
-	\centering
-	\begin{tabular}{ | c | c |}
-		\hline
-		Metric & Magnitude \\
-		\hline
-		Data per day [TB] & 1 \\
-		Data per year [PB] & 20 \\
-		Datasets per acquisition & O(4000) \\
-		Simulation Datasets per day & O(1500) \\
-		Versions per Dataset & O(1) \\
-		Files per Dataset & O(100) \\
-		\hline
-	\end{tabular}
-	\caption[Summary of ATLAS data set generation in 2008]{Summary of ATLAS data set generation in 2008.  From Branco et al.\cite{Branco2008}}
-	\label{table:Atlas}
-\end{table}
-
-The fundamental challenge to determining data quality, its subjectivity, needs clarification.
-Conceptually, a data set on desert climate likely has very poor data quality and relevancy to a study in whale biology.
-However, in a more quantitative sense, that same desert climate data can have excellent quality with respect to its correctness, expression, and traceability.
-With the hybridization of data sets from disparate agencies to provide big data solutions, collaborations plays an ever present role in achieving broad, valid findings.
-This requires good quality data and the ability to determine when data with better quality becomes available.
-The primary focus, generally, involves tracing the lineage of artifacts and activities that lead to the current data.
-This provides insight into possible sources of error as well as validating the assumptions made in generating a data set for future use.
-
-There are several characteristics that can describe a data's quality, but the one most relevant to data versioning is provenance.
-In art this describes the sequence of people who have had ownership of a piece of artwork.
-For data, provenance relates the history of inputs and operations that result in a data object such as a plot or data set.
-
-Each stage computes a dataset using a collection of input data, processing scripts, and calibration values.
-This collection forms the provenance for the resulting level of data, and it contributes to the production history of the higher level products it feeds into.
-More specifically, scripts and code which "Produce Instantaneous Fields" operates on "L1 Data" using "Geophysical Conversion Coefficients."
-The diagram clearly illustrates that should "Calibration Coefficients" used to generate "L1 Data" change, the resulting data would cause "Produce Instantaneous Fields" to yield different "L2 Data."
-As such, strong ties lie between identifying versions and locating differences between provenance changes.
-
-As data sets grow, this process becomes even more confusing to coordinate so version control systems often manage provenance.
-Current research endeavors to provide high quality data clearly becomes more formalized as data becomes concentrated in massive data warehouses \cite{Vassiliadis1999}.
-The focus of a majority of versioning research focuses on lineage retrieval which becomes ever important as evidence grows that researchers generate data faster than they can reasonably track \cite{Bose:2005:LRS:1057977.1057978}.
-This poses a particularly difficult problem as provenance provides a potent means of data auditing.
-With provenance, data producers ensure the trustability of their data inputs, either ingested from external sources or integrated from internal data sets.
-Fairly reassuring results have been found when combining lineage management and error reporting systems \cite{Fischer2003}.
-The errors provide a context for the changes made to advance the lineage of the data set and the version manager demonstrates that a problem has been addressed and how it was corrected.
-The data analytics required to determine the value of data collected by a project also requires the provenance to ensure that the analysis is also reproducible.
-The basic provenance often collected by hand now needs to be collected automatically in order to facilitate collaboration, especially with projects that are farther away from the data.
-
 \section{Thesis Statement}
 
-Generate a data model to better capture versioning relationships by looking at the attributes of as version.
-Create a means of capturing the information normally contained within change logs, extending the adoption of these documents in data set production.
-Use the insights provided by the new data model to supply evidence towards creating improved identifiers.
+Large data collection endeavors necessitate the development and deployment of versioning systems to manage change propagating through their data.
+Advancing beyond identifier comparisons and delving into capturing substantive change can significantly improve the ability to standardize version communications and transition.
+A model is developed to provide a foundation in regularizing the versioning process and communicating that in a machine-computable manner using linked data.
+For this purpose, we compare two methods in micro-data with JSON-LD expected to provide better performance.
+These relations cannot be communicated by current provenance models' semantics.
+Furthermore, the model provides a quantitative basis for determining meaningful version identifiers following a numerical system which has previously only been done using qualitative methods.
+Through sub-classing concepts within this versioning model, versions can provide detailed comparisons to support experimental designs and decisions.
 
 
 %%% Local Variables:
