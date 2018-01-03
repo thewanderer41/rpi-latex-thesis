@@ -1107,10 +1107,26 @@ be in line with traditional close source development.},
 }
 
 @Electronic{Schema,
-  title        = {U},
+  title        = {UpdateAction},
   organization = {Schema.org},
   note         = {Accessed: January 19, 2017},
   url          = {http://schema.org/UpdateAction},
+}
+
+@Electronic{JSONLD,
+  author       = {Manu Sporny and Dave Longley and Gregg Kellogg and Markus Lanthaler and Niklas Lindstrom},
+  month        = dec,
+  year         = {2017},
+  title        = {JSON-LD 1.1},
+  organization = {W3C},
+  note         = {Accessed: June 7, 2017},
+  url          = {https://json-ld.org/spec/latest/json-ld/},
+}
+
+@Electronic{mbvl,
+  title = {M},
+  note  = {Accessed: September 28, 2016},
+  url   = {https://tw.rpi.edu/web/project/MBVL},
 }
 
 @Comment{jabref-meta: databaseType:bibtex;}

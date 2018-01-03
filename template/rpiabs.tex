@@ -6,30 +6,14 @@
 
 \specialhead{ABSTRACT}
 
-The growth of data driven technologies has "exploded" the need for reliable, high quality data.
-This data powers the science of major agencies like NASA and laboratories like CERN.
-The changes made to maintain its quality has serious implications to the quality of the data that system uses as they propagate down stream through a workflow.
-Provenance plays a large part in identifying factors that contribute to data change.
-Technologies like PROV and OPM have allowed researchers to instantiate and track the entities and activities which went into generating their data sets.
-However, these ontologies do not cover change information in detail, and arguably, this falls outside their purview.
-Provenance discloses the contributors to the generation of a data object, but versioning describes the relationship that object has with its previous or future iterations.
-Changes to an object's provenance undoubtedly creates a new version of that data, but measuring the magnitude of that change still remains difficult.
-Current methods to quantitatively determine the distance between versions of a data object often involve comparing provenance graphs, but these approaches lacks the detail to make meaningful comparisons.
-There is a gap in understanding the transition from an old data set to a new one, and developing a more detailed understanding of change information allows users to comprehend how a data set evolves over time.
-
-Much work has already been accomplished towards filling in this gap and laying the foundations to further address issues in this area.
-The first part of this thesis presents a concept model developed as a foundation to capture changes across versions.
-It does so by capturing the relationships involved in the three core versioning operations: addition, invalidation, and modification.
-Two data sets stored in Excel spreadsheets were used to develop and test the versioning model with the goal of describing changes in a scalable way that can expand to other applications.
-In open source software, changelogs provide more detailed change information to users and developers as a documentation artifact.
-However, changelogs traditionally present its contents only as human readable formats text.
-This work adopts changelogs as a documentation tool to communicate change, but also adopt semantic web technologies by encoding machine readable content into the log using RDFa.
-In such a way, the changelog can be provided as an openly available HTML page, required to use RDFa, which is also machine accessible.
-
-Work needs to continue to completely demonstrate the utility of the versioning model and its applicability.
-Much of the model construction and distribution has already been demonstrated with spreadsheets, but to ensure flexibility and applicability, other contexts must be hooked into the model.
-Databases provide a unique challenge because transactions do not create new instances of the data object.
-The versioning of ontologies provides significant insight into the growth of vocabularies to a domain as well as expand the application of older data sets.
-GCMD keywords do not constitute an ontology, but changes to terms within the hierarchical vocabulary have significant impact on the searchability and discoverability of Earth Science data sets.
-Applying the process of versioning the vocabulary could provide greater freedom to evolve without sacrificing the ability to find data sets.
-As a final endeavor, a method needs to be developed to utilize the structure of the resulting versioning graph in performing a flux-like calculation and give a quantifiable distance measure for the amount of change between versions of data.
+Data sets invariably require versioning systems to manage changes due to an imperfect collection environment.
+While importance grows, versioning discussion remains imprecise, lacking standardization or formal specifications.
+Many works tend to define versions around examples and local characteristics but lack a broader foundation.
+This imprecision results in a reliance on change brackets and dot-decimal identifiers without quantitative measures to justify their application.
+No difference exists between the versioning practices of a group which updates their data regularly and a group which adds many new files but rarely replaces them.
+This work attempts to improve discussion by capturing version relationships into a linked data model, taking inspiration from provenance models that incorporate versioning concepts such as PROV and PAV.
+The model captures addition, invalidation, and modification relationships between versions to provide change log-like characterization of the differences.
+This approach demonstrated increased expressibility of change interactions, but encountered issues with space scalability.
+The model's generation also revealed a four step process to conduct versioning: validation, mapping, computation, and publishing.
+Quantifying these changes also provided a numerical basis for evaluating the GCMD Keywords taxonomy's adopted identification scheme.
+It also demonstrates the ability of versioning methods to actively influence scientific designs through performance assessment.

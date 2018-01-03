@@ -1099,12 +1099,36 @@ be in line with traditional close source development.},
   venue      = {Portoro{\v z}, Slovenia},
 }
 
+@Electronic{SchemaRem,
+  title        = {DeleteAction},
+  organization = {Schema.org},
+  note         = {Accessed: January 19, 2017},
+  url          = {http://schema.org/DeleteAction},
+}
+
+@Electronic{Schema,
+  title        = {UpdateAction},
+  organization = {Schema.org},
+  note         = {Accessed: January 19, 2017},
+  url          = {http://schema.org/UpdateAction},
+}
+
+@Electronic{JSONLD,
+  author       = {Manu Sporny and Dave Longley and Gregg Kellogg and Markus Lanthaler and Niklas Lindstrom},
+  month        = dec,
+  year         = {2017},
+  title        = {JSON-LD 1.1},
+  organization = {W3C},
+  note         = {Accessed: June 7, 2017},
+  url          = {https://json-ld.org/spec/latest/json-ld/},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}
 
-@Comment{jabref-meta: groupstree:
+@Comment{jabref-meta: grouping:
 0 AllEntriesGroup:;
-1 ExplicitGroup:Provenance\;0\;;
-1 ExplicitGroup:Edge Distance\;0\;;
-1 ExplicitGroup:Changelogs\;0\;;
-1 ExplicitGroup:Version Management\;0\;;
+1 StaticGroup:Provenance\;0\;1\;\;\;\;;
+1 StaticGroup:Edge Distance\;0\;1\;\;\;\;;
+1 StaticGroup:Changelogs\;0\;1\;\;\;\;;
+1 StaticGroup:Version Management\;0\;1\;\;\;\;;
 }
