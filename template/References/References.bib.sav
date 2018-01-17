@@ -1132,8 +1132,18 @@ be in line with traditional close source development.},
 @Electronic{Ands2017,
   title        = {Data versioning},
   organization = {Australian National Data Service},
-  note         = {Accessed: June 9t, 2017},
+  note         = {Accessed: June 9, 2017},
   url          = {http://www.ands.org.au/working-with-data/data-management/data-versioning},
+}
+
+@Electronic{skos,
+  author       = {Alistair Miles and Sean Bechhofer},
+  month        = aug,
+  year         = {2009},
+  title        = {SKOS Simple Knowledge Organization System Reference},
+  organization = {W3C},
+  note         = {Accessed: January 19, 2017},
+  url          = {http://www.w3.org/TR/2009/REC-skos-reference-20090818/},
 }
 
 @Comment{jabref-meta: databaseType:bibtex;}

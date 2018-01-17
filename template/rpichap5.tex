@@ -15,9 +15,9 @@ The Global Change Master Directory maintains and releases the different versions
 From this, it can be concluded that each edition shares provenance and can be used in the same workflow step.
 This conclusion is further justified as each keyword concept uses the same Unique Resource Identifier (URI) across versions.
 The identifiers also act as an ideal key in the version mapping.
-While additions and invalidations are simple to identify using these keys, modifications are not since a change in their key would result in completely different object.
-Instead, the immediately broader concept is looked at.
-Each keyword uses the concepts skos:Broader and skos:Narrower, where skos refers to the Simple Knowledge Organization System ontology name space, to form a tree hierarchy with the broadest concept "Science Keywords" forming the root.
+While additions and invalidations are simple to identify using these keys, modifications are not since a change in the key would result in completely different object.
+Instead, we look at the immediately broader concept.
+Each keyword uses the concepts \textit{skos:Broader} and \textit{skos:Narrower}, where skos refers to the Simple Knowledge Organization System ontology name space, to form a tree hierarchy with the broadest concept "Science Keywords" forming the root.
 A modification would then result if a concept moved to a different place in the hierarchy.
 This would result in the removal of a child node from the parent and a different broader concept for the child, meaning two modifications occur.
 However, in this project, only the child is recorded since it is the concept that moves around in the hierarchy.

@@ -9,19 +9,19 @@
 \section{Model}
 
 The resulting model addresses versioning by looking at the attributes of each version.
-Other ontologies takes a higher level view in terms of version modeling.
+Other ontologies take a higher-level view in terms of version modeling.
 While it is more specific, this implementation forces some space requirements.
 PROV only requires 3 to 5 triples in order to make a versioning statement.
 This model uses 9 triples for a mod change and 7 to encode addition and invalidation.
 To model a version has space complexity of \(O(7M+5(A+I))\) since the version declaration statements overlap.
-However, a similar structure can be achieved using prov:wasDerivedFrom to replace modifications and schema:AddAction and schema:DeleteAction to replace additions and invalidations.
+However, a similar structure can be achieved using \textit{prov:wasDerivedFrom} to replace modifications and \textit{schema:AddAction} and \textit{schema:DeleteAction} to replace additions and invalidations.
 The resulting space complexity is \(O(7M+3A+5I)\).
-This is fairly similar with additions seeing a reduction since the left-hand version no longer contributes to the AddAction.
+This is fairly similar with additions seeing a reduction since the left-hand version no longer contributes to the \textit{schema:AddAction}.
 Thus the primary benefit of using this model comes from semantics.
 
-The reason prov:Generation and prov:Invalidation are not used is because they expect an activity to be responsible for an object.
+The reason \textit{prov:Generation} and \textit{prov:Invalidation} are not used is because they expect an activity to be responsible for an object.
 However, it is not generally true that an action actively added or removed an attribute from an object in the left-hand version to produce the right-hand revision.
-That mentality denies the ability to conduct versioning comparisons between objects that are not sequentially adjacent.
+That assumption minimizes the ability to conduct versioning comparisons between objects that are not sequentially adjacent.
 The activity producing a far away object may not immediately relate to the original data in a version comparison, resulting in a situation where it would be inappropriate to use the two PROV concepts.
 When considering versioning in a state-based sense, relationships exist as a result of two objects being versions of each other.
 
@@ -38,7 +38,7 @@ The resultant mapping in spreadsheet comparisons followed very similar rules, bu
 The final step involves publishing the change information using the mapping.
 In this thesis, the resulting product is published into a versioning graph.
 
-One of the desired contributions was to study the possibility of a machine readable change log.
+One of the desired contributions was to study the possibility of a machine-readable change log.
 In this implementation, the number of triples necessary to implement the model significantly impairs the log's ability to remain human readable.
 The Noble Gas data set's change logs could not be loaded using a web browser.
 One contributor to this problem is that the modification of an entire column would result in multiple entries equal to the number of rows in the table.
@@ -60,7 +60,7 @@ It would explain how 8.4.1 had more additions than any previous minor change but
 However, assuming that the observed relationship remains, it can be shown that the keyword management team did not consider the namespace change as a major modification in their data set.
 This is seen after accounting for namespace differences to show that the change count magnitude resembles other versions in the same identifier bracket.
 This brings into concern the practice of version name assignment based on producer perception and not on more concrete measures.
-A poor understanding in the amount of change between two versions can lead to flawed expectations in migrating across them.
+An incomplete understanding in the amount of change between two versions can lead to flawed expectations in migrating across them.
 
 This is not to claim that change magnitudes should be the sole mechanism in determining version identifiers.
 However, it can provide a more quantitative characterization of changes within the system.
