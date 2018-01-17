@@ -10,36 +10,36 @@ This chapter uses the Copper and Noble Gas databases to demonstrate the implemen
 
 \section{Validate Comparisons}
 
-The first step in any versioning endeavor is to first establish that the two objects being compared meet the requirements of being each other's versions.
-For the copper dataset, the objects result from a compilation effort from the same sources of data.
+The first step is to establish that the two objects being compared meet the requirements of being each other's versions.
+For the Copper dataset, the objects result from a compilation effort from the same sources of data.
 An entry recording the source material for each row in the table accompanies each reading.
 As a result, these entries were used to determine that they share similar provenance.
 They will also both be used as data inputs at the same step to generate data visualizations.
 The datasets become interchangeable within the context of executing the workflow.
-Determining whether the noble gas files are versions is a more challenging activity.
+Determining whether the Noble Gas files are versions is a more challenging activity.
 From provenance graphs like the one constructed for the entry CAM001 in Figure \ref{CAM001ProvGraph}, the entries share a common source document.
 Likewise, a significant portion of the other entries also share sources from the same body of work.
 The ones that do not are new or removed entries.
 As there was no personal involvement in the use of this data set, determining whether they can occupy the same workflow step requires actually looking into the files.
-Investigating column headers and the accompanying documentation reveals that they report many of the same measurements.
-Some amount of leeway is given in this assessment as having every quantity match would mean that the two files aren't versions, but the same object.
-This process helps to determine the confidence that using the model to encode the discovered changes will result in a meaningful versioning graph.
-
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.70]{figures/CAM001v1v2.png}
 	\caption{Provenance graph for the CAM001 entry of the Noble Gas Database.  Other than the labels, the structure of each data object is very much the same.}
 	\label{CAM001ProvGraph}
 \end{figure}
+Investigating column headers and the accompanying documentation reveals that they report many of the same measurements.
+Some amount of leeway is given in this assessment as having every quantity match would mean that the two files aren't versions, but the same object.
+This process helps to determine the confidence that using the model to encode the discovered changes will result in a meaningful versioning graph.
+
 
 \section{Form a Mapping} \label{mapping}
 
 The next step involves formulating a method to determine whether a relationship constitutes an add, invalidate, or modify mapping.
 As discussed in the previous chapter, this relies on determining whether an attribute exists in one version, the other, or both.
-However, with tabular data, a row and column attribute is required to match together specific cells.
-For the Noble Gas dataset, this is conveniently the entry identifier and the column headers.
+However, with tabular data, a row and column attribute is required to match specific cells.
+For the Noble Gas dataset, this is the entry identifier and the column headers.
 Row and column numbers are avoided because edits can result in the same entry associated with different indices.
-In addition, the first version of the Noble Gas dataset was organized into multiple files so the same row index would appear more than once, and therefore, could not be used to match together related entries.
+In addition, the first version of the Noble Gas dataset was organized into multiple files so the same row index would appear more than once, and therefore, could not be used to match related entries.
 An observation that also simplifies identifying edits is that cells are rarely added or removed individually.
 When one row gains a cell all other rows gain one as well, perhaps with null values, forming a new column.
 As a result, data additions and invalidations only use one identifier.
@@ -53,10 +53,10 @@ This only performs a very basic version mapping, but data producers can signific
 For example, the base method would not understand that a Location column has been divided into two columns Latitude and Longitude.
 A data producer could manually link the Location attribute to the Latitude and Longitude attributes, forming a single modification instead of an invalidate and two additions.
 
-The copper minerals dataset starts each row with a unique mineral name, and these can be matched across datasets to determine if an entry has undergone a modification.
-The column headers have different formats because the initial file is an Excel file and the other was a comma separated file.
+The Copper Minerals dataset starts each row with a unique mineral name, which can be matched across datasets to determine if an entry has undergone a modification.
+The column headers have different formats because the initial file is an Excel file and the other is a comma separated file.
 As a result, the column headers were manually matched together with the remaining headers in each file mapped into the added and invalidated sets.
-The noble gas database also uses unique identifiers to mark each of its entries, but the first version of the database divides data among multiple files.
+The Noble Gas database also uses unique identifiers to mark each of its entries, but the first version of the database divides data among multiple files.
 For this reason, the identifiers must first be collected into a single dictionary data structure mapping identifiers to their files.
 The version map is then computed from this data structure.
 The database also uses multi-line headers which makes a basic automated approach difficult since the cells are not well aligned.
@@ -112,8 +112,8 @@ Alternatively, a technology meant to store data in web documents, such as JSON-L
 Listing \ref{json_list} provides the alternative encoding of the Abswurmbachite entry from RDFa.
 While significantly longer, the number of triples is not limited by the tag count within a change.
 It also separates the human-readable content from the model data, making the source easier to code and modify.
-Additionally, a decision was made to divide each change's linked data into it's associated row instead of collecting them all at the bottom or top of the page in a single script node.
-The practice of a one node collection is generally helpful for many web applications to load data quickly, but since this is not an application, it makes more sense to break the content up.
+Additionally, a decision was made to divide each change's linked data into its associated row instead of collecting them all at the bottom or top of the page in a single script node.
+The practice of a one-node collection is generally helpful for many web applications to load data quickly, but since this is not an application, it makes more sense to break up the content.
 Changes to individual attributes can be identified using anchors on the web page, then agents need only extract and parse the link data to these specific entries.
 This way, a subgraph of only the pertinent attributes can be created without first ingesting the entire versioning graph.
 However, a problem both of these change logs struggle with is size.
@@ -186,6 +186,13 @@ Since we know the number of additions, each change instance can be easily number
 Add changes are also kept separate to allow for individual annotation.
 Likewise, the graph generator iterates over the set of invalidations and generates a set of statements to instantiate each invalidate change.
 
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.30]{figures/NobleVersion.png}
+	\caption{Some initial entries from versions 1 and 2 of the Noble Gas dataset}
+	\label{NobleGraph1}
+\end{figure}
+
 However, Figure \ref{NobleGraph1} also demonstrates an interesting set of decisions made early in the generation process regarding modifications.
 Firstly, the relation presented in the figure is unbalanced and the right-hand side of ChangeCAM00111 links only to the column identifier but not to the corresponding row attribute.
 This links from a mismatch between the model's structure, the order in which data appears in the change log, and the way RDFa links properties together.
@@ -196,13 +203,6 @@ This was a decision to properly identify the attribute as it appears in the chan
 Since the item is not a generic column 11 element in the log, but a specific item of CAM001, the entry id is included in the column identifier.
 This formulation poses a problem when trying to query the graph and determine how many rows have a column 11 modify change for example.
 When the versioning triples are not extracted from a change log and printed as linked data, the structure has greater freedom as seen in Figure \ref{NobleGraph2}.
-
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.30]{figures/NobleVersion.png}
-	\caption{Some initial entries from versions 1 and 2 of the Noble Gas dataset}
-	\label{NobleGraph1}
-\end{figure}
 
 \begin{figure}
 	\centering
