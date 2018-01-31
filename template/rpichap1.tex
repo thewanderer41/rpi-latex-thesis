@@ -23,8 +23,8 @@ As Barkstrom writes in 2003,
 \section{Defining Versions and Versioning}
 
 Using versions in the vernacular has become so pervasive that few documents formally define it.
-Barkstrom describes versions as homogeneous groupings used to control, ``production volatility induced by changes in algorithms and coefficients as result of validation and reprocessing," \cite{Barkstrom2003}.
-This definition's first implication is that groupings indicates an expectation that versioning requires multiple objects.
+Barkstrom describes versions as ``homogeneous groupings" used to control, ``production volatility induced by changes in algorithms and coefficients as result of validation and reprocessing," \cite{Barkstrom2003}.
+This definition's first implication is that such \textbf{groupings} indicate an expectation that versioning requires multiple objects.
 With only one object, all metadata would be homogeneous and groupings would become unnecessary.
 Whether in the same or different groups, the relationship between entries informs the grouping necessary to organize the data collection.
 Figure \ref{hierarchy} visually displays this concept with each file having a clearly defined grouping at each hierarchical level.
@@ -68,7 +68,7 @@ Data managers often impose a sequential ordering in conjunction with logical gro
 As a result, they often employ version identifiers in the dot-decimal style where a decimal point connects together a series of numbers \cite{Stuckenholz:2005:CEV:1039174.1039197}.
 Whenever, a new version is made, it receives an identifier with one of the numbers incremented as seen in Figure \ref{RCSTree}.
 Changes to the left-most number often signify a more important change.
-Many software applications consider the 3-number Major.minor.revision format to be a best practice in labeling software releases.
+Many software applications use the 3-number Major.minor.revision format in labeling software releases.
 Numbering the version this way, however, does allow computers and readers to quickly parse the version name and discern that a change has occurred, but not much value exists beyond that \cite{Dijkstra1994}.
 Most importantly, it groups together changes from the lower spectrum of minor or major change with those in the upper, more impactful, changes.
 It is, therefore, difficult to obtain a clear characterization of a version change without a longer series of numbers.
@@ -129,7 +129,7 @@ Each participant in the federated repository is the master of their personal cop
 Upon completion of their distribution's part, they may request that it be pulled into another participant's distribution.
 While each developer's individual repository can follow a linear identifier scheme, this would not work as the overall project bounces around different primary repositories with mismatching sequential identifiers.
 The dot-decimal identifier scheme could be made to work in such an environment by severely limiting the distributed manager's utilized features.
-Figure \ref{fig:federated}, illustrates a workflow which utilizes distributed repositories to manage very active public software projects.
+Figure \ref{fig:federated} illustrates a workflow which utilizes distributed repositories to manage very active public software projects.
 Each lieutenant developer manages a section of the overall code, and they dampen the number of requests made to the dictator by collecting changes and submitting them over longer intervals.
 As a result, relying on identifiers to convey and contain versioning information limits the evolution of new and valuable methods of processing change in digital objects.
 
