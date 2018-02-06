@@ -13,7 +13,7 @@ The goal of this section is to use the versioning graph to compare the accuracy 
 The experiment undergoes two phases of comparison in this procedure.
 The first phase compares the initial species content with the classifications by a particular algorithm/taxonomy combination.
 Since the classification results from a population selected according to the initial species list, these two datasets share a common provenance.
-However, the list cannot be used in place of the classifier results because not only does it have only 21 entries, but also it does not have a clear correspondence with the DNA chains sent to the classifier.
+The list, however, cannot be used in place of the classifier results because not only does it have only 21 entries, but also it does not have a clear correspondence with the DNA chains sent to the classifier.
 As a result, these two sets are not versions of each other, and versioning results will have weak implications.
 A labeling of the initial input data, could be considered a version of the results, but that data product is not available.
 
@@ -21,7 +21,7 @@ Each taxonomy and classifier combination outputs a taxonomic classification for 
 Shared input data indicates the results share common provenance.
 The classifications also share the same workflow step because their results have similar formats, reporting a specific taxonomic name for each entry.
 Since classifications occur over the same set of entries, their identifiers can be used to match outputs together for comparison.
-However, if this method of matching is used, every mapping would be a modification since each identifier appears in all data sets, and it would not provide any comparison based on the algorithm's specificity.
+If this method of matching, however, is used, every mapping would be a modification since each identifier appears in all data sets, and it would not provide any comparison based on the algorithm's specificity.
 Instead, a mapping using the accuracy of each algorithm is used.
 Since a name is assigned at a taxonomic rank to a sequence only if it passes the algorithm's confidence level, matches can be determined on whether a classifier can confidently decide more or fewer ranks.
 As a result, additions and invalidations ascertain whether a classifier can identify more or less of an entry's taxonomic name while modifications indicate the same specificity but mismatching names.
@@ -40,7 +40,7 @@ There are also significantly fewer disagreements using the Gast algorithm betwee
 Looking at the third set of columns, Silva demonstrates greater accuracy classifications under the Spingo algorithm than under Gast.
 Over four thousand of these entries can be classified to the species level when Gast cannot.
 In the fourth set of columns, RDP appears to perform better with Spingo than Gast.
-However, the comparison is dominated by a much larger number of disagreements between almost six thousand entries, primarily at the species rank.
+The comparison, however, is dominated by a much larger number of disagreements between almost six thousand entries, primarily at the species rank.
 On closer inspection, this disagreement is explained by Gast classifying the species for a number of entries as unclutured bacterium.
 This analysis presents evidence that using the RDP taxonomy with the Spingo algorithm will produce the most accurate classification results.
 

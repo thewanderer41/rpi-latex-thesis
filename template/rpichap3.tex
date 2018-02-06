@@ -9,7 +9,7 @@
 The goal of dataset versioning is to expose the relationships between versions of a dataset.
 To do this, the concept model relates three kinds of --- objects, versions, attributes, and changes --- using three different orientations.
 The model obviously includes versions because they are the objects being compared.
-However, identifying one object as a version of another does not give much insight into the nature of their relationship.
+Identifying one object, however, as a version of another does not give much insight into the nature of their relationship.
 In order to characterize the change between two versions, the model relates their attributes.
 The model uses the Dublin Core Term \textit{dco:hasPart} to facilitate the link from a version to its attribute.
 The changes used then defines the difference between these attributes in each version.
@@ -31,7 +31,7 @@ In order to ensure that the relationships being exposed by the mapping are valid
 Having common provenance establishes that performing a comparison between these two objects results in a relation pertaining to the same application.
 In addition, if the objects also can share the same workflow step it establishes that they have relatable content.
 This also addresses the possibility that we are comparing objects that have different purposes at separate points in a workflow, but share provenance as a result.
-Therefore, before applying the methods in this model, it must be first established that the two objects satisfy the requirements to be versions of each other.
+Before applying the methods in this model, it must, therefore, be first established that the two objects satisfy the requirements to be versions of each other.
 
 \section{Modification}
 
@@ -78,7 +78,7 @@ This concept has two properties, \textit{schema:replacee} and \textit{schema:rep
 This provides a structure very similar to the one found in Figure \ref{ModificationFig} with the only difference being the relationship between Attribute 1 and Change M reversed.
 While this difference is subtle, it demonstrates a disagreement in view as to how change works in a system.
 Schema.org's perspective looks at a single replacement action in isolation and models that quite well.
-However, this versioning model views change as a quantity that flows through attributes from one version to another.
+This versioning model, however, views change as a quantity that flows through attributes from one version to another.
 Unlike ReplaceAction, ModifyChange does not attribute changes to an actor, but rather it acts as a medium to convey change between objects.
 
 PROV also has a property called \textit{prov:isDerivedFrom} to convey, "a transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a pre-existing entity," \cite{Lebo2013}.
@@ -91,8 +91,8 @@ PROV assumes derivations to be part of a sequence, but situations exist, as seen
 
 In Figure \ref{AdditionFig}, the \textit{addition} model differs from the \textit{modification} construction by the absence of Attribute 1.
 This should mean that there does not exist a relationship between Version 1 and the concept Change A as the inclusion of Attribute 2 into Version 2 does not in general use content from the previous object.
-However, Change A in this model is not an activity, but a comparison relationship between Version 1 and 2.
-Therefore, a path must exist from Version 1 to Attribute 2.
+Change A in this model, however, is not an activity, but a comparison relationship between Version 1 and 2.
+A path, therefore, must exist from Version 1 to Attribute 2.
 This formulation has the added benefit of conveying the idea of change as a quantity of flow, coming out of Version 1 and moving through the graph.
 In this context, the structure establishes the left-hand version object as a source of flow when attributes become added to the following object.
 This construction also forms a symmetric orientation with Invalidation.
@@ -121,7 +121,7 @@ In comparison, the \textit{schema:AddAction} from Schema.org considers addition 
 This view of addition does not take into account the prior state of the collection being manipulated.
 As a result, the proposed model for \textit{addition} should provide a better context for the relationships between objects when an attribute is added.
 The corresponding concept in PROV-O is a \textit{prov:Generation}.
-However, it relates together activities with entities, meaning that it could not relate together two versions or a version and an attribute.
+It, however, relates together activities with entities, meaning that it could not relate together two versions or a version and an attribute.
 This property also does not make sense because, once again, no activity is producing the versioning relationship.
 Although, if we attribute new additions to the activity which generates Version 2, a relationship using \textit{prov:Generation} can be formed.
 This formation, however, would also apply to other attributes added to Version 2, and convolute the role the activity took in an attributes generation.
@@ -134,7 +134,7 @@ The \textit{invalidation} relationship has a missing attribute object on the oth
 As a result of the invalidation, an attribute no longer exists in the following version.
 As seen in Figure \ref{InvalidationFig}, the invalidation change concept matches to the Version 2 object.
 Just like in addition model, this construction maintains a link between the two version objects.
-However, in this case, it makes more conceptual sense because Version 2 invalidates Attribute 1 by omitting it.
+In this case, it makes more conceptual sense, however, because Version 2 invalidates Attribute 1 by omitting it.
 
 \begin{figure}
 	\centering
@@ -156,14 +156,14 @@ However, in this case, it makes more conceptual sense because Version 2 invalida
 	\label{InvalidationFig}  % the \label command comes AFTER the caption
 \end{figure}
 
-Related concepts include Schema.org's \textit{schema:DeleteAction} and PROV's \textit{prov:Invalidation}.
+Related concepts include Schema.org's \textit{schema:DeleteAction} and PROV's \textit{prov: Invalidation}.
 PROV defines the property as the "start of the destruction, cessation, or expiry of an existing entity by an activity," but since nothing actively creates versioning relationships, this property is inappropriate for this application \cite{Lebo2013}.
 There is no activity to credit with removing the property in this comparison, and the absence results from a state-based property.
 Schema.org defines the \textit{schema:DeleteAction} as, "The act of editing a recipient by removing one of its objects," \cite{SchemaRem}.
 This definition assumes that an actor will perform an action upon an object or collection, removing one of its members, producing a new result.
 This follows the provenance mentality, but when versioning, the resulting object has already been created.
 Cases exist, as shown in Section \ref{mapping}, where an attribute is not included in a new version, thus indicating that it has been removed.
-However, the most important point of contention in this definition is the idea of removal and deletion.
+The most important point of contention in this definition, however, is the idea of removal and deletion.
 Although an object is no longer valid, it does not mean the data has been deleted.
 Invalid data often gets removed, but this is not always the case.
 As a result, naming the concept invalidation is more general and inclusive.

@@ -30,10 +30,10 @@ Whether in the same or different groups, the relationship between entries inform
 Figure \ref{hierarchy} visually displays this concept with each file having a clearly defined grouping at each hierarchical level.
 Another implication is that version changes can be determined by studying the difference in provenance between two objects.
 Changes in algorithms and coefficients may induce enough volatility into the data that a new grouping becomes necessary.
-However, this relies heavily on knowing which provenance changes correspond with resulting volatility.
+This, however, relies heavily on knowing which provenance changes correspond with resulting volatility.
 A new version of a data set can result from modifications to data downstream propagated through a workflow without significant changes to the immediate algorithm or coefficients.
 In addition, a deeper investigation would become necessary to quantify the amount of volatility introduced by these changes, and how much is necessary to induce a change at each level of the hierarchy.
-Therefore, a version definition cannot rely on provenance alone.
+A version definition, therefore, cannot rely on provenance alone.
 
 \begin{figure}
 	\centering
@@ -51,16 +51,16 @@ More specifically, these designs perform the same function in their application.
 Combining these conclusions together, a clearer image emerges.
 A version is, at its core, a work, but it is not a singular work.
 Versions are members of a group which have common, but varying provenance.
-However, these members must also perform the same function as others in their group.
+These members, however, must also perform the same function as others in their group.
 This creates specific requirements as to when two objects can be considered versions of each other.
 
 Notice that neither definition includes how to generate versions.
 The derivation, PROV Ontology's analog for a version, is defined as, ``a transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a pre-existing entity," \cite{Lebo2013}.
 In this view, a version exists because an activity generated it.
-However, looking more closely at the forces acting upon the version, they generate an object which becomes a derivation of another as a result of sharing the properties previously mentioned.
+Looking more closely, however, at the forces acting upon the version, they generate an object which becomes a derivation of another as a result of sharing the properties previously mentioned.
 The version identifier becomes applied using prior knowledge, not as a result of generation activities.
 That is, an activity determines whether an object is a version of another based on the state of that object.
-Therefore, versioning is the activity of identifying two objects connected by provenance and exposing the changes relating them, not of generating versions.
+Versioning, therefore, is the activity of identifying two objects connected by provenance and exposing the changes relating them, not of generating versions.
 
 \section{Identifiers}
 
@@ -95,14 +95,14 @@ Early citations referred to on-line documents using stagnant Uniform Resource Lo
 Locators required a system to manage changes of old identifiers to new locations when people attempted to utilize references from print.
 This eventually led to the development of Persistent URLs (PURL), which also suffered from link rot, and this eventually led to the distributed Digital Object Identifier (DOI) system used to track documents today \cite{Duerr2011}.
 The PURL used a centralized system that would translate dead links and redirect to a document's latest location.
-However, the system would still need to be manually updated, meaning links would rot if a document was lost or overlooked.
+The system, however, would still need to be manually updated, meaning links would rot if a document was lost or overlooked.
 DOIs rely on a network of managing agencies to collect and host submitted documents.
 In the specialized Handle system, the network has member agencies internally assign an unique name and concatenate it to the end of their host name.
 In Figure \ref{table:Duerr}, DOIs represent the most suitable identifier used for citation in scholarly literature \cite{Duerr2011}.
 The DOI network provides a robust system to track documents, but when tracking data, it faces difficulty following the rate of change with more volatile data sets.
 Under current definitions, distribution organizations assign different DOIs to separate editions of a document.
 Documents often do not need new identifiers since they change very rarely as a result of the publication process.
-However, the data set production and distribution cycle moves more quickly and reacts more sensitively to small content changes, including when data collection continues on after initial publication.
+The data set production and distribution cycle, however, moves more quickly and reacts more sensitively to small content changes, including when data collection continues on after initial publication.
 This behavior becomes entirely too slow as data providers begin allowing users to dynamically generate data products from existing data according to their needs \cite{Barkstrom2003a}.
 Some agencies have begun assigning versioned DOIs, but this has not become common practice.
 Other groups do not assign a new DOI, but reference to the latest release of the document or object \cite{Ands2017}.
@@ -159,7 +159,7 @@ It also provides feedback to the user community that corrections have been addre
 An identifier cannot communicate these qualities while remaining succinct.
 Some research has been done to determine the health of a development project based on the number and length of change logs released over time \cite{German03automatingthe}.
 This becomes particularly significant as data freshness plays a growing role in successful system function \cite{Bouzeghoub:2004:FAD:1012453.1012464}.
-However, little work has been done to make change logs machine-computable, as many of these documents remain in human-readable text only.
+Little work has been done, however, to make change logs machine-computable, as many of these documents remain in human-readable text only.
 Research done involving change log content must manually link entries with computable meta-data such as the introduction of new features with the emergence of new bugs \cite{6132954}.
 While machines may still be significantly removed from the ability to comprehend the impact of changes made to a data set or software code, they are currently opaquely blocked from consuming any of the content within logs more than understanding they contain text.
 The transition between different versions of large datasets is then left largely up to the human user's ability to understand and process the modifications mentioned within the change log.
@@ -184,7 +184,7 @@ The implementation requires changing publishing practices from plain-text docume
 The change also has the added benefit of making the logs available on-line, and thus, more openly accessible to data users through the utilization of web based search engines.
 Large companies such as Google have already begun equipping their web crawlers to consume structured data such as RDFa from web pages.
 RDFa has already had significant success in adoption across a variety of web publication platforms and eases the search for their content \cite{Bizer2013}.
-However, the design of RDFa focuses on describing the web page's content through markup \cite{Herman2015}.
+The design of RDFa, however, focuses on describing the web page's content through markup \cite{Herman2015}.
 The underlying or resulting versioning data model may not conform with the format of content presented in the change log.
 This would lead to a poorly structured graph or missing content, undermining the value gained by encoding linked data into the change log.
 As a result, another method using JavaScript Object Notation for Linked Data (JSON-LD) was pursued since its purpose is to store data separate from visible content.
@@ -193,7 +193,7 @@ The JSON data format allows web pages to store data for JavaScript applications 
 It utilizes a simple and robust syntax to accommodate a wide variety of content.
 JSON-LD extends the original specification by defining rules which allow entries to resolve as web vocabularies, giving them a meaningful context \cite{JSONLD}.
 Because it stores data separate from visible content, JSON-LD does not need to adhere with the constraints of visible content.
-However, every linked data triple must be explicitly defined, meaning that resulting documents may likely be much larger than their RDFa counterparts.
+Every linked data triple, however, must be explicitly defined, meaning that resulting documents may likely be much larger than their RDFa counterparts.
 
 \section{Modeling} \label{sec:models}
 
@@ -211,7 +211,7 @@ This method, however, relies on an abstract model capturing data changes to info
 Data models allow the capture of complicated relationships between data objects within a system without needing to physically look over sizable datasets.
 The Proof Markup Language, one of the first semantic models to capture provenance information, expressed these relationships using inference reasoning through traceable graphs \cite{daSilva2006381}.
 Many data models include versioning concepts in their specifications, but they are often provenance models which describe the sequence of events that lead to the construction of an object \cite{dai2014provenance}.
-However, as discussed previously, versioning seeks to expose relationships between objects which may not describe how to construct either one.
+As discussed previously, versioning seeks to expose relationships between objects which, however, may not describe how to construct either one.
 The Health Care and Life Sciences (HCLS) Interest Group recently released a model which may provide a solution when used in conjunction with other identifiers \cite{Dummontier2016}.
 Their model, shown in Figure \ref{HCLSModel}, separates the concept of a dataset into three groupings.
 The highest level summarizes the data as an abstract work, perhaps better described as a topic or title.
@@ -235,7 +235,7 @@ They enumerate specific situations relating to health care data requiring broade
 As a result, their model provides basic properties to identify a previous version and its corresponding identifier.
 They do not provide methods to identify motivations or discuss the role attribute differences effect changing versions.
 The existence and widespread adoption of change logs demonstrates the importance of this information in understanding modifications between versions.
-However, PAV does adopt a state-based perspective regarding versioning since it only seeks to identify a previous version without attributing a responsible activity.
+PAV, however, does adopt a state-based perspective regarding versioning since it only seeks to identify a previous version without attributing a responsible activity.
 
 The PROV data model is a World Wide Web Consortium (W3C) recommendation which defines linked data properties to capture data provenance \cite{Gil2013}.
 PROV has played a significant contribution in maintaining the quality and reproducibility of datasets and reporting in the National Climate Assessment (NCA) \cite{Ma2014191}.
@@ -263,7 +263,7 @@ Klein and Fensel determined versioning systems needed to capture compatibility a
 There are two types of compatibility, `forwards', which explains how to modify old data to work with new content, and `backwards', which allows new data to interact with old data.
 Knowing one type of compatibility does not always entail the means of deriving the other.
 Having full forwards and backwards compatibility allows interoperability between a variety of applications which may use different versions of the same ontology.
-However, it often depends on the application as to whether full compatibility is necessary.
+It, however, often depends on the application as to whether full compatibility is necessary.
 Once concern which is very rarely discussed is the compatibility of files and objects which do not change at all.
 Take, for example, some biological ontologies, which must update terms and definitions to better capture the field \cite{Ochs:2015:SVS:2826733.2826866}.
 They mention very little on how to migrate terms which do not change, but these can contribute to a majority of copied content and pose significant scaling issues.
@@ -278,7 +278,7 @@ While this work cannot hope to explore all these applications, every system stud
 These three operations plausibly form the core set of relationships when versioning.
 
 Literature surveys often expect versioning systems to interact with data uniformly because they are asked to perform the same functions \cite{Tagger2005}.
-However, different data sets may utilize each of the three core operations at different rates \cite{rohtua}.
+Different data sets, however, may utilize each of the three core operations at different rates \cite{rohtua}.
 This helps to characterize the data set in ways such as a growing set with many additions, a stable collection featuring occasional corrections, or a wildly volatile data set consisting of often deleted and replaced data files.
 Understanding these would give insight into the maturity and health of a dataset, but most major provenance ontologies do not heavily feature these relationships.
 Versioning information, of course, does not give insight into the origins of an object, and therefore, would not be expected to play a major role in provenance documentation.
@@ -301,7 +301,7 @@ It allows for more orderly management of versions, but does not conduct versioni
 Other activities provide functional operations such as locking and unlocking files from edits to prevent race conditions in branch mergers.
 It does not introduce any new relationships but allows the tool to operate more smoothly.
 Clotho, a versioning application managing versions at the block level, coordinates constrained spaces using intermittent compact and un-compact methods when retrieving or storing old objects \cite{Flouris04clotho:transparent}.
-Likewise, many version control tools include functions to display the versioning tree, but this is also an ease-of-use function \cite{Dijkstra1994}.
+Many version control tools, likewise, include functions to display the versioning tree, but this is also an ease-of-use function \cite{Dijkstra1994}.
 
 \begin{figure}
 	\centering
@@ -318,12 +318,12 @@ Instead, they observe that changes to format and structure contribute significan
 As a result, these technical changes form a second boundary to meaningfully separate minor version groupings.
 Finally, the explicit values may need occasional revisions to correct lexical errors such as spelling or formatting.
 These terms were chosen carefully as they reflect the three value dot-decimal identifier system.
-However, data producers will often use qualitative measures to determine the type of change occurring between versions.
+data producers, however, will often use qualitative measures to determine the type of change occurring between versions.
 Versioning system users wish to achieve insight into the type of change that occurs between versions, and quantitative analysis on versioning operations will provide quantifiable evidence in characterizing the impact of a change.
 
 The exact category that a particular change falls into can be controversial.
 The decision to provide concentration units from parts per million to milligrams per milliliter poses a Technical change for a data producer.
-However, for a data consumer, the alteration may be viewed as a Scientific change as it invalidates the methods they had previously used.
+For a data consumer, the alteration may be viewed, however, as a Scientific change as it invalidates the methods they had previously used.
 This conflict in view illustrates the data consumer-producer dynamic.
 In general, data producers control the versioning methods, but data consumers determine the classification of a data change.
 Producers tend to use versioning systems to ensure data quality of service through audits and recovery tools \cite{Cavanaugh2002}.

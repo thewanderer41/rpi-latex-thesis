@@ -14,13 +14,13 @@ While it is more specific, this implementation forces some space requirements.
 PROV only requires 3 to 5 triples in order to make a versioning statement.
 This model uses 9 triples for a mod change and 7 to encode addition and invalidation.
 To model a version has space complexity of \(O(7M+5(A+I))\) since the version declaration statements overlap.
-However, a similar structure can be achieved using \textit{prov:wasDerivedFrom} to replace modifications and \textit{schema:AddAction} and \textit{schema:DeleteAction} to replace additions and invalidations.
+A similar structure, however, can be achieved using \textit{prov:wasDerivedFrom} to replace modifications and \textit{schema:AddAction} and \textit{schema:DeleteAction} to replace additions and invalidations.
 The resulting space complexity is \(O(7M+3A+5I)\).
 This is fairly similar with additions seeing a reduction since the left-hand version no longer contributes to the \textit{schema:AddAction}.
 Thus the primary benefit of using this model comes from semantics.
 
 The reason \textit{prov:Generation} and \textit{prov:Invalidation} are not used is because they expect an activity to be responsible for an object.
-However, it is not generally true that an action actively added or removed an attribute from an object in the left-hand version to produce the right-hand revision.
+It is not generally true, however, that an action actively added or removed an attribute from an object in the left-hand version to produce the right-hand revision.
 That assumption minimizes the ability to conduct versioning comparisons between objects that are not sequentially adjacent.
 The activity producing a far away object may not immediately relate to the original data in a version comparison, resulting in a situation where it would be inappropriate to use the two PROV concepts.
 When considering versioning in a state-based sense, relationships exist as a result of two objects being versions of each other.
@@ -31,7 +31,7 @@ The versioning process breaks down to three formal steps which appear in all con
 The first activity verifies that the objects being compared are actually versions of each other.
 This exercise is often left out of details in practice since a data producer is often fairly certain as to the state of their versions.
 Mechanisms are otherwise employed to enforce a strict documentation procedure to ensure the data's comparability as seen in version control software.
-However, this step establishes the foundation and validity of further actions taken to version the objects.
+This step establishes, however, the foundation and validity of further actions taken to version the objects.
 This ensures that a mapping can be performed and will be meaningful.
 The next step is generating the mapping to identify addition, invalidation, and modification relationships.
 The resultant mapping in spreadsheet comparisons followed very similar rules, but when looking at the MBVL dataset, the definitions were changed to achieve a specific goal.
@@ -43,7 +43,7 @@ In this implementation, the number of triples necessary to implement the model s
 The Noble Gas data set's change logs could not be loaded using a web browser.
 One contributor to this problem is that the modification of an entire column would result in multiple entries equal to the number of rows in the table.
 These entries could be combined together into a single statement relating just the effected columns.
-However, this optimization would greatly impact the resulting change counts, reinforcing that version analysis depends largely on the mapping method, but this would likely allow the log to become readable.
+This optimization, however, would greatly impact the resulting change counts, reinforcing that version analysis depends largely on the mapping method, but this would likely allow the log to become readable.
 JSON-LD proves to be a better mechanism for encoding the versioning graph than RDFa since it is intended to encode data while the latter primarily contextualizes visible content.
 
 When linking together multiple versions using a versioning graph, the relationship between non-adjacent editions remains implied in the graph's structure.
@@ -54,20 +54,20 @@ In comparison, other models only capture activity between the adjacent versions.
 
 The versioning process discovered a discrepancy in the identifier assignment in the GCMD Keywords taxonomy.
 The original analysis was intended to determine if dot-decimal identifiers could be predicted using the change counts of the versioning graph.
-However, version 8.5 was named with respect to perceived taxonomy changes and did not consider underlying linked data practice revisions.
+Version 8.5, however, was named with respect to perceived taxonomy changes and did not consider underlying linked data practice revisions.
 This brings into question the accuracy of all prior names and the any relationships observed between identifier and change counts.
 It would explain how 8.4.1 had more additions than any previous minor change but obtains a third bracket identifier
-However, assuming that the observed relationship remains, it can be shown that the keyword management team did not consider the namespace change as a major modification in their data set.
+Assuming, however, that the observed relationship remains, it can be shown that the keyword management team did not consider the namespace change as a major modification in their data set.
 This is seen after accounting for namespace differences to show that the change count magnitude resembles other versions in the same identifier bracket.
 This brings into concern the practice of version name assignment based on producer perception and not on more concrete measures.
 An incomplete understanding in the amount of change between two versions can lead to flawed expectations in migrating across them.
 
 This is not to claim that change magnitudes should be the sole mechanism in determining version identifiers.
-However, it can provide a more quantitative characterization of changes within the system.
+It can, however, provide a more quantitative characterization of changes within the system.
 In Figure \ref{GCMDC2}, the yellow line indicates the total changes made to the data set, performing a similar function as the major/minor/revision version identifier.
-However, breaking up the changes into types reveals the dominant contribution of additions to the data set.
+Breaking up the changes into types, however, reveals the dominant contribution of additions to the data set.
 This understanding of the data's behavior cannot be revealed with a three number dot decimal identifier system.
-However, it also does not take into account the possibility that single or small changes can have significant implications scientifically.
+It also does not take into account the possibility that single or small changes can have significant implications scientifically.
 
 \section{Change Analysis}
 

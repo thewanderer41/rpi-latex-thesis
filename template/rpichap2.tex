@@ -8,7 +8,7 @@
 %\resetfootnote %this command starts footnote numbering with 1 again.
 
 The data versioning landscape produces a variety of different approaches and standards towards change capture.
-However, massive centralized data stores have become more prevalent as data distribution methods advance  \cite{Vassiliadis1999}.
+Massive centralized data stores, however, have become more prevalent as data distribution methods advance  \cite{Vassiliadis1999}.
 Collection into larger unified repositories will likely require a multi-tiered approach to synchronize the varied practices  \cite{Baker2009}.
 Baker notes that differences depend on the sociotechnical distance of a repository from the data's origin \cite{Baker2009}.
 Local stores closer to the collection site better understand data capture conditions, but must also adapt to changing environments.
@@ -45,7 +45,7 @@ Komadu, a framework developed to alleviate workflow integration, improves upon i
 The PROV Ontology provides three different concepts that begin to encapsulate the provenance relationship between data versions.
 It defines a \textit{prov:Generation} as "the completion of production of a new entity by an activity," \cite{Lebo2013}.
 This means that the generation, which corresponds to the version addition operation, must result from a \textit{prov:Activity}.
-However, activities play a much less active role in versioning since object comparisons instead expose changes.
+Activities, however, play a much less active role in versioning since object comparisons instead expose changes.
 The property creates a relationship between entities and activities, but such a connection may imply that perturbations in the activity resulted in changing the version.
 Changes could also result from modifications in the input data, leading to an entirely new generating activity rather than a modified one.
 \textit{Prov:Invalidation} likewise makes a similar connection between activities and entities.
@@ -75,7 +75,7 @@ This observation makes change impact difficult to measure, but one insight begin
 Provenance can give great insight into a data object's future performance such as the  ability to predict disk usage based on the lineage of a data object \cite{dai2014provenance}.
 Efforts have also been made to summarize provenance representations to improve consumption \cite{Ainy:2015:ASD:2806416.2806429}.
 Changes to the process creating an object signals the development of a new version.
-Therefore, studying the magnitude of this deviation should give some idea into the resulting object's impact.
+Studying the magnitude of this deviation, therefore, should give some idea into the resulting object's impact.
 This idea, known as provenance distance, seeks to determine the impact of changes in provenance on new data versions through measuring graph edit distances.
 
 \begin{figure}
@@ -100,7 +100,7 @@ Some variations count edge changes \cite{Goddard:1996:DGU:246962.246972}.
 In Figure \ref{GraphEdit}, the left graph transforms through a move of edge 1 and a rotation of edge 4, resulting in an edit distance of two.
 Such changes in a provenance graph would demonstrate an alteration in dependencies between objects used to generate a final notable product.
 This kind of analysis resembles comparison measures employed in determining semantic similarity \cite{Hliaoutakis06informationretrieval}.
-However, isolating changes responsible for differences in provenance can become difficult in complex environments as Tilmes observes in 2011, 
+Isolating changes responsible for differences in provenance, however, can become difficult in complex environments as Tilmes observes in 2011, 
 \begin{quotation}
 	Consider the relatively common case of the calibration table, which is an input to the L1B process, changing. Even though the version of the L2 or L3 software hasn't changed, the data files in the whole process have been affected by the change in the calibration.
 \end{quotation} \cite{TILMES2011548}.
@@ -115,7 +115,7 @@ While provenance distance may be straight-forward to calculate, the indicator hi
 \end{figure}
 
 Methods to provide quality of service boundaries leveraging provenance already exist which compare workflows based on performance criteria \cite{2015:CAA:2778374.2778504}.
-However, these procedures focus primarily on quick retrieval and efficient storage instead of capitalizing on the latent information accessed by reasoning across data set versions \cite{tan2004research}.
+These procedures, however, focus primarily on quick retrieval and efficient storage instead of capitalizing on the latent information accessed by reasoning across data set versions \cite{tan2004research}.
 The distance measures previously mentioned rely solely on provenance graphs to compute results, but this is obviously insufficient.
 When considering the provenance of a data object, methods only consider the activities and entities that took an active role in the production of it.
 A new version of an object has a familial relationship with its previous versions, but in most cases, they do not take an active role in its generation.
@@ -135,7 +135,7 @@ The software manager GIT employs this method and Figure \ref{GITFile} demonstrat
 The squares with dotted outlines indicate unmodified files, which the system stores as pointers instead of full objects.
 In addition, GIT compresses and separately stores very old versions which are unlikely to be accessed.
 This versioning style may not be ideal for larger or often modified data sets as the size requirements will quickly grow unmanageable.
-However, for many library or catalog environments, they cannot predict the target volume a user desires and must prioritize availability \cite{Payette2002} \cite{Barkstrom_digitallibrary}.
+For many library or catalog environments, they cannot predict, however, the target volume a user desires and must prioritize availability \cite{Payette2002} \cite{Barkstrom_digitallibrary}.
 Some methods like the inverted file index have been developed to balance space and retrieval performance on web documents, especially since wikis and news feeds have grown in deployment \cite{Berberich:2007:TMT:1277741.1277831}.
 Searches over these text media may require execution on older archived web pages.
 
@@ -158,7 +158,7 @@ Properly detecting changes in a system's files allows file managers to correctly
 Difference or diff applications must first properly map data between objects and align them for comparison.
 Many text-based data sets rely on well-established algorithms to perform this alignment  \cite{Chien:2000:VMX:646544.696357} \cite{Hartung201315}.
 Sequential scientific data largely avoids this problem since developers already know the files or objects they replaced.
-However, users do not have this advantage and system managers are starting to recognize the difference in versioning usage patterns between users and producers \cite{Branco2008}.
+Users, however, do not have this advantage and system managers are starting to recognize the difference in versioning usage patterns between users and producers \cite{Branco2008}.
 Mayernik, et al., probably gives the best description saying, "Prospective records document a process that must be followed to generate a given class of products whereas retrospective records document a process that has already been executed" \cite{MatthewS.Mayernik201312-039}.
 While producers take a retrospective approach to version usage, consumers of new versions must take a prospective view, adapting to new changes.
 This indicates that the orientation of versioning information reflects the imagined customer of that data.

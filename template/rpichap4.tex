@@ -36,7 +36,7 @@ This process helps to determine the confidence that using the model to encode th
 
 The next step involves formulating a method to determine whether a relationship constitutes an add, invalidate, or modify mapping.
 As discussed in the previous chapter, this relies on determining whether an attribute exists in one version, the other, or both.
-However, with tabular data, a row and column attribute is required to match specific cells.
+With tabular data, a row and column attribute, however, is required to match specific cells.
 For the Noble Gas dataset, this is the entry identifier and the column headers.
 Row and column numbers are avoided because edits can result in the same entry associated with different indices.
 In addition, the first version of the Noble Gas dataset was organized into multiple files so the same row index would appear more than once, and therefore, could not be used to match related entries.
@@ -68,7 +68,7 @@ While a linked data versioning graph can now be generated using the mapping meth
 The solution is to create a human readable change log to both validate the mapping matches and generate human readable change documentation.
 This addresses a gap in the Noble Gas data set's documentation which describes data use, but not data changes.
 The log is divided into three sections corresponding to the sets generated in Section \ref{mapping}.
-However, this provides an opportunity to address a weakness in modern change logs in that they are only human readable.
+This provides an opportunity, however, to address a weakness in modern change logs in that they are only human readable.
 Two technologies previously introduced, RDFa and JSON-LD, provide a means of embedding linked data into HTML documents, allowing the log to be both human and machine readable.
 
 \begin{figure}
@@ -85,7 +85,7 @@ A selection of the marked up source from Figure \ref{changelog_zoomed} appears i
 Only the lines displaying table headers and the second data line have been removed.
 Immediately, it can be seen that the markup is quite cluttered as a result of the clash between RDFa's intent and its use.
 The goal of this technology is to describe the content on a page and give context to particular values, marking a string of digits as a phone number for example.
-However, in this application, very little of the content is used in the model except for line 3, which uses the mineral name as an attribute label.
+In this application, very little of the content, however, is used in the model except for line 3, which uses the mineral name as an attribute label.
 It is instead used to encode the versioning model into the HTML document's lattice, leveraging the ability to imply relationships in nested tags.
 Unfortunately, RDFa interpreters are very particular in the way they resolve implications, and the order in which data appears in a change log to be human readable does not match the order they need to be for RDFa to encode the model.
 In lines 10 and 11, two triples have to be explicitly included in order to conform with the model outlined in Chapter \ref{ch:model}.
@@ -116,7 +116,7 @@ Additionally, a decision was made to divide each change's linked data into its a
 The practice of a one-node collection is generally helpful for many web applications to load data quickly, but since this is not an application, it makes more sense to break up the content.
 Changes to individual attributes can be identified using anchors on the web page, then agents need only extract and parse the link data to these specific entries.
 This way, a subgraph of only the pertinent attributes can be created without first ingesting the entire versioning graph.
-However, a problem both of these change logs struggle with is size.
+Both of these change logs, however, struggle with size.
 The Copper Minerals data set encoded in RDFa is 1.7 MB and JSON-LD is 3.3 MB.
 In the Noble Gas data set, the RDFa and JSON-LD change log sizes are 59 and 60 MB, respectively.
 The Noble Gas change logs often do not load in a browser.
@@ -193,7 +193,7 @@ Likewise, the graph generator iterates over the set of invalidations and generat
 	\label{NobleGraph1}
 \end{figure}
 
-However, Figure \ref{NobleGraph1} also demonstrates an interesting set of decisions made early in the generation process regarding modifications.
+Figure \ref{NobleGraph1}, however, also demonstrates an interesting set of decisions made early in the generation process regarding modifications.
 Firstly, the relation presented in the figure is unbalanced and the right-hand side of ChangeCAM00111 links only to the column identifier but not to the corresponding row attribute.
 This links from a mismatch between the model's structure, the order in which data appears in the change log, and the way RDFa links properties together.
 Because the row label forms the outermost encapsulation, it cannot instantiate both row identifiers and implicitly link them separately.
