@@ -9,6 +9,7 @@
 The goal of dataset versioning is to expose the relationships between versions of a dataset.
 To do this, the concept model relates three kinds of --- objects, versions, attributes, and changes --- using three different orientations.
 The model obviously includes versions because they are the objects being compared.
+Identifying one object, however, as a version of another does not give much insight into the nature of their relationship.
 In order to characterize the change between two versions, the model relates their attributes.
 The model uses the Dublin Core Term \textit{dco:hasPart} to facilitate the link from a version to its attribute.
 The changes used then defines the difference between these attributes in each version.
