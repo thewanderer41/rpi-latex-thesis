@@ -23,13 +23,13 @@ As Barkstrom writes in 2003,
 \section{Defining Versions and Versioning}
 
 Using versions in the vernacular has become so pervasive that few documents formally define it.
-Barkstrom describes versions as ``homogeneous groupings" used to control, ``production volatility induced by changes in algorithms and coefficients as result of validation and reprocessing," \cite{Barkstrom2003}.
+Barkstrom describes versions as \textbf{homogeneous groupings} used to control, ``production volatility induced by changes in algorithms and coefficients as result of validation and reprocessing," \cite{Barkstrom2003}.
 This definition's first implication is that such \textbf{groupings} indicate an expectation that versioning requires multiple objects.
-With only one object, all metadata would be homogeneous and groupings would become unnecessary.
-Whether in the same or different groups, the relationship between entries informs the grouping necessary to organize the data collection.
-Figure \ref{hierarchy} visually displays this concept with each file having a clearly defined grouping at each hierarchical level.
+With only one object, all metadata would be homogeneous and \textbf{groupings} would become unnecessary.
+Whether in the same or different groups, the relationship between entries informs the \textbf{grouping} necessary to organize the data collection.
+Figure \ref{hierarchy} visually displays this concept with each file having a clearly defined \textbf{grouping} at each hierarchical level.
 Another implication is that version changes can be determined by studying the difference in provenance between two objects.
-Changes in algorithms and coefficients may induce enough volatility into the data that a new grouping becomes necessary.
+Changes in algorithms and coefficients may induce enough volatility into the data that a new \textbf{grouping} becomes necessary.
 However, this relies heavily on knowing which provenance changes correspond with resulting volatility.
 A new version of a data set can result from modifications to data downstream propagated through a workflow without significant changes to the immediate algorithm or coefficients.
 In addition, a deeper investigation would become necessary to quantify the amount of volatility introduced by these changes, and how much is necessary to induce a change at each level of the hierarchy.
@@ -49,18 +49,18 @@ A similar context connects each snapshot, meaning that they are versions as a re
 More specifically, these designs perform the same function in their application.
 
 Combining these conclusions together, a clearer image emerges.
-A version is, at its core, a work, but it is not a singular work.
-Versions are members of a group which have common, but varying provenance.
+A \textbf{version} is, at its core, a work, but it is not a singular work.
+\textbf{Versions} are members of a group which have common, but varying provenance.
 However, these members must also perform the same function as others in their group.
-This creates specific requirements as to when two objects can be considered versions of each other.
+This creates specific requirements as to when two objects can be considered \textbf{versions} of each other.
 
 Notice that neither definition includes how to generate versions.
 The derivation, PROV Ontology's analog for a version, is defined as, ``a transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a pre-existing entity," \cite{Lebo2013}.
-In this view, a version exists because an activity generated it.
-However, looking more closely at the forces acting upon the version, they generate an object which becomes a derivation of another as a result of sharing the properties previously mentioned.
+In this view, a \textbf{version} exists because an activity generated it.
+However, looking more closely at the forces acting upon the \textbf{version}, they generate an object which becomes a derivation of another as a result of sharing the properties previously mentioned.
 The version identifier becomes applied using prior knowledge, not as a result of generation activities.
 That is, an activity determines whether an object is a version of another based on the state of that object.
-Therefore, versioning is the activity of identifying two objects connected by provenance and exposing the changes relating them, not of generating versions.
+Therefore, \textbf{versioning} is the activity of identifying two objects connected by provenance and exposing the changes relating them, not of generating versions.
 
 \section{Identifiers}
 
@@ -212,7 +212,7 @@ Data models allow the capture of complicated relationships between data objects 
 The Proof Markup Language, one of the first semantic models to capture provenance information, expressed these relationships using inference reasoning through traceable graphs \cite{daSilva2006381}.
 Many data models include versioning concepts in their specifications, but they are often provenance models which describe the sequence of events that lead to the construction of an object \cite{dai2014provenance}.
 However, as discussed previously, versioning seeks to expose relationships between objects which may not describe how to construct either one.
-The Health Care and Life Sciences (HCLS) Interest Group recently released a model which may provide a solution when used in conjunction with other identifiers \cite{Dummontier2016}.
+The Health Care and Life Sciences (HCLS) Interest Group of the World Wide Web Consortium (W3C) recently released a model which may provide a solution when used in conjunction with other identifiers \cite{Dummontier2016}.
 Their model, shown in Figure \ref{HCLSModel}, separates the concept of a dataset into three groupings.
 The highest level summarizes the data as an abstract work, perhaps better described as a topic or title.
 This data topic can have multiple versions as it changes over time.
@@ -237,7 +237,7 @@ They do not provide methods to identify motivations or discuss the role attribut
 The existence and widespread adoption of change logs demonstrates the importance of this information in understanding modifications between versions.
 However, PAV does adopt a state-based perspective regarding versioning since it only seeks to identify a previous version without attributing a responsible activity.
 
-The PROV data model is a World Wide Web Consortium (W3C) recommendation which defines linked data properties to capture data provenance \cite{Gil2013}.
+The PROV data model is a W3C recommendation which defines linked data properties to capture data provenance \cite{Gil2013}.
 PROV has played a significant contribution in maintaining the quality and reproducibility of datasets and reporting in the National Climate Assessment (NCA) \cite{Ma2014191}.
 This implication signifies that there is an increased likelihood of adoption through other scientific fields as a result of this reporting.
 The Global Change Information System, which houses the data used to generate the NCA, uses PROV to meticulously track the generation of its artifacts and results as they are used in the report \cite{Tilmes2012}.
