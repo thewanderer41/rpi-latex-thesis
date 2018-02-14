@@ -4,18 +4,18 @@
 %                                                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{VERSIONING TABULAR DATA}\label{ch:spreadsheet}
+\chapter{VERSIONING TABULAR DATA}\label{ch:implement}
 
 This chapter uses the Copper and Noble Gas databases to demonstrate the implementation of the model presented in the previous chapter.
 
 \section{Validate Comparisons}
 
 The first step is to establish that the two objects being compared meet the requirements of being each other's versions.
-For the Copper dataset, the objects result from a compilation effort from the same sources of data.
+For the Copper data set, the objects result from a compilation effort from the same sources of data.
 An entry recording the source material for each row in the table accompanies each reading.
 As a result, these entries were used to determine that they share similar provenance.
 They will also both be used as data inputs at the same step to generate data visualizations.
-The datasets become interchangeable within the context of executing the workflow.
+The data sets become interchangeable within the context of executing the workflow.
 Determining whether the Noble Gas files are versions is a more challenging activity.
 From provenance graphs like the one constructed for the entry CAM001 in Figure \ref{CAM001ProvGraph}, the entries share a common source document.
 Likewise, a significant portion of the other entries also share sources from the same body of work.
@@ -37,9 +37,9 @@ This process helps to determine the confidence that using the model to encode th
 The next step involves formulating a method to determine whether a relationship constitutes an add, invalidate, or modify mapping.
 As discussed in the previous chapter, this relies on determining whether an attribute exists in one version, the other, or both.
 However, with tabular data, a row and column attribute is required to match specific cells.
-For the Noble Gas dataset, this is the entry identifier and the column headers.
+For the Noble Gas data set, this is the entry identifier and the column headers.
 Row and column numbers are avoided because edits can result in the same entry associated with different indices.
-In addition, the first version of the Noble Gas dataset was organized into multiple files so the same row index would appear more than once, and therefore, could not be used to match related entries.
+In addition, the first version of the Noble Gas data set was organized into multiple files so the same row index would appear more than once, and therefore, could not be used to match related entries.
 An observation that also simplifies identifying edits is that cells are rarely added or removed individually.
 When one row gains a cell all other rows gain one as well, perhaps with null values, forming a new column.
 As a result, data additions and invalidations only use one identifier.
@@ -53,7 +53,7 @@ This only performs a very basic version mapping, but data producers can signific
 For example, the base method would not understand that a Location column has been divided into two columns Latitude and Longitude.
 A data producer could manually link the Location attribute to the Latitude and Longitude attributes, forming a single modification instead of an invalidate and two additions.
 
-The Copper Minerals dataset starts each row with a unique mineral name, which can be matched across datasets to determine if an entry has undergone a modification.
+The Copper Minerals data set starts each row with a unique mineral name, which can be matched across data sets to determine if an entry has undergone a modification.
 The column headers have different formats because the initial file is an Excel file and the other is a comma separated file.
 As a result, the column headers were manually matched together with the remaining headers in each file mapped into the added and invalidated sets.
 The Noble Gas database also uses unique identifiers to mark each of its entries, but the first version of the database divides data among multiple files.
@@ -179,7 +179,7 @@ Since the attributes in sets \(\mathcal{A}\) and \(\mathcal{I}\) guarantee a cha
 <http://rdfa.info/play/Version2> a vo:Version ;
 	vo:hasAttribute <http://rdfa.info/play/Attribute21>
 \end{lstlisting}
-Listing \ref{NGA} presents the statements in turtle format necessary to express that the entry EGY001 has been added to the dataset from Version 1 to Version 2 as shown in Figure \ref{NobleGraph1}.
+Listing \ref{NGA} presents the statements in turtle format necessary to express that the entry EGY001 has been added to the data set from Version 1 to Version 2 as shown in Figure \ref{NobleGraph1}.
 Notice that the namespace for many of the URIs is \textlangle http://rdfa.info/play/\textrangle.
 This results from the triples being extracted out of an HTML change log with embedded linked data, and this is used as the default namespace for the page.
 Since we know the number of additions, each change instance can be easily numbered.
@@ -189,7 +189,7 @@ Likewise, the graph generator iterates over the set of invalidations and generat
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.30]{figures/NobleVersion.png}
-	\caption{Some initial entries from versions 1 and 2 of the Noble Gas dataset}
+	\caption{Some initial entries from versions 1 and 2 of the Noble Gas data set}
 	\label{NobleGraph1}
 \end{figure}
 
@@ -218,7 +218,7 @@ When the versioning triples are not extracted from a change log and printed as l
 
 The figures in this document so far have depicted a comparison between only two versions, but versioning often involves more than two objects, either in sequence or parallel.
 Figure \ref{NobleGraph2} shows a graph that follows change as it moves through three versions of the Noble Gas data set.
-From the first to second version of the data, EGY001 becomes introduced as an attribute into the dataset.
+From the first to second version of the data, EGY001 becomes introduced as an attribute into the data set.
 This entry then undergoes a modification change in columns 29, 31, and 43 when comparing versions two and three.
 The construction results in a format naturally oriented to show the flow of change from version one to three.
 The advantage of this formation is that now many versions can be related together using a unified set of semantics that cannot be achieved through combining the other concepts and properties in Chapter \ref{ch:model}.

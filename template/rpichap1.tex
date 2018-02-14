@@ -11,7 +11,7 @@ Companies brand sequential devices to indicate improvements in performance or ca
 This basic identification method has given rise to a plethora of versioning systems used widely across a landscape of software and data.
 They help scientific workflows avoid losing work by managing transitions and changes while in operation \cite{Casati1996}.
 They provide necessary documentation which informs the transition to new methods and procedures \cite{Wiil:2000:RDH:338407.338517}.
-They provide accountability for the value of a project's dataset when considering an agency's continued funding \cite{Cavanaugh2002}.
+They provide accountability for the value of a project's data set when considering an agency's continued funding \cite{Cavanaugh2002}.
 As Barkstrom writes in 2003,
 \begin{quotation}
 	If scientific data production were easy, instruments would
@@ -19,6 +19,8 @@ As Barkstrom writes in 2003,
 	corrections that vary with time. Unfortunately, validation invariably shows that
 	instrument calibrations drift and that algorithms need a better physical basis.
 \end{quotation} \cite{Barkstrom2003}.
+The natural evolution of these systems, however, have given rise to formal architecture operating on top of very informal concepts.
+In this dissertation, we identify gaps in versioning practices which result from tradition and develop a data model to more completely capture the interactions involved in versioning.
 
 \section{Defining Versions and Versioning}
 
@@ -106,7 +108,7 @@ However, the data set production and distribution cycle moves more quickly and r
 This behavior becomes entirely too slow as data providers begin allowing users to dynamically generate data products from existing data according to their needs \cite{Barkstrom2003a}.
 Some agencies have begun assigning versioned DOIs, but this has not become common practice.
 Other groups do not assign a new DOI, but reference to the latest release of the document or object \cite{Ands2017}.
-As data sets continue to grow in size, it may become impractical to look towards data as the driving source for identifiers, as Proell and Rauber suggest that database queries may provide a more scalable means of citing datasets \cite{proellBigData}.
+As data sets continue to grow in size, it may become impractical to look towards data as the driving source for identifiers, as Proell and Rauber suggest that database queries may provide a more scalable means of citing data sets \cite{proellBigData}.
 
 \begin{figure}
 	\centering
@@ -162,7 +164,7 @@ This becomes particularly significant as data freshness plays a growing role in 
 However, little work has been done to make change logs machine-computable, as many of these documents remain in human-readable text only.
 Research done involving change log content must manually link entries with computable meta-data such as the introduction of new features with the emergence of new bugs \cite{6132954}.
 While machines may still be significantly removed from the ability to comprehend the impact of changes made to a data set or software code, they are currently opaquely blocked from consuming any of the content within logs more than understanding they contain text.
-The transition between different versions of large datasets is then left largely up to the human user's ability to understand and process the modifications mentioned within the change log.
+The transition between different versions of large data sets is then left largely up to the human user's ability to understand and process the modifications mentioned within the change log.
 
 \subsection{Structured Data}
 
@@ -208,12 +210,12 @@ Klahold, et al., introduced using abstract versioning environments to separate t
 As publications more often include citations to data, researchers adjust to enormous modern databases with new methods changing queries rather than transforming schemas \cite{Proell2013} \cite{DBLP:conf/data/2013}.
 This method, however, relies on an abstract model capturing data changes to inform query modifications.
 
-Data models allow the capture of complicated relationships between data objects within a system without needing to physically look over sizable datasets.
+Data models allow the capture of complicated relationships between data objects within a system without needing to physically look over sizable data sets.
 The Proof Markup Language, one of the first semantic models to capture provenance information, expressed these relationships using inference reasoning through traceable graphs \cite{daSilva2006381}.
 Many data models include versioning concepts in their specifications, but they are often provenance models which describe the sequence of events that lead to the construction of an object \cite{dai2014provenance}.
 However, as discussed previously, versioning seeks to expose relationships between objects which may not describe how to construct either one.
 The Health Care and Life Sciences (HCLS) Interest Group of the World Wide Web Consortium (W3C) recently released a model which may provide a solution when used in conjunction with other identifiers \cite{Dummontier2016}.
-Their model, shown in Figure \ref{HCLSModel}, separates the concept of a dataset into three groupings.
+Their model, shown in Figure \ref{HCLSModel}, separates the concept of a data set into three groupings.
 The highest level summarizes the data as an abstract work, perhaps better described as a topic or title.
 This data topic can have multiple versions as it changes over time.
 The version can then be instantiated into various distributions with different formats.
@@ -238,7 +240,7 @@ The existence and widespread adoption of change logs demonstrates the importance
 However, PAV does adopt a state-based perspective regarding versioning since it only seeks to identify a previous version without attributing a responsible activity.
 
 The PROV data model is a W3C recommendation which defines linked data properties to capture data provenance \cite{Gil2013}.
-PROV has played a significant contribution in maintaining the quality and reproducibility of datasets and reporting in the National Climate Assessment (NCA) \cite{Ma2014191}.
+PROV has played a significant contribution in maintaining the quality and reproducibility of data sets and reporting in the National Climate Assessment (NCA) \cite{Ma2014191}.
 This implication signifies that there is an increased likelihood of adoption through other scientific fields as a result of this reporting.
 The Global Change Information System, which houses the data used to generate the NCA, uses PROV to meticulously track the generation of its artifacts and results as they are used in the report \cite{Tilmes2012}.
 This means that not only does the data have a traceable lineage to verify quality, but the content of documents can have the same verifiability \cite{Ma2014}.
@@ -280,7 +282,7 @@ These three operations plausibly form the core set of relationships when version
 Literature surveys often expect versioning systems to interact with data uniformly because they are asked to perform the same functions \cite{Tagger2005}.
 However, different data sets may utilize each of the three core operations at different rates \cite{rohtua}.
 This helps to characterize the data set in ways such as a growing set with many additions, a stable collection featuring occasional corrections, or a wildly volatile data set consisting of often deleted and replaced data files.
-Understanding these would give insight into the maturity and health of a dataset, but most major provenance ontologies do not heavily feature these relationships.
+Understanding these would give insight into the maturity and health of a data set, but most major provenance ontologies do not heavily feature these relationships.
 Versioning information, of course, does not give insight into the origins of an object, and therefore, would not be expected to play a major role in provenance documentation.
 
 While data addition and modification remain fairly uncontroversial, there is a mild division between practical and theoretical approaches to data deletion \cite{Flouris04clotho:transparent}.
@@ -339,10 +341,11 @@ As previously mentioned, different systems utilize the operations at varying rat
 
 Large data collection endeavors necessitate the development and deployment of versioning systems to manage change propagating through their data.
 Advancing beyond identifier comparisons and delving into capturing substantive change can significantly improve the ability to standardize version communications and transition.
-A model is developed to provide a foundation in regularizing the versioning process and communicating that in a machine-computable manner using linked data.
-For this purpose, we compare two methods in micro-data with JSON-LD expected to provide better performance.
+In chapter \ref{ch:prevwork}, we explore existing methods of codifying versions and change.
+In chapter \ref{ch:model}, we define a model to provide a foundation in regularizing the versioning process and communicating that in a machine-computable manner using linked data.
+In chapter \ref{ch:implement}, we implement the model and compare two methods in micro-data with JSON-LD expected to provide better performance.
 These relations cannot be communicated by current provenance models' semantics.
-Furthermore, the model provides a quantitative basis for determining meaningful version identifiers following a numerical system which has previously only been performed using qualitative methods.
+Furthermore, in chapter \ref{ch:mbvl}, we show the model provides a quantitative basis for determining meaningful version identifiers following a numerical system which has previously only been performed using qualitative methods.
 Through sub-classing concepts within this versioning model, versions can provide detailed comparisons to support experimental designs and decisions.
 
 

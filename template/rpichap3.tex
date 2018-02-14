@@ -6,14 +6,14 @@
 
 \chapter{CONCEPTUAL MODEL}\label{ch:model}
 
-The goal of dataset versioning is to expose the relationships between versions of a dataset.
+The goal of data set versioning is to expose the relationships between versions of a data set.
 To do this, the concept model relates three kinds of --- objects, versions, attributes, and changes --- using three different orientations.
 The model obviously includes versions because they are the objects being compared.
 Identifying one object, however, as a version of another does not give much insight into the nature of their relationship.
 In order to characterize the change between two versions, the model relates their attributes.
 The model uses the Dublin Core Term \textit{dco:hasPart} to facilitate the link from a version to its attribute.
 The changes used then defines the difference between these attributes in each version.
-The modeling process can be viewed as creating a mapping between an original set and a new dataset.
+The modeling process can be viewed as creating a mapping between an original set and a new data set.
 As mentioned previously, the operations conducted by data versioning systems boil down to primarily three operations: addition, invalidation, and modification.
 Since these activities are so prevalent, we use these three procedures to characterize the relationships between versions.
 A modification is straight forward to model because it maps together an attribute which exists in both versions, but addition and invalidation are a little different.
@@ -65,7 +65,7 @@ Finally, a change object connects the two attributes, denoting that the values d
 
 Notice that the model captures neither the change's magnitude, nor the values of the attributes involved in the change.
 These are not included because too much domain knowledge will be required to interpret the significance of the value.
-In addition, the model would essentially begin storing a copy of the dataset, leading to space and redundancy concerns.
+In addition, the model would essentially begin storing a copy of the data set, leading to space and redundancy concerns.
 If an application needs to include this information, they can be added as a property of the attributes involved, but this is outside the scope of this thesis.
 Simply knowing that the attribute has changed provides valuable information to identify the relationship between the two attributes from a versioning standpoint.
 Sometimes it may be necessary to distinguish between modification changes.

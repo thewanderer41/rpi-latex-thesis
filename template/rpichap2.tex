@@ -4,7 +4,7 @@
 %                                                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{PREVIOUS WORK}
+\chapter{PREVIOUS WORK}\label{ch:prevwork}
 %\resetfootnote %this command starts footnote numbering with 1 again.
 
 The data versioning landscape produces a variety of different approaches and standards towards change capture.
@@ -52,7 +52,7 @@ Changes could also result from modifications in the input data, leading to an en
 This means that PROV-O does not have the direct means to communicate the addition and invalidation relationships which exist in our versioning context.
 Since we previously establish a state-based view between versions, a more contextually appropriate property should connect two objects together.
 Continuing, \textit{prov:Derivation} does relate two entities and the ontology defines it as, "a transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a preexisting entity. " \cite{Lebo2013}.
-In the Marine Biodiversity Virtual Laboratory (MBVL) dataset's case described in Section \ref{sec:MBVL}, none of these three assertions hold true. 
+In the Marine Biodiversity Virtual Laboratory (MBVL) data set's case described in Section \ref{sec:MBVL}, none of these three assertions hold true. 
 The process simultaneously considers all four versions so one is not transformed into another as would a sequential set of versions.
 Additionally, since we do not know which version is the best, we cannot consider any data set as an update of the others.
 Finally, no entity preexisted as the data sets resulted from an ongoing analysis and further steps have not been developed.
