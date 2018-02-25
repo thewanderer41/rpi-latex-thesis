@@ -4,7 +4,7 @@
 %                                                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{PREVIOUS WORK}\label{ch:prevwork}
+\chapter{LITERATURE REVIEW}\label{ch:prevwork}
 %\resetfootnote %this command starts footnote numbering with 1 again.
 
 The data versioning landscape produces a variety of different approaches and standards towards change capture.
@@ -24,56 +24,72 @@ This distance measure lacks sufficient resolution to provide detailed quantities
 The model also draws inspiration from existing change mapping methods found in version control managers to reduce space consumption when working with large data sets.
 These mapping methods provide a familiar and regularized basis to both compute and present changes.
 
-\section{Provenance}
+\section{Data Versioning Operations}
 
-A number of linked data models include versioning concepts such as the Open Provenance Model (OPM) \cite{moreau2008open}.
-Driven by the uncertain needs and sometimes conflicting conventions of different scientific domains, the model sought to find a method to standardize the way in which provenance data is captured while also keeping the specification open to accommodate current data sets through the change.
-In an experimental case, the model has been applied to sensor networks, automating and unifying their provenance capture even as they grow \cite{5478496}.
-To aid OPM's adoption, the framework Karma2 integrates provenance capture into scientific workflows and provides a more abstract view of their data collection activities \cite{simmhan2010karma2}.
-The property WasDerivedFrom constitutes a core concept in the model and marks the reliance of one object's existence on another object.
-For a large part, this encompasses the engagement which provenance models view versions, without further need to explore the derivation's content.
+Versioning systems come in a variety of different forms as a result of the assorted applications they must manage.
+Experimental biology data require tracking as they pass through a scientific workflow \cite{Tagger2005}.
+Libraries curate multiple editions of the same work, sometimes with significant revisions \cite{Wiil:2000:RDH:338407.338517}.
+What such activities demonstrate is the wide range of settings and expectations under which versioning systems operate.
+While this work cannot hope to explore all these applications, every system studied shares three common functions: addition, deletion, and modification.
+These three operations plausibly form the core set of relationships when versioning.
 
-PROV, a World Wide Web Consortium (W3C) Recommendation, delineates a method to express data provenance in a more compact form as seen in Figure \ref{PROVO} \cite{Gil2013a} \cite{Groth2013}.
-The recommendation uses a conceptual model relating activities, agents, and entities to describe data production lineage \cite{Moreau2013c} \cite{Nies2013} \cite{Nies2013a}.
-Intended as a high level abstraction, it takes an activity-oriented approach to provenance modeling.
-Every data entity results from the actions of some activity.
-The conceptual model's expression occurs through the PROV Ontology (PROV-O), which can be conveyed through various resource description languages \cite{Hua2013} \cite{Klyne2013}.
-The ontology is further formalized into a functional notation for easier human consumption \cite{Moreau2013b} \cite{Cheney2013a}.
-One particular strength that has contributed to the adoption of PROV is its ability to link into other ontologies, making it easier for existing semantically enriched data sets to adopt PROV \cite{Miles2013} \cite{Moreau2013}.
+Literature surveys often expect versioning systems to interact with data uniformly because they are asked to perform the same functions \cite{Tagger2005}.
+However, different data sets may utilize each of the three core operations at different rates \cite{rohtua}.
+This helps to characterize the data set in ways such as a growing set with many additions, a stable collection featuring occasional corrections, or a wildly volatile data set consisting of often deleted and replaced data files.
+Understanding these would give insight into the maturity and health of a data set, but most major provenance ontologies do not heavily feature these relationships.
+Versioning information, of course, does not give insight into the origins of an object, and therefore, would not be expected to play a major role in provenance documentation.
+
+While data addition and modification remain fairly uncontroversial, there is a mild division between practical and theoretical approaches to data deletion \cite{Flouris04clotho:transparent}.
+A removed object provides evidence of an erroneous activity's results or intermediary steps leading to a final product.
+As a result, version management should maintain and track invalidated data.
+The software versioning manager GIT uses a method of compressing older data to conserve space without deleting the data \cite{Chacon:2009:PG:1618548}.
+Available storage space places pragmatic constraints on the number of projects which can adopt snapshotting practices.
+In applications which cannot recover erroneous data nor use it as documentation artifacts, like corrupted surveillance images.
+Some high energy physics experiments cannot re-collect observational data due to cost, and as a result, they cannot replace or re-process poor quality data \cite{Cavanaugh2002}.
+While the distinction between `deletion' and `invalidations' remains largely semantic, the terms' use in this document reflects an understanding of the different constraints and requirements placed on versioning systems.
+As a result, invalidation is adopted as a broad, general term to also encompass data deletions.
+
+A handful of other operations exist among version managers, but they do not prove ubiquitous across most applications.
+Software versioning tools like RCS commonly feature branching and merging functions to create a versioning line separate from the stable master branch \cite{tichy1985rcs}.
+This mostly provides an organizational role in development by allowing developers to experiment without contaminating a stable software release.
+Figure \ref{GITTree} models this, showing versions C3 and C5 in branch iss53 before being merged back into the production line as C6.
+It allows for more orderly management of versions, but does not conduct versioning itself.
+Other activities provide functional operations such as locking and unlocking files from edits to prevent race conditions in branch mergers.
+It does not introduce any new relationships but allows the tool to operate more smoothly.
+Clotho, a versioning application managing versions at the block level, coordinates constrained spaces using intermittent compact and un-compact methods when retrieving or storing old objects \cite{Flouris04clotho:transparent}.
+Likewise, many version control tools include functions to display the versioning tree, but this is also an ease-of-use function \cite{Dijkstra1994}.
+
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.5]{figures/ProvO.png}
-	\caption[Diagram of the PROV Ontology.]{Diagram of the PROV Ontology.  Figure 1 from \cite{Lebo2013}}
-	\label{PROVO}
+	\includegraphics[scale=0.75]{figures/GITCommitTree.png}
+	\caption[Example of a commit history with branching stored in GIT.]{Example of a commit history with branching stored in GIT.  Figure 3.17 from \cite{Chacon:2009:PG:1618548}}
+	\label{GITTree}
 \end{figure}
-Komadu, a framework developed to alleviate workflow integration, improves upon its predecessor, Karma, by no longer utilizing global context identifiers that were not necessarily shared throughout the workflow. \cite{Suriarachchi_2015}.
 
+\subsection{Types of Change}
 
-The PROV Ontology provides three different concepts that begin to encapsulate the provenance relationship between data versions.
-It defines a \textit{prov:Generation} as "the completion of production of a new entity by an activity," \cite{Lebo2013}.
-This means that the generation, which corresponds to the version addition operation, must result from a \textit{prov:Activity}.
-However, activities play a much less active role in versioning since object comparisons instead expose changes.
-The property creates a relationship between entities and activities, but such a connection may imply that perturbations in the activity resulted in changing the version.
-Changes could also result from modifications in the input data, leading to an entirely new generating activity rather than a modified one.
-\textit{Prov:Invalidation} likewise makes a similar connection between activities and entities.
-This means that PROV-O does not have the direct means to communicate the addition and invalidation relationships which exist in our versioning context.
-Since we previously establish a state-based view between versions, a more contextually appropriate property should connect two objects together.
-Continuing, \textit{prov:Derivation} does relate two entities and the ontology defines it as, "a transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a preexisting entity. " \cite{Lebo2013}.
-In the Marine Biodiversity Virtual Laboratory (MBVL) data set's case described in Section \ref{sec:MBVL}, none of these three assertions hold true. 
-The process simultaneously considers all four versions so one is not transformed into another as would a sequential set of versions.
-Additionally, since we do not know which version is the best, we cannot consider any data set as an update of the others.
-Finally, no entity preexisted as the data sets resulted from an ongoing analysis and further steps have not been developed.
+Barkstrom uses the ability to scientifically distinguish between two data sets as a criteria for major divisions among groupings \cite{Barkstrom2003}.
+At lower levels, he notes that science teams can no longer discern scientific differences between data sets.
+Instead, they observe that changes to format and structure contribute significant alterations without changing any values withing the data.
+As a result, these technical changes form a second boundary to meaningfully separate minor version groupings.
+Finally, the explicit values may need occasional revisions to correct lexical errors such as spelling or formatting.
+These terms were chosen carefully as they reflect the three value dot-decimal identifier system.
+However, data producers will often use qualitative measures to determine the type of change occurring between versions.
+Versioning system users wish to achieve insight into the type of change that occurs between versions, and quantitative analysis on versioning operations will provide quantifiable evidence in characterizing the impact of a change.
 
-The Provenance, Authorship, and Versioning (PAV) Ontology is, "a lightweight vocabulary, for capturing ``just enough” descriptions essential for web resources representing digitized knowledge" \cite{Ciccarese2013}.
-It provides a means to track versioning information through linked data by introducing \textit{pav:version} to cite versions and \textit{pav:previousVersion} to link them together in order \cite{Ciccarese2013}.
-It does so in comparison to the Dublin Core concept \textit{dc:isVersionOf} which records, "Changes in version imply substantive changes in content rather than differences in format" \cite{DCMI2012}.
-PAV supports the idea that a new concept becomes necessary to cover cases where new versions do not have to be substantive but can still be alternate editions of the original object.
-While it documents related versions well, PAV does not dive deeper in explaining the circumstances behind version differences.
+The exact category that a particular change falls into can be controversial.
+The decision to provide concentration units from parts per million to milligrams per milliliter poses a Technical change for a data producer.
+However, for a data consumer, the alteration may be viewed as a Scientific change as it invalidates the methods they had previously used.
+This conflict in view illustrates the data consumer-producer dynamic.
+In general, data producers control the versioning methods, but data consumers determine the classification of a data change.
+Producers tend to use versioning systems to ensure data quality of service through audits and recovery tools \cite{Cavanaugh2002}.
+Meanwhile, a consumer will analyze the historical changes and determine the impact this may have on their data use.
+As a result, this means that data versioning systems must communicate a dynamic view of the changes in a system contextualized by the user of that data.
 
-The Schema.org \textit{schema:UpdateAction} largely reflect the relationships adopted by this work, and are defined as "the act of managing by changing/editing the state of the object" \cite{Schema}.
-The remaining subclasses include the \textit{schema:AddAction}, \textit{schema:DeleteAction}, and \textit{schema:UpdateAction}.
-The function of these terms is to provide a means to supply searchable web pages with standardized micro-data.
-As a result, they orient their properties towards definitions and characterization but do not provide the right structure for a standardized change capture model.
+Version managers often disagree at the point many technical changes sufficiently modifies a data set that it comprises a scientific change.
+As determining changes in science requires expert understanding over a domain, different measures should be explored to address the distinction.
+This document's approach studies add, invalidate, and modify counts to quantify the impact of changes and how they relate to the producer's observations.
+As previously mentioned, different systems utilize the operations at varying rates so absolute cutoffs will be unlikely in comparison to relative results.
 
 \section{Provenance Distance}
 
@@ -170,6 +186,11 @@ Mayernik, et al., probably gives the best description saying, "Prospective recor
 While producers take a retrospective approach to version usage, consumers of new versions must take a prospective view, adapting to new changes.
 This indicates that the orientation of versioning information reflects the imagined customer of that data.
 
+Current linked data methods lack the fidelity to capture change information.
+PROV and OPM express version changes as a single link, but capturing individual changes provides better detail, allowing more accurate distance measures.
+Measuring change this way better communicates the change existing within a versioning system than courser methods leveraging only provenance graphs.
+Implementing the version capture requires the procedures used to perform difference calculations and going a step further by creating linked data statements.
+The model in Chapter \ref{ch:model} defines concepts to capture individual changes based on common operations and compares them with current methods of capture.
 
 %%% Local Variables:
 %%% mode: latex
