@@ -86,7 +86,7 @@ This means that the only difference between the data sets are the ranks assigned
 
 \section{Creating a Versioning Graph}
 
-The Noble Gas and Copper data set authors have previously asserted that the files in each set are versions of each other.
+The Noble Gas and Copper data set authors assert that the files in each set are versions of each other.
 We can also verify they are versions by taking a look at their provenance.
 For the Copper data set, the objects result from a compilation effort with the same sources of data.
 An entry recording the source material for each row in the table accompanies each reading.
@@ -291,7 +291,20 @@ When the versioning triples are not extracted from a change log and printed as l
 	\label{CopperGraphVerGraph}
 \end{figure}
 
-\subsection{Multiple Linked Versions}
+
+\begin{figure}
+	\centering
+	\begin{adjustbox}{addcode={\begin{minipage}{\width}}{
+					\caption{Versioning Graph representing the linked data graph with selected entries of additions, invalidations, and modifications after the publication of the third version. 
+			}\end{minipage}},rotate=90,center}
+		\includegraphics[scale=0.5]{figures/NobleVersion2.png}%
+	\end{adjustbox}
+	\label{NobleGraph2}
+\end{figure}
+
+\section{GCMD}
+
+\subsection{Multiple Versions Graph}
 
 The figures in this document so far have depicted a comparison between only two versions, but versioning often involves more than two objects, either in sequence or parallel.
 Figure \ref{NobleGraph2} shows a graph that follows change as it moves through three versions of the Noble Gas data set.
@@ -307,22 +320,6 @@ In that particular case, no links are created, but if this occurs between two tr
 For example, in Figure \ref{NobleGraph2}, column 31 of EGY001 becomes modified transitioning into the third version.
 If that column underwent no activity in the next transition but changed from version four to five, the connection between all the column 31s would no longer be continuous.
 This poses a problem for executing queries in a triple store which rely on graph traversals, but no path exists between the two modification changes in the example.
-
-
-\begin{figure}
-	\centering
-	\begin{adjustbox}{addcode={\begin{minipage}{\width}}{
-					\caption{Versioning Graph representing the linked data graph with selected entries of additions, invalidations, and modifications after the publication of the third version. 
-			}\end{minipage}},rotate=90,center}
-		\includegraphics[scale=0.5]{figures/NobleVersion2.png}%
-	\end{adjustbox}
-	\label{NobleGraph2}
-\end{figure}
-
-\section{GCMD}
-
-This chapter extensively uses the GCMD Keywords data set to study methods of determining the extent of change in a data set.
-The keywords have a long sequence of versions, allowing trends to be observed over the course of releases.
 
 \subsection{Creating the Versioning Graph}
 
@@ -359,7 +356,7 @@ To provide context, NASA mandated a transition to secure protocols, and the grou
 	\label{GCMDC1}
 \end{figure}
 
-\hfill \break
+%\hfill \break
 \begin{lstlisting}[language=SPARQL, caption=This query compiles the counts for each subclass of Change in a GCMD versioning graph,label=gcmd_list]
 PREFIX vo:<http://orion.tw.rpi.edu/~blee/VersionOntology.owl>
 PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
@@ -411,27 +408,3 @@ Instead, a mapping using the accuracy of each algorithm is used.
 Since a name is assigned at a taxonomic rank to a sequence only if it passes the algorithm's confidence level, matches can be determined on whether a classifier can confidently decide more or fewer ranks.
 As a result, additions and invalidations ascertain whether a classifier can identify more or less of an entry's taxonomic name while modifications indicate the same specificity but mismatching names.
 This method of mapping versions allows the results to give insight into the accuracy of different algorithm and taxonomy combinations.
-
-\subsection{Analysis}
-
-Figure \ref{mbvl_chart} shows the results of four comparisons performed using the matching procedure in the previous section.
-There are only four comparisons because varying both taxonomy and algorithm muddles the contribution of each towards a more accurate result.
-In the first set of columns, the Silva taxonomy results are versioned against RDP using the Spingo algorithm.
-The naming reflects the orientation in the versioning graph so Silva forms the left-hand version and RDP would be the right-hand version.
-In this comparison, using the RDP taxonomy seems to provide more accurate results, most specifically at the species level.
-The taxonomies also disagree fairly often at the species and family ranks.
-Switching to the Gast algorithm in the second set of columns, RDP once again demonstrates a noticeably greater accuracy in species classification.
-There are also significantly fewer disagreements using the Gast algorithm between the two taxonomies.
-Looking at the third set of columns, Silva demonstrates greater accuracy classifications under the Spingo algorithm than under Gast.
-Over four thousand of these entries can be classified to the species level when Gast cannot.
-In the fourth set of columns, RDP appears to perform better with Spingo than Gast.
-However, the comparison is dominated by a much larger number of disagreements between almost six thousand entries, primarily at the species rank.
-On closer inspection, this disagreement is explained by Gast classifying the species for a number of entries as unclutured bacterium.
-This analysis presents evidence that using the RDP taxonomy with the Spingo algorithm will produce the most accurate classification results.
-
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.80]{figures/mbvl_chart.png}
-	\caption{Compiled counts of adds, invalidates, and modifies grouped by taxonomic rank across algorithm and taxonomy combinations.}
-	\label{mbvl_chart}
-\end{figure}
