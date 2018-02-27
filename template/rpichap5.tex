@@ -51,9 +51,18 @@ These entries could be combined together into a single statement relating just t
 However, this optimization would greatly impact the resulting change counts, reinforcing that version analysis depends largely on the mapping method, but this would likely allow the log to become readable.
 JSON-LD proves to be a better mechanism for encoding the versioning graph than RDFa since it is intended to encode data while the latter primarily contextualizes visible content.
 
+The advantage of this formation is that now many versions can be related together using a unified set of semantics that cannot be achieved through combining the other concepts and properties in Chapter \ref{ch:model}.
+Versioning forms a continuous relationship even into later versions without introducing new semantics.
+This is important since many versioning linked data alternatives view version change as a single contained activity.
 When linking together multiple versions using a versioning graph, the relationship between non-adjacent editions remains implied in the graph's structure.
 The natural pathway between attributes in non-adjacent versions holistically considers the relationships among all attributes along that path.
 In comparison, other models only capture activity between the adjacent versions.
+
+When considering multiple versions, a particular challenge is when an attribute does not change.
+In that particular case, no links are created, but if this occurs between two transitions, the flow of change is broken.
+For example, in Figure \ref{NobleGraph2}, column 31 of EGY001 becomes modified transitioning into the third version.
+If that column underwent no activity in the next transition but changed from version four to five, the connection between all the column 31s would no longer be continuous.
+This poses a problem for executing queries in a triple store which rely on graph traversals, but no path exists between the two modification changes in the example.
 
 \section{Version Identification}
 

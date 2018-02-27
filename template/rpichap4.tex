@@ -263,7 +263,7 @@ Since we know the number of additions, each change instance can be easily number
 Add changes are also kept separate to allow for individual annotation.
 Likewise, the graph generator iterates over the set of invalidations and generates a set of statements to instantiate each invalidate change.
 
-\begin{figure}
+\begin{figure}[b]
 	\centering
 	\includegraphics[scale=0.30]{figures/NobleVersion.png}
 	\caption{Some initial entries from versions 1 and 2 of the Noble Gas data set}
@@ -291,6 +291,15 @@ When the versioning triples are not extracted from a change log and printed as l
 	\label{CopperGraphVerGraph}
 \end{figure}
 
+\subsection{Graphs with Multiple Versions}
+
+Figures \ref{NobleGraph1} and \ref{CopperGraphVerGraph} depict a comparison between only two versions, but a project can contain more than two objects.
+Case in point, a third version of the Noble Gas data set was released on July 11, 2017.
+Figure \ref{NobleGraph2} shows a subgraph that contains changes from all three versions of the Noble Gas data set.
+From the first to second version of the data, EGY001 becomes introduced as an attribute into the data set.
+This entry then undergoes a modification change in columns 29, 31, and 43 when comparing versions two and three.
+Entry TUR030 goes through a modification change in column 11 from version one to version two.
+The entire row, however, becomes invalidated in version three.
 
 \begin{figure}
 	\centering
@@ -302,24 +311,13 @@ When the versioning triples are not extracted from a change log and printed as l
 	\label{NobleGraph2}
 \end{figure}
 
+Notice the difference in how Figure \ref{NobleGraph1} and Figure \ref{NobleGraph2} refer to columns.
+Figure \ref{NobleGraph1} used linked data extracted from a change log employing RDFa, forcing the row identifier and the column identifier into the same concept.
+The way nesting works in RDFa means that ChangeCAM00111 cannot back reference multiple concepts in a single statement, therefore AttributeCAM00111v2 was used to imply CAM001.
+Figure \ref{NobleGraph2} used linked data extracted from a JSON-LD encoded change log.
+Since the log can use explicit statements, the column identifier refers to the entire column and can be used to identifier changes in the same column across multiple rows.
+
 \section{GCMD}
-
-\subsection{Multiple Versions Graph}
-
-The figures in this document so far have depicted a comparison between only two versions, but versioning often involves more than two objects, either in sequence or parallel.
-Figure \ref{NobleGraph2} shows a graph that follows change as it moves through three versions of the Noble Gas data set.
-From the first to second version of the data, EGY001 becomes introduced as an attribute into the data set.
-This entry then undergoes a modification change in columns 29, 31, and 43 when comparing versions two and three.
-The construction results in a format naturally oriented to show the flow of change from version one to three.
-The advantage of this formation is that now many versions can be related together using a unified set of semantics that cannot be achieved through combining the other concepts and properties in Chapter \ref{ch:model}.
-Versioning forms a continuous relationship even into later versions without introducing new semantics.
-This is important since many versioning linked data alternatives view version change as a single contained activity.
-
-When considering multiple versions, a particular challenge is when an attribute does not change.
-In that particular case, no links are created, but if this occurs between two transitions, the flow of change is broken.
-For example, in Figure \ref{NobleGraph2}, column 31 of EGY001 becomes modified transitioning into the third version.
-If that column underwent no activity in the next transition but changed from version four to five, the connection between all the column 31s would no longer be continuous.
-This poses a problem for executing queries in a triple store which rely on graph traversals, but no path exists between the two modification changes in the example.
 
 \subsection{Creating the Versioning Graph}
 
