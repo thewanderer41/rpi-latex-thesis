@@ -7,6 +7,8 @@
 \chapter{LITERATURE REVIEW}\label{ch:prevwork}
 %\resetfootnote %this command starts footnote numbering with 1 again.
 
+\section{Introduction}
+
 The data versioning landscape produces a variety of different approaches and standards towards change capture.
 However, massive centralized data stores have become more prevalent as data distribution methods advance  \cite{Vassiliadis1999}.
 Collection into larger unified repositories will likely require a multi-tiered approach to synchronize the varied practices  \cite{Baker2009}.
@@ -91,7 +93,142 @@ As determining changes in science requires expert understanding over a domain, d
 This document's approach studies add, invalidate, and modify counts to quantify the impact of changes and how they relate to the producer's observations.
 As previously mentioned, different systems utilize the operations at varying rates so absolute cutoffs will be unlikely in comparison to relative results.
 
-\section{Provenance Distance}
+\section{Identifiers}
+
+Data managers often impose a sequential ordering in conjunction with logical groupings to form an object's historical lineage \cite{barkstrom2014earth}.
+As a result, they often employ version identifiers in the dot-decimal style where a decimal point connects together a series of numbers \cite{Stuckenholz:2005:CEV:1039174.1039197}.
+Whenever, a new version is made, it receives an identifier with one of the numbers incremented as seen in Figure \ref{RCSTree}.
+Changes to the left-most number often signify a more important change.
+Many software applications use the 3-number Major.minor.revision format in labeling software releases.
+Numbering the version this way, however, does allow computers and readers to quickly parse the version name and discern that a change has occurred, but not much value exists beyond that \cite{Dijkstra1994}.
+Most importantly, it groups together changes from the lower spectrum of minor or major change with those in the upper, more impactful, changes.
+It is, therefore, difficult to obtain a clear characterization of a version change without a longer series of numbers.
+This method of identification also has issues since small changes in the current data set may have larger implications for data farther down the workflow, which is not communicated by the identifier.
+In addition, version numbers capture the overall change of a data set, but users may not interact with collections that way.
+Data on a hurricane sometimes occupy only a small portion of a data set, and the files may not even be adjacent in the collection \cite{Barkstrom_digitallibrary}.
+There is also little standardization or formal requirements in naming methods.
+Ubuntu utilizes a dot-decimal version labeling scheme where the two number identifier corresponds to the year-month values of the release \cite{Ubuntu}.
+Fischer, et al., demonstrate the importance of having a regular standardized version identification system, as it provides a mechanism to track errors being addressed \cite{Fischer2003}.
+The ability to link bug reports and versions thus gives producers and customers metrics to understand how developers fix errors and how long it will take.
+A common method used to address the distinction between versions is a human-readable change log, further discussed in Section \ref{sec:changelog}.
+
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.75]{figures/RCSCommitTree.png}
+	\caption[Commit history of an object in RCS with changes in the main line stored as back deltas and side branches stored as forward deltas.]{Commit history of an object in RCS with changes in the main line stored as back deltas and side branches stored as forward deltas.  Figure 5 in \cite{tichy1985rcs}}
+	\label{RCSTree}
+\end{figure}
+
+In many ways, versioned objects resemble multi-edition books or documents.
+Digital librarians have faced many challenges when searching for an identifier due to evolving web technologies.
+Early citations referred to on-line documents using stagnant Uniform Resource Locators (URL), but this frequently lead to a condition known as link rot where moving the document would invalidate the URL \cite{Lyons2005}.
+Locators required a system to manage changes of old identifiers to new locations when people attempted to utilize references from print.
+This eventually led to the development of Persistent URLs (PURL), which also suffered from link rot, and this eventually led to the distributed Digital Object Identifier (DOI) system used to track documents today \cite{Duerr2011}.
+The PURL used a centralized system that would translate dead links and redirect to a document's latest location.
+However, the system would still need to be manually updated, meaning links would rot if a document was lost or overlooked.
+DOIs rely on a network of managing agencies to collect and host submitted documents.
+In the specialized Handle system, the network has member agencies internally assign an unique name and concatenate it to the end of their host name.
+In Figure \ref{table:Duerr}, DOIs represent the most suitable identifier used for citation in scholarly literature \cite{Duerr2011}.
+The DOI network provides a robust system to track documents, but when tracking data, it faces difficulty following the rate of change with more volatile data sets.
+Under current definitions, distribution organizations assign different DOIs to separate editions of a document.
+Documents often do not need new identifiers since they change very rarely as a result of the publication process.
+However, the data set production and distribution cycle moves more quickly and reacts more sensitively to small content changes, including when data collection continues on after initial publication.
+This behavior becomes entirely too slow as data providers begin allowing users to dynamically generate data products from existing data according to their needs \cite{Barkstrom2003a}.
+Some agencies have begun assigning versioned DOIs, but this has not become common practice.
+Other groups do not assign a new DOI, but reference to the latest release of the document or object \cite{Ands2017}.
+As data sets continue to grow in size, it may become impractical to look towards data as the driving source for identifiers, as Proell and Rauber suggest that database queries may provide a more scalable means of citing data sets \cite{proellBigData}.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.30]{figures/DigitalIdentifierTable.png}
+	\caption[Table of predominant identifiers used in science.]{Table of predominant identifiers used in science.  From Duerr, et al. \cite{Duerr2011}}
+	\label{table:Duerr}
+\end{figure}
+
+The discourse on DOIs highlights the importance of understanding the limitations of particular identifier schemes.
+With respect to Figure \ref{table:Duerr}, no identification scheme fits the description of a scientific identifier.
+Duerr, et al., define a use case to make the argument that scientifically unique identifiers are necessary, ``to be able to tell that two data instances contain the same information even if the formats are different" \cite{Duerr2011}.
+A possibility to consider is that identifiers may require incorporation into a data model to discern between scientific differences.
+An identifier works well in revealing the characteristics of an individual object, but it should not be expected to explain its relationship with other objects.
+A data model provides better insight into the different roles objects play in a relationship.
+Further discussion on versioning models will be found in Section \ref{sec:models}.
+This proves increasingly important as the ability to propagate relevant data change across autonomous systems then assures valid quality in interactions between domains \cite{Systems02champagne:data}.
+
+Using identifiers to convey extended versioning information becomes more difficult with the adoption of distributed version managers like GIT \cite{cederqvist2002version}.
+Each participant in the federated repository is the master of their personal copy of the code.
+Upon completion of their distribution's part, they may request that it be pulled into another participant's distribution.
+While each developer's individual repository can follow a linear identifier scheme, this would not work as the overall project bounces around different primary repositories with mismatching sequential identifiers.
+The dot-decimal identifier scheme could be made to work in such an environment by severely limiting the distributed manager's utilized features.
+Figure \ref{fig:federated} illustrates a workflow which utilizes distributed repositories to manage very active public software projects.
+Each lieutenant developer manages a section of the overall code, and they dampen the number of requests made to the dictator by collecting changes and submitting them over longer intervals.
+As a result, relying on identifiers to convey and contain versioning information limits the evolution of new and valuable methods of processing change in digital objects.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.85]{figures/federatedGit.png}
+	\caption[A distributed workflow to control for volatile versioning behavior.]{A distributed workflow to control for volatile versioning behavior.  From  \cite{cederqvist2002version}.}
+	\label{fig:federated}
+\end{figure}
+
+\section{Change Logs} \label{sec:changelog}
+
+Change logs, artifacts resulting from the versioning process, play a major role filling in gaps between versions.
+They document changes and explain, in human language, the motivations behind these modifications \cite{uel1037}.
+Since identifiers denote that a change has occurred, the logs provide details on how the changes modify an object's attributes.
+They demonstrate a need and utility in understanding the deeper content of change beyond knowing that an object did transform.
+While some data sets will provide a change log, software projects have normalized their use in version release documentation.
+As a result, these projects provide a basis for understanding the value these logs can supply data sets with multiple versions.
+The change log's common drawback is the limitation to only human readable text.
+Wider adoption among data sets may be possible by making these texts machine computable.
+
+Open source projects use change logs more consistently than data projects, which usually sport only use documentation.
+Logs play an important communication role in these projects since developers can contribute without having been part of the original development team.
+They allow developers to link bugs and errors with their corrections in new versions of the code \cite{Chen:2004:OCL:990374.990391}.
+This gives insight into motivations behind particular design decisions.
+It also provides feedback to the user community that corrections have been addressed, in addition to ensuring that improvements drive modifications to the code base.
+An identifier cannot communicate these qualities while remaining succinct.
+Some research has been done to determine the health of a development project based on the number and length of change logs released over time \cite{German03automatingthe}.
+This becomes particularly significant as data freshness plays a growing role in successful system function \cite{Bouzeghoub:2004:FAD:1012453.1012464}.
+However, little work has been done to make change logs machine-computable, as many of these documents remain in human-readable text only.
+Research done involving change log content must manually link entries with computable meta-data such as the introduction of new features with the emergence of new bugs \cite{6132954}.
+While machines may still be significantly removed from the ability to comprehend the impact of changes made to a data set or software code, they are currently opaquely blocked from consuming any of the content within logs more than understanding they contain text.
+The transition between different versions of large data sets is then left largely up to the human user's ability to understand and process the modifications mentioned within the change log.
+
+\subsection{Structured Data}
+
+The Resource Description Framework in Attributes (RDFa) framework encodes linked data vocabularies into HTML documents, and provides an opportunity to make change logs machine interpretable. \cite{Adida2015}.
+Linked data technologies utilize web ontologies to standardize terms and semantics across domain applications.
+Automated agents can reason over a graph formed by linking these terms.
+Encoding HTML documents with linked data better unlocks the content stored within.
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.40]{figures/RDFaSemantics.png}
+	\caption[Illustration of the difference in what autonomous systems see when crawling a web page and what humans see when reading the same material.]{Illustration of the difference in what autonomous systems see when crawling a web page and what humans see when reading the same material. Figure 1 from \cite{Herman2015}}
+	\label{RDFa}
+\end{figure}Figure \ref{RDFa} illustrates the semantic difference between what web crawlers and what humans see when they consume web pages.
+People intuitively understand that certain strings represent meaningful information based on location and style.
+RDFa seeks to encode that understanding natively for effective machine consumption.
+Extending this approach into publishing change logs, will allow linked data to capture the metaphorical meat of change content.
+
+The implementation requires changing publishing practices from plain-text documents to something structured-data compatible such as HTML.
+The change also has the added benefit of making the logs available on-line, and thus, more openly accessible to data users through the utilization of web based search engines.
+Large companies such as Google have already begun equipping their web crawlers to consume structured data such as RDFa from web pages.
+RDFa has already had significant success in adoption across a variety of web publication platforms and eases the search for their content \cite{Bizer2013}.
+However, the design of RDFa focuses on describing the web page's content through markup \cite{Herman2015}.
+The underlying or resulting versioning data model may not conform with the format of content presented in the change log.
+This would lead to a poorly structured graph or missing content, undermining the value gained by encoding linked data into the change log.
+As a result, another method using JavaScript Object Notation for Linked Data (JSON-LD) was pursued since its purpose is to store data separate from visible content.
+
+The JSON data format allows web pages to store data for JavaScript applications within the document.
+It utilizes a simple and robust syntax to accommodate a wide variety of content.
+JSON-LD extends the original specification by defining rules which allow entries to resolve as web vocabularies, giving them a meaningful context \cite{JSONLD}.
+Because it stores data separate from visible content, JSON-LD does not need to adhere with the constraints of visible content.
+However, every linked data triple must be explicitly defined, meaning that resulting documents may likely be much larger than their RDFa counterparts.
+
+\section{Change Distance}
+
+\subsection{Provenance Distance}
 
 With increasing complexity, data workflows have developed in such a way that even subtle changes have serious implications for other parts of the workflow \cite{TILMES2011548}.
 This observation makes change impact difficult to measure, but one insight begins with provenance's role in workflows.
@@ -192,6 +329,7 @@ Measuring change this way better communicates the change existing within a versi
 Implementing the version capture requires the procedures used to perform difference calculations and going a step further by creating linked data statements.
 The model in Chapter \ref{ch:model} defines concepts to capture individual changes based on common operations and compares them with current methods of capture.
 
+\section{Summary}
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: t

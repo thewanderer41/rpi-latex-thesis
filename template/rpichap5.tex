@@ -6,131 +6,132 @@
 
 \chapter{ANALYSIS}
 
+\section{Introduction}
+
+Implementing the versioning model yielded results more complicated than the simple model expected.
+While the model addresses difficulties in other linked data approaches, it requires many more triples to express the relationship.
+The scalability created space issues with encoded change logs, especially in JSON-LD.
+RDFa also proved to be a more restrictive structured data method than expected.
+The implementation required multiple attributes per \textbf{modification} to accommodate both row and column \textbf{attributes} associating with a cell.
+There were discrepancies between GCMD Keyword version identifiers and the change detected within the data set.
+Finally, the versioning model was used not to document sequential versions but to compare the results of different species classifiers.
+
 \section{Model}
 
-In the Marine Biodiversity Virtual Laboratory (MBVL) data set's case described in Section \ref{sec:MBVL}, none of these three assertions hold true. 
-The process simultaneously considers all four versions so one is not transformed into another as would a sequential set of versions.
+The versioning model's development began with an expectation that versions would be sequential.
+The Marine Biodiversity Virtual Laboratory (MBVL) data set demonstrated a case where four data sets were not related by temporal sequence.
+One is not a transformation of another since we are studying the effects of changing the taxonomy or algorithm.
 Additionally, since we do not know which version is the best, we cannot consider any data set as an update of the others.
 Finally, no entity preexisted as the data sets resulted from an ongoing analysis and further steps have not been developed.
+As a result, the current definition of \textit{prov:wasDerivedFrom} would not be able to capture the relationship between these data sets.
+The model improves upon expressing versions in linked data by focusing on the differences between objects rather than the sequence.
+The model takes inspiration from \textit{schema:UpdateAction} by dividing up the \textbf{changes} into three forms, but improves upon it by adopting the provenance model's transition from one object to the next.
+The resulting forms diverge from Schema.org's context of an agent acting upon an object.
 
-The resulting model addresses versioning by looking at the attributes of each version.
-Other ontologies take a higher-level view in terms of version modeling.
-While it is more specific, this implementation forces some space requirements.
-PROV only requires 3 to 5 triples in order to make a versioning statement.
-This model uses 9 triples for a mod change and 7 to encode addition and invalidation.
-To model a version has space complexity of \(O(7M+5(A+I))\) since the version declaration statements overlap.
+The reason \textit{prov:Generation} and \textit{prov:Invalidation} are not used is because they expect an activity to act upon an object.
+It is not generally true that an action actively adds or removes an object's attribute from in the left-hand version to produce the right-hand revision.
+That assumption minimizes the ability to conduct versioning comparisons between objects that are not sequentially adjacent.
+The PROV concepts also have a property pointing towards the responsible activity which is assumed to be the immediately preceding activity.
+The assumption fails to consider the case where a change propagates further changes downstream, generating or invalidating the current object
+The versioning model avoids confusion by only considering the versions and their differences.
+
+\section{Implementation}
+
+\subsection{Scalability}
+
+The versioning model breaks up a revision into constituent changes, acting upon different attributes of the version.
+Other ontologies use a single property to relate versions.
+While it is more specific, the VersOn implementation encounters scalable space consumption problems.
+PROV only requires 3 to 5 triples in order to make a \textit{prov:wasRevisionOf} statement.
+This model uses 9 triples for a \textit{vo:ModifyChange} and 7 to encode \textit{vo:AddChange} and \textit{vo:InvalidateChange}.
+An implementation of the model, therefore, has space complexity of \(O(7M+5(A+I))\) since declaring version objects takes a constant two statements.
 However, a similar structure can be achieved using \textit{prov:wasDerivedFrom} to replace modifications and \textit{schema:AddAction} and \textit{schema:DeleteAction} to replace additions and invalidations.
 The resulting space complexity is \(O(7M+3A+5I)\).
 This is fairly similar with additions seeing a reduction since the left-hand version no longer contributes to the \textit{schema:AddAction}.
 Thus the primary benefit of using this model comes from semantics.
 
-The reason \textit{prov:Generation} and \textit{prov:Invalidation} are not used is because they expect an activity to be responsible for an object.
-However, it is not generally true that an action actively added or removed an attribute from an object in the left-hand version to produce the right-hand revision.
-That assumption minimizes the ability to conduct versioning comparisons between objects that are not sequentially adjacent.
-The activity producing a far away object may not immediately relate to the original data in a version comparison, resulting in a situation where it would be inappropriate to use the two PROV concepts.
-When considering versioning in a state-based sense, relationships exist as a result of two objects being versions of each other.
+\subsection{Change Log Analysis}
 
-\section{Implementation}
+The change logs created with RDFa or JSON-LD demonstrates progress towards documents which are both human and machine-readable.
+The implementation provides evidence that JSON-LD is better suited to embed a versioning graph into a change log than RDFa.
+RDFa suffers limitations since it is constrained by the content's structure.
+The \textbf{modify} relation presented in Figure \ref{NobleGraph1} is unbalanced and the right-hand side of ``ChangeCAM00111" links only to the column \textbf{attribute} but not to the corresponding row \textbf{attribute}.
+This stems from a mismatch between the model's structure, the order in which data appears in the change log, and the way RDFa links properties together.
+Because the row label forms the outermost encapsulation, it cannot instantiate both row identifiers and implicitly link them separately.
+To do so would require explicitly instantiating the \textbf{attribute} in a non-visible part of the document, defeating the purpose of using RDFa to implicitly encode the versioning graph into the document.
 
-The versioning process breaks down to three formal steps which appear in all contexts of versioning studied in this thesis.
-The first activity verifies that the objects being compared are actually versions of each other.
-This exercise is often left out of details in practice since a data producer is often fairly certain as to the state of their versions.
-Mechanisms are otherwise employed to enforce a strict documentation procedure to ensure the data's comparability as seen in version control software.
-However, this step establishes the foundation and validity of further actions taken to version the objects.
-This ensures that a mapping can be performed and will be meaningful.
-The next step is generating the mapping to identify addition, invalidation, and modification relationships.
-The resultant mapping in spreadsheet comparisons followed very similar rules, but when looking at the MBVL data set, the definitions were changed to achieve a specific goal.
-The final step involves publishing the change information using the mapping.
-In this thesis, the resulting product is published into a versioning graph.
+Both structured data implementations break up the graph across \textbf{attributes} so that individual parts of the graph can be extracted.
+The practice of a one-node JSON object is generally helpful for many web applications to load data quickly, but since the change log is not an application, it makes more sense to break up the content.
+Changes to individual \textbf{attributes} can be identified using anchors on the web page, then agents need only extract and parse the linked data to these specific entries.
+This way, a subgraph of only the pertinent attributes can be created without first ingesting the entire versioning graph.
 
-One of the desired contributions was to study the possibility of a machine-readable change log.
-In this implementation, the number of triples necessary to implement the model significantly impairs the log's ability to remain human readable.
-The Noble Gas data set's change logs could not be loaded using a web browser.
-One contributor to this problem is that the modification of an entire column would result in multiple entries equal to the number of rows in the table.
-These entries could be combined together into a single statement relating just the effected columns.
-However, this optimization would greatly impact the resulting change counts, reinforcing that version analysis depends largely on the mapping method, but this would likely allow the log to become readable.
-JSON-LD proves to be a better mechanism for encoding the versioning graph than RDFa since it is intended to encode data while the latter primarily contextualizes visible content.
+An unexpected challenge with the change logs is the larger file size and difficulties in loading the Noble Gas data set's JSON-LD change log.
+The problem results from needing ten lines to express a single row in the change log.
+Noble Gas also had an impressive number of \textbf{modifications}, some of which are shared across all rows in the data set.
+Repeated modifications over rows would account for the explosion in entries within the change log.
 
-The advantage of this formation is that now many versions can be related together using a unified set of semantics that cannot be achieved through combining the other concepts and properties in Chapter \ref{ch:model}.
-Versioning forms a continuous relationship even into later versions without introducing new semantics.
-This is important since many versioning linked data alternatives view version change as a single contained activity.
-When linking together multiple versions using a versioning graph, the relationship between non-adjacent editions remains implied in the graph's structure.
-The natural pathway between attributes in non-adjacent versions holistically considers the relationships among all attributes along that path.
+\subsection{Version Graph}
+
+In Chapter \ref{ch:model}, there is only one \textbf{attribute} on each side of the interaction.
+Figure \ref{CopperGraphVerGraph}, however, shows two \textbf{attributes} used to characterize the \textit{vo:ModifyChange}.
+While the model only shows one \textbf{attribute}, it was found that in some applications, multiple \textbf{attributes} may be necessary to properly model a single change.
+The construction does not even need to have the same number \textbf{attributes} on both sides of the \textbf{change}.
+The flexibility becomes important when trying to model a single location entry being split into separate latitude and longitude entries.
+
+The version graph's construction allows multiple versions to be linked together.
+The graph provides not only greater continuity than Schema.org's properties, but also greater detail than PROV's versioning properties.
+Continuity is important since many versioning linked data alternatives view version change as a single contained \textbf{activity}.
+When linking together multiple versions using a versioning graph, the relationship between non-adjacent editions becomes implied in the graph's structure.
+The natural pathway between \textbf{attributes} in non-adjacent \textbf{versions} holistically considers the relationships among all \textbf{attributes} along that path.
 In comparison, other models only capture activity between the adjacent versions.
 
-When considering multiple versions, a particular challenge is when an attribute does not change.
-In that particular case, no links are created, but if this occurs between two transitions, the flow of change is broken.
+The model struggles with discontinuous changes to an \textbf{attribute} across multiple versions.
+Since the model does not capture when an \textbf{attribute} doesn't change, it is possible for an \textbf{attribute} in an earlier \textbf{version} to become disconnected from later \textbf{versions} due to inactivity.
 For example, in Figure \ref{NobleGraph2}, column 31 of EGY001 becomes modified transitioning into the third version.
 If that column underwent no activity in the next transition but changed from version four to five, the connection between all the column 31s would no longer be continuous.
-This poses a problem for executing queries in a triple store which rely on graph traversals, but no path exists between the two modification changes in the example.
-
-However, Figure \ref{NobleGraph1} also demonstrates an interesting set of decisions made early in the generation process regarding modifications.
-Firstly, the relation presented in the figure is unbalanced and the right-hand side of ChangeCAM00111 links only to the column identifier but not to the corresponding row attribute.
-This links from a mismatch between the model's structure, the order in which data appears in the change log, and the way RDFa links properties together.
-Because the row label forms the outermost encapsulation, it cannot instantiate both row identifiers and implicitly link them separately.
-To do so would require explicitly instantiating the attribute in a non-visible part of the document which would defeat the purpose of using RDFa to implicitly encode the versioning graph into the document.
-Secondly, the column identifier AttributeCAM00111v1 combines together the row label and the column number, making it unique to just the CAM001 row.
-This was a decision to properly identify the attribute as it appears in the change log document.
-Since the item is not a generic column 11 element in the log, but a specific item of CAM001, the entry id is included in the column identifier.
-This formulation poses a problem when trying to query the graph and determine how many rows have a column 11 modify change for example.
-When the versioning triples are not extracted from a change log and printed as linked data, the structure has greater freedom as seen in Figure \ref{NobleGraph2}.
+This poses a problem for executing queries in a triple store which rely on graph traversals, but no path exists between disconnected \textbf{attributes}.
 
 \section{Version Identification}
 
 The versioning process discovered a discrepancy in the identifier assignment in the GCMD Keywords taxonomy.
 The original analysis was intended to determine if dot-decimal identifiers could be predicted using the change counts of the versioning graph.
-However, version 8.5 was named with respect to perceived taxonomy changes and did not consider underlying linked data practice revisions.
-This brings into question the accuracy of all prior names and the any relationships observed between identifier and change counts.
-It would explain how 8.4.1 had more additions than any previous minor change but obtains a third bracket identifier
-However, assuming that the observed relationship remains, it can be shown that the keyword management team did not consider the namespace change as a major modification in their data set.
-This is seen after accounting for namespace differences to show that the change count magnitude resembles other versions in the same identifier bracket.
-This brings into concern the practice of version name assignment based on producer perception and not on more concrete measures.
-An incomplete understanding in the amount of change between two versions can lead to flawed expectations in migrating across them.
+Version 8.5, however, was named with respect to perceived taxonomy changes and did not consider underlying linked data practice revisions.
+The disconnect brings into question the accuracy of all prior names and any relationships observed between identifier and change counts.
+Non-matching identifiers would explain how 8.4.1 had more additions than any previous minor change but obtains a third bracket identifier.
+After accounting for namespace differences in version 8.5, the change counts is in the tens, resembling tallies of other versions in the same identifier bracket.
+Version name assignment based on producer perception and not on more concrete measures is concerning.
+An incomplete understanding in the amount of change between two versions can lead to flawed expectations during version migration.
 
-This is not to claim that change magnitudes should be the sole mechanism in determining version identifiers.
-However, it can provide a more quantitative characterization of changes within the system.
+The analysis does not to claim that change counts should be the sole mechanism in determining version identifiers.
+The counts, however, can provide a more quantitative method to compare version differences.
 In Figure \ref{GCMDC2}, the yellow line indicates the total changes made to the data set, performing a similar function as the major/minor/revision version identifier.
-However, breaking up the changes into types reveals the dominant contribution of additions to the data set.
-This understanding of the data's behavior cannot be revealed with a three number dot decimal identifier system.
-However, it also does not take into account the possibility that single or small changes can have significant implications scientifically.
-
-From the identifier scheme and the change counts, it is clear that the keyword management team expected only minor changes in the keywords.
-This analysis demonstrates that relying on data producers to name their versions using the dot decimal identifiers based on their perceived change also relies on their perceiving the intended utilization of their data set by all their users.
-The count results seem to indicate that they can differentiate between major and minor revisions, but it also shows that current version labels may not capture all the change within a transition.
-
-\section{Change Log Analysis}
-
-The practice of a one-node collection is generally helpful for many web applications to load data quickly, but since this is not an application, it makes more sense to break up the content.
-Changes to individual attributes can be identified using anchors on the web page, then agents need only extract and parse the link data to these specific entries.
-This way, a subgraph of only the pertinent attributes can be created without first ingesting the entire versioning graph.
-
-
-\section{Change Analysis}
-
-In Chapter \ref{ch:mbvl}, the versioning process was used to compare the performance of different taxonomy and algorithm combinations.
-This diverges from many of the common understandings of derivations since each of the versions are not sequential and are largely independent.
-The application demonstrated a case in which two data sets do not form versions.
-Since they are not in a state of being revisions, implementing the version model on these two data sets would produce largely meaningless relations.
-The criteria of determining valid states may seem rather dubious, and there are likely other criteria which decide more conclusively.
-The data sets in this work, however, only reveal these two requirements to justify the use of versioning relationships. 
-
-Versioning models often provide documentation on changes between versions so it is interesting applying it actively to perform analytics.
-The results are able to provide a multi-lateral characterization of differences between modifications to either the choice in taxonomy or algorithm.
-In order to achieve more specificity, each of the core operation concepts had to be sub-classed in order to also consider taxonomic rank.
+Breaking up the changes into types reveals additions dominate manipulations to the data set.
+Addition, invalidation, and modification provides deeper insight into how a data set is changing, but some changes can be more impactful than others which this model does not capture.
 
 \section{MBVL Analysis}
 
-Figure \ref{mbvl_chart} shows the results of four comparisons performed using the matching procedure in the previous section.
-There are only four comparisons because varying both taxonomy and algorithm muddles the contribution of each towards a more accurate result.
-In the first set of columns, the Silva taxonomy results are versioned against RDP using the Spingo algorithm.
+In Chapter \ref{ch:implement}, the versioning process was used to compare the performance of different taxonomy and algorithm combinations.
+The data set diverges from many of the common understandings of versions since each of the versions are not sequential and are largely independent.
+The data set of species names in the initial population would not have produced very meaningful results if applied to the versioning model since it lacked sufficient data to map the other data sets together well.
+
+In Figure \ref{mbvl_chart}, the first set of columns in the Silva taxonomy results are versioned against RDP using the SPINGO algorithm.
 The naming reflects the orientation in the versioning graph so Silva forms the left-hand version and RDP would be the right-hand version.
 In this comparison, using the RDP taxonomy seems to provide more accurate results, most specifically at the species level.
 The taxonomies also disagree fairly often at the species and family ranks.
-Switching to the Gast algorithm in the second set of columns, RDP once again demonstrates a noticeably greater accuracy in species classification.
-There are also significantly fewer disagreements using the Gast algorithm between the two taxonomies.
-Looking at the third set of columns, Silva demonstrates greater accuracy classifications under the Spingo algorithm than under Gast.
-Over four thousand of these entries can be classified to the species level when Gast cannot.
-In the fourth set of columns, RDP appears to perform better with Spingo than Gast.
+Switching to the GAST algorithm in the second set of columns, RDP once again demonstrates a noticeably greater accuracy in species classification.
+There are also significantly fewer disagreements using the GAST algorithm between the two taxonomies.
+Looking at the third set of columns, Silva demonstrates greater accuracy classifications under the SPINGO algorithm than under GAST.
+Over four thousand of these entries can be classified to the species level when GAST cannot.
+In the fourth set of columns, RDP appears to perform better with SPINGO than GAST.
 However, the comparison is dominated by a much larger number of disagreements between almost six thousand entries, primarily at the species rank.
-On closer inspection, this disagreement is explained by Gast classifying the species for a number of entries as unclutured bacterium.
-This analysis presents evidence that using the RDP taxonomy with the Spingo algorithm will produce the most accurate classification results.
+On closer inspection, this disagreement is explained by GAST classifying the species for a number of entries as ``unclutured bacterium".
+This analysis presents evidence that using the RDP taxonomy with the SPINGO algorithm will produce the most accurate classification results.
+
+\section{Summary}
+
+The versioning model uses expanded semantics to better capture the differences between versions.
+When implemented in JSON-LD, the versioning graph integrates well with text change logs, but it must address scalability issues with more volatile data sets.
+The model's construction allows multiple versions to be linked together into a single graph, but graphs with four or more versions may have problems with discontinuous attributes.
+The implementation was not able to provide evidence linking change counts to version identifiers due to strong disagreement with GCMD Keywords version 8.5.
+The results do indicate that version identifiers need better quantitative support.
+The MBVL results also demonstrate that the versioning model can provide comparisons in more contexts than documentation.
