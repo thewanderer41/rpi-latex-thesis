@@ -6,8 +6,30 @@
 
 \chapter{FUTURE WORK}\label{ch:future}
 
-\section{Smaller Change Logs}
+A number of concerns were not addressed during the versioning graph research process.
+Since a new change statement is made for each difference between versions, some optimizations must be made to keep version graphs small enough to be encoded within change logs.
+Discontinuous attributes across multi-version graphs creates a problematic barrier to graph queries.
+Finally, further study must be done to determine methods in providing quantitative basis for version identifiers.
+These un-addressed questions form the most immediately approachable next steps for this versioning graph approach.
 
-\section{Multi-Version Null Step}
+Very large change logs encoded with JSON-LD through HTML began experiencing performance issues due to the extreme number of modifications in the graph.
+One observation is that a modification in one cell of the Noble Gas data set sometimes also occurs in every other cell in that spreadsheet column.
+The relation of all those cells could then be summarized with a singe modification statement with just the column attribute, reducing the space utilization dependency from the number of rows to a single statement.
+The summarization could reduce the change log's size to a manageable enough level to be viewable.
 
-\section{More Identifier Research Needed}
+At present, the versioning model captures only changing as a matter of convention and to save space.
+Version graphs with multiple versions can suffer discontinuities across attributes which don't change between two versions, but then experience a modification later.
+Discontinuities in the graph causes problems for search queries since a directed path does not exist through all versions in the graph for that attribute.
+The definition of a null-step to bridge gaps could provide a temporary solution to show an attribute in the graph hasn't changed but re-establish connectivity.
+The addition could also introduce new space utilization concerns.
+
+The initial research to study the relationship between change counts and version identifiers broke down due to the subjectivity of identifier assignment.
+Not enough evidence was found to determine if identifiers were assigned accurately.
+Applying the versioning model to more data sets and comparing change counts may be necessary to determine what quantifiable methods, if any, can be used as a basis for version identifier assignment.
+The research would be conducted to determine the extent to which dot-decimal identifiers can communicate change of a data set.
+
+Future work should be conducted to reduce the size of change logs, re-connect multi-version graphs, and determine a quantitative basis for version identifiers.
+Change logs can be shortened by discovering modifications occurring over an entire column which can be summarized in a single statement.
+Null-step links could be used to reconnect attributes in multi-version graphs, but this may also introduce new space consumption issues.
+The versioning model should be applied to more data sets employing the dot-decimal identifier method to gather evidence on the extent to which the identifiers can communicate change in a data set.
+These approaches were left unexplored by the project's conclusion.
