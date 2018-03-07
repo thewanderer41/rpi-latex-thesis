@@ -38,13 +38,6 @@ A new version of a data set can result from modifications to data downstream pro
 In addition, a deeper investigation would become necessary to quantify the amount of volatility introduced by these changes, and how much is necessary to induce a change at each level of the hierarchy.
 Therefore, a version definition cannot rely on provenance alone.
 
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.50]{figures/hierarchy.png}
-	\caption[Visual representation of grouping hierarchy.]{Visual representation of grouping hierarchy.  From \cite{Barkstrom2003}}
-	\label{hierarchy}
-\end{figure}
-
 Another definition comes from Tagger in which versions are a, ``semantically meaningful snapshot of a design object," \cite{Tagger2005}.
 Unfortunately, he does not further clarify what he means by semantically meaningful.
 It is, however, important to note that these snapshots are not of any design object, but the same one.
@@ -65,120 +58,99 @@ The version identifier becomes applied using prior knowledge, not as a result of
 That is, an activity determines whether an object is a version of another based on the state of that object.
 Therefore, \textbf{versioning} is the activity of identifying two objects connected by provenance and exposing the changes relating them, not of generating versions.
 
-\section{Provenance Ontologies}
+\section{Version Systems}
 
-\subsection{Open Provenance Model}
+Many text-based data sets rely on well-established algorithms to perform this alignment  \cite{Chien:2000:VMX:646544.696357}.
 
-A number of linked data models include versioning concepts such as the Open Provenance Model (OPM) \cite{moreau2008open}.
-Driven by the uncertain needs and sometimes conflicting conventions of different scientific domains, the model sought to find a method to standardize the way in which provenance data is captured while also keeping the specification open to accommodate current data sets through the change.
-In an experimental case, the model has been applied to sensor networks, automating and unifying their provenance capture even as they grow \cite{5478496}.
-To aid OPM's adoption, the framework Karma2 integrates provenance capture into scientific workflows and provides a more abstract view of their data collection activities \cite{simmhan2010karma2}.
-The property WasDerivedFrom constitutes a core concept in the model and marks the reliance of one object's existence on another object.
-For a large part, this encompasses the engagement which provenance models view versions, without further need to explore the derivation's content.
+Clotho, a versioning application managing versions at the block level, coordinates constrained spaces using intermittent compact and un-compact methods when retrieving or storing old objects \cite{Flouris04clotho:transparent}.
 
-\subsection{PROV-O}
+Collection into larger unified repositories will likely require a multi-tiered approach to synchronize the varied practices  \cite{Baker2009}.
+Baker notes that differences depend on the sociotechnical distance of a repository from the data's origin \cite{Baker2009}.
+Local stores closer to the collection site better understand data capture conditions, but must also adapt to changing environments.
 
-PROV, a World Wide Web Consortium (W3C) Recommendation, delineates a method to express data provenance in a more compact form as seen in Figure \ref{PROVO} \cite{Gil2013a} \cite{Groth2013}.
-The recommendation uses a conceptual model relating activities, agents, and entities to describe data production lineage \cite{Moreau2013c} \cite{Nies2013} \cite{Nies2013a}.
-Intended as a high level abstraction, it takes an activity-oriented approach to provenance modeling.
-Every data entity results from the actions of some activity.
-The conceptual model's expression occurs through the PROV Ontology (PROV-O), which can be conveyed through various resource description languages \cite{Hua2013} \cite{Klyne2013}.
-The ontology is further formalized into a functional notation for easier human consumption \cite{Moreau2013b} \cite{Cheney2013a}.
-One particular strength that has contributed to the adoption of PROV is its ability to link into other ontologies, making it easier for existing semantically enriched data sets to adopt PROV \cite{Miles2013} \cite{Moreau2013}.
+Likewise, many version control tools include functions to display the versioning tree, but this is also an ease-of-use function \cite{Dijkstra1994}.
+
+\cite{Stuckenholz:2005:CEV:1039174.1039197} - Component Evolution and Versioning State of the Art
+The setup proves ideal for data sets which prioritize service to their most recent versions \cite{Stuckenholz:2005:CEV:1039174.1039197}.
+
+Some methods like the inverted file index have been developed to balance space and retrieval performance on web documents, especially since wikis and news feeds have grown in deployment \cite{Berberich:2007:TMT:1277741.1277831}.
+
+This proves increasingly important as the ability to propagate relevant data change across autonomous systems then assures valid quality in interactions between domains \cite{Systems02champagne:data}.
+
+\subsection{Library Sciences}
+
+Data on a hurricane sometimes occupy only a small portion of a data set, and the files may not even be adjacent in the collection \cite{Barkstrom_digitallibrary}.
+
+Libraries curate multiple editions of the same work, sometimes with significant revisions \cite{Wiil:2000:RDH:338407.338517}.
+
+Data managers often impose a sequential ordering in conjunction with logical groupings to form an object's historical lineage \cite{barkstrom2014earth}.
+
+However, for many library or catalog environments, they cannot predict the target volume a user desires and must prioritize availability \cite{Payette2002} \cite{Barkstrom_digitallibrary}.
+
+However, different data sets may utilize each of the three core operations at different rates \cite{rohtua}.
+
+\subsection{Software Versioning}
+
+Software versioning tools like RCS commonly feature branching and merging functions to create a versioning line separate from the stable master branch \cite{tichy1985rcs}.
+
+The software manager GIT employs this method and Figure \ref{GITFile} demonstrates an example storage space for multiple versions \cite{Chacon:2009:PG:1618548}.
+
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.5]{figures/ProvO.png}
-	\caption[Diagram of the PROV Ontology.]{Diagram of the PROV Ontology.  Figure 1 from \cite{Lebo2013}}
-	\label{PROVO}
+	\includegraphics[scale=0.50]{figures/GITFiles.png}
+	\caption[GIT stores changes in the repository as snapshots of individual files.]{GIT stores changes in the repository as snapshots of individual files. Figure 1.5 from \cite{Chacon:2009:PG:1618548}}
+	\label{GITFile}
 \end{figure}
-Komadu, a framework developed to alleviate workflow integration, improves upon its predecessor, Karma, by no longer utilizing global context identifiers that were not necessarily shared throughout the workflow. \cite{Suriarachchi_2015}.
 
-The PROV Ontology provides three different concepts that begin to encapsulate the provenance relationship between data versions.
-It defines a \textit{prov:Generation} as "the completion of production of a new entity by an activity," \cite{Lebo2013}.
-This means that the generation, which corresponds to the version addition operation, must result from a \textit{prov:Activity}.
-However, activities play a much less active role in versioning since object comparisons instead expose changes.
-The property creates a relationship between entities and activities, but such a connection may imply that perturbations in the activity resulted in changing the version.
-Changes could also result from modifications in the input data, leading to an entirely new generating activity rather than a modified one.
-\textit{Prov:Invalidation} likewise makes a similar connection between activities and entities.
-This means that PROV-O does not have the direct means to communicate the addition and invalidation relationships which exist in our versioning context.
-Since we previously establish a state-based view between versions, a more contextually appropriate property should connect two objects together.
-Continuing, \textit{prov:Derivation} does relate two entities and the ontology defines it as, "a transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a preexisting entity. " \cite{Lebo2013}.
+Using identifiers to convey extended versioning information becomes more difficult with the adoption of distributed version managers like GIT \cite{cederqvist2002version}.
 
-PROV also has a property called \textit{prov:isDerivedFrom} to convey, "a transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a pre-existing entity," \cite{Lebo2013}.
-Changing this property into a qualified property then results in a form very similar to the construction in this model.
-It gains the advantage of turning the property into a concept that can be instanced and described easily using other ontologies.
-The primary discrepancy between this versioning ontology and PROV-O is that Version 2 no longer needs to depend on a previous entity.
-PROV assumes derivations to be part of a sequence, but situations exist, as seen in a later chapter, where research can create multiple simultaneous versions where an ordering does not matter.
+\subsection{Database Versioning}
 
-The corresponding concept in PROV-O is a \textit{prov:Generation}.
-It, however, relates together activities with entities, meaning that it could not relate together two versions or a version and an attribute.
-This property also does not make sense because, once again, no activity is producing the versioning relationship.
-Although, if we attribute new additions to the activity which generates Version 2, a relationship using \textit{prov:Generation} can be formed.
-This formation, however, would also apply to other attributes added to Version 2, and convolute the role the activity took in an attributes generation.
-In the versioning model proposed, each added attribute connects to a particular change instance so that they can be individually described.
+As data sets continue to grow in size, it may become impractical to look towards data as the driving source for identifiers, as Proell and Rauber suggest that database queries may provide a more scalable means of citing data sets \cite{proellBigData}.
 
-Related concepts include Schema.org's \textit{schema:DeleteAction} and PROV's \textit{prov: Invalidation}.
-PROV defines the property as the "start of the destruction, cessation, or expiry of an existing entity by an activity," but since nothing actively creates versioning relationships, this property is inappropriate for this application \cite{Lebo2013}.
-There is no activity to credit with removing the property in this comparison, and the absence results from a state-based property.
+This gave rise to the first temporal databases where schemas included time and dated transactions modifying the schema \cite{roddick1996model}.
 
-\subsection{Provenance, Authorship, and Versioning Ontology}
+Fischer, et al., demonstrate the importance of having a regular standardized version identification system, as it provides a mechanism to track errors being addressed \cite{Fischer2003}.
 
-The Provenance, Authorship, and Versioning (PAV) Ontology is, ``a lightweight vocabulary, for capturing ``just enough” descriptions essential for web resources representing digitized knowledge" \cite{Ciccarese2013}.
-It provides a means to track versioning information through linked data by introducing \textit{pav:version} to cite versions and \textit{pav:previousVersion} to link them together in order \cite{Ciccarese2013}.
-It does so in comparison to the Dublin Core concept \textit{dc:isVersionOf} which records, "Changes in version imply substantive changes in content rather than differences in format" \cite{DCMI2012}.
-PAV supports the idea that a new concept becomes necessary to cover cases where new versions do not have to be substantive but can still be alternate editions of the original object.
-While it documents related versions well, PAV does not dive deeper in explaining the circumstances behind version differences.
+Klahold, et al., introduced using abstract versioning environments to separate the temporal features and organize them into related groupings \cite{Klahold:1986:GMV:645913.671314}.
 
-\subsection{Schema.org}
+As publications more often include citations to data, researchers adjust to enormous modern databases with new methods changing queries rather than transforming schemas \cite{Proell2013} \cite{DBLP:conf/data/2013}.
 
-The Schema.org \textit{schema:UpdateAction} largely reflect the relationships adopted by this work, and are defined as "the act of managing by changing/editing the state of the object" \cite{Schema}.
-The remaining subclasses include the \textit{schema:AddAction}, \textit{schema:DeleteAction}, and \textit{schema:UpdateAction}.
-The function of these terms is to provide a means to supply searchable web pages with standardized micro-data.
-As a result, they orient their properties towards definitions and characterization but do not provide the right structure for a standardized change capture model.
-
-The \textit{modification} relationship is simple enough to understand, and a couple of well developed alternatives exist.
-Schema.org supplies a subclass of the \textit{schema:UpdateAction} labeled \textit{schema:ReplaceAction}.
-This concept has two properties, \textit{schema:replacee} and \textit{schema:replacer} which indicates that a new object replaces an old one.
-This provides a structure very similar to the one found in Figure \ref{ModificationFig} with the only difference being the relationship between Attribute 1 and Change M reversed.
-While this difference is subtle, it demonstrates a disagreement in view as to how change works in a system.
-Schema.org's perspective looks at a single replacement action in isolation and models that quite well.
-This versioning model, however, views change as a quantity that flows through attributes from one version to another.
-Unlike ReplaceAction, ModifyChange does not attribute changes to an actor, but rather it acts as a medium to convey change between objects.
-
-In comparison, the \textit{schema:AddAction} from Schema.org considers addition as an activity performed by an agent.
-This view of addition does not take into account the prior state of the collection being manipulated.
-As a result, the proposed model for \textit{addition} should provide a better context for the relationships between objects when an attribute is added.
-
-Schema.org defines the \textit{schema:DeleteAction} as, "The act of editing a recipient by removing one of its objects," \cite{SchemaRem}.
-This definition assumes that an actor will perform an action upon an object or collection, removing one of its members, producing a new result.
-This follows the provenance mentality, but when versioning, the resulting object has already been created.
-Cases exist, as shown in Section \ref{mapping}, where an attribute is not included in a new version, thus indicating that it has been removed.
-The most important point of contention in this definition, however, is the idea of removal and deletion.
-Although an object is no longer valid, it does not mean the data has been deleted.
-Invalid data often gets removed, but this is not always the case.
-As a result, naming the concept invalidation is more general and inclusive.
-
-\section{Library Sciences}
-\section{Version Systems}
+However, massive centralized data stores have become more prevalent as data distribution methods advance  \cite{Vassiliadis1999}.
 
 \subsection{Grid Versioning}
 
+However, users do not have this advantage and system managers are starting to recognize the difference in versioning usage patterns between users and producers \cite{Branco2008}.
+
+This seems to be a recurring cycle of attention with rapidly developing technologies such as the grid or parallel computing \cite{Kovse2003VGridAVS}.
+
+The CERN grid for the Compact Muon Solenoid experiment carefully developed necessary processes which allow references by multiple users to the same file without copying that file across the grid \cite{Holtman:687353}.
+
+This behavior becomes entirely too slow as data providers begin allowing users to dynamically generate data products from existing data according to their needs \cite{Barkstrom2003a}.
+
+\subsection{Ontology Versioning}
+
+\cite{HauptmannEtAl:LDQ2015} \cite{LDQ2015} - Scalable Semantic Version Control for Linked Data Management
+
+Klein and Fensel determined versioning systems needed to capture compatibility as a major characteristic while performing a study of different ontology versioning methods \cite{Klein01ontologyversioning}.
+
+Take, for example, some biological ontologies, which must update terms and definitions to better capture the field \cite{Ochs:2015:SVS:2826733.2826866}.
+
+Many text-based data sets rely on well-established algorithms to perform this alignment  \cite{Hartung201315}.
+
 \section{Version Models} \label{sec:models}
+
+Properly detecting changes in a system's files allows file managers to correctly group them into versions as seen in research conducted by the Atmospheric Radiation Measurements (ARM) group \cite{6906868}.
 
 Initial research in version modeling occurred with databases, studying ways to track and migrate schema changes.
 Capturing periodic snapshots or copies becomes unfeasible with increasingly large centralized database systems.
-This gave rise to the first temporal databases where schemas included time and dated transactions modifying the schema \cite{roddick1996model}.
 This provides the database a method to transactionally rollback the environment to recreate a search.
 As databases grew more complex, the intricate relationships between objects made rollbacks more difficult.
 This results from the need to manage the time instances of realization, storage, and validity.
 The datum becomes realized at collection, then stored upon entry into the database, and finally valid until the present or new data replaces it.
-Klahold, et al., introduced using abstract versioning environments to separate the temporal features and organize them into related groupings \cite{Klahold:1986:GMV:645913.671314}.
-As publications more often include citations to data, researchers adjust to enormous modern databases with new methods changing queries rather than transforming schemas \cite{Proell2013} \cite{DBLP:conf/data/2013}.
 This method, however, relies on an abstract model capturing data changes to inform query modifications.
 
 Data models allow the capture of complicated relationships between data objects within a system without needing to physically look over sizable data sets.
-The Proof Markup Language, one of the first semantic models to capture provenance information, expressed these relationships using inference reasoning through traceable graphs \cite{daSilva2006381}.
-Many data models include versioning concepts in their specifications, but they are often provenance models which describe the sequence of events that lead to the construction of an object \cite{dai2014provenance}.
 However, as discussed previously, versioning seeks to expose relationships between objects which may not describe how to construct either one.
 The Health Care and Life Sciences (HCLS) Interest Group of the World Wide Web Consortium (W3C) recently released a model which may provide a solution when used in conjunction with other identifiers \cite{Dummontier2016}.
 Their model, shown in Figure \ref{HCLSModel}, separates the concept of a data set into three groupings.
@@ -195,6 +167,13 @@ The model logically links together, under a single version, representations of t
 	\includegraphics[scale=0.35]{figures/HCLSModel.png}
 	\caption[Data model from the Health Care and Life Sciences Interest Group separating data into three levels: works, versions, and instances.]{Data model from the Health Care and Life Sciences Interest Group separating data into three levels: works, versions, and instances.  From Dummontier, et al. \cite{Dummontier2016}}
 	\label{HCLSModel}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.50]{figures/hierarchy.png}
+	\caption[Visual representation of grouping hierarchy.]{Visual representation of grouping hierarchy.  From \cite{Barkstrom2003}}
+	\label{hierarchy}
 \end{figure}
 
 The HCLS data model captures version information using the Provenance, Authoring, and Versioning (PAV) ontology \cite{Ciccarese2013}.
@@ -227,14 +206,74 @@ Understanding this model reveals that changes to either the algorithms or parame
 This explains the new result's provenance, but it would not capture the differences between these objects.
 The key to understanding version modeling lies in recognizing provenance and versioning are intimately entwined, but seek to explain different properties about data objects.
 
-Klein and Fensel determined versioning systems needed to capture compatibility as a major characteristic while performing a study of different ontology versioning methods \cite{Klein01ontologyversioning}.
 There are two types of compatibility, `forwards', which explains how to modify old data to work with new content, and `backwards', which allows new data to interact with old data.
 Knowing one type of compatibility does not always entail the means of deriving the other.
 Having full forwards and backwards compatibility allows interoperability between a variety of applications which may use different versions of the same ontology.
 However, it often depends on the application as to whether full compatibility is necessary.
 Once concern which is very rarely discussed is the compatibility of files and objects which do not change at all.
-Take, for example, some biological ontologies, which must update terms and definitions to better capture the field \cite{Ochs:2015:SVS:2826733.2826866}.
 They mention very little on how to migrate terms which do not change, but these can contribute to a majority of copied content and pose significant scaling issues.
+
+\section{Provenance Ontologies}
+
+The Proof Markup Language, one of the first semantic models to capture provenance information, expressed these relationships using inference reasoning through traceable graphs \cite{daSilva2006381}.
+
+\subsection{Open Provenance Model}
+
+A number of linked data models include versioning concepts such as the Open Provenance Model (OPM) \cite{moreau2008open}.
+Driven by the uncertain needs and sometimes conflicting conventions of different scientific domains, the model sought to find a method to standardize the way in which provenance data is captured while also keeping the specification open to accommodate current data sets through the change.
+In an experimental case, the model has been applied to sensor networks, automating and unifying their provenance capture even as they grow \cite{5478496}.
+To aid OPM's adoption, the framework Karma2 integrates provenance capture into scientific workflows and provides a more abstract view of their data collection activities \cite{simmhan2010karma2}.
+The property WasDerivedFrom constitutes a core concept in the model and marks the reliance of one object's existence on another object.
+For a large part, this encompasses the engagement which provenance models view versions, without further need to explore the derivation's content.
+
+\subsection{PROV-O}
+
+PROV, a World Wide Web Consortium (W3C) Recommendation, delineates a method to express data provenance in a more compact form as seen in Figure \ref{PROVO} \cite{Gil2013a} \cite{Groth2013}.
+The recommendation uses a conceptual model relating activities, agents, and entities to describe data production lineage \cite{Moreau2013c} \cite{Nies2013} \cite{Nies2013a}.
+Intended as a high level abstraction, it takes an activity-oriented approach to provenance modeling.
+Every data entity results from the actions of some activity.
+The conceptual model's expression occurs through the PROV Ontology (PROV-O), which can be conveyed through various resource description languages \cite{Hua2013} \cite{Klyne2013}.
+The ontology is further formalized into a functional notation for easier human consumption \cite{Moreau2013b} \cite{Cheney2013a}.
+One particular strength that has contributed to the adoption of PROV is its ability to link into other ontologies, making it easier for existing semantically enriched data sets to adopt PROV \cite{Miles2013} \cite{Moreau2013}.
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.5]{figures/ProvO.png}
+	\caption[Diagram of the PROV Ontology.]{Diagram of the PROV Ontology.  Figure 1 from \cite{Lebo2013}}
+	\label{PROVO}
+\end{figure}
+Komadu, a framework developed to alleviate workflow integration, improves upon its predecessor, Karma, by no longer utilizing global context identifiers that were not necessarily shared throughout the workflow. \cite{Suriarachchi_2015}.
+
+The PROV Ontology provides three different concepts that begin to encapsulate the provenance relationship between data versions.
+It defines a \textit{prov:Generation} as "the completion of production of a new entity by an activity," \cite{Lebo2013}.
+This means that the generation, which corresponds adding an object to a version, must result from a \textit{prov:Activity}.
+\textit{Prov:Invalidation}, defined as the, ``start of the destruction, cessation, or expiry of an existing entity by an activity," makes a similar connection between activities and entities \cite{Lebo2013}.
+A third concept, \textit{prov:Derivation}, relates two entities, and the ontology defines it as, "a transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a preexisting entity. " \cite{Lebo2013}.
+PROV also has a property called \textit{prov:isDerivedFrom} which conveys the same definition as a \textit{prov:Derivation}.
+Using the property and concept together forms a qualified property which can be instantiated and further annotated.
+
+\subsection{Provenance, Authorship, and Versioning Ontology}
+
+The Provenance, Authorship, and Versioning (PAV) Ontology is, ``a lightweight vocabulary, for capturing ``just enough" descriptions essential for web resources representing digitized knowledge" \cite{Ciccarese2013}.
+It provides a means to track versioning information through linked data by introducing \textit{pav:version} to cite versions and \textit{pav:previousVersion} to link them together in order \cite{Ciccarese2013}.
+It does so in comparison to the Dublin Core concept \textit{dc:isVersionOf} which records, "Changes in version imply substantive changes in content rather than differences in format" \cite{DCMI2012}.
+PAV supports the idea that a new concept becomes necessary to cover cases where new versions do not have to be substantive but can still be alternate editions of the original object.
+While it documents related versions well, PAV does not dive deeper in explaining the circumstances behind version differences.
+
+\subsection{Schema.org}
+
+The Schema.org ontology is not a provenance ontology but provides a means to supply searchable web pages with standardized micro-data.
+The ontology has a collection of concepts which could be applied to versioning.
+The \textit{schema:UpdateAction} is defined as, ``the act of managing by changing/editing the state of the object," which encompasses the same responsibilities expected of versioning systems \cite{Schema}.
+The terms \textit{schema:AddAction}, \textit{schema:DeleteAction}, and \textit{schema:ReplaceAction} subclass the \textit{shcema:UpdateAction}.
+These classes model actions which further cement parallels between versioning and \textit{schema:UpdateAction}.
+
+Schema.org defines a \textit{schema:ReplaceAction} as, ``the act of editing a recipient by replacing an old object with a new object" \cite{SchemaRep}.
+The concept has two properties, \textit{schema:replacee} and \textit{schema:replacer} which indicates that a new object replaces an old one.
+Schema.org models the interaction by placing the replacement action at the relation's center.
+In comparison, the \textit{schema:AddAction} is defined as, ``the act of editing by adding an object to a collection" \cite{SchemaAdd}.
+The action only involves the object and the new state of the collection, not involving any of the collection's prior lineage.
+Schema.org defines the \textit{schema:DeleteAction} as, "the act of editing a recipient by removing one of its objects," \cite{SchemaRem}.
+The concept aligns well with other versioning systems, although deletion may be a strong assertion.
 
 \section{Thesis Statement}
 

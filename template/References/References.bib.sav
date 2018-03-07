@@ -3,9 +3,11 @@
 @InProceedings{HauptmannEtAl:LDQ2015,
   author     = {Claudius Hauptmann and Michele Brocco and Wolfgang W\"orndl},
   title      = {Scalable Semantic Version Control for Linked Data Management},
-  bdsk-url-1 = {http://ceur-ws.org/Vol-1376/#paper-06},
+  note       = {Accessed: February 21, 2017},
+  bdsk-url-1 = {http://ceur-ws.org/Vol-1376},
   crossref   = {LDQ2015},
-  url        = {http://ceur-ws.org/Vol-1376/#paper-06},
+  groups     = {Ontology Versioning},
+  url        = {http://ceur-ws.org/Vol-1376},
 }
 
 @InProceedings{Flouris04clotho:transparent,
@@ -14,6 +16,7 @@
   booktitle = {In Proceedings of the 12th NASA Goddard, 21st IEEE Conference on Mass Storage Systems and Technologies (MSST 2004)},
   year      = {2004},
   pages     = {315--328},
+  groups    = {Version Systems},
 }
 
 @InProceedings{proellBigData,
@@ -22,6 +25,7 @@
   booktitle = {IEEE International Conference on Big Data 2013 (IEEE BigData 2013)},
   year      = {2013},
   month     = {10},
+  groups    = {Databases},
 }
 
 @Article{tichy1985rcs,
@@ -32,7 +36,7 @@
   volume    = {15},
   number    = {7},
   pages     = {637--654},
-  groups    = {Version Management},
+  groups    = {Software Management},
   publisher = {Wiley Online Library},
 }
 
@@ -43,6 +47,7 @@
   year    = {2005},
   volume  = {97},
   pages   = {681-694},
+  groups  = {Identifier},
 }
 
 @Article{roddick1996model,
@@ -52,6 +57,7 @@
   year      = {1996},
   volume    = {18},
   pages     = {446--452},
+  groups    = {Databases},
   publisher = {UNIVERSITY OF CANTERBURY},
 }
 
@@ -59,6 +65,7 @@
   author = {Bruce R. Barkstrom and John J. Bates},
   title  = {Digital Library Issues Arising from Earth Science Data},
   year   = {2006},
+  groups = {Library Science},
 }
 
 @InProceedings{Klein01ontologyversioning,
@@ -67,6 +74,7 @@
   booktitle = {Stanford University},
   year      = {2001},
   pages     = {75--91},
+  groups    = {Ontology Versioning},
 }
 
 @InProceedings{Fischer2003,
@@ -79,6 +87,7 @@
   address   = {Washington, DC, USA},
   publisher = {IEEE Computer Society},
   acmid     = {943568},
+  groups    = {Databases},
   isbn      = {0-7695-1905-9},
   url       = {http://dl.acm.org/citation.cfm?id=942800.943568},
 }
@@ -92,6 +101,7 @@
   address   = {London, UK, UK},
   publisher = {Springer-Verlag},
   acmid     = {696357},
+  groups    = {Version Systems},
   isbn      = {3-540-41826-1},
   numpages  = {17},
   url       = {http://dl.acm.org/citation.cfm?id=646544.696357},
@@ -108,6 +118,7 @@
   publisher = {ACM},
   acmid     = {338517},
   doi       = {10.1145/338407.338517},
+  groups    = {Library Science},
   isbn      = {1-58113-240-9},
   keywords  = {collaborative work, digital library, hypermedia technology, scholarly work, work practices},
   location  = {Como, Italy},
@@ -152,6 +163,7 @@
   bibsource = {dblp computer science bibliography, http://dblp.org},
   biburl    = {http://dblp.uni-trier.de/rec/bib/conf/data/ProllR13},
   doi       = {10.5220/0004589102060210},
+  groups    = {Databases},
   timestamp = {Tue, 05 Nov 2013 13:57:48 +0100},
   url       = {http://dx.doi.org/10.5220/0004589102060210},
 }
@@ -177,6 +189,7 @@
   address   = {San Francisco, CA, USA},
   publisher = {Morgan Kaufmann Publishers Inc.},
   acmid     = {671314},
+  groups    = {Databases},
   isbn      = {0-934613-18-4},
   numpages  = {9},
   url       = {http://dl.acm.org/citation.cfm?id=645913.671314},
@@ -190,6 +203,7 @@
   volume    = {1},
   month     = {April},
   isbn      = {9781439866986},
+  groups    = {Library Science},
   url       = {https://books.google.com/books?id=pI3rTgEACAAJ},
 }
 
@@ -201,6 +215,7 @@
   volume  = {4},
   number  = {2},
   pages   = {12-27},
+  groups  = {Version Systems},
 }
 
 @Article{Branco2008,
@@ -212,6 +227,7 @@
   number   = {6},
   pages    = {062017},
   abstract = {The ATLAS detector at CERN's Large Hadron Collider presents data handling requirements on an unprecedented scale. From 2008 on the ATLAS distributed data management system, Don Quijote2 (DQ2), must manage tens of petabytes of experiment data per year, distributed globally via the LCG, OSG and NDGF computing grids, now commonly known as the WLCG. Since its inception in 2005 DQ2 has continuously managed all experiment data for the ATLAS collaboration, which now comprises over 3000 scientists participating from more than 150 universities and laboratories in 34 countries. Fulfilling its primary requirement of providing a highly distributed, fault-tolerant and scalable architecture DQ2 was successfully upgraded from managing data on a terabyte-scale to managing data on a petabyte-scale. We present improvements and enhancements to DQ2 based on the increasing demands for ATLAS data management. We describe performance issues, architectural changes and implementation decisions, the current state of deployment in test and production as well as anticipated future improvements. Test results presented here show that DQ2 is capable of handling data up to and beyond the requirements of full-scale data-taking.},
+  groups   = {Grid Systems},
   url      = {http://stacks.iop.org/1742-6596/119/i=6/a=062017},
 }
 
@@ -233,9 +249,10 @@
   author    = {Barkstrom, Bruce R.},
   editor    = {Westfechtel, Bernhard and van der Hoek, Andr{\'e}},
   address   = {Berlin, Heidelberg},
+  isbn      = {978-3-540-39195-1},
   booktitle = {Software Configuration Management: ICSE Workshops SCM 2001 and SCM 2003, Toronto, Canada, May 14--15, 2001 and Portland, OR, USA, May 9--10, 2003. Selected Papers},
   doi       = {10.1007/3-540-39195-9_9},
-  isbn      = {978-3-540-39195-1},
+  groups    = {Models},
   url       = {http://dx.doi.org/10.1007/3-540-39195-9_9},
 }
 
@@ -247,9 +264,10 @@
   author    = {Dijkstra, Joost},
   editor    = {Elmasri, Ramez A. and Kouramajian, Vram and Thalheim, Bernhard},
   address   = {Berlin, Heidelberg},
+  isbn      = {978-3-540-48575-9},
   booktitle = {Entity-Relationship Approach --- ER '93: 12th International Conference on the Entity-Relationship Approach Arlington, Texas, USA, December 15--17, 1993 Proceedings},
   doi       = {10.1007/BFb0024353},
-  isbn      = {978-3-540-48575-9},
+  groups    = {Version Systems},
   url       = {http://dx.doi.org/10.1007/BFb0024353},
 }
 
@@ -262,10 +280,11 @@
   number     = {1},
   pages      = {7--},
   month      = jan,
+  issn       = {0163-5948},
   acmid      = {1039197},
   address    = {New York, NY, USA},
   doi        = {10.1145/1039174.1039197},
-  issn       = {0163-5948},
+  groups     = {Version Systems},
   issue_date = {January 2005},
   publisher  = {ACM},
   url        = {http://doi.acm.org/10.1145/1039174.1039197},
@@ -279,9 +298,10 @@
   author    = {Payette, Sandra and Staples, Thornton},
   editor    = {Agosti, Maristella and Thanos, Costantino},
   address   = {Berlin, Heidelberg},
+  isbn      = {978-3-540-45747-3},
   booktitle = {Research and Advanced Technology for Digital Libraries: 6th European Conference, ECDL 2002 Rome, Italy, September 16--18, 2002 Proceedings},
   doi       = {10.1007/3-540-45747-X_30},
-  isbn      = {978-3-540-45747-3},
+  groups    = {Library Science},
   url       = {http://dx.doi.org/10.1007/3-540-45747-X_30},
 }
 
@@ -296,6 +316,7 @@
   publisher = {ACM},
   acmid     = {1277831},
   doi       = {10.1145/1277741.1277831},
+  groups    = {Version Systems},
   isbn      = {978-1-59593-597-7},
   keywords  = {temporal text indexing, time-travel text search, web archives},
   location  = {Amsterdam, The Netherlands},
@@ -308,6 +329,7 @@
   title     = {V-Grid-A Versioning Services Framework for the Grid},
   booktitle = {Berliner XML Tage},
   year      = {2003},
+  groups    = {Grid Systems},
 }
 
 @TechReport{Holtman:687353,
@@ -318,6 +340,7 @@
   number       = {CMS-NOTE-2001-037},
   address      = {Geneva},
   month        = {Jul},
+  groups       = {Grid Systems},
   reportnumber = {CMS-NOTE-2001-037},
   url          = {http://cds.cern.ch/record/687353},
 }
@@ -329,8 +352,8 @@
   author    = {Chacon, Scott},
   address   = {Berkely, CA, USA},
   edition   = {1st},
-  groups    = {Version Management},
   isbn      = {1430218339, 9781430218333},
+  groups    = {Software Management},
 }
 
 @Book{cederqvist2002version,
@@ -338,7 +361,7 @@
   publisher = {Network Theory Ltd.},
   year      = {2002},
   author    = {Cederqvist, Per and Pesch, Roland and others},
-  groups    = {Version Management},
+  groups    = {Software Management},
 }
 
 @Manual{Gil2013,
@@ -348,7 +371,7 @@
   month        = apr,
   year         = {2013},
   note         = {30},
-  groups       = {Provenance},
+  groups       = {Provenance, PROVO},
   url          = {https://www.w3.org/TR/prov-primer},
 }
 
@@ -443,6 +466,7 @@ be in line with traditional close source development.},
   month    = {01},
   note     = {Copyright - Copyright Medical Library Association Jan 2006; Document feature - Graphs; Tables; ; Last updated - 2016-11-09},
   abstract = {The paper describes patterns of electronic journal usage in health sciences libraries during the past decade. The paper presents a case study, documenting the pattern of acquisition, management, and usage at the Louis Calder Memorial Library of the University of Miami Miller School of Medicine. Health sciences journals were early to offer electronic alternatives to print. As a result, health sciences libraries, their patrons, and the public at large were early to embrace the new versions and continue to embrace the significant changes in scholarly communication they enable. Although the patterns of electronic journals among health sciences libraries and other special and academic libraries have similarities, they also have differences. Broad studies of electronic journals in non-health sciences libraries have been published, but a retrospective review of electronic journals in health sciences libraries has not.},
+  groups   = {Library Science},
   isbn     = {15365050},
   keywords = {Library And Information Sciences; Libraries; Electronic publishing; Health; Purchasing; Bibliographic data bases; History, 20th Century; History, 21st Century; Periodicals as Topic -- trends; Humans; Internet -- trends; Publishing -- economics; Florida; Organizational Case Studies; Publishing -- trends; Internet -- economics; Periodicals as Topic -- economics; Access to Information; Libraries, Medical -- trends; Cost-Benefit Analysis; Library Collection Development; Libraries, Medical -- economics; Periodicals as Topic -- utilization; Libraries, Medical -- statistics & numerical data; Internet -- utilization; Publishing -- utilization; Libraries, Medical -- organization & administration; Publishing -- organization & administration},
   language = {English},
@@ -454,6 +478,7 @@ be in line with traditional close source development.},
   title     = {Champagne: Data Change Propagation for Heterogeneous Information Systems},
   booktitle = {In: Proceedings of the International Conference on Very Large Databases (VLDB), Demonstration Paper, Hong Kong},
   year      = {2002},
+  groups    = {Version Systems},
 }
 
 @InProceedings{Bouzeghoub:2004:FAD:1012453.1012464,
@@ -467,6 +492,7 @@ be in line with traditional close source development.},
   publisher = {ACM},
   acmid     = {1012464},
   doi       = {10.1145/1012453.1012464},
+  groups    = {Change Distance},
   isbn      = {1-58113-902-0},
   keywords  = {freshness, multi-source information systems, quality evaluation},
   location  = {Paris, France},
@@ -502,9 +528,10 @@ be in line with traditional close source development.},
   year     = {2011},
   volume   = {4},
   pages    = {548 - 557},
+  issn     = {1877-0509},
   abstract = {Reproducibility of scientific research relies on accurate and precise citation of data and the provenance of that data. Earth science data are often the result of applying complex data transformation and analysis workflows to vast quantities of data. Provenance information of data processing is used for a variety of purposes, including understanding the process and auditing as well as reproducibility. Certain provenance information is essential for producing scientifically equivalent data. Capturing and representing that provenance information and assigning identifiers suitable for precisely distinguishing data granules and datasets is needed for accurate comparisons. This paper discusses scientific equivalence and essential provenance for scientific reproducibility. We use the example of an operational earth science data processing system to illustrate the application of the technique of cascading digital signatures or “hash chains” to precisely identify sets of granules and as provenance equivalence identifiers to distinguish data made in an an equivalent manner.},
   doi      = {http://dx.doi.org/10.1016/j.procs.2011.04.057},
-  issn     = {1877-0509},
+  groups   = {Change Distance},
   keywords = {provenance, equivalence, reproducibility, data identifiers, data citations},
   url      = {http://www.sciencedirect.com/science/article/pii/S1877050911001153},
 }
@@ -516,6 +543,7 @@ be in line with traditional close source development.},
   year         = {2014},
   pages        = {271--280},
   organization = {IEEE},
+  groups       = {Change Distance},
 }
 
 @InBook{Vassiliadis1999,
@@ -526,9 +554,10 @@ be in line with traditional close source development.},
   author    = {Vassiliadis, Panos and Bouzeghoub, Mokrane and Quix, Christoph},
   editor    = {Jarke, Matthias and Oberweis, Andreas},
   address   = {Berlin, Heidelberg},
+  isbn      = {978-3-540-48738-8},
   booktitle = {Advanced Information Systems Engineering: 11th International Conference, CAiSE``99 Heidelberg, Germany, June 14---18, 1999 Proceedings},
   doi       = {10.1007/3-540-48738-7_13},
-  isbn      = {978-3-540-48738-8},
+  groups    = {Databases},
   url       = {http://dx.doi.org/10.1007/3-540-48738-7_13},
 }
 
@@ -644,6 +673,7 @@ be in line with traditional close source development.},
   pages     = {788-791},
   month     = {June},
   doi       = {10.1109/BigData.Congress.2014.124},
+  groups    = {Models},
   issn      = {2379-7703},
   keywords  = {atmospheric radiation;data handling;geophysics computing;ARM program;Atmospheric Radiation Measurement;complex data versioning;historical ARM data set;software versioning;Atmospheric measurements;Data models;Documentation;Electronic mail;History;Manuals;Object recognition;curation;version},
 }
@@ -652,6 +682,7 @@ be in line with traditional close source development.},
   author = {Boris Polyak and Edward Prasolov and Igor Tolstikhin and L Yakovlev and Alex Ioffe and Olga Kikvadze and Olga Vereina and Margarite Vetrina},
   title  = {Noble gas isotope abundances in terrestrial fluids},
   year   = {2015},
+  groups = {Data Sets},
   url    = {https://info.deepcarbon.net/vivo/display/n6225},
 }
 
@@ -660,6 +691,7 @@ be in line with traditional close source development.},
   title     = {Exploiting mineral data: applications to the diversity, distribution, and social networks of copper mineral},
   booktitle = {AGU Fall Meeting},
   year      = {2016},
+  groups    = {Data Sets},
 }
 
 @InCollection{Lafuente,
@@ -678,6 +710,7 @@ be in line with traditional close source development.},
 @Misc{Ubuntu,
   title        = {Common Questions: Ubuntu Release and Version Numbers},
   note         = {Accessed: December 12, 2016},
+  groups       = {Identifier},
   organization = {Canonical Ltd.},
   url          = {https://help.ubuntu.com/community/CommonQuestions##Ubuntu%20Releases%20and%20Version%20Numbers},
 }
@@ -689,6 +722,7 @@ be in line with traditional close source development.},
   year         = {2008},
   pages        = {323--326},
   organization = {Springer},
+  groups       = {Provenance},
 }
 
 @InProceedings{Miled:2001:GCM:372202.372324,
@@ -702,6 +736,7 @@ be in line with traditional close source development.},
   publisher = {ACM},
   acmid     = {372324},
   doi       = {10.1145/372202.372324},
+  groups    = {Data Sets},
   isbn      = {1-58113-287-5},
   keywords  = {JDBC, Java, RMI, World Wide Web, XML, asynchronous, component, distributed, distributed object management, global transaction management, interface, interoperability, object-oriented},
   location  = {Las Vegas, Nevada, USA},
@@ -713,6 +748,7 @@ be in line with traditional close source development.},
   title        = {Keyword FAQ},
   year         = {2016},
   note         = {Accessed: December 12, 2016},
+  groups       = {Data Sets},
   organization = {Earthdata},
   url          = {https://wiki.earthdata.nasa.gov/display/CMR/Keyword+FAQ},
 }
@@ -740,6 +776,7 @@ be in line with traditional close source development.},
   pages     = {330-339},
   month     = {May},
   doi       = {10.1109/CTS.2010.5478496},
+  groups    = {Provenance},
   keywords  = {Internet;application program interfaces;decision support systems;real-time systems;virtual reality;OPM;SWE;cyberenvironments;open provenance model;original sensor design;provenance aware virtual sensor system;real-time environmental decision support systems;sensor Web applications;sensor Web enablement;Acoustic sensors;Biosensors;Chemical and biological sensors;Computational modeling;Decision support systems;Real time systems;Sensor phenomena and characterization;Sensor systems;Sensor systems and applications;Temperature sensors;Open Provenance Model;Sensor Web;Streaming Data;Virtual Sensor},
 }
 
@@ -749,6 +786,7 @@ be in line with traditional close source development.},
   journal   = {Web Services Research for Emerging Applications: Discoveries and Trends: Discoveries and Trends},
   year      = {2010},
   pages     = {317},
+  groups    = {Provenance, PROVO},
   publisher = {IGI Global},
 }
 
@@ -772,6 +810,7 @@ be in line with traditional close source development.},
   month  = {April},
   year   = {2013},
   note   = {Accessed: December 17, 2016},
+  groups = {Provenance, PROVO},
   url    = {https://www.w3.org/TR/2013/REC-prov-dm-20130430/},
 }
 
@@ -781,7 +820,7 @@ be in line with traditional close source development.},
   month  = {April},
   year   = {2013},
   note   = {Accessed: December 17, 2016},
-  groups = {Provenance},
+  groups = {Provenance, PROVO},
   url    = {https://www.w3.org/TR/2013/REC-prov-o-20130430/},
 }
 
@@ -791,6 +830,7 @@ be in line with traditional close source development.},
   month  = {April},
   year   = {2013},
   note   = {Accessed: December 17, 2016},
+  groups = {Provenance, PROVO},
   url    = {https://www.w3.org/TR/2013/REC-prov-n-20130430/},
 }
 
@@ -801,6 +841,7 @@ be in line with traditional close source development.},
   year   = {2013},
   note   = {Accessed: December 17, 2016},
   editor = {Daniel Garijo and Kai Eckert},
+  groups = {Provenance},
   url    = {https://www.w3.org/TR/2013/NOTE-prov-dc-20130430/},
 }
 
@@ -810,6 +851,7 @@ be in line with traditional close source development.},
   year   = {2013},
   note   = {Accessed: December 17, 2016},
   editor = {Luc Moreau and Timothy Lebo},
+  groups = {Provenance},
   url    = {https://www.w3.org/TR/2013/NOTE-prov-links-20130430/},
 }
 
@@ -820,6 +862,7 @@ be in line with traditional close source development.},
   year   = {2013},
   note   = {Accessed: December 17, 2016},
   editor = {James Cheney and Paolo Missier and Luc Moreau},
+  groups = {Provenance, PROVO},
   url    = {https://www.w3.org/TR/2013/REC-prov-constraints-20130430/},
 }
 
@@ -829,6 +872,7 @@ be in line with traditional close source development.},
   month  = {April},
   year   = {2013},
   note   = {Accessed: December 17, 2016},
+  groups = {Provenance, PROVO},
   url    = {https://www.w3.org/TR/2013/NOTE-prov-overview-20130430/},
 }
 
@@ -838,6 +882,7 @@ be in line with traditional close source development.},
   month  = {April},
   year   = {2013},
   note   = {Accessed: December 17, 2016},
+  groups = {Provenance, PROVO},
   url    = {https://www.w3.org/TR/2013/NOTE-prov-primer-20130430/},
 }
 
@@ -847,6 +892,7 @@ be in line with traditional close source development.},
   month  = {April},
   year   = {2013},
   note   = {Accessed: December 17, 2016},
+  groups = {Provenance, PROVO},
   url    = {https://www.w3.org/TR/2013/NOTE-prov-xml-20130430/},
 }
 
@@ -856,6 +902,7 @@ be in line with traditional close source development.},
   month  = {April},
   year   = {2013},
   note   = {Accessed: December 17, 2016},
+  groups = {Provenance, PROVO},
   url    = {https://www.w3.org/TR/2013/NOTE-prov-aq-20130430/},
 }
 
@@ -865,15 +912,17 @@ be in line with traditional close source development.},
   month  = {April},
   year   = {2013},
   note   = {Accessed: December 17, 2016},
+  groups = {Provenance, PROVO},
   url    = {https://www.w3.org/TR/2013/NOTE-prov-dictionary-20130430/},
 }
 
 @Misc{Cheney2013a,
-  title  = {SSemantic of the PROV Data Model},
+  title  = {Semantic of the PROV Data Model},
   month  = {April},
   year   = {2013},
   note   = {Accessed: December 17, 2016},
   editor = {James Cheney},
+  groups = {Provenance, PROVO},
   url    = {https://www.w3.org/TR/2013/NOTE-prov-sem-20130430/},
 }
 
@@ -886,6 +935,7 @@ be in line with traditional close source development.},
   number    = {1},
   month     = {mar},
   doi       = {http://doi.org/10.5334/jors.bq},
+  groups    = {Provenance},
   publisher = {Ubiquity Press, Ltd.},
   url       = {http://dx.doi.org/10.5334/jors.bq},
 }
@@ -901,6 +951,7 @@ be in line with traditional close source development.},
   publisher = {ACM},
   acmid     = {2806429},
   doi       = {10.1145/2806416.2806429},
+  groups    = {Change Distance},
   isbn      = {978-1-4503-3794-6},
   keywords  = {crowd-sourcing applications, provenance, provisioning},
   location  = {Melbourne, Australia},
@@ -927,10 +978,11 @@ be in line with traditional close source development.},
   number     = {C},
   pages      = {127--144},
   month      = aug,
+  issn       = {1532-0464},
   acmid      = {2826866},
   address    = {San Diego, USA},
   doi        = {10.1016/j.jbi.2015.05.018},
-  issn       = {1532-0464},
+  groups     = {Ontology Versioning},
   issue_date = {August 2015},
   keywords   = {Abstraction networks, Ontology diff, Ontology quality assurance, Ontology version change, Summarizing ontology change, Summarizing ontology evolution, Visualizing ontology evolution},
   numpages   = {18},
@@ -946,8 +998,9 @@ be in line with traditional close source development.},
   volume   = {46},
   number   = {1},
   pages    = {15 - 32},
-  doi      = {http://dx.doi.org/10.1016/j.jbi.2012.04.009},
   issn     = {1532-0464},
+  doi      = {http://dx.doi.org/10.1016/j.jbi.2012.04.009},
+  groups   = {Ontology Versioning},
   keywords = {Ontology evolution, Ontology versions, Diff, Life science ontologies },
   url      = {http://www.sciencedirect.com/science/article/pii/S1532046412000627},
 }
@@ -960,9 +1013,10 @@ be in line with traditional close source development.},
   volume   = {4},
   number   = {3},
   pages    = {139},
+  issn     = {1865-0481},
   abstract = {In recent years, a number of data identification technologies have been developed which purport to permanently identify digital objects. In this paper, nine technologies and systems for assigning persistent identifiers are assessed for their applicability to Earth science data (ARKs, DOIs, XRIs, Handles, LSIDs, OIDs, PURLs, URIs/URNs/URLs, and UUIDs). The evaluation used four use cases that focused on the suitability of each scheme to provide Unique Identifiers for Earth science data objects, to provide Unique Locators for the objects, to serve as Citable Locators, and to uniquely identify the scientific contents of data objects if the data were reformatted. Of all the identifier schemes assessed, the one that most closely meets all of the requirements for an Unique Identifier is the UUID scheme. Any of the URL/URI/IRI-based identifier schemes assessed could be used for Unique Locators. Since there are currently no strong market leaders to help make the choice among them, the decision must be based on secondary criteria. While most publications now allow the use of URLs in citations, so that all of the URL/URI/IRI based identification schemes discussed in this paper could potentially be used as a Citable Locator, DOIs are the identification scheme currently adopted by most commercial publishers. None of the identifier schemes assessed here even minimally address identification of scientifically identical numerical data sets under reformatting.},
   doi      = {10.1007/s12145-011-0083-6},
-  issn     = {1865-0481},
+  groups   = {Identifier},
   url      = {http://dx.doi.org/10.1007/s12145-011-0083-6},
 }
 
@@ -974,9 +1028,10 @@ be in line with traditional close source development.},
   volume   = {1},
   number   = {2},
   pages    = {101--116},
+  issn     = {1572-9184},
   abstract = {The objective of this work is the development of Grid-based approaches through which NASA data centers can become active participants in serving data users by transforming archived data into the specific form needed by the user. This approach involves generating custom data products from data stored in multiple NASA data centers. We describe a prototype developed to explore how Grid technology can facilitate this multi-center product generation. Our initial example of a custom data product is phenomena-based subsetting. This example involves production of a subset of a large collection of data based on the subset's association with some phenomena, such as a mesoscale convective system (severe storm) or a hurricane. We demonstrate that this subsetting can be performed on data located at a single data center or at multiple data centers. We also describe a system that performed customized data product generation using a combination of commodity processors deployed at a NASA data center, Grid technology to access these processors, and data mining software that intelligently selects where to perform processing based on data location and availability of compute resources. This demonstration also suggests that we could create a catalog of phenomena related data at multiple data centers, in which the catalog can contain references to the original data in different locations. The catalog is important to providing other users with efficient access to the data belonging to the identified phenomenon.},
   doi      = {10.1023/B:GRID.0000024069.33399.ee},
-  issn     = {1572-9184},
+  groups   = {Grid Systems},
   url      = {http://dx.doi.org/10.1023/B:GRID.0000024069.33399.ee},
 }
 
@@ -985,6 +1040,7 @@ be in line with traditional close source development.},
   title     = {Information Retrieval by Semantic Similarity},
   booktitle = {Intern. Journal on Semantic Web and Information Systems (IJSWIS), 3(3):55–73, July/Sept. 2006. Special Issue of Multimedia Semantics},
   year      = {2006},
+  groups    = {Change Distance},
 }
 
 @Misc{Adida2015,
@@ -993,6 +1049,7 @@ be in line with traditional close source development.},
   year   = {2015},
   note   = {Accessed: December 24, 2016},
   editor = {Ben Adida and Mark Birbeck and Shane McCarron and Ivan Herman},
+  groups = {Structured Data},
   url    = {http://www.w3.org/TR/2015/REC-rdfa-core-20150317/},
 }
 
@@ -1002,6 +1059,7 @@ be in line with traditional close source development.},
   year   = {2015},
   note   = {Accessed: December 24, 2016},
   editor = {Ivan Herman and Ben Adida and Manu Sporny and Mark Birbeck},
+  groups = {Structured Data},
   url    = {http://www.w3.org/TR/2015/NOTE-rdfa-primer-20150317/},
 }
 
@@ -1013,9 +1071,10 @@ be in line with traditional close source development.},
   author    = {Bizer, Christian and Eckert, Kai and Meusel, Robert and M{\"u}hleisen, Hannes and Schuhmacher, Michael and V{\"o}lker, Johanna},
   editor    = {Alani, Harith and Kagal, Lalana and Fokoue, Achille and Groth, Paul and Biemann, Chris and Parreira, Josiane Xavier and Aroyo, Lora and Noy, Natasha and Welty, Chris and Janowicz, Krzysztof},
   address   = {Berlin, Heidelberg},
+  isbn      = {978-3-642-41338-4},
   booktitle = {The Semantic Web -- ISWC 2013: 12th International Semantic Web Conference, Sydney, NSW, Australia, October 21-25, 2013, Proceedings, Part II},
   doi       = {10.1007/978-3-642-41338-4_2},
-  isbn      = {978-3-642-41338-4},
+  groups    = {Structured Data},
   url       = {http://dx.doi.org/10.1007/978-3-642-41338-4_2},
 }
 
@@ -1024,6 +1083,7 @@ be in line with traditional close source development.},
   title     = {The HCLS Community Profile: Describing DataData, VVersion, and Distributions},
   booktitle = {Smart Descriptions \& Smarter Vocabularies},
   year      = {2016},
+  groups    = {Models},
   url       = {https://www.w3.org/2016/11/sdsvoc/SDSVoc16_paper_3},
 }
 
@@ -1038,6 +1098,7 @@ be in line with traditional close source development.},
   issn     = {2041-1480},
   abstract = {Provenance is a critical ingredient for establishing trust of published scientific content. This is true whether we are considering a data set, a computational workflow, a peer-reviewed publication or a simple scientific claim with supportive evidence. Existing vocabularies such as Dublin Core Terms (DC Terms) and the W3C Provenance Ontology (PROV-O) are domain-independent and general-purpose and they allow and encourage for extensions to cover more specific needs. In particular, to track authoring and versioning information of web resources, PROV-O provides a basic methodology but not any specific classes and properties for identifying or distinguishing between the various roles assumed by agents manipulating digital artifacts, such as author, contributor and curator.},
   doi      = {10.1186/2041-1480-4-37},
+  groups   = {Provenance},
   url      = {http://dx.doi.org/10.1186/2041-1480-4-37},
 }
 
@@ -1063,10 +1124,11 @@ be in line with traditional close source development.},
 
 @Misc{Stevens2016,
   author = {Tyler Stevens},
-  title  = {NASA GCMD KKeyword Version 8.4 Released},
+  title  = {NASA GCMD Keyword Version 8.4 Released},
   month  = aug,
   year   = {2016},
   note   = {Accessed: February 10, 2017},
+  groups = {Data Sets},
   url    = {https://wiki.earthdata.nasa.gov/display/CMR/NASA+GCMD+Keywords+Version+8.4+Released},
 }
 
@@ -1104,6 +1166,7 @@ be in line with traditional close source development.},
   organization = {Schema.org},
   note         = {Accessed: January 19, 2017},
   url          = {http://schema.org/DeleteAction},
+  groups       = {Provenance},
 }
 
 @Electronic{Schema,
@@ -1111,6 +1174,7 @@ be in line with traditional close source development.},
   organization = {Schema.org},
   note         = {Accessed: January 19, 2017},
   url          = {http://schema.org/UpdateAction},
+  groups       = {Provenance},
 }
 
 @Electronic{JSONLD,
@@ -1121,12 +1185,14 @@ be in line with traditional close source development.},
   organization = {W3C},
   note         = {Accessed: June 7, 2017},
   url          = {https://json-ld.org/spec/latest/json-ld/},
+  groups       = {Structured Data},
 }
 
 @Electronic{mbvl,
-  title = {Marine Biodiversity Virtual Laboratory},
-  note  = {Accessed: September 28, 2016},
-  url   = {https://tw.rpi.edu/web/project/MBVL},
+  title  = {Marine Biodiversity Virtual Laboratory},
+  note   = {Accessed: September 28, 2016},
+  url    = {https://tw.rpi.edu/web/project/MBVL},
+  groups = {Data Sets},
 }
 
 @Electronic{Ands2017,
@@ -1134,6 +1200,7 @@ be in line with traditional close source development.},
   organization = {Australian National Data Service},
   note         = {Accessed: June 9, 2017},
   url          = {http://www.ands.org.au/working-with-data/data-management/data-versioning},
+  groups       = {Provenance},
 }
 
 @Electronic{skos,
@@ -1144,6 +1211,23 @@ be in line with traditional close source development.},
   organization = {W3C},
   note         = {Accessed: January 19, 2017},
   url          = {http://www.w3.org/TR/2009/REC-skos-reference-20090818/},
+  groups       = {Data Sets},
+}
+
+@Electronic{SchemaAdd,
+  title        = {AddAction},
+  organization = {Schema.org},
+  note         = {Accessed: January 19, 2017},
+  url          = {http://schema.org/AAction},
+  groups       = {Provenance},
+}
+
+@Electronic{SchemaRep,
+  title        = {ReplaceAction},
+  organization = {Schema.org},
+  note         = {Accessed: January 19, 2017},
+  url          = {http://schema.org/ReplaceAction},
+  groups       = {Provenance},
 }
 
 @Comment{jabref-meta: databaseType:bibtex;}
@@ -1151,7 +1235,18 @@ be in line with traditional close source development.},
 @Comment{jabref-meta: grouping:
 0 AllEntriesGroup:;
 1 StaticGroup:Provenance\;0\;1\;\;\;\;;
-1 StaticGroup:Edge Distance\;0\;1\;\;\;\;;
+2 StaticGroup:PROVO\;0\;1\;\;\;\;;
 1 StaticGroup:Changelogs\;0\;1\;\;\;\;;
-1 StaticGroup:Version Management\;0\;1\;\;\;\;;
+2 StaticGroup:Structured Data\;0\;1\;\;\;\;;
+1 StaticGroup:Library Science\;0\;1\;\;\;\;;
+1 StaticGroup:Models\;0\;1\;\;\;\;;
+1 StaticGroup:Ontology Versioning\;0\;1\;\;\;\;;
+1 StaticGroup:Data Sets\;0\;1\;\;\;\;;
+1 StaticGroup:Change Distance\;0\;1\;\;\;\;;
+2 StaticGroup:Edge Distance\;0\;1\;\;\;\;;
+1 StaticGroup:Version Systems\;0\;1\;\;\;\;;
+2 StaticGroup:Databases\;0\;1\;\;\;\;;
+2 StaticGroup:Grid Systems\;0\;1\;\;\;\;;
+2 StaticGroup:Software Management\;0\;1\;\;\;\;;
+1 StaticGroup:Identifier\;0\;1\;\;\;\;;
 }

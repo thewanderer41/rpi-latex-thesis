@@ -10,13 +10,7 @@
 \section{Introduction}
 
 The data versioning landscape produces a variety of different approaches and standards towards change capture.
-However, massive centralized data stores have become more prevalent as data distribution methods advance  \cite{Vassiliadis1999}.
-Collection into larger unified repositories will likely require a multi-tiered approach to synchronize the varied practices  \cite{Baker2009}.
-Baker notes that differences depend on the sociotechnical distance of a repository from the data's origin \cite{Baker2009}.
-Local stores closer to the collection site better understand data capture conditions, but must also adapt to changing environments.
 Science agencies and organizations are only beginning to formally codify and standardize methods to capture and publish lineage information \cite{MatthewS.Mayernik201312-039}.
-This seems to be a recurring cycle of attention with rapidly developing technologies such as the grid or parallel computing \cite{Kovse2003VGridAVS}.
-The CERN grid for the Compact Muon Solenoid experiment carefully developed necessary processes which allow references by multiple users to the same file without copying that file across the grid \cite{Holtman:687353}.
 
 The model defined in Chapter \ref{ch:model} provides a basis for understanding the formal underlying properties which will allow consistent versioning practices.
 Previous work in provenance, provenance distance, and mapping provide inspiration for the model's form.
@@ -28,9 +22,14 @@ These mapping methods provide a familiar and regularized basis to both compute a
 
 \section{Data Versioning Operations}
 
+The most important point of contention in this definition, however, is the idea of removal and deletion.
+Although an object is no longer valid, it does not mean the data has been deleted.
+Invalid data often gets removed, but this is not always the case.
+As a result, naming the concept invalidation is more general and inclusive.
+
+
 Versioning systems come in a variety of different forms as a result of the assorted applications they must manage.
 Experimental biology data require tracking as they pass through a scientific workflow \cite{Tagger2005}.
-Libraries curate multiple editions of the same work, sometimes with significant revisions \cite{Wiil:2000:RDH:338407.338517}.
 What such activities demonstrate is the wide range of settings and expectations under which versioning systems operate.
 While this work cannot hope to explore all these applications, every system studied shares three common functions: addition, deletion, and modification.
 These three operations plausibly form the core set of relationships when versioning.
@@ -95,7 +94,6 @@ As previously mentioned, different systems utilize the operations at varying rat
 
 \section{Identifiers}
 
-Data managers often impose a sequential ordering in conjunction with logical groupings to form an object's historical lineage \cite{barkstrom2014earth}.
 As a result, they often employ version identifiers in the dot-decimal style where a decimal point connects together a series of numbers \cite{Stuckenholz:2005:CEV:1039174.1039197}.
 Whenever, a new version is made, it receives an identifier with one of the numbers incremented as seen in Figure \ref{RCSTree}.
 Changes to the left-most number often signify a more important change.
@@ -105,10 +103,8 @@ Most importantly, it groups together changes from the lower spectrum of minor or
 It is, therefore, difficult to obtain a clear characterization of a version change without a longer series of numbers.
 This method of identification also has issues since small changes in the current data set may have larger implications for data farther down the workflow, which is not communicated by the identifier.
 In addition, version numbers capture the overall change of a data set, but users may not interact with collections that way.
-Data on a hurricane sometimes occupy only a small portion of a data set, and the files may not even be adjacent in the collection \cite{Barkstrom_digitallibrary}.
 There is also little standardization or formal requirements in naming methods.
 Ubuntu utilizes a dot-decimal version labeling scheme where the two number identifier corresponds to the year-month values of the release \cite{Ubuntu}.
-Fischer, et al., demonstrate the importance of having a regular standardized version identification system, as it provides a mechanism to track errors being addressed \cite{Fischer2003}.
 The ability to link bug reports and versions thus gives producers and customers metrics to understand how developers fix errors and how long it will take.
 A common method used to address the distinction between versions is a human-readable change log, further discussed in Section \ref{sec:changelog}.
 
@@ -137,7 +133,6 @@ However, the data set production and distribution cycle moves more quickly and r
 This behavior becomes entirely too slow as data providers begin allowing users to dynamically generate data products from existing data according to their needs \cite{Barkstrom2003a}.
 Some agencies have begun assigning versioned DOIs, but this has not become common practice.
 Other groups do not assign a new DOI, but reference to the latest release of the document or object \cite{Ands2017}.
-As data sets continue to grow in size, it may become impractical to look towards data as the driving source for identifiers, as Proell and Rauber suggest that database queries may provide a more scalable means of citing data sets \cite{proellBigData}.
 
 \begin{figure}
 	\centering
@@ -189,7 +184,6 @@ This gives insight into motivations behind particular design decisions.
 It also provides feedback to the user community that corrections have been addressed, in addition to ensuring that improvements drive modifications to the code base.
 An identifier cannot communicate these qualities while remaining succinct.
 Some research has been done to determine the health of a development project based on the number and length of change logs released over time \cite{German03automatingthe}.
-This becomes particularly significant as data freshness plays a growing role in successful system function \cite{Bouzeghoub:2004:FAD:1012453.1012464}.
 However, little work has been done to make change logs machine-computable, as many of these documents remain in human-readable text only.
 Research done involving change log content must manually link entries with computable meta-data such as the introduction of new features with the emergence of new bugs \cite{6132954}.
 While machines may still be significantly removed from the ability to comprehend the impact of changes made to a data set or software code, they are currently opaquely blocked from consuming any of the content within logs more than understanding they contain text.
@@ -228,12 +222,21 @@ However, every linked data triple must be explicitly defined, meaning that resul
 
 \section{Change Distance}
 
-\subsection{Provenance Distance}
+This becomes particularly significant as data freshness plays a growing role in successful system function \cite{Bouzeghoub:2004:FAD:1012453.1012464}.
+
+Many data models include versioning concepts in their specifications, but they are often provenance models which describe the sequence of events that lead to the construction of an object \cite{dai2014provenance}.
 
 With increasing complexity, data workflows have developed in such a way that even subtle changes have serious implications for other parts of the workflow \cite{TILMES2011548}.
+
 This observation makes change impact difficult to measure, but one insight begins with provenance's role in workflows.
 Provenance can give great insight into a data object's future performance such as the  ability to predict disk usage based on the lineage of a data object \cite{dai2014provenance}.
+
 Efforts have also been made to summarize provenance representations to improve consumption \cite{Ainy:2015:ASD:2806416.2806429}.
+
+This kind of analysis resembles comparison measures employed in determining semantic similarity \cite{Hliaoutakis06informationretrieval}.
+
+\subsection{Provenance Distance}
+
 Changes to the process creating an object signals the development of a new version.
 Therefore, studying the magnitude of this deviation should give some idea into the resulting object's impact.
 This idea, known as provenance distance, seeks to determine the impact of changes in provenance on new data versions through measuring graph edit distances.
@@ -259,7 +262,6 @@ Some variations count edge changes \cite{Goddard:1996:DGU:246962.246972}.
 
 In Figure \ref{GraphEdit}, the left graph transforms through a move of edge 1 and a rotation of edge 4, resulting in an edit distance of two.
 Such changes in a provenance graph would demonstrate an alteration in dependencies between objects used to generate a final notable product.
-This kind of analysis resembles comparison measures employed in determining semantic similarity \cite{Hliaoutakis06informationretrieval}.
 However, isolating changes responsible for differences in provenance can become difficult in complex environments as Tilmes observes in 2011, 
 \begin{quotation}
 	Consider the relatively common case of the calibration table, which is an input to the L1B process, changing. Even though the version of the L2 or L3 software hasn't changed, the data files in the whole process have been affected by the change in the calibration.
@@ -286,42 +288,10 @@ Provenance distance provides a means of determining how reliable versioning resu
 Measuring a change's impact with accuracy comparable to a change log requires a more detailed understanding and description than provenance can provide  \cite{Bose:2005:LRS:1057977.1057978}.
 Sufficiently precise versioning measurements cannot be provided by provenance distance, but it could indicate the confidence of versioning results, which is out of scope for this project.
 
-\section{Mapping}
+\section{Extra Citations}
 
-Data managers primarily use one of two methods to store data versions: snapshots and deltas.
-The snapshot method makes periodic copies of the data's state at a point in time.
-While storing and retrieving these snapshots can be very quick, they require significant amounts of space to maintain.
-The software manager GIT employs this method and Figure \ref{GITFile} demonstrates an example storage space for multiple versions \cite{Chacon:2009:PG:1618548}.
-The squares with dotted outlines indicate unmodified files, which the system stores as pointers instead of full objects.
-In addition, GIT compresses and separately stores very old versions which are unlikely to be accessed.
-This versioning style may not be ideal for larger or often modified data sets as the size requirements will quickly grow unmanageable.
-However, for many library or catalog environments, they cannot predict the target volume a user desires and must prioritize availability \cite{Payette2002} \cite{Barkstrom_digitallibrary}.
-Some methods like the inverted file index have been developed to balance space and retrieval performance on web documents, especially since wikis and news feeds have grown in deployment \cite{Berberich:2007:TMT:1277741.1277831}.
-Searches over these text media may require execution on older archived web pages.
-
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.50]{figures/GITFiles.png}
-	\caption[GIT stores changes in the repository as snapshots of individual files.]{GIT stores changes in the repository as snapshots of individual files. Figure 1.5 from \cite{Chacon:2009:PG:1618548}}
-	\label{GITFile}
-\end{figure}
-
-The delta method entails calculating and storing only the differences between one version and the next.
-Back delta variations store a snapshot of the most recent version and compute deltas towards older releases.
-The forward delta variation stores the oldest data's snapshot and has deltas going forwards.
-This method uses the minimum amount of space but trades it in for computation time to recreate any given version.
-Particularly long running versioning systems occasionally save an intermittent snapshot to cut down on this processing time.
-The setup proves ideal for data sets which prioritize service to their most recent versions \cite{Stuckenholz:2005:CEV:1039174.1039197}.
-Because change documentation captures information between version objects, they most resemble differences calculated by the delta method.
-
-Properly detecting changes in a system's files allows file managers to correctly group them into versions as seen in research conducted by the Atmospheric Radiation Measurements (ARM) group \cite{6906868}.
-Difference or diff applications must first properly map data between objects and align them for comparison.
-Many text-based data sets rely on well-established algorithms to perform this alignment  \cite{Chien:2000:VMX:646544.696357} \cite{Hartung201315}.
-Sequential scientific data largely avoids this problem since developers already know the files or objects they replaced.
-However, users do not have this advantage and system managers are starting to recognize the difference in versioning usage patterns between users and producers \cite{Branco2008}.
 Mayernik, et al., probably gives the best description saying, "Prospective records document a process that must be followed to generate a given class of products whereas retrospective records document a process that has already been executed" \cite{MatthewS.Mayernik201312-039}.
-While producers take a retrospective approach to version usage, consumers of new versions must take a prospective view, adapting to new changes.
-This indicates that the orientation of versioning information reflects the imagined customer of that data.
+
 
 Current linked data methods lack the fidelity to capture change information.
 PROV and OPM express version changes as a single link, but capturing individual changes provides better detail, allowing more accurate distance measures.
