@@ -1218,7 +1218,7 @@ be in line with traditional close source development.},
   title        = {AddAction},
   organization = {Schema.org},
   note         = {Accessed: January 19, 2017},
-  url          = {http://schema.org/AAction},
+  url          = {http://schema.org/AddAction},
   groups       = {Provenance},
 }
 
@@ -1228,6 +1228,14 @@ be in line with traditional close source development.},
   note         = {Accessed: January 19, 2017},
   url          = {http://schema.org/ReplaceAction},
   groups       = {Provenance},
+}
+
+@TechReport{frbr,
+  author      = {IFLA Study Group on the Functional Requirements for Bibliographic Records},
+  title       = {Functional Requirements for Bibliographic Records},
+  institution = {International Federation of Library Associations and Institutions},
+  year        = {2009},
+  doi         = {https://www.ifla.org/files/assets/cataloguing/frbr/frbr_2008.pdf},
 }
 
 @Comment{jabref-meta: databaseType:bibtex;}

@@ -7,19 +7,20 @@
 \chapter{INTRODUCTION}
 
 \section{Introduction}
-Anyone who has used an iPhone or owned a video game console understands the basics of versioning.
-Companies brand sequential devices to indicate improvements in performance or capabilities.
-This basic identification method has given rise to a plethora of versioning systems used widely across a landscape of software and data.
-They help scientific workflows avoid losing work by managing transitions and changes while in operation \cite{Casati1996}.
-They provide necessary documentation which informs the transition to new methods and procedures \cite{Wiil:2000:RDH:338407.338517}.
-They provide accountability for the value of a project's data set when considering an agency's continued funding \cite{Cavanaugh2002}.
-As Barkstrom writes in 2003,
+
 \begin{quotation}
 	If scientific data production were easy, instruments would
 	have stable calibrations and validation activities would discover no need for
 	corrections that vary with time. Unfortunately, validation invariably shows that
 	instrument calibrations drift and that algorithms need a better physical basis.
 \end{quotation} \cite{Barkstrom2003}.
+
+Anyone who has used an iPhone or owned a video game console understands the basics of versioning.
+Companies brand sequential devices to indicate improvements in performance or capabilities.
+This basic identification method has given rise to a plethora of versioning systems used widely across a landscape of software and data.
+They help scientific workflows avoid losing work by managing transitions and changes while in operation \cite{Casati1996}.
+They provide necessary documentation which informs the transition to new methods and procedures \cite{Wiil:2000:RDH:338407.338517}.
+They provide accountability for the value of a project's data set when considering an agency's continued funding \cite{Cavanaugh2002}.
 The natural evolution of these systems, however, have given rise to formal architecture operating on top of very informal concepts.
 In this dissertation, we identify gaps in versioning practices which result from tradition and develop a data model to more completely capture the interactions involved in versioning.
 
@@ -27,147 +28,159 @@ In this dissertation, we identify gaps in versioning practices which result from
 
 Using versions in the vernacular has become so pervasive that few documents formally define it.
 Barkstrom describes versions as \textbf{homogeneous groupings} used to control, ``production volatility induced by changes in algorithms and coefficients as result of validation and reprocessing," \cite{Barkstrom2003}.
-This definition's first implication is that such \textbf{groupings} indicate an expectation that versioning requires multiple objects.
-With only one object, all metadata would be homogeneous and \textbf{groupings} would become unnecessary.
-Whether in the same or different groups, the relationship between entries informs the \textbf{grouping} necessary to organize the data collection.
-Figure \ref{hierarchy} visually displays this concept with each file having a clearly defined \textbf{grouping} at each hierarchical level.
-Another implication is that version changes can be determined by studying the difference in provenance between two objects.
-Changes in algorithms and coefficients may induce enough volatility into the data that a new \textbf{grouping} becomes necessary.
-However, this relies heavily on knowing which provenance changes correspond with resulting volatility.
-A new version of a data set can result from modifications to data downstream propagated through a workflow without significant changes to the immediate algorithm or coefficients.
-In addition, a deeper investigation would become necessary to quantify the amount of volatility introduced by these changes, and how much is necessary to induce a change at each level of the hierarchy.
-Therefore, a version definition cannot rely on provenance alone.
+The \textbf{groupings} he mentions is a method of separating data objects such that they have similar scientific or technical properties.
+In order to determine when these properties have changed, he leverages the NASA workflow model shown in Figure \ref{NASALevels}.
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.35]{figures/NASALevels.png}
+	\caption[NASA organizes its data into three levels depending on the amount of aggregation and the distance the data is removed from the original sensor measurements.]{NASA organizes its data into three levels depending on the amount of aggregation and the distance the data is removed from the original sensor measurements. Figure 1 from \cite{Barkstrom2003}}
+	\label{NASALevels}
+\end{figure}
+The model describes the formal stages of processing to turn a raw remote sensing signal from satellite instruments into global aggregate summaries \cite{Barkstrom2003}.
+Understanding this model reveals that changes to either the algorithms or parameter files will force a change in the resulting data, creating a new version of the output data.
+Essentially, versions are a means to communicate how much data has diverged as a result of changes to an object's provenance.
 
 Another definition comes from Tagger in which versions are a, ``semantically meaningful snapshot of a design object," \cite{Tagger2005}.
-Unfortunately, he does not further clarify what he means by semantically meaningful.
-It is, however, important to note that these snapshots are not of any design object, but the same one.
-A similar context connects each snapshot, meaning that they are versions as a result of sharing the same subject and setting.
-More specifically, these designs perform the same function in their application.
+He, unfortunately, does not further clarify what he means by semantically meaningful.
+The design object unifies the versions as their primary subject, capturing the object's state over the course of its design.
 
-Combining these conclusions together, a clearer image emerges.
-A \textbf{version} is, at its core, a work, but it is not a singular work.
-\textbf{Versions} are members of a group which have common, but varying provenance.
-However, these members must also perform the same function as others in their group.
-This creates specific requirements as to when two objects can be considered \textbf{versions} of each other.
+The derivation, PROV Ontology's analog for a version and covered more in Section \ref{sec:prov}, is defined as, ``a transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a pre-existing entity," \cite{Lebo2013}.
+In this view, a \textbf{version} exists in comparison to another object.
 
-Notice that neither definition includes how to generate versions.
-The derivation, PROV Ontology's analog for a version, is defined as, ``a transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a pre-existing entity," \cite{Lebo2013}.
-In this view, a \textbf{version} exists because an activity generated it.
-However, looking more closely at the forces acting upon the \textbf{version}, they generate an object which becomes a derivation of another as a result of sharing the properties previously mentioned.
-The version identifier becomes applied using prior knowledge, not as a result of generation activities.
-That is, an activity determines whether an object is a version of another based on the state of that object.
-Therefore, \textbf{versioning} is the activity of identifying two objects connected by provenance and exposing the changes relating them, not of generating versions.
+The Functional Requirements for Bibliographical Records (FRBR) avoids the terms \textbf{edition} and \textbf{version} since ``those terms are neither clearly defined nor uniformly applied" \cite{frbr}.
+Instead, they use the terms: work, expression, and manifestation.
+A \textbf{work} refers to the abstract concept of a creative or artistic idea.
+\textbf{Expressions} are then different forms of that particular \textbf{work}, embodying the most similar term to versions.
+A \textbf{manifestation} is the physical embodiment of an \textbf{expression}.
+These three terms and their hierarchy establish a repeating theme throughout other versioning works.
+Combining these myriad of definitions together, a version is an \textbf{expression} of a \textbf{work} which exists in comparison to another object and communicates the extent to which it diverges from that object as a result of provenance changes.
 
-\section{Version Systems}
+\section{Version Systems} \label{sec:system}
 
-Many text-based data sets rely on well-established algorithms to perform this alignment  \cite{Chien:2000:VMX:646544.696357}.
-
-Clotho, a versioning application managing versions at the block level, coordinates constrained spaces using intermittent compact and un-compact methods when retrieving or storing old objects \cite{Flouris04clotho:transparent}.
-
-Collection into larger unified repositories will likely require a multi-tiered approach to synchronize the varied practices  \cite{Baker2009}.
-Baker notes that differences depend on the sociotechnical distance of a repository from the data's origin \cite{Baker2009}.
-Local stores closer to the collection site better understand data capture conditions, but must also adapt to changing environments.
-
-Likewise, many version control tools include functions to display the versioning tree, but this is also an ease-of-use function \cite{Dijkstra1994}.
-
-\cite{Stuckenholz:2005:CEV:1039174.1039197} - Component Evolution and Versioning State of the Art
-The setup proves ideal for data sets which prioritize service to their most recent versions \cite{Stuckenholz:2005:CEV:1039174.1039197}.
-
-Some methods like the inverted file index have been developed to balance space and retrieval performance on web documents, especially since wikis and news feeds have grown in deployment \cite{Berberich:2007:TMT:1277741.1277831}.
-
-This proves increasingly important as the ability to propagate relevant data change across autonomous systems then assures valid quality in interactions between domains \cite{Systems02champagne:data}.
+Versioning systems take many different forms from Clotho, an application conducting versioning at the block level, to Champagne, a framework to propagate change data across multiple information systems \cite{Flouris04clotho:transparent} \cite{Systems02champagne:data}.
+Each approach has a unique set of challenges to overcome.
+Closer to the data collection, version systems must be flexible and responsive to adapt to changing environments, but as the socio-technical distance of a repository increases away from the collection site, more formal methods are required to unify repositories \cite{Baker2009}.
+Different approaches are also necessary to account for the needs of different domains.
+Versioning an XML text-file will need to account for serial file input and output as well as structured markup \cite{Chien:2000:VMX:646544.696357}.
+Many applications have adopted a tree-like structure which is further propagated by software versioning managers (SVM) \cite{Stuckenholz:2005:CEV:1039174.1039197}.
+The advantage being well established graph theory methods can be applied to complex objects relationships in complex environemtns \cite{Dijkstra1994}.
+The growing population of web documents, however, presents a new smörgåsbord of complicated data which will need scalable solutions \cite{Berberich:2007:TMT:1277741.1277831}.
 
 \subsection{Library Sciences}
 
-Data on a hurricane sometimes occupy only a small portion of a data set, and the files may not even be adjacent in the collection \cite{Barkstrom_digitallibrary}.
-
+While many of the modern systems requiring versioning managers store digital products, libraries have been tackling similar issues for a much longer time.
 Libraries curate multiple editions of the same work, sometimes with significant revisions \cite{Wiil:2000:RDH:338407.338517}.
+In many ways, versioned objects resemble multi-edition books or documents.
+Digital librarians have faced many challenges when searching for a persistent identifier due to evolving web technologies.
+Early citations referred to on-line documents using stagnant Uniform Resource Locators (URL), but this frequently lead to a condition known as link rot where moving the document would invalidate the URL \cite{Lyons2005}.
+Locators required a system to manage changes of old identifiers to new locations when people attempted to utilize references from print.
+The need eventually led to the development of Persistent URLs (PURL), which also suffered from link rot, and this eventually led to the distributed Digital Object Identifier (DOI) system used to track documents today \cite{Duerr2011}.
+The PURL used a centralized system that would translate dead links and redirect to a document's latest location.
+The system would still need to be manually updated, meaning links would rot if a document was lost or overlooked.
+DOIs rely on a network of managing agencies to collect and host submitted documents.
+In the specialized Handle system, the network has member agencies internally assign an unique name and concatenate it to the end of their host name.
+In Figure \ref{table:Duerr}, DOIs represent the most suitable identifier used for citation in scholarly literature \cite{Duerr2011}.
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.30]{figures/DigitalIdentifierTable.png}
+	\caption[Table of predominant identifiers used in science.]{Table of predominant identifiers used in science.  From Duerr, et al. \cite{Duerr2011}}
+	\label{table:Duerr}
+\end{figure}
+The DOI network provides a robust system to track documents, but when tracking data, it faces difficulty following the rate of change with more volatile data sets.
+Under current definitions, distribution organizations assign different DOIs to separate editions of a document.
+Documents often do not need new identifiers since they change very rarely as a result of the publication process.
+Data set production and distribution cycles move more quickly and react more sensitively to small content changes, including when data collection continues on after initial publication.
+Data set behavior becomes entirely too slow as data providers begin allowing users to dynamically generate data products from existing data according to their needs \cite{Barkstrom2003a}.
+Some agencies have begun assigning versioned DOIs, but this has not become common practice.
+Other groups do not assign a new DOI, but reference the latest release of the document or object \cite{Ands2017}.
 
-Data managers often impose a sequential ordering in conjunction with logical groupings to form an object's historical lineage \cite{barkstrom2014earth}.
-
-However, for many library or catalog environments, they cannot predict the target volume a user desires and must prioritize availability \cite{Payette2002} \cite{Barkstrom_digitallibrary}.
-
-However, different data sets may utilize each of the three core operations at different rates \cite{rohtua}.
+As digital methods have evolved, so have digital libraries.
+The documents that digital libraries store are no longer constrained by physical organization \cite{Barkstrom_digitallibrary}.
+A book can physically be randomly stored for efficient retrieval, but the digital copy may reside in multiple locations depending on dynamic filters or search queries.
+The Mellon Fedora Project developed a standardized edition control structure to unify disparate digital library stores \cite{Payette2002}.
+The regularizing edition tracking methods significantly improved the response time and relevancy of the library services.
 
 \subsection{Software Versioning}
 
-Software versioning tools like RCS commonly feature branching and merging functions to create a versioning line separate from the stable master branch \cite{tichy1985rcs}.
-
-The software manager GIT employs this method and Figure \ref{GITFile} demonstrates an example storage space for multiple versions \cite{Chacon:2009:PG:1618548}.
-
+Software versions form the most visible displays of versioning often experienced by researchers.
+Version managers provide tools to archive and restore code through the development lifecycle.
+The Revision Control System (RCS), developed in originally in 1985, documents one of the earliest uses of the dot-decimal identifier \cite{tichy1985rcs}.
+This identifier uses a sequence of whole numbers concatenated by decimals.
+The system possessed many features of modern SVMs such as branches, a separate copy of the code for developing changes safely, which were identified by extending the dot-decimal identifier as seen in Figure \ref{RCSTree}.
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.75]{figures/RCSCommitTree.png}
+	\caption[Commit history of an object in RCS with changes in the main line stored as back deltas and side branches stored as forward deltas.]{Commit history of an object in RCS with changes in the main line stored as back deltas and side branches stored as forward deltas.  Figure 5 in \cite{tichy1985rcs}}
+	\label{RCSTree}
+\end{figure}
+Not long after, the Concurrent Versions System (CVS) gained popularity with methods allowing multiple users to concurrently develop code to a central repository \cite{cederqvist2002version}.
+The most popular modern SVM is GIT which also allows concurrent development but enables distributed repositories \cite{Chacon:2009:PG:1618548}.
+Each developer contributing to a project is considered by the system to possess the master copy of that project.
+The users collaborate by requesting and pulling other developer's master copies into their project.
+In previous SVMs, only the differences between software files were stored, but GIT stores the entirety of each file version.
+Figure \ref{GITFile} demonstrates an example of how GIT employs storage space for multiple versions \cite{Chacon:2009:PG:1618548}.
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.50]{figures/GITFiles.png}
 	\caption[GIT stores changes in the repository as snapshots of individual files.]{GIT stores changes in the repository as snapshots of individual files. Figure 1.5 from \cite{Chacon:2009:PG:1618548}}
 	\label{GITFile}
 \end{figure}
-
-Using identifiers to convey extended versioning information becomes more difficult with the adoption of distributed version managers like GIT \cite{cederqvist2002version}.
+Only a pointer is stored in subsequent versions for unchanged files, saving space.
+Fischer, et al., demonstrate the importance of software version systems by integrating the manager with a bug tracking system to indicate the bugs a version release addresses \cite{Fischer2003}.
 
 \subsection{Database Versioning}
 
-As data sets continue to grow in size, it may become impractical to look towards data as the driving source for identifiers, as Proell and Rauber suggest that database queries may provide a more scalable means of citing data sets \cite{proellBigData}.
-
-This gave rise to the first temporal databases where schemas included time and dated transactions modifying the schema \cite{roddick1996model}.
-
-Fischer, et al., demonstrate the importance of having a regular standardized version identification system, as it provides a mechanism to track errors being addressed \cite{Fischer2003}.
-
-Klahold, et al., introduced using abstract versioning environments to separate the temporal features and organize them into related groupings \cite{Klahold:1986:GMV:645913.671314}.
-
-As publications more often include citations to data, researchers adjust to enormous modern databases with new methods changing queries rather than transforming schemas \cite{Proell2013} \cite{DBLP:conf/data/2013}.
-
-However, massive centralized data stores have become more prevalent as data distribution methods advance  \cite{Vassiliadis1999}.
+The need for data versioning methods grew alongside the growing popularity and power of relational databases.
+Klahold, et al., introduced using abstract versioning environments in 1986 to separate the temporal features and organize the data into related groupings \cite{Klahold:1986:GMV:645913.671314}.
+Research in the versioning area focused primarily on the database schema.
+The results were temporal databases where schemas included time and dated transactions modifying the schema \cite{roddick1996model}.
+Temporal databases allowed old queries to be executed on updated schemas, improving the reproducibility of results.
+Capturing periodic snapshots or copies becomes unfeasible with increasingly large centralized database systems.
+Data collection continues to migrate towards massive data warehouses which store and serve a wide variety of data \cite{Vassiliadis1999}.
+Proell and Rauber have investigated tracking data queries instead of the database as a more scalable solution to reproduce data \cite{proellBigData}.
+The queries can then be used as publication citations to provide scalable, reproducible references to older data \cite{Proell2013} \cite{DBLP:conf/data/2013}.
 
 \subsection{Grid Versioning}
 
-However, users do not have this advantage and system managers are starting to recognize the difference in versioning usage patterns between users and producers \cite{Branco2008}.
-
-This seems to be a recurring cycle of attention with rapidly developing technologies such as the grid or parallel computing \cite{Kovse2003VGridAVS}.
-
-The CERN grid for the Compact Muon Solenoid experiment carefully developed necessary processes which allow references by multiple users to the same file without copying that file across the grid \cite{Holtman:687353}.
-
-This behavior becomes entirely too slow as data providers begin allowing users to dynamically generate data products from existing data according to their needs \cite{Barkstrom2003a}.
+The grid provides a sensitive environment for versioning where there are many users and data movement across the grid should be avoided.
+The CERN grid for the Compact Muon Solenoid experiment carefully developed processes which allow references by multiple users to the same file without copying that file across the grid \cite{Holtman:687353}.
+Versions lock and release to permit parallel processing while still archiving additions and modifications to the data.
+Grid versioning applications also begins to highlight the difference in versioning usage patterns between users and producers \cite{Branco2008}.
+Deeper exploration into the ATLAS system documentation did not reveal specific use cases explaining the differences.
+The grid also provides users with the ability to begin dynamically defining data sets to their needs by aggregating results from across the network \cite{Barkstrom2003a}.
+The process would create new data sets without prior existing change documentation and fueled a demand for responsive frameworks which could track the discordant data collection conditions assimilated by the system \cite{Kovse2003VGridAVS}.
 
 \subsection{Ontology Versioning}
 
-\cite{HauptmannEtAl:LDQ2015} \cite{LDQ2015} - Scalable Semantic Version Control for Linked Data Management
+Ontologies play a major role in defining domains, especially in the biological and medical fields where terms and definitions can change rapidly across highly variable organisms \cite{Ochs:2015:SVS:2826733.2826866}.
+As a result, the ontologies require consistent methods to capture and model changes to evolving terms.
+Tools aid in the process by detecting differences between ontologies \cite{Hartung201315}.
+Klein and Fensel have found that when the changes are discovered, both forward and backward compatibility must be established for clear ontology versioning \cite{Klein01ontologyversioning}.
+Not only must the path from an old term to a new one be clear, but a method for new terms to interact with old data must also exist.
+They additionally identified three levels at which ontologies can differ: the domain, the conceptualization, and the specification.
+Hauptmann et al., define a method to version ontologies natively within a triple store using linked data \cite{HauptmannEtAl:LDQ2015} \cite{LDQ2015}.
+The method heavily relies on the context of stored data.
 
-Klein and Fensel determined versioning systems needed to capture compatibility as a major characteristic while performing a study of different ontology versioning methods \cite{Klein01ontologyversioning}.
-
-Take, for example, some biological ontologies, which must update terms and definitions to better capture the field \cite{Ochs:2015:SVS:2826733.2826866}.
-
-Many text-based data sets rely on well-established algorithms to perform this alignment  \cite{Hartung201315}.
 
 \section{Version Models} \label{sec:models}
 
-Properly detecting changes in a system's files allows file managers to correctly group them into versions as seen in research conducted by the Atmospheric Radiation Measurements (ARM) group \cite{6906868}.
+Version models provide a visual a theoretical aid in understanding where a data object lies in relation to the rest of a work.
+The Atmospheric Radiation Measurements (ARM) group used a model dividing the data into mathematical sets which versioning operations acted upon\cite{6906868}.
+Adding files already in the set created a new set which inherited all non-intersecting files and included all the new ones.
+The model provided a means to organize and automate the versioning of ARM's daily expanding data sets.
 
-Initial research in version modeling occurred with databases, studying ways to track and migrate schema changes.
-Capturing periodic snapshots or copies becomes unfeasible with increasingly large centralized database systems.
-This provides the database a method to transactionally rollback the environment to recreate a search.
-As databases grew more complex, the intricate relationships between objects made rollbacks more difficult.
-This results from the need to manage the time instances of realization, storage, and validity.
-The datum becomes realized at collection, then stored upon entry into the database, and finally valid until the present or new data replaces it.
-This method, however, relies on an abstract model capturing data changes to inform query modifications.
-
-Data models allow the capture of complicated relationships between data objects within a system without needing to physically look over sizable data sets.
-However, as discussed previously, versioning seeks to expose relationships between objects which may not describe how to construct either one.
 The Health Care and Life Sciences (HCLS) Interest Group of the World Wide Web Consortium (W3C) recently released a model which may provide a solution when used in conjunction with other identifiers \cite{Dummontier2016}.
 Their model, shown in Figure \ref{HCLSModel}, separates the concept of a data set into three groupings.
-The highest level summarizes the data as an abstract work, perhaps better described as a topic or title.
-This data topic can have multiple versions as it changes over time.
-The version can then be instantiated into various distributions with different formats.
-Compare this to the diagram in Figure \ref{hierarchy} which features more tiers.
-In this case, the basis for diverging groups is changes in identifier and physical formating of that version.
-This model also demonstrates how it can better communicate scientific similarity than an identifier.
-The model logically links together, under a single version, representations of that data adjusting for physical perturbations.
-
 \begin{figure}%[b]
 	\centering
 	\includegraphics[scale=0.35]{figures/HCLSModel.png}
 	\caption[Data model from the Health Care and Life Sciences Interest Group separating data into three levels: works, versions, and instances.]{Data model from the Health Care and Life Sciences Interest Group separating data into three levels: works, versions, and instances.  From Dummontier, et al. \cite{Dummontier2016}}
 	\label{HCLSModel}
 \end{figure}
+The highest level summarizes the data as an abstract work, perhaps better described as a topic or title.
+The data topic can have multiple versions over time.
+The version can then be instantiated into various distributions with different physical formats.
+The model---relating summary, version, and distribution---also strongly resembles the formation of FRBR's work, expression, and manifestation model.
 
 \begin{figure}
 	\centering
@@ -176,46 +189,16 @@ The model logically links together, under a single version, representations of t
 	\label{hierarchy}
 \end{figure}
 
-The HCLS data model captures version information using the Provenance, Authoring, and Versioning (PAV) ontology \cite{Ciccarese2013}.
-As explained in their document, PAV addresses versioning as a result of disagreements with other ontologies' definitions such as PROV.
-They enumerate specific situations relating to health care data requiring broader conceptual coverage.
-As a result, their model provides basic properties to identify a previous version and its corresponding identifier.
-They do not provide methods to identify motivations or discuss the role attribute differences effect changing versions.
-The existence and widespread adoption of change logs demonstrates the importance of this information in understanding modifications between versions.
-However, PAV does adopt a state-based perspective regarding versioning since it only seeks to identify a previous version without attributing a responsible activity.
-
-The PROV data model is a W3C recommendation which defines linked data properties to capture data provenance \cite{Gil2013}.
-PROV has played a significant contribution in maintaining the quality and reproducibility of data sets and reporting in the National Climate Assessment (NCA) \cite{Ma2014191}.
-This implication signifies that there is an increased likelihood of adoption through other scientific fields as a result of this reporting.
-The Global Change Information System, which houses the data used to generate the NCA, uses PROV to meticulously track the generation of its artifacts and results as they are used in the report \cite{Tilmes2012}.
-This means that not only does the data have a traceable lineage to verify quality, but the content of documents can have the same verifiability \cite{Ma2014}.
-While a subtree of terms deal with versions, the ontology takes an activity based view of data.
-This makes sense since it seeks to explain what activities led to the creation of an object.
-This focus on activities results in a very shallow definition of methods to capture entity-to-entity relationships within the model.
-
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.35]{figures/NASALevels.png}
-	\caption[NASA organizes its data into three levels depending on the amount of aggregation and the distance the data is removed from the original sensor measurements.]{NASA organizes its data into three levels depending on the amount of aggregation and the distance the data is removed from the original sensor measurements. Figure 1 from \cite{Barkstrom2003}}
-	\label{NASALevels}
-\end{figure}
-
-In his discourse on version management, Barkstrom introduces NASA's workflow model as seen in Figure \ref{NASALevels}.
-It describes the formal stages of processing to turn a raw remote sensing signal from satellite instruments into global aggregate summaries \cite{Barkstrom2003}.
-Understanding this model reveals that changes to either the algorithms or parameter files will force a change in the resulting data.
-This explains the new result's provenance, but it would not capture the differences between these objects.
-The key to understanding version modeling lies in recognizing provenance and versioning are intimately entwined, but seek to explain different properties about data objects.
-
-There are two types of compatibility, `forwards', which explains how to modify old data to work with new content, and `backwards', which allows new data to interact with old data.
-Knowing one type of compatibility does not always entail the means of deriving the other.
-Having full forwards and backwards compatibility allows interoperability between a variety of applications which may use different versions of the same ontology.
-However, it often depends on the application as to whether full compatibility is necessary.
-Once concern which is very rarely discussed is the compatibility of files and objects which do not change at all.
-They mention very little on how to migrate terms which do not change, but these can contribute to a majority of copied content and pose significant scaling issues.
+From his definition of versions, Barkstrom also outlines an hierarchical version model as seen in Figure \ref{hierarchy}.
+The model features additional intermediary levels than the HCLS's model, following NASA's data curation practices \cite{barkstrom2014earth}.
+Each edge in the tree signifies a difference with other objects at the same depth, but the model does not provide a mechanism to explain the difference.
 
 \section{Provenance Ontologies}
 
-The Proof Markup Language, one of the first semantic models to capture provenance information, expressed these relationships using inference reasoning through traceable graphs \cite{daSilva2006381}.
+Provenance ontologies form a major section of linked data approaches to data versioning.
+The coverage stems from the close relation between provenance and differentiating versions.
+The Proof Markup Language, one of the first semantic models to capture provenance information, expressed lineage relationships using inference reasoning through traceable graphs \cite{daSilva2006381}.
+The technique provides a powerful way to express and imply sequences of relationships between different versions and characterize the manner of their relation.
 
 \subsection{Open Provenance Model}
 
@@ -223,25 +206,30 @@ A number of linked data models include versioning concepts such as the Open Prov
 Driven by the uncertain needs and sometimes conflicting conventions of different scientific domains, the model sought to find a method to standardize the way in which provenance data is captured while also keeping the specification open to accommodate current data sets through the change.
 In an experimental case, the model has been applied to sensor networks, automating and unifying their provenance capture even as they grow \cite{5478496}.
 To aid OPM's adoption, the framework Karma2 integrates provenance capture into scientific workflows and provides a more abstract view of their data collection activities \cite{simmhan2010karma2}.
-The property WasDerivedFrom constitutes a core concept in the model and marks the reliance of one object's existence on another object.
+The property \textit{opm:WasDerivedFrom} constitutes a core concept in the model and marks the reliance of one object's existence on another object.
 For a large part, this encompasses the engagement which provenance models view versions, without further need to explore the derivation's content.
 
-\subsection{PROV-O}
+\subsection{PROV-O}\label{sec:prov}
 
 PROV, a World Wide Web Consortium (W3C) Recommendation, delineates a method to express data provenance in a more compact form as seen in Figure \ref{PROVO} \cite{Gil2013a} \cite{Groth2013}.
-The recommendation uses a conceptual model relating activities, agents, and entities to describe data production lineage \cite{Moreau2013c} \cite{Nies2013} \cite{Nies2013a}.
-Intended as a high level abstraction, it takes an activity-oriented approach to provenance modeling.
-Every data entity results from the actions of some activity.
-The conceptual model's expression occurs through the PROV Ontology (PROV-O), which can be conveyed through various resource description languages \cite{Hua2013} \cite{Klyne2013}.
-The ontology is further formalized into a functional notation for easier human consumption \cite{Moreau2013b} \cite{Cheney2013a}.
-One particular strength that has contributed to the adoption of PROV is its ability to link into other ontologies, making it easier for existing semantically enriched data sets to adopt PROV \cite{Miles2013} \cite{Moreau2013}.
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.5]{figures/ProvO.png}
 	\caption[Diagram of the PROV Ontology.]{Diagram of the PROV Ontology.  Figure 1 from \cite{Lebo2013}}
 	\label{PROVO}
 \end{figure}
-Komadu, a framework developed to alleviate workflow integration, improves upon its predecessor, Karma, by no longer utilizing global context identifiers that were not necessarily shared throughout the workflow. \cite{Suriarachchi_2015}.
+The recommendation uses a conceptual model relating activities, agents, and entities to describe data production lineage \cite{Moreau2013c} \cite{Nies2013} \cite{Nies2013a}.
+Intended as a high level abstraction, it takes an activity-oriented approach to provenance modeling.
+Every data entity results from the actions of some activity \cite{Gil2013}.
+The conceptual model's expression occurs through the PROV Ontology (PROV-O), which can be conveyed through various resource description languages \cite{Hua2013} \cite{Klyne2013}.
+The ontology is further formalized into a functional notation for easier human consumption \cite{Moreau2013b} \cite{Cheney2013a}.
+One particular strength that has contributed to the adoption of PROV is its ability to link into other ontologies, making it easier for existing semantically enriched data sets to adopt PROV \cite{Miles2013} \cite{Moreau2013}.
+
+PROV has provided a major contribution in maintaining the quality and reproducibility of data sets and reporting in the National Climate Assessment (NCA) \cite{Ma2014191}.
+The contribution signifies that there is an increased likelihood of adoption through other scientific fields as a result of this reporting.
+The Global Change Information System, which houses the data used to generate the NCA, uses PROV to meticulously track the generation of its artifacts and results as they are used in assessment report \cite{Tilmes2012}.
+The usage means that not only does the data have a traceable lineage to verify quality, but the content of documents can have the same verifiability \cite{Ma2014}.
+Komadu, a framework developed to alleviate workflow integration, utilizes PROV to improve upon its predecessor, Karma, by no longer utilizing global context identifiers that were not necessarily shared throughout the workflow. \cite{Suriarachchi_2015}.
 
 The PROV Ontology provides three different concepts that begin to encapsulate the provenance relationship between data versions.
 It defines a \textit{prov:Generation} as "the completion of production of a new entity by an activity," \cite{Lebo2013}.
@@ -279,12 +267,9 @@ The concept aligns well with other versioning systems, although deletion may be 
 
 Large data collection endeavors necessitate the development and deployment of versioning systems to manage change propagating through their data.
 Advancing beyond identifier comparisons and delving into capturing substantive change can significantly improve the ability to standardize version communications and transition.
-In chapter \ref{ch:prevwork}, we explore existing methods of codifying versions and change.
-In chapter \ref{ch:model}, we define a model to provide a foundation in regularizing the versioning process and communicating that in a machine-computable manner using linked data.
-In chapter \ref{ch:implement}, we implement the model and compare two methods in micro-data with JSON-LD expected to provide better performance.
-These relations cannot be communicated by current provenance models' semantics.
-Furthermore, in chapter \ref{ch:mbvl}, we show the model provides a quantitative basis for determining meaningful version identifiers following a numerical system which has previously only been performed using qualitative methods.
-Through sub-classing concepts within this versioning model, versions can provide detailed comparisons to support experimental designs and decisions.
+The work in the following chapters will contribute to expanding change capture by defining a more expressive linked data versioning model.
+The model will allow current versioning documentation to become machine-consumable.
+A better method will be developed to provide a quantitative basis for the assignment of version identifiers.
 
 
 %%% Local Variables:
