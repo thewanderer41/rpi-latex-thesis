@@ -4,7 +4,7 @@
 %                                                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{METHODOLOGY}\label{ch:model}
+\chapter{MODEL SPECIFICATION}\label{ch:model}
 
 \section{Introduction}
 
@@ -12,6 +12,113 @@ A versioning data model needs to address a variety of needs not met by provenanc
 The model must contain a mechanism to convey how changes to parts of an object contribute to that object's transition into a new version.
 The fundamental operations---\textbf{add}, \textbf{invalidate}, and \textbf{modify}---are used by the model to capture change in a more detailed manner.
 These details provide a mechanism to measure change between versions with better clarity than current methods.
+
+\section{Initial Approaches}
+
+\begin{figure}
+	\centering
+	\vspace{0.0in} % normally the command here would be \includegraphics
+	%	\includegraphics{figures/Addition.png}
+	\begin{tikzpicture}[every node/.style={draw, rectangle}]
+	\begin{scope}[node distance=10mm and 30mm]
+	\node (1) [scale=1.25] at (0,0) {Version 1};
+	\node (a) [below=of 1, scale=1.25] {Attribute};
+	\node (p1) [below=of a, scale=1.25] {Pre-Value};
+	\node (p2) [below right=of a, scale=1.25] {Post-Value};
+	\node (n) [above=of p2, scale=1.25] {New};
+	\node (o) [right=of n, scale=1.25] {Old};
+	\node (2) [above =of o, scale=1.25] {Version 2};
+	
+	\draw [line width=2pt, ->] (1) -- (2);
+	\draw [line width=2pt, ->] (2) -- (n);
+	\draw [line width=2pt, ->] (2) -- (o);
+	\draw [line width=2pt, ->] (1) -- (a);
+	\draw [line width=2pt, ->] (2) -- (a);
+	\draw [line width=2pt, ->] (a) -- (p1);
+	\draw [line width=2pt, ->] (a) -- (p2);
+	\end{scope}
+	\end{tikzpicture}
+	\caption{Model of the relationships between Versions 1 and 2 when modifying Attribute 1 from Version 1 as a result of Change M, resulting in Attribute 2 from Version 2}
+	\label{DiscardedFig}  % the \label command comes AFTER the caption
+\end{figure}
+
+\begin{figure}
+	\centering
+	\vspace{0.0in} % normally the command here would be \includegraphics
+	%	\includegraphics{figures/Addition.png}
+	\begin{tikzpicture}[every node/.style={draw, rectangle}]
+	\begin{scope}[node distance=10mm and 20mm]
+	\node (l) [scale=1.25] at (1,0) {Log};
+	\node (n) [above right=of l, scale=1.25] {New};
+	\node (o) [below right=of l, scale=1.25] {Old};	
+	\node (a) [right=of l, scale=1.25] {Attribute};
+	\node (c) [right=of a, scale=1.25] {Change};
+	\node (t) [right=of c, scale=1.25] {Type};
+	\node (p1) [above right=of c, scale=1.25] {Pre-Value};
+	\node (p2) [below right=of c, scale=1.25] {Post-Value};
+	
+	\draw [line width=2pt,->] (l) -- (n);
+	\draw [line width=2pt,->] (l) -- (o);
+	\draw [line width=2pt,->] (l) -- (a);
+	\draw [line width=2pt,->] (a) -- (c);
+	\draw [line width=2pt, ->] (c) -- (t);
+	\draw [line width=2pt, ->] (c) -- (p1);
+	\draw [line width=2pt, ->] (c) -- (p2);
+	\end{scope}
+	\end{tikzpicture}
+	\caption{Model of the relationships between Versions 1 and 2 when modifying Attribute 1 from Version 1 as a result of Change M, resulting in Attribute 2 from Version 2}
+	\label{DiscardedFig2}  % the \label command comes AFTER the caption
+\end{figure}
+
+\begin{figure}
+	\centering
+	\vspace{0.0in} % normally the command here would be \includegraphics
+	%	\includegraphics{figures/Addition.png}
+	\begin{tikzpicture}[every node/.style={draw, rectangle}]
+	\begin{scope}[node distance=10mm and 30mm]
+	\node (l) [scale=1.25] at (0,0) {Log};
+	\node (1) [left=of l, scale=1.25] {Version 1};
+	\node (2) [right=of l, scale=1.25] {Version 2};
+	\node (n) [below=of 1, scale=1.25] {New};
+	\node (o) [below=of 2, scale=1.25] {Old};	
+	\node (m) [below=of l, scale=1.25] {Modified};
+	\node (a) [below=of m, scale=1.25] {Attribute};
+	
+	\draw [line width=2pt,->] (1) -- (l);
+	\draw [line width=2pt,->] (l) -- (2);
+	\draw [line width=2pt,->] (l) -- (m);
+	\draw [line width=2pt,->] (l) -- (n);
+	\draw [line width=2pt, ->] (l) -- (o);
+	\draw [line width=2pt, ->] (m) -- (a);
+	\end{scope}
+	\end{tikzpicture}
+	\caption{Model of the relationships between Versions 1 and 2 when modifying Attribute 1 from Version 1 as a result of Change M, resulting in Attribute 2 from Version 2}
+	\label{DiscardedFig3}  % the \label command comes AFTER the caption
+\end{figure}
+
+\begin{figure}
+	\centering
+	\vspace{0.0in} % normally the command here would be \includegraphics
+	%	\includegraphics{figures/Addition.png}
+	\begin{tikzpicture}[every node/.style={draw, rectangle}]
+	\begin{scope}[node distance=20mm and 20mm]
+	\node (c) [scale=1.25] at (1,0) {Change};
+	\node (1) [above left=of c, scale=1.25] {Version 1};
+	\node (2) [above right=of c, scale=1.25] {Version 2};
+	\node (a1) [below =of 1, scale=1.25] {Attribute 1};
+	\node (a2) [below =of 2, scale=1.25] {Attribute 2};
+	
+	\draw [line width=2pt,->] (a1) -- (c);
+	\draw [line width=2pt,->] (a2) -- (c);
+	\draw [line width=2pt, ->] (1) -- (a1);
+	\draw [line width=2pt, ->] (2) -- (a2);
+	\draw [line width=2pt,->] (c) -- (1);
+	\draw [line width=2pt,->] (c) -- (2);
+	\end{scope}
+	\end{tikzpicture}
+	\caption{Model of the relationships between Versions 1 and 2 when modifying Attribute 1 from Version 1 as a result of Change M, resulting in Attribute 2 from Version 2}
+	\label{DiscardedFig4}  % the \label command comes AFTER the caption
+\end{figure}
 
 \section{Model Objects}
 

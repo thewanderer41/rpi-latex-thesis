@@ -113,30 +113,7 @@ As a result, relying on identifiers to convey and contain versioning information
 	\label{fig:federated}
 \end{figure}
 
-\section{Change Logs} \label{sec:changelog}
-
-Change logs, artifacts resulting from the versioning process, play a major role filling in gaps between versions.
-The logs document changes and explain, in human language, motivations behind the modifications \cite{uel1037}.
-Since identifiers denote that a change has occurred, the logs provide details on how the changes modify an object's attributes.
-They demonstrate a need and utility in understanding the deeper content of change beyond knowing that an object did transform.
-While some data sets will provide a change log, software projects have normalized their use in version release documentation.
-As a result, these projects provide a basis for understanding the value these logs can supply data sets with multiple versions.
-The change log's common drawback is the limitation to only human readable text.
-Wider adoption among data sets may be possible by making these texts machine computable.
-
-Open source projects use change logs more consistently than data projects, which usually sport only use documentation.
-Logs play an important communication role in these projects since developers can contribute without having been part of the original development team.
-The change logs allow developers to link bugs and errors with their corrections in new versions of the code \cite{Chen:2004:OCL:990374.990391}.
-The links gives insight into motivations behind particular design decisions.
-Logs linked with version releases also provide feedback to the user community that corrections have been addressed, in addition to ensuring that improvements drive modifications to the code base.
-An identifier cannot communicate these qualities while remaining succinct.
-Some research has been done to determine the health of a development project based on the number and length of change logs released over time \cite{German03automatingthe}.
-Little work has been done to make change logs machine-computable, as many of these documents remain in human-readable text only.
-Research done involving change log content must manually link entries with computable meta-data such as the introduction of new features with the emergence of new bugs \cite{6132954}.
-While machines may still be significantly removed from the ability to comprehend the impact of changes made to a data set or software code, they are currently opaquely blocked from consuming any of the content within logs more than understanding they contain text.
-The transition between different versions of large data sets is then left largely up to the human user's ability to understand and process the modifications mentioned within the change log.
-
-\subsection{Structured Data}
+\section{Structured Data}
 
 The Resource Description Framework in Attributes (RDFa) framework encodes linked data vocabularies into HTML documents, and provides an opportunity to make change logs machine interpretable. \cite{Adida2015}.
 \begin{figure}
