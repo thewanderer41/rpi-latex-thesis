@@ -1,0 +1,355 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                 %
+%                            CHAPTER THREE                        %
+%                                                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+<<<<<<< HEAD
+\chapter{MODEL SPECIFICATION}\label{ch:model}
+
+\section{Introduction}
+
+A versioning data model needs to address a variety of needs not met by provenance models.
+The model must contain a mechanism to convey how changes to parts of an object contribute to that object's transition into a new version.
+The fundamental operations---\textbf{add}, \textbf{invalidate}, and \textbf{modify}---are used by the model to capture change in a more detailed manner.
+These details provide a mechanism to measure change between versions with better clarity than current methods.
+
+\section{Initial Approaches}
+
+\begin{figure}
+	\centering
+	\vspace{0.0in} % normally the command here would be \includegraphics
+	%	\includegraphics{figures/Addition.png}
+	\begin{tikzpicture}[every node/.style={draw, rectangle}]
+	\begin{scope}[node distance=10mm and 30mm]
+	\node (1) [scale=1.25] at (0,0) {Version 1};
+	\node (a) [below=of 1, scale=1.25] {Attribute};
+	\node (p1) [below=of a, scale=1.25] {Pre-Value};
+	\node (p2) [below right=of a, scale=1.25] {Post-Value};
+	\node (n) [above=of p2, scale=1.25] {New};
+	\node (o) [right=of n, scale=1.25] {Old};
+	\node (2) [above =of o, scale=1.25] {Version 2};
+	
+	\draw [line width=2pt, ->] (1) -- (2);
+	\draw [line width=2pt, ->] (2) -- (n);
+	\draw [line width=2pt, ->] (2) -- (o);
+	\draw [line width=2pt, ->] (1) -- (a);
+	\draw [line width=2pt, ->] (2) -- (a);
+	\draw [line width=2pt, ->] (a) -- (p1);
+	\draw [line width=2pt, ->] (a) -- (p2);
+	\end{scope}
+	\end{tikzpicture}
+	\caption{Model of the relationships between Versions 1 and 2 when modifying Attribute 1 from Version 1 as a result of Change M, resulting in Attribute 2 from Version 2}
+	\label{DiscardedFig}  % the \label command comes AFTER the caption
+\end{figure}
+
+\begin{figure}
+	\centering
+	\vspace{0.0in} % normally the command here would be \includegraphics
+	%	\includegraphics{figures/Addition.png}
+	\begin{tikzpicture}[every node/.style={draw, rectangle}]
+	\begin{scope}[node distance=10mm and 20mm]
+	\node (l) [scale=1.25] at (1,0) {Log};
+	\node (n) [above right=of l, scale=1.25] {New};
+	\node (o) [below right=of l, scale=1.25] {Old};	
+	\node (a) [right=of l, scale=1.25] {Attribute};
+	\node (c) [right=of a, scale=1.25] {Change};
+	\node (t) [right=of c, scale=1.25] {Type};
+	\node (p1) [above right=of c, scale=1.25] {Pre-Value};
+	\node (p2) [below right=of c, scale=1.25] {Post-Value};
+	
+	\draw [line width=2pt,->] (l) -- (n);
+	\draw [line width=2pt,->] (l) -- (o);
+	\draw [line width=2pt,->] (l) -- (a);
+	\draw [line width=2pt,->] (a) -- (c);
+	\draw [line width=2pt, ->] (c) -- (t);
+	\draw [line width=2pt, ->] (c) -- (p1);
+	\draw [line width=2pt, ->] (c) -- (p2);
+	\end{scope}
+	\end{tikzpicture}
+	\caption{Model of the relationships between Versions 1 and 2 when modifying Attribute 1 from Version 1 as a result of Change M, resulting in Attribute 2 from Version 2}
+	\label{DiscardedFig2}  % the \label command comes AFTER the caption
+\end{figure}
+
+\begin{figure}
+	\centering
+	\vspace{0.0in} % normally the command here would be \includegraphics
+	%	\includegraphics{figures/Addition.png}
+	\begin{tikzpicture}[every node/.style={draw, rectangle}]
+	\begin{scope}[node distance=10mm and 30mm]
+	\node (l) [scale=1.25] at (0,0) {Log};
+	\node (1) [left=of l, scale=1.25] {Version 1};
+	\node (2) [right=of l, scale=1.25] {Version 2};
+	\node (n) [below=of 1, scale=1.25] {New};
+	\node (o) [below=of 2, scale=1.25] {Old};	
+	\node (m) [below=of l, scale=1.25] {Modified};
+	\node (a) [below=of m, scale=1.25] {Attribute};
+	
+	\draw [line width=2pt,->] (1) -- (l);
+	\draw [line width=2pt,->] (l) -- (2);
+	\draw [line width=2pt,->] (l) -- (m);
+	\draw [line width=2pt,->] (l) -- (n);
+	\draw [line width=2pt, ->] (l) -- (o);
+	\draw [line width=2pt, ->] (m) -- (a);
+	\end{scope}
+	\end{tikzpicture}
+	\caption{Model of the relationships between Versions 1 and 2 when modifying Attribute 1 from Version 1 as a result of Change M, resulting in Attribute 2 from Version 2}
+	\label{DiscardedFig3}  % the \label command comes AFTER the caption
+\end{figure}
+
+\begin{figure}
+	\centering
+	\vspace{0.0in} % normally the command here would be \includegraphics
+	%	\includegraphics{figures/Addition.png}
+	\begin{tikzpicture}[every node/.style={draw, rectangle}]
+	\begin{scope}[node distance=20mm and 20mm]
+	\node (c) [scale=1.25] at (1,0) {Change};
+	\node (1) [above left=of c, scale=1.25] {Version 1};
+	\node (2) [above right=of c, scale=1.25] {Version 2};
+	\node (a1) [below =of 1, scale=1.25] {Attribute 1};
+	\node (a2) [below =of 2, scale=1.25] {Attribute 2};
+	
+	\draw [line width=2pt,->] (a1) -- (c);
+	\draw [line width=2pt,->] (a2) -- (c);
+	\draw [line width=2pt, ->] (1) -- (a1);
+	\draw [line width=2pt, ->] (2) -- (a2);
+	\draw [line width=2pt,->] (c) -- (1);
+	\draw [line width=2pt,->] (c) -- (2);
+	\end{scope}
+	\end{tikzpicture}
+	\caption{Model of the relationships between Versions 1 and 2 when modifying Attribute 1 from Version 1 as a result of Change M, resulting in Attribute 2 from Version 2}
+	\label{DiscardedFig4}  % the \label command comes AFTER the caption
+\end{figure}
+
+\section{Model Objects}
+
+The versioning model incorporates three kinds of objects: \textbf{versions}, \textbf{attributes}, and \textbf{changes}.
+A \textbf{version} object represents the items being compared such as a book or spreadsheet.
+In PROV, a \textbf{version} would likely correspond with the \textit{prov:Entity} involved in a \textit{prov:wasRevisionOf} property.
+The \textbf{attribute} object refers to specific parts which make up a \textbf{version}.
+\textbf{Attributes} could be lines in a book or columns in a spreadsheet.
+Including \textbf{attributes} addresses the lack of detail involved in a \textit{prov:wasRevisionOf} or \textit{pav:previousVersion}.
+The relationship between \textbf{versions} and \textbf{attributes} captures the influence that changes in the underlying part will have on the overarching \textbf{version}.
+Because the model refers to specific parts of a \textbf{version}, the \textbf{version} concept corresponds most closely with a FRBR \textbf{manifestation} rather than an \textbf{expression}.
+The presence or absence of an \textbf{attribute} is used to determine the kind of \textbf{change} which occurs to the \textbf{attribute} between \textbf{versions}.
+\textbf{Changes} are used to link together \textbf{attributes} from different \textbf{versions}.
+The \textbf{change} captures a difference between the old \textbf{version} state and the new \textbf{version} state.
+While the \textbf{change} object greatly resembles a PROV qualified property, its form can change depending on the kind of \textbf{change}, like a \textit{schema:UpdateAction}.
+
+\subsection{Left-hand Right-hand Convention}
+
+In the following diagrams and figures, the original or base version and its attributes will be placed on the left-hand side and the new version will be placed on the right-hand side with its attributes.
+References to the versions as previous and next are avoided since sequencing may not play a major role in distinguishing versions.
+Scientific data in large repositories often track sequential releases of data, but a book may have different versions distinguished by printed language.
+To recognize this distinction, objects will be referred to as the left-hand \textbf{version} or left-hand \textbf{attribute} when they are not sequentially or temporally related.
+
+\section{Model Changes}
+
+The model bases \textbf{changes} around the three core versioning operations because their commonality across systems provides a fundamental basis for comparisons.
+\textbf{Additions} occur when an \textbf{attribute} appears only in the right-hand \textbf{version}.
+When an \textbf{attribute} only shows up in the left-hand \textbf{version}, the model captures this as an \textbf{invalidation}.
+Finally, a \textbf{modification} change has \textbf{attributes} in both the left and right-hand \textbf{versions}, but it only connects two \textbf{attributes} if their values are different.
+These three combinations cover the possible situations within the model.
+=======
+\chapter{CONCEPTUAL MODEL}\label{ch:model}
+
+The goal of dataset versioning is to expose the relationships between versions of a dataset.
+To do this, the concept model relates three kinds of --- objects, versions, attributes, and changes --- using three different orientations.
+The model obviously includes versions because they are the objects being compared.
+Identifying one object, however, as a version of another does not give much insight into the nature of their relationship.
+In order to characterize the change between two versions, the model relates their attributes.
+The model uses the Dublin Core Term \textit{dco:hasPart} to facilitate the link from a version to its attribute.
+The changes used then defines the difference between these attributes in each version.
+The modeling process can be viewed as creating a mapping between an original set and a new dataset.
+As mentioned previously, the operations conducted by data versioning systems boil down to primarily three operations: addition, invalidation, and modification.
+Since these activities are so prevalent, we use these three procedures to characterize the relationships between versions.
+A modification is straight forward to model because it maps together an attribute which exists in both versions, but addition and invalidation are a little different.
+Because the attribute doesn't exist in one version or in the other for addition and invalidation, it forms a '0 to 1' relationship between the attributes.
+This causes a problem technically because without a concept on one end, a mapping cannot be formed.
+The chosen solution was to use the version concept as the anchor in place of the non-existent attribute.
+This observation leads to the conceptual model's structure used in this dissertation.
+The nature of change can be determined by observing the construction used to model a relationship and counting the number of attributes on each side.
+As a note, the figures in this chapter only depict the attribute relationships as 0 to 1, 1 to 0, and 1 to 1 --- the cardinality of links entering a change concept from an attribute to the number of links exiting to an attribute.
+It is more valid to consider the relationships as 0 to X, X to 0, and X to Y in cardinality because it may take more than one attribute to identify an observation in a version.
+For example, a cell in tabular data would need a row and a column to identify it, or a modification may change a single location attribute into two separate latitude and longitude entries.
+
+An obvious concern about using these requirements to determine the mapping is that it does not guarantee meaningful versioning is being performed.
+In order to ensure that the relationships being exposed by the mapping are valid, we must go back to the definition of versions.
+Having common provenance establishes that performing a comparison between these two objects results in a relation pertaining to the same application.
+In addition, if the objects also can share the same workflow step it establishes that they have relatable content.
+This also addresses the possibility that we are comparing objects that have different purposes at separate points in a workflow, but share provenance as a result.
+Before applying the methods in this model, it must, therefore, be first established that the two objects satisfy the requirements to be versions of each other.
+
+\section{Modification}
+
+The simplest operation to model is \textit{modification} because it has no missing parts.
+It maps a change from one attribute of version one to its corresponding attribute in version two.
+In Figure \ref{ModificationFig}, a versioning comparison is being performed between two objects, Version 1 and Version 2.
+Each version has an attribute, Attribute 1 and Attribute 2, respectively.
+Finally, a change object connects the two attributes, denoting that the values described by the attribute are different.
+>>>>>>> master
+
+\begin{figure}
+	\centering
+	\vspace{0.0in} % normally the command here would be \includegraphics
+	%	\includegraphics{figures/Addition.png}
+	\begin{tikzpicture}[every node/.style={draw, rectangle}]
+	\begin{scope}[node distance=20mm and 20mm]
+	\node (c) [scale=1.25] at (1,0) {Change M};
+	\node (1) [above left=of c, scale=1.25] {Version 1};
+	\node (2) [above right=of c, scale=1.25] {Version 2};
+	\node (a1) [below =of 1, scale=1.25] {Attribute 1};
+	\node (a2) [below =of 2, scale=1.25] {Attribute 2};
+	
+	\draw [line width=2pt,->] (a1) -- (c);
+	\draw [line width=2pt,->] (c) -- (a2);
+	\draw [line width=2pt, ->] (1) -- (a1);
+	\draw [line width=2pt, ->] (2) -- (a2);
+	\end{scope}
+	\end{tikzpicture}
+	\caption{Model of the relationships between Versions 1 and 2 when modifying Attribute 1 from Version 1 as a result of Change M, resulting in Attribute 2 from Version 2}
+	\label{ModificationFig}  % the \label command comes AFTER the caption
+\end{figure}
+
+<<<<<<< HEAD
+\subsection{Modification}
+
+The \textbf{modification} relation occurs when an \textbf{attribute} appears in both \textbf{versions} and their values are different.
+In Figure \ref{ModificationFig}, a \textbf{modification} is captured between two versions.
+Each \textbf{version} has an \textbf{attribute}, Attribute 1 and Attribute 2, respectively.
+Finally, a \textbf{change} object connects the two \textbf{attributes}, denoting that the values described by the attribute are different.
+
+The specific values pertaining to Attribute 1 and Attribute 2 are not captured by the model because acknowledging that a difference exists is more important.
+Extending the model to properly communicate the significance of a modification for a wide variety of domains would require sizable domain knowledge and would be outside the scope for this project.
+In addition, the model would essentially begin storing a copy of the data set, leading to space and redundancy concerns.
+
+\subsection{Addition}
+=======
+Notice that the model captures neither the change's magnitude, nor the values of the attributes involved in the change.
+These are not included because too much domain knowledge will be required to interpret the significance of the value.
+In addition, the model would essentially begin storing a copy of the dataset, leading to space and redundancy concerns.
+If an application needs to include this information, they can be added as a property of the attributes involved, but this is outside the scope of this thesis.
+Simply knowing that the attribute has changed provides valuable information to identify the relationship between the two attributes from a versioning standpoint.
+Sometimes it may be necessary to distinguish between modification changes.
+For this reason, the \textit{vo:Change} concept in this relationship may be sub-classed to differentiate between different kinds of change that map one attribute to another.
+For example, in order to distinguish a modification in which the units of a measurement changes, a \textit{UnitChange} concept, which sub-classes the \textit{Modify} change concept, can be used to connect the attributes from two different version.
+
+The \textit{modification} relationship is simple enough to understand, and a couple of well developed alternatives exist.
+Schema.org supplies a subclass of the \textit{schema:UpdateAction} labeled \textit{schema:ReplaceAction}.
+This concept has two properties, \textit{schema:replacee} and \textit{schema:replacer} which indicates that a new object replaces an old one.
+This provides a structure very similar to the one found in Figure \ref{ModificationFig} with the only difference being the relationship between Attribute 1 and Change M reversed.
+While this difference is subtle, it demonstrates a disagreement in view as to how change works in a system.
+Schema.org's perspective looks at a single replacement action in isolation and models that quite well.
+This versioning model, however, views change as a quantity that flows through attributes from one version to another.
+Unlike ReplaceAction, ModifyChange does not attribute changes to an actor, but rather it acts as a medium to convey change between objects.
+
+PROV also has a property called \textit{prov:isDerivedFrom} to convey, "a transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a pre-existing entity," \cite{Lebo2013}.
+Changing this property into a qualified property then results in a form very similar to the construction in this model.
+It gains the advantage of turning the property into a concept that can be instanced and described easily using other ontologies.
+The primary discrepancy between this versioning ontology and PROV-O is that Version 2 no longer needs to depend on a previous entity.
+PROV assumes derivations to be part of a sequence, but situations exist, as seen in a later chapter, where research can create multiple simultaneous versions where an ordering does not matter.
+
+\section{Addition}
+
+In Figure \ref{AdditionFig}, the \textit{addition} model differs from the \textit{modification} construction by the absence of Attribute 1.
+This should mean that there does not exist a relationship between Version 1 and the concept Change A as the inclusion of Attribute 2 into Version 2 does not in general use content from the previous object.
+Change A in this model, however, is not an activity, but a comparison relationship between Version 1 and 2.
+A path, therefore, must exist from Version 1 to Attribute 2.
+This formulation has the added benefit of conveying the idea of change as a quantity of flow, coming out of Version 1 and moving through the graph.
+In this context, the structure establishes the left-hand version object as a source of flow when attributes become added to the following object.
+This construction also forms a symmetric orientation with Invalidation.
+>>>>>>> master
+
+In Figure \ref{AdditionFig}, the \textbf{addition} model differs from the \textbf{modification} construction by the absence of Attribute 1.
+\begin{figure}
+	\centering
+	\vspace{0.0in} % normally the command here would be \includegraphics
+	%	\includegraphics{figures/Addition.png}
+	\begin{tikzpicture}[every node/.style={draw, rectangle}]
+	\begin{scope}[node distance=20mm and 20mm]
+	\node (c) [scale=1.25] at (1,0) {Change A};
+	\node (1) [above left=of c, scale=1.25] {Version 1};
+	\node (2) [above right=of c, scale=1.25] {Version 2};
+	\node (a) [below =of 2, scale=1.25] {Attribute 2};
+	
+	\draw [line width=2pt,->] (1) -- (c);
+	\draw [line width=2pt,->] (c) -- (a);
+	\draw [line width=2pt, ->] (2) -- (a);
+	\end{scope}
+	\end{tikzpicture}
+	\caption{Model of the relationships between Versions 1 and 2 when adding an Attribute 2 to Version 2 as a result of Change A}
+	\label{AdditionFig}  % the \label command comes AFTER the caption
+\end{figure}
+The absence creates a disconnect between ``Version 1" and ``Change A".
+A property is used to create a path between the two \textbf{attributes} to indicate the contribution of  ``Version 1" to the change's lineage.
+The path does not show that ``Version 1" informs or creates ``Attribute 2", while that may be true.
+The construction was also chosen to create a symmetric orientation with the \textbf{invalidation} change.
+
+<<<<<<< HEAD
+=======
+In comparison, the \textit{schema:AddAction} from Schema.org considers addition as an activity performed by an agent.
+This view of addition does not take into account the prior state of the collection being manipulated.
+As a result, the proposed model for \textit{addition} should provide a better context for the relationships between objects when an attribute is added.
+The corresponding concept in PROV-O is a \textit{prov:Generation}.
+It, however, relates together activities with entities, meaning that it could not relate together two versions or a version and an attribute.
+This property also does not make sense because, once again, no activity is producing the versioning relationship.
+Although, if we attribute new additions to the activity which generates Version 2, a relationship using \textit{prov:Generation} can be formed.
+This formation, however, would also apply to other attributes added to Version 2, and convolute the role the activity took in an attributes generation.
+In the versioning model proposed, each added attribute connects to a particular change instance so that they can be individually described.
+>>>>>>> master
+
+\subsection{Invalidation}
+
+The \textit{invalidation} model has a missing \textbf{attribute} on the right-hand side of the relation, contrary to the \textbf{addition} construction.
+As a result of the invalidation, an attribute no longer exists in the right-hand \textbf{version}.
+As seen in Figure \ref{InvalidationFig}, the invalidation change concept matches to the Version 2 object.
+<<<<<<< HEAD
+=======
+Just like in addition model, this construction maintains a link between the two version objects.
+In this case, it makes more conceptual sense, however, because Version 2 invalidates Attribute 1 by omitting it.
+
+>>>>>>> master
+\begin{figure}
+	\centering
+	\vspace{0.0in} % normally the command here would be \includegraphics
+	%	\includegraphics{figures/Addition.png}
+	\begin{tikzpicture}[every node/.style={draw, rectangle}]
+	\begin{scope}[node distance=15mm and 20mm]
+	\node (c) [scale=1.25] at (1,0) {Change I};
+	\node (1) [above left=of c, scale=1.25] {Version 1};
+	\node (2) [above right=of c, scale=1.25] {Version 2};
+	\node (a) [below =of 1, scale=1.25] {Attribute 1};
+	
+	\draw [line width=2pt,->] (a) -- (c);
+	\draw [line width=2pt,->] (c) -- (2);
+	\draw [line width=2pt, ->] (1) -- (a);
+	\end{scope}
+	\end{tikzpicture}
+	\caption{Model of the relationships between Versions 1 and 2 when invalidating Attribute 1 from Version 1 as a result of Change I}
+	\label{InvalidationFig}  % the \label command comes AFTER the caption
+\end{figure}
+Just like in \textbf{addition} model, this construction maintains a link between the two \textbf{version} objects.
+In this case, it makes more conceptual sense, however, because ``Version 2" invalidates ``Attribute 1" by omitting it.
+
+
+\section{Summary}
+
+<<<<<<< HEAD
+The versioning model provides a method to capture change information in greater detail than current provenance models.
+The inclusion of \textbf{versions} and \textbf{attributes} into the model connect changing items with the objects they influence.
+The \textbf{changes} create a ladder-like structure to connect together \textbf{version} objects in greater detail.
+Each rung of the ladder can not only be counted, but also grouped into types of change according to the respective operation.
+The method of instantiating a versioning graph will be covered in Chapter \ref{ch:implement}.
+=======
+Related concepts include Schema.org's \textit{schema:DeleteAction} and PROV's \textit{prov: Invalidation}.
+PROV defines the property as the "start of the destruction, cessation, or expiry of an existing entity by an activity," but since nothing actively creates versioning relationships, this property is inappropriate for this application \cite{Lebo2013}.
+There is no activity to credit with removing the property in this comparison, and the absence results from a state-based property.
+Schema.org defines the \textit{schema:DeleteAction} as, "The act of editing a recipient by removing one of its objects," \cite{SchemaRem}.
+This definition assumes that an actor will perform an action upon an object or collection, removing one of its members, producing a new result.
+This follows the provenance mentality, but when versioning, the resulting object has already been created.
+Cases exist, as shown in Section \ref{mapping}, where an attribute is not included in a new version, thus indicating that it has been removed.
+The most important point of contention in this definition, however, is the idea of removal and deletion.
+Although an object is no longer valid, it does not mean the data has been deleted.
+Invalid data often gets removed, but this is not always the case.
+As a result, naming the concept invalidation is more general and inclusive.
+>>>>>>> master
