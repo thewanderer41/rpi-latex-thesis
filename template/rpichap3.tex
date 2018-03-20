@@ -9,6 +9,20 @@
 \section{Introduction}
 
 A versioning data model needs to address a variety of needs not met by provenance models.
+In PROV-O and PAV, the modeled entities are exclusively one-dimensional with each version leading sequentially to the next one.
+The HCLS model, Figure \ref{HCLSModel}, and Barkstrom model, Figure \ref{hierarchy}, however, display a more complex two-dimensional hierarchy.
+The tree models better capture the tiered granularity separating different versions which can result from a higher-tier macro change.
+These models also tightly couple new objects with changes to their underlying attributes.
+The tiered approach more clearly explains the scale on which two objects within the tree differ.
+
+Provenance models provide concepts to sequentially order data objects but lack the ability to convey differences between farther spanning objects.
+In Figure \ref{hierarchy}, the left-most leaf node and the right-most leaf node differ by three changes at the data product level.
+A provenance model would need to rely on qualified properties to connect further annotations and describe the higher level changes.
+Remember that a common function of versioning systems is to provide a method to determine the amount of change or difference between two objects of a work.
+Much of the differences become lost when compressed into a single relation in a provenance graph.
+Additional annotations are often in natural language and do not provide a regular attribute to quantify.
+
+The provenance models, on the other hand, do a much better job in explicitly defining the connection between objects which the tree models rely on structure to imply.
 The model must contain a mechanism to convey how changes to parts of an object contribute to that object's transition into a new version.
 The fundamental operations---\textbf{add}, \textbf{invalidate}, and \textbf{modify}---are used by the model to capture change in a more detailed manner.
 These details provide a mechanism to measure change between versions with better clarity than current methods.
