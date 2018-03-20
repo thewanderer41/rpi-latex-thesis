@@ -289,11 +289,25 @@ The transition between different versions of large data sets is then left largel
 \section{Introduction of Use Cases}
 
 \subsection{Use Case 1: Linked Data Change Log}
-Needed a project with at least two versions, and the objects had to have content differences.
-The single project constraint makes sure they're from the same work.
-Excel spreadsheets allow simultaneous instances of each version and well supported tools for access.
+The first use case's goal is to determine the differences between two versions of a data set.
+The way this is accomplished in the ``Global Database on \textsuperscript{3}He/\textsuperscript{4}He in on-shore free-circulated subsurface fluids" (Noble Gas) is to look at the use documentation for each version and manually determine the differences \cite{Polyak2015}.
+The ``Paragenetic Mode for Copper Minerals" (Copper) database became available through collaboration with the author's lab to create new methods of visualizing mineralogy relationships \cite{Morrison2016}.
+In the Copper data set, changes were reported by word of mouth through interaction with the author.
+These data sets were chosen because they had at least two versions in the same format, Excel spreadsheets.
+Software projects normally use a change log to summarize the modifications separating two versions, but a document was not included with either data set.
 
-\subsection{Use Case 2: Multi-version Change Distance}
+The spreadsheets offered a very enticing point of entry since changes could easily be detected by comparing matching cells in a regular table format and tools to access the data were readily available.
+Both data sets displayed content and structural changes, new or deleted rows and columns as well as re-ordered columns in the Copper data set's case.
+Each version of the spreadsheets were also instanced, allowing multiple versions to simultaneously exist.
+Separate linked data identifiers can then be assigned to each file, making graph generation possible.
+Centralized databases were avoided because they generally only make available a single instance, causing manual verification and visual comparisons difficult.
+In addition, users of centralized databases primarily interact with the data through queries, merging and filtering data tables to slice out the desired data set.
+Rather than complicate the approach with multiple tables, Use Case 1 focuses on the primary unified table of the Noble Gas and Copper data sets.
+
+The spreadsheets do not innately use linked data identifiers, meaning artificial identifiers will need to be deployed referring to objects within the model.
+Methods to generate an identifier lies outside the scope of this work.
+
+\subsection{Use Case 2: Change Distance}
 
 \section{Hypothesis Statement}
 

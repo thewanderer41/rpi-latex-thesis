@@ -29,6 +29,7 @@ These details provide a mechanism to measure change between versions with better
 
 \section{Initial Approaches}
 
+The first approach, seen in Figure \ref{DiscardedFig}, simply extends the provenance relation with additional concepts to capture more types of relationships.
 \begin{figure}
 	\centering
 	\vspace{0.0in} % normally the command here would be \includegraphics
@@ -55,7 +56,17 @@ These details provide a mechanism to measure change between versions with better
 	\caption{Model of the relationships between Versions 1 and 2 when modifying Attribute 1 from Version 1 as a result of Change M, resulting in Attribute 2 from Version 2}
 	\label{DiscardedFig}  % the \label command comes AFTER the caption
 \end{figure}
+Until the introduction of or comparison with Version 2, none of the concepts in Version 1 can be considered new or old.
+As the responsible party for introducing changes, Version 2 becomes associated with New, Old, and modified attributes.
+Version 1 also relates to modified attributes since it provides the pre-value used to contextualize Version 2's post-value.
+The pre and post values are included so that a user can see how much the attribute has changed, much like with a change log.
 
+Having Version 2 be responsible for all the changes causes issues with the model since it must be associated with attributes from an entirely different object.
+The Old attributes should not exists within Version 2.
+Associating Old attributes with Version 1 would be more appropriate and intuitive to understand.
+The model does not capture the type of change, making the result a listing of attributes without the version differences to contextualize the relationship between the versions.
+
+From a different direction, Figure \ref{DiscardedFig2} shows a model created by starting from the change log.
 \begin{figure}
 	\centering
 	\vspace{0.0in} % normally the command here would be \includegraphics
