@@ -22,8 +22,8 @@ Remember that a common function of versioning systems is to provide a method to 
 Much of the differences become lost when compressed into a single relation in a provenance graph.
 Additional annotations are often in natural language and do not provide a regular attribute to quantify.
 
-The provenance models, on the other hand, do a much better job in explicitly defining the connection between objects which the tree models rely on structure to imply.
-The model must contain a mechanism to convey how changes to parts of an object contribute to that object's transition into a new version.
+The provenance models, on the other hand, do a much better job in explicitly defining the connection between objects which the tree models imply with structure.
+The versioning model must contain a mechanism to convey how changes to parts of an object contribute to that object's transition into a new version.
 The fundamental operations---\textbf{add}, \textbf{invalidate}, and \textbf{modify}---are used by the model to capture change in a more detailed manner.
 These details provide a mechanism to measure change between versions with better clarity than current methods.
 
@@ -61,6 +61,7 @@ As the responsible party for introducing changes, Version 2 becomes associated w
 Version 1 also relates to modified attributes since it provides the pre-value used to contextualize Version 2's post-value.
 The pre and post values are included so that a user can see how much the attribute has changed, much like with a change log.
 
+Adding the attributes as concepts to the model addresses PROV's and PAV's flat approach to version relations, but the attributes do not capture the inter-relation between objects for New and Old attributes.
 Having Version 2 be responsible for all the changes causes issues with the model since it must be associated with attributes from an entirely different object.
 The Old attributes should not exists within Version 2.
 Associating Old attributes with Version 1 would be more appropriate and intuitive to understand.
@@ -106,7 +107,7 @@ One of the major breakthroughs with this model construction is that while specif
 By encoding the type of change, the need for actual values becomes superfluous as change type is more generalizable across domains and contexts.
 
 Figure \ref{DiscardedFig3} combines the provenance and change log approaches by capturing the transition from Version 1 to Version 2 in the change log.
-\begin{figure}
+\begin{figure}[b]
 	\centering
 	\vspace{0.0in} % normally the command here would be \includegraphics
 	%	\includegraphics{figures/Addition.png}
@@ -260,6 +261,7 @@ In Figure \ref{AdditionFig}, the \textbf{addition} model differs from the \textb
 	\label{AdditionFig}  % the \label command comes AFTER the caption
 \end{figure}
 The absence creates a disconnect between ``Version 1" and ``Change A".
+We know that a connected graph will be desirable to accommodate traversal using linked data query languages so ``Version 1" must be reconnected to the other concepts in the model.
 A property is used to create a path between the two \textbf{attributes} to indicate the contribution of  ``Version 1" to the change's lineage.
 The path does not show that ``Version 1" informs or creates ``Attribute 2", while that may be true.
 The construction was also chosen to create a symmetric orientation with the \textbf{invalidation} change.
@@ -270,7 +272,7 @@ The construction was also chosen to create a symmetric orientation with the \tex
 The \textit{invalidation} model has a missing \textbf{attribute} on the right-hand side of the relation, contrary to the \textbf{addition} construction.
 As a result of the invalidation, an attribute no longer exists in the right-hand \textbf{version}.
 As seen in Figure \ref{InvalidationFig}, the invalidation change concept matches to the Version 2 object.
-\begin{figure}
+\begin{figure}[b]
 	\centering
 	\vspace{0.0in} % normally the command here would be \includegraphics
 	%	\includegraphics{figures/Addition.png}

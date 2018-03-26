@@ -86,6 +86,8 @@ The model---relating summary, version, and distribution---also strongly resemble
 From his definition of versions, Barkstrom also outlines an hierarchical version model as seen in Figure \ref{hierarchy}.
 The model features additional intermediary levels than the HCLS's model, following NASA's data curation practices \cite{barkstrom2014earth}.
 Each edge in the tree signifies a difference with other objects at the same depth, but the model does not provide a mechanism to explain the difference.
+The difference in the number of tiers employed in the HCLS and Barkstrom models also indicates that different applications will have varying expectations of granularity to their versioning models.
+A general solution will likely need to be tiered and recursive in structure to accommodate different levels of specificity.
 
 \section{Provenance Ontologies}
 
@@ -216,10 +218,20 @@ The encoding would mean that, unlike the Noble Gas and Copper data sets, the key
 More importantly, the GCMD data set has more than two versions with clear identifiers in the dot-decimal style, indicating three degrees of change between versions.
 The identifier indicates when a major, minor, or revisionary extent of change separates two versions.
 
+\section{Hypothesis Statement}
+
 Assumption: all changes within a work will have about the same magnitude of change.
 Change logs provide a means to evaluate what has changed, but are difficult to quantify.
 
-\section{Hypothesis Statement}
+Versioning graphs will need to utilize a tiered approach to unify the practices already established by provenance models with the semantics defined by versioning models.
+Hypothesis 1: Version graphs will provide a mechanism to combine versioning and provenance models to better communicate the change between two versions.  A tiered approach is necessary to achieve this goal.
+	Expectation: Version graphs based on operations provide a means to capture change as indicated by change logs.
+Hypothesis 2: Versioning graphs can calculate change distance by counting the number of changes.
+	Assumption: All changes count the same and are consistent across versions.
+	Expectation: Change counts will stratify to different orders of magnitude according to the change in identifier
+Hypothesis 3: A versioning graph will enable the automated production of machine-readable change logs which are necessary to explain the differences between versions.
+	Scope: There is no comparison with NLP approaches to processing the change log.
+	Assumption: Change logs are not included with data
 
 Large data collection endeavors necessitate the development and deployment of versioning systems to manage change propagating through their data.
 Advancing beyond identifier comparisons and delving into capturing substantive change can significantly improve the ability to standardize version communications and transition.
@@ -232,6 +244,10 @@ The distance can be verified by comparison with the amount of change indicated b
 
 \section{Contributions}
 
+Through the process of addressing Use Case 1, I develop the idea of a versioning graph.
+I created machine-readable change logs and  developed their automated construction.
+Leveraging versioning graphs, I develop a new method of determining change distance.
+I expand the semantics of what constitutes a version of different objects.
 
 %%% Local Variables:
 %%% mode: latex
