@@ -53,7 +53,7 @@ The first approach, seen in Figure \ref{DiscardedFig}, simply extends the proven
 	\draw [line width=2pt, ->] (a) -- (p2);
 	\end{scope}
 	\end{tikzpicture}
-	\caption{Model of the relationships between Versions 1 and 2 when modifying Attribute 1 from Version 1 as a result of Change M, resulting in Attribute 2 from Version 2}
+	\caption{Provenance oriented versioning model.}
 	\label{DiscardedFig}  % the \label command comes AFTER the caption
 \end{figure}
 Until the introduction of or comparison with Version 2, none of the concepts in Version 1 can be considered new or old.
@@ -91,10 +91,21 @@ From a different direction, Figure \ref{DiscardedFig2} shows a model created by 
 	\draw [line width=2pt, ->] (c) -- (p2);
 	\end{scope}
 	\end{tikzpicture}
-	\caption{Model of the relationships between Versions 1 and 2 when modifying Attribute 1 from Version 1 as a result of Change M, resulting in Attribute 2 from Version 2}
+	\caption{Change log based versioning model.}
 	\label{DiscardedFig2}  % the \label command comes AFTER the caption
 \end{figure}
+Attributes are attached to the log as the primary indicators for old, new, and modified concepts.
+Change logs often break down and group changes by attributes.
+For modified attributes, an additional change concept is associated, encapsulating the values and nature of the change.
+At the far right side of the figure is a concept called Type which indicates more specifically the nature of the change for example a unit of speed to another.
+Pre and post values are also included to explicitly define the change concept.
 
+The primary drawback of the log-based construction is that the change log assumes all responsibility for every modification to the data even though the document only reports the differences.
+The version objects are also left out of the model, leaving the log concept in possession of the attributes.
+One of the major breakthroughs with this model construction is that while specific values are kept in the log, those values do not need to be in the model.
+By encoding the type of change, the need for actual values becomes superfluous as change type is more generalizable across domains and contexts.
+
+Figure \ref{DiscardedFig3} combines the provenance and change log approaches by capturing the transition from Version 1 to Version 2 in the change log.
 \begin{figure}
 	\centering
 	\vspace{0.0in} % normally the command here would be \includegraphics
@@ -117,10 +128,18 @@ From a different direction, Figure \ref{DiscardedFig2} shows a model created by 
 	\draw [line width=2pt, ->] (m) -- (a);
 	\end{scope}
 	\end{tikzpicture}
-	\caption{Model of the relationships between Versions 1 and 2 when modifying Attribute 1 from Version 1 as a result of Change M, resulting in Attribute 2 from Version 2}
+	\caption{Hybrid provenance and change log versioning model.}
 	\label{DiscardedFig3}  % the \label command comes AFTER the caption
 \end{figure}
+The idea here is to enable distance capture between versions by encapsulating all changes within the log concept.
+The changes are then associated with specific attributes.
+Pre and post values do not appear in the model as knowing a change has occurred and what kind is more valuable than knowing the explicit values involved.
+As a data set becomes more volatile, more values would need to be stored, resulting in more of a copy of the data rather than a summarization of the changes.
+Notice in Figure \ref{DiscardedFig3} that Attribute has now become disconnected from either version.
+Reconnecting the Attribute concept brings into question which version it should be associated with since it exists in both.
+The larger issue with both the log based and hybrid approach is that the model resembles a tree more than a graph, making linked data queries less powerful as most of the concepts are disconnected.
 
+A fourth formulation, in Figure \ref{DiscardedFig4}, leverages the insight that when a change interacts with an attribute, the attribute is different in the next version.
 \begin{figure}
 	\centering
 	\vspace{0.0in} % normally the command here would be \includegraphics
@@ -141,9 +160,19 @@ From a different direction, Figure \ref{DiscardedFig2} shows a model created by 
 	\draw [line width=2pt,->] (c) -- (2);
 	\end{scope}
 	\end{tikzpicture}
-	\caption{Model of the relationships between Versions 1 and 2 when modifying Attribute 1 from Version 1 as a result of Change M, resulting in Attribute 2 from Version 2}
+	\caption{Highly connected model of just versions, changes, and attributes}
 	\label{DiscardedFig4}  % the \label command comes AFTER the caption
 \end{figure}
+The model addresses the attribution problem by forming two attributes, each associated with a different version.
+These attributes inform a change which acts upon both version concepts.
+The Log object is dropped for the model since it is a method to convey change and not an actor involved in the change.
+From the highly connected construction, new and old attributes no longer need to be explicitly stated, but they can be implied from the model's structure.
+A new attribute would not exist in Version 1 so Attribute 1 and its associated properties (arrows) are removed, leaving a unique construction implying an attribute addition.
+
+One observation is that the relation from changes to versions is redundant since the links from version to attribute to change implies the same relationship.
+Removing the explicit relation would shorten the number of triples required to encode a change and improve scalability.
+The versioning graph using this highly connected model would also be easier to query if the edges were oriented in the same direction, additionally implying that change flows from one version to the next.
+These final observations result in the current versioning model.
 
 \section{Model Objects}
 
