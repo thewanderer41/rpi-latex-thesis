@@ -220,27 +220,24 @@ The identifier indicates when a major, minor, or revisionary extent of change se
 
 \section{Hypothesis Statement}
 
-Assumption: all changes within a work will have about the same magnitude of change.
-Change logs provide a means to evaluate what has changed, but are difficult to quantify.
+The work in this dissertation seeks to prove three hypotheses.
+In the first hypothesis, provenance concepts for revisions need to be diversified in order to properly capture change information.
+Prior versioning models indicate that versioning graphs will need to utilize a tiered approach to capture the relation between objects and their more granular attributes.
+These tiers unify the practices already established by provenance models with the semantics defined by versioning models.
+The content and format of change logs give insight into the information desired by version users.
+The versioning graphs in this dissertation will explicitly deal with data sets since software versioning is a more developed field.
 
-Versioning graphs will need to utilize a tiered approach to unify the practices already established by provenance models with the semantics defined by versioning models.
-Hypothesis 1: Version graphs will provide a mechanism to combine versioning and provenance models to better communicate the change between two versions.  A tiered approach is necessary to achieve this goal.
-	Expectation: Version graphs based on operations provide a means to capture change as indicated by change logs.
-Hypothesis 2: Versioning graphs can calculate change distance by counting the number of changes.
-	Assumption: All changes count the same and are consistent across versions.
-	Expectation: Change counts will stratify to different orders of magnitude according to the change in identifier
-Hypothesis 3: A versioning graph will enable the automated production of machine-readable change logs which are necessary to explain the differences between versions.
-	Scope: There is no comparison with NLP approaches to processing the change log.
-	Assumption: Change logs are not included with data
-
-Large data collection endeavors necessitate the development and deployment of versioning systems to manage change propagating through their data.
-Advancing beyond identifier comparisons and delving into capturing substantive change can significantly improve the ability to standardize version communications and transition.
-The work in the following chapters will contribute to expanding change capture by defining a more expressive linked data versioning model.
-The model will allow current versioning documentation to become machine-consumable.
-A better method will be developed to provide a quantitative basis for the assignment of version identifiers.
-
-By encoding change logs with the versioning ontology, a distance measure can be calculated from the resulting versioning graph.
+The second hypothesis is that versioning graphs can calculate a more accurate change distance by counting the number of changes.
+Current methods rely on vague data producer evaluation, communicated through changing version identifiers.
+Because version graphs will catalog individual changes, a count based on the different types of changes are expected to produce a more revealing change metric.
 The distance can be verified by comparison with the amount of change indicated by the version identifier.
+The hypothesis relies on an assumption that all changes of the same type within a work have the same or similar significance.
+The evaluation stems from the observation that change logs exist to capture the differences between sequential versions.
+
+The third hypothesis is that versioning graphs will enable the automated creation of machine readable change logs.
+Assuming that natural language processing cannot understand and quantify the change in a log, quantifying the log's information remains difficult.
+The results will show that a comprehensive log can be generated which is both human and machine consumable.
+The approach will deal specifically with spreadsheet data sets since they provide a flatter, more consistent context to capture.
 
 \section{Contributions}
 
