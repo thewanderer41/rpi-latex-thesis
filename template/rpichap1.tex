@@ -216,10 +216,20 @@ The encoding would mean that, unlike the Noble Gas and Copper data sets, the key
 More importantly, the GCMD data set has more than two versions with clear identifiers in the dot-decimal style, indicating three degrees of change between versions.
 The identifier indicates when a major, minor, or revisionary extent of change separates two versions.
 
-Assumption: all changes within a work will have about the same magnitude of change.
-Change logs provide a means to evaluate what has changed, but are difficult to quantify.
+\subsection{Use Case 3: Linked Data Versioning}
+
+Use Case 3 deals with encoding versioning semantics using linked data.
+The current concepts revolve around provenance applications where PROV-O and PAV are often employed.
+The Marine Biodiversity Virtual Laboratory (MBVL), based at Woods Hole Oceanographic Institution, provides data and services for the study of marine biology with an integrative approach \cite{mbvl}.
+This virtual laboratory has produced sets of data which, under FRBR and Barkstrom's definitions, belong to the same work but do not satisfy the semantics of PROV or other provenance ontologies.
+Because the semantics do not fit, the ontologies should not be employed to capture their changes.
+Provenance graphs, additionally, do not focus on change or differences between objects.
+Since PROV and Schema.org have the most detailed definitions for change relations, they are used as the primary comparison for the development of a versioning graph.
 
 \section{Hypothesis Statement}
+
+Assumption: all changes within a work will have about the same magnitude of change.
+Change logs provide a means to evaluate what has changed, but are difficult to quantify.
 
 Large data collection endeavors necessitate the development and deployment of versioning systems to manage change propagating through their data.
 Advancing beyond identifier comparisons and delving into capturing substantive change can significantly improve the ability to standardize version communications and transition.
