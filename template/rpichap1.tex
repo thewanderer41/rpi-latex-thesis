@@ -86,6 +86,8 @@ The model---relating summary, version, and distribution---also strongly resemble
 From his definition of versions, Barkstrom also outlines an hierarchical version model as seen in Figure \ref{hierarchy}.
 The model features additional intermediary levels than the HCLS's model, following NASA's data curation practices \cite{barkstrom2014earth}.
 Each edge in the tree signifies a difference with other objects at the same depth, but the model does not provide a mechanism to explain the difference.
+The difference in the number of tiers employed in the HCLS and Barkstrom models also indicates that different applications will have varying expectations of granularity to their versioning models.
+A general solution will likely need to be tiered and recursive in structure to accommodate different levels of specificity.
 
 \section{Provenance Ontologies}
 
@@ -225,23 +227,36 @@ This virtual laboratory has produced sets of data which, under FRBR and Barkstro
 Because the semantics do not fit, the ontologies should not be employed to capture their changes.
 Provenance graphs, additionally, do not focus on change or differences between objects.
 Since PROV and Schema.org have the most detailed definitions for change relations, they are used as the primary comparison for the development of a versioning graph.
-
 \section{Hypothesis Statement}
 
 Assumption: all changes within a work will have about the same magnitude of change.
 Change logs provide a means to evaluate what has changed, but are difficult to quantify.
 
-Large data collection endeavors necessitate the development and deployment of versioning systems to manage change propagating through their data.
-Advancing beyond identifier comparisons and delving into capturing substantive change can significantly improve the ability to standardize version communications and transition.
-The work in the following chapters will contribute to expanding change capture by defining a more expressive linked data versioning model.
-The model will allow current versioning documentation to become machine-consumable.
-A better method will be developed to provide a quantitative basis for the assignment of version identifiers.
+The work in this dissertation seeks to prove three hypotheses.
+In the first hypothesis, provenance concepts for revisions need to be diversified in order to properly capture change information.
+Prior versioning models indicate that versioning graphs will need to utilize a tiered approach to capture the relation between objects and their more granular attributes.
+These tiers unify the practices already established by provenance models with the semantics defined by versioning models.
+The content and format of change logs give insight into the information desired by version users.
+The versioning graphs in this dissertation will explicitly deal with data sets since software versioning is a more developed field.
 
-By encoding change logs with the versioning ontology, a distance measure can be calculated from the resulting versioning graph.
+The second hypothesis is that versioning graphs can calculate a more accurate change distance by counting the number of changes.
+Current methods rely on vague data producer evaluation, communicated through changing version identifiers.
+Because version graphs will catalog individual changes, a count based on the different types of changes are expected to produce a more revealing change metric.
 The distance can be verified by comparison with the amount of change indicated by the version identifier.
+The hypothesis relies on an assumption that all changes of the same type within a work have the same or similar significance.
+The evaluation stems from the observation that change logs exist to capture the differences between sequential versions.
+
+The third hypothesis is that versioning graphs will enable the automated creation of machine readable change logs.
+Assuming that natural language processing cannot understand and quantify the change in a log, quantifying the log's information remains difficult.
+The results will show that a comprehensive log can be generated which is both human and machine consumable.
+The approach will deal specifically with spreadsheet data sets since they provide a flatter, more consistent context to capture.
 
 \section{Contributions}
 
+Through the process of addressing Use Case 1, I develop the idea of a versioning graph.
+I created machine-readable change logs and  developed their automated construction.
+Leveraging versioning graphs, I develop a new method of determining change distance.
+I expand the semantics of what constitutes a version of different objects.
 
 %%% Local Variables:
 %%% mode: latex
