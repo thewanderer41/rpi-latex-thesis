@@ -227,10 +227,8 @@ This virtual laboratory has produced sets of data which, under FRBR and Barkstro
 Because the semantics do not fit, the ontologies should not be employed to capture their changes.
 Provenance graphs, additionally, do not focus on change or differences between objects.
 Since PROV and Schema.org have the most detailed definitions for change relations, they are used as the primary comparison for the development of a versioning graph.
-\section{Hypothesis Statement}
 
-Assumption: all changes within a work will have about the same magnitude of change.
-Change logs provide a means to evaluate what has changed, but are difficult to quantify.
+\section{Hypothesis Statement}
 
 The work in this dissertation seeks to prove three hypotheses.
 In the first hypothesis, provenance concepts for revisions need to be diversified in order to properly capture change information.
@@ -238,6 +236,8 @@ Prior versioning models indicate that versioning graphs will need to utilize a t
 These tiers unify the practices already established by provenance models with the semantics defined by versioning models.
 The content and format of change logs give insight into the information desired by version users.
 The versioning graphs in this dissertation will explicitly deal with data sets since software versioning is a more developed field.
+An additional assumption in constructing the versioning graph is that the objects used in the comparison have already been established as versions of each other.
+That is, objects in the versioning graph belong to the same \textbf{work} and share the same tier.
 
 The second hypothesis is that versioning graphs can calculate a more accurate change distance by counting the number of changes.
 Current methods rely on vague data producer evaluation, communicated through changing version identifiers.
@@ -253,10 +253,12 @@ The approach will deal specifically with spreadsheet data sets since they provid
 
 \section{Contributions}
 
-Through the process of addressing Use Case 1, I develop the idea of a versioning graph.
-I created machine-readable change logs and  developed their automated construction.
-Leveraging versioning graphs, I develop a new method of determining change distance.
-I expand the semantics of what constitutes a version of different objects.
+Through the process of addressing Use Case 1, I develop my first contribution, the idea of a versioning graph.
+Versioning graphs capture differences between objects, not the course used to create those objects, differentiating themselves from provenance graphs.
+The versioning graph enables my second contribution, a process to automate machine-readable change log creation.
+The contribution eases consuming very lengthy logs, which data sets often produce, as well as enabling searchability and discoverability of changes affecting the version.
+My third contribution is using a versioning graph to provide a quantitative basis for determining change distance.
+The resulting distance measure comes in three parts to both characterize the distance and provide a basis for version identifier assignment.
 
 %%% Local Variables:
 %%% mode: latex
