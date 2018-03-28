@@ -4,7 +4,7 @@
 %                                                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{RESULTS}\label{ch:implement}
+\chapter{VERSIONING GRAPH}\label{ch:graph}
 
 \section{Introduction}
 
@@ -124,119 +124,6 @@ A script then iterates over the remaining cells which exist in both versions to 
 The unchanged cells form a set of entries which do not appear in a change log or the versioning graph.
 The attributes in these sets are then minted into URIs and linked together into the versioning graph, or they can be used to publish a change log.
 
-\subsection{Produce Change Log}
-
-Change logs were generated for both the Noble Gas data set and the Copper data set.
-Following the practices of other change logs, the documents present before and after values for comparison which can be seen in Figure \ref{changelog_zoomed}.
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.80]{figures/Changelog-zoomed.png}
-	\caption{Abswurmbachite entry in the Copper Dataset Change Log}
-	\label{changelog_zoomed}
-\end{figure}
-The partial snapshot of the change log shows that column numbers in the Copper data set also accompany the values to identify the data's location in the spreadsheet.
-Very little natural language is used in this change log to regularize the format and improve compatibility with RDFa.
-The change logs follow a common format with three sections: Additions, Invalidations, and then Modifications.
-The sections may be further grouped by column or row additions.
-The division means that changes are not published into the change log as they are found, but instead organized and grouped beforehand.
-
-Employing RDFa means that the document must be written using HTML formatting.
-Listing \ref{rdfa_list} shows the text necessary to layout the first four lines of Figure \ref{changelog_zoomed}.
-While the content only shows four lines, the underlying markup takes up three and a half times as many lines.
-Line 2 states that all following resources will be \textbf{attributes} of Version 1.
-Line 3 defines such an \textbf{attribute}.
-Lines 5 through 8 define the changes Abswurmbachite undergoes.
-Because RDFa allows the statements to be embedded within the content, the triples can appear along with the text they describe.
-Lines 11 and 12 define complete triples which do not appear in the visible document.
-The lines complete the graph, but must be included in spans because RDFa only allows a single triple within each tag.
-Modifying the tags' order so that the spans are unnecessary would cause the visible content to appear in an un-logical order, rendering the document machine-readable but not human-readable.
-
-\begin{lstlisting}[language=HTML, caption=Abswurmbachite RDFa, label=rdfa_list]
-<h3>Change Log</h3>
-<div about="Version1" rel="vo:hasAttribute">
-  <div resource="v2:Abswurmbachite" typeof="vo:Attribute">
-    <span style="font-weight:bold" property="http://www.w3.org/2000/01/rdf-schema#label">Abswurmbachite</span>
-    <table rel="vo:Undergoes">
-      <tr  about="ChangeAbswurmbachite12" typeof="vo:Change">
-        <td align="right" rev="vo:Undergoes" resource="v1:AttributeAbswurmbachite12v1" typeof="vo:Attribute"> 9</td>
-        <td property="vo:resultsIn" resource="v2:AttributeAbswurmbachite12v2" typeof="vo:Attribute">(12)</td>
-        <td>          </td>
-        <td>       0.0</td>
-        <span about="Version1" property="vo:hasAttribute" resource="v1:AttributeAbswurmbachite12v1"></span>
-        <span about="Version2" property="vo:hasAttribute" resource="v2:AttributeAbswurmbachite12v2"></span>
-      </tr>
-    </table></div></div><br>
-\end{lstlisting}
-
-After encountering the limitations of using RDFa to include the versioning graph into the change log, JSON-LD was used.
-The new format does not rely on the structure of visible content to determine the syntax triples use to be included in the change log.
-Listing \ref{json_list} provides the alternative encoding of the Abswurmbachite entry from RDFa.
-The entry is significantly longer, almost three times longer than the RDFa entry and ten times longer than the original visible content.
-Instead of including all the data in the beginning or end of the document, each change block is separated into the particular \textit{div} section for that change.
-This choice allows consumers to extract pertinent change information without needing to ingest the entire versioning graph.
-
-\begin{lstlisting}[language=HTML, caption=Abswurmbachite JSON-LD, label=json_list]
-<h3>Change Log</h3>
-<div about="v1:Abswurmbachite">
-  <span style="font-weight:bold" property="http://www.w3.org/2000/01/rdf-schema#label">Abswurmbachite</span>
-  <table>
-    <tr  id="ModifyChangeAbswurmbachite12">
-      <td align="right"> 9</td>
-      <td >(12)</td>
-      <td>          </td>
-      <td>       0.0</td>
-      <script type="application/ld+json">
-[
-{
-	"@context": "https://orion.tw.rpi.edu/~blee/provdist/GCMD/VO.jsonld", 
-	"@id": "http://CUdb.com/v1/AttributeAbswurmbachite9", 
-	"@reverse": {
-		"hasAttribute": "Version1"
-	}, 
-	"@type": "vo:Attribute", 
-	"label": "Primary", 
-	"undergoes": "http://orion.tw.rpi.edu/~blee/provdist/CU/DTDI/CUjsonlog.html#ModifyChangeAbswurmbachite12"
-}, 
-{
-	"@context": "https://orion.tw.rpi.edu/~blee/provdist/GCMD/VO.jsonld", 
-	"@id": "http://orion.tw.rpi.edu/~blee/provdist/CU/DTDI/CUjsonlog.html#ModifyChangeAbswurmbachite12", 
-	"@type": "vo:ModifyChange", 
-	"resultsIn": "http://CUdb.com/v2/AttributeAbswurmbachite12"
-}, 
-{
-	"@context": "https://orion.tw.rpi.edu/~blee/provdist/GCMD/VO.jsonld", 
-	"@id": "http://CUdb.com/v2/AttributeAbswurmbachite12", 
-	"@reverse": {
-		"hasAttribute": "Version2"
-	}, 
-	"@type": "vo:Attribute", 
-	"label": "Primary"
-}
-]
-      </script>
-    </tr>
-  </table></div><br>
-\end{lstlisting}
-
-The encoded change logs struggle with intense document size.
-The Copper Minerals data set encoded in RDFa is 1.7 MB and JSON-LD is 3.3 MB.
-In the Noble Gas data set, the RDFa and JSON-LD change log sizes are 59 and 60 MB, respectively.
-The Noble Gas change logs often do not load in a browser.
-
-\begin{table}[b]
-	\caption{Sizes of change log encodings.}
-	\label{changelog_table}
-	\centering
-	\begin{tabular}{|c|c|c|c|}
-		\hline
-		Dataset & No Encoding (MB) & RDFa (MB) & JSON-LD (MB) \\
-		\hline
-		Copper Minerals & 0.137 & 1.7 & 3.4 \\
-		Noble Gas & 5.4 & 59 & 124 \\
-		\hline
-	\end{tabular}
-\end{table}
-
 \subsection{Generate Versioning Graph}
 
 The versioning graphs presented in this section were created by extracting triples from the associated change log.
@@ -244,7 +131,7 @@ The statements making up the graph could have alternately been published by writ
 Figure \ref{NobleGraph1} displays a subgraph of the Noble Gas data set's versioning graph between versions 1 and 2, highlighting each of the three change operations.
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.30]{figures/NobleVersion.png}
+	\includegraphics[scale=0.25]{figures/NobleVersion.png}
 	\caption{Some initial entries from versions 1 and 2 of the Noble Gas data set}
 	\label{NobleGraph1}
 \end{figure}
@@ -253,7 +140,7 @@ The versioning graph unpacks the \textit{prov:wasRevisionOf} relationship into e
 These components reveal more detailed differences between version 1 and 2 of CAM001 in the provenance graph which are the differing compilation activities.
 \begin{figure}[b]
 	\centering
-	\includegraphics[scale=0.70]{figures/CAM001v1v2.png}
+	\includegraphics[scale=0.65]{figures/CAM001v1v2.png}
 	\caption{Provenance graph for the CAM001 entry of the Noble Gas Database.  Other than the labels, the structure of each data object is very much the same.}
 	\label{CAM001ProvGraph}
 \end{figure}
@@ -308,7 +195,7 @@ The entire row, however, becomes invalidated in version three.
 	\begin{adjustbox}{addcode={\begin{minipage}{\width}}{
 					\caption{Versioning Graph representing the linked data graph with selected entries of additions, invalidations, and modifications after the publication of the third version. 
 			}\end{minipage}},rotate=90,center}
-		\includegraphics[scale=0.5]{figures/NobleVersion2.png}%
+		\includegraphics[scale=0.48]{figures/NobleVersion2.png}%
 	\end{adjustbox}
 	\label{NobleGraph2}
 \end{figure}
@@ -318,97 +205,6 @@ Figure \ref{NobleGraph1} used linked data extracted from a change log employing 
 The way nesting works in RDFa means that ChangeCAM00111 cannot back reference multiple concepts in a single statement, therefore AttributeCAM00111v2 was used to imply CAM001.
 Figure \ref{NobleGraph2} used linked data extracted from a JSON-LD encoded change log.
 Since the log can use explicit statements, the column identifier refers to the entire column and can be used to identifier changes in the same column across multiple rows.
-
-\section{GCMD}
-
-\subsection{GCMD Versioning Graph}
-
-The Global Change Master Directory establishes the context that each \textbf{manifestation} of their keyword list are related versions.
-Since the unique identifier for each keyword remains the same across versions, they can be used to align a mapping across versions.
-\textbf{Additions} and \textbf{invalidations} are detected by checking an identifier's presence within both versions.
-A \textbf{modification} occurs when a keyword's \textit{skos:Broader} property differs between adjacent versions.
-A difference indicates that the word has been moved to a different place within the taxonomy since identifiers do not change across versions and a keyword only has one parent concept.
-Changes over consecutive versions can be collected into a single graph using the method in Section \ref{sec:multiver} to chain together versioning graphs.
-A change log was generated for each pair of consecutive versions in GCMD Keywords and embedded with JSON-LD.
-Versioning graphs for each adjacent version was created by extracting JSON-LD from the corresponding change log, and entering the triples into a Fuseki triple store.
-
-\subsection{Connecting Change Counts to Identifiers}
-
-The \textbf{add}, \textbf{invalidate}, and \textbf{modify} counts for each transition are presented in Figure \ref{GCMDC1}.
-The query used to extract the counts is found in Listing \ref{gcmd_list}.
-Notice the sharp spike in adds and invalidates when transitioning from version 8.4.1 to 8.5.
-The version identifiers indicate that at most a minor or technical change has occurred, but the counts of \textbf{addition} and \textbf{invalidation} changes in this transition is more than triple the counts in either of the previous \textbf{major} transitions.
-Not only should a small transition not produce changes of this quantity, but the data set's size is on the order magnitude of the recorded \textbf{invalidates}.
-In addition, no \textbf{modifications} are revealed, and even the root node "Science Keywords" has been invalidated.
-Further investigation of the root word reveals that the name space for the keywords has changed from HTTP to HTTPS.
-To provide context, NASA mandated a transition to secure protocols, and the group changed the name space to ensure the URIs remained resolvable.
-Since the identifiers are unique, the new name space means they no longer refer to the same object after the protocol change.
-Because the keyword identifiers no longer match, the mapping approach results in the total invalidation of keywords from 8.4.1 and the addition of keywords from 8.5.
-The dot decimal identifier for the transition from version 8.4.1 to 8.5 does not match the number of changes in the versioning graph.
-
-\begin{figure}[b]
-	\centering
-	\includegraphics[scale=1]{figures/GCMDChart1.png}
-	\caption{Add, Invalidate, and Modify counts in Version 8.5.  The counts show change magnitudes and indicate that major and minor changes differ by orders of magnitude.}
-	\label{GCMDC1}
-\end{figure}
-
-%\hfill \break
-\begin{lstlisting}[language=SPARQL, caption=This query compiles the counts for each subclass of Change in a GCMD versioning graph,label=gcmd_list]
-PREFIX vo:<http://orion.tw.rpi.edu/~blee/VersionOntology.owl>
-PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-
-SELECT ?p (COUNT (DISTINCT ?s) as ?count)
-{
-?s a ?p .
-?p rdfs:subClassOf vo:Change .
-} GROUP BY ?p
-\end{lstlisting}
-
-Changing the mapping method to account for the new namespace provides a pathway to compare the perceived change by the producer as evidenced by the version identifier with the amount of change in the versioning graph.
-To do this, the mapping treats identifiers with HTTP and HTTPS the same. 
-Differences in change magnitudes become much clearer after controlling for the altered name space in Figure \ref{GCMDC2}.
-All revisions are dominated by \textbf{additions}, but major version changes have counts around 300 to 500 while minor revisions are an order of magnitude smaller.
-The transition from version 8.4.1 to 8.5 also seems to follow this trend.
-The \textbf{additions} in ``8.4 to 8.4.1" in Figure \ref{GCMDC2} numbers almost a hundred, providing evidence that the trend of decreasing order of magnitudes may now continue as the granularity of the version identifier increases.
-
-\begin{figure}%[b]
-	\centering
-	\includegraphics[scale=1]{figures/GCMDChart2.png}
-	\caption{Add, Invalidate, and Modify counts ignoring the namespace changes in Version 8.5.  The counts show change magnitudes appropriate for the identifier.}
-	\label{GCMDC2}
-\end{figure}
-
-\section{MBVL}
-
-
-\subsection{Variant Versioning Graph}
-
-The experiment conducts activity over two phases in this procedure.
-The first phase takes sequences from the original known population and feeds the sequences though a particular algorithm/taxonomy combination to produce a candidate classification.
-Since the classifications for the known population sequences is unavailable, there is not sufficient context to perform a valid comparison with the candidate classifications.
-The second phase compares the performances of each candidate classification of a algorithm/taxonomy pair.
-The use of \textbf{add}, \textbf{invalidate}, and \textbf{modify} varies slightly in this application since all the results use the same sequences.
-A versioning graph utilizing just the sequence identifiers would only result in \textbf{modify} changes when taxonomic ranks differ since the sequence identifier exists in both data sets.
-The mapping instead uses the sequence identifiers to align comparisons and then the taxonomic rank classification to determine the kind of change.
-If the right-hand result specifies more taxonomic ranks, the relationship is an \textbf{addition}.
-If the left-hand result is more specific, then the relationship is classified as an \textbf{invalidation}.
-If both results have the same precision but the name differs, then the link is a \textbf{modification}.
-Otherwise, no change is detected.
-
-Figure \ref{mbvl_chart} shows the changes detected when varying either the taxonomy or the classification algorithm.
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.80]{figures/mbvl_chart.png}
-	\caption{Compiled counts of \textbf{adds}, \textbf{invalidates}, and \textbf{modifies} grouped by taxonomic rank across algorithm and taxonomy combinations.}
-	\label{mbvl_chart}
-\end{figure}
-No comparison was conducted with different taxonomy and classifier since that would introduce too many sources of variability to differing results in a classification.
-Each bar indicates the total number of differences between sequences for a specific kind of change.
-The bars are further broken down by the taxonomic rank at which the difference occurred.
-For example, in ``Silva vs RDP, Gast", a notable number of classifications differed at the species rank.
-The graph also indicates that using the RDP taxonomy often produces more precise classifications since both ``Silva vs RDP, Spingo" and ``Silva vs RDP, Gast" feature a larger number of \textbf{additions} than any other change.
-The classifier comparisons feature a high number of \textbf{invalidations}; however, ``RDP, Spingo vs Gast" also displays a higher number of \textbf{modifications} than \textbf{invalidations}.
 
 
 \section{Summary}
