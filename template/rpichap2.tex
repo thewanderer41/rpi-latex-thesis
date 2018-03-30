@@ -122,6 +122,17 @@ They additionally identified three levels at which ontologies can differ: the do
 Hauptmann et al., define a method to version ontologies natively within a triple store using linked data \cite{HauptmannEtAl:LDQ2015} \cite{LDQ2015}.
 The method heavily relies on the context of stored data.
 
+\subsection{Evaluation}
+
+Versioning systems cover a wide variety of different application environments, and each uses terminology to define versions in the context of their particular domain.
+Application based systems such as software and grid versioning focus primarily on identifying large, medium, and small differences between versions.
+The size approach suffers many drawbacks as a result of variety in versioning environments.
+Small changes logged in Clotho would barely register in massive systems operating on the grid.
+The requirements to differentiate changes is not universal across versioning systems.
+Other than software version managers, the systems do not incorporate methods to include change logs.
+They use the existence of an alternate version as sufficient explanation for what has changed.
+Bose, Frew, and Tagger all recognize the need in versioning for a standardized representation, but each domain defines change according to the needs of their application \cite{Bose:2005:LRS:1057977.1057978} \cite{Tagger2005}.
+In isolation, the systems to not recognize the commonality in utilizing similar operations to conduct versioning activities.
 
 \section{Data Versioning Operations}
 

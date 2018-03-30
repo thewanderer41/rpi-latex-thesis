@@ -12,16 +12,27 @@ Discontinuous attributes across multi-version graphs creates a problematic barri
 Finally, further study must be done to determine methods in providing quantitative basis for version identifiers.
 These un-addressed questions form the most immediately approachable next steps for this versioning graph approach.
 
+\section{Change Log Optimization}
+
 Very large change logs encoded with JSON-LD through HTML began experiencing performance issues due to the extreme number of modifications in the graph.
 One observation is that a modification in one cell of the Noble Gas data set sometimes also occurs in every other cell in that spreadsheet column.
 The relation of all those cells could then be summarized with a singe modification statement with just the column attribute, reducing the space utilization dependency from the number of rows to a single statement.
 The summarization could reduce the change log's size to a manageable enough level to be viewable.
+
+\section{Multi-version Graphs}
 
 At present, the versioning model captures only changing as a matter of convention and to save space.
 Version graphs with multiple versions can suffer discontinuities across attributes which don't change between two versions, but then experience a modification later.
 Discontinuities in the graph causes problems for search queries since a directed path does not exist through all versions in the graph for that attribute.
 The definition of a null-step to bridge gaps could provide a temporary solution to show an attribute in the graph hasn't changed but re-establish connectivity.
 The addition could also introduce new space utilization concerns.
+
+Once standardized, multi-version graphs provide a full history of a work.
+Versioning systems often only need to provide the changes between two specific versions.
+Not all changes along that profile is necessary.
+As a result, reasoning methods need to be developed to help summarize changes across multiple versions.
+
+\section{Change Distance and Dot-decimal Idnetifiers}
 
 The initial research to study the relationship between change counts and version identifiers broke down due to the subjectivity of identifier assignment.
 Not enough evidence was found to determine if identifiers were assigned accurately.
@@ -30,7 +41,27 @@ The research would be conducted to determine the extent to which dot-decimal ide
 
 \section{Database Context}
 
-\section{Reasoning Mechanics Over Multiple Versions}
+One area not explored by the work in this dissertation is the context of centralized databases.
+While they resemble spreadsheets, centralized databases only have a single instance and use multiple tables which are routinely merged to answer queries.
+The scripts and process used to version spreadsheets would not work on these databases since the data is not instanced.
+The databases, however, use standardized add, delete, and modify commands which do map to the versioning model.
+Work remains to be done in studying how these commands can be captured and output as a versioning graph instead of using the script to perform the comparison.
+
+\section{Implementing Recursive Tiers}
+
+The multi-tiered nature of versioning models have been mentioned multiple times, but the specified versioning model only defines one tier.
+Multiple tiers may be necessary to capture the granularity of some data sets such as the one illustrated by Barkstrom.
+If attributes are also allowed to be versions, graphs can be nested recursively to form a multi-tiered graph.
+More work needs to be done to understand what such a graph would look like as well as the mechanics necessary to make the graph accessible.
+
+\section{Multi-file Versions}
+
+As pointed out in Chapter \ref{ch:graph}, little guidance is given on versions spread across multiple files.
+For the Noble Gas data set, the files were grouped into a collection, but if the desired representation are separate objects and multiple left-hand versions, not much work has been done to explain how that should be implemented.
+An alternative way to implement the Noble Gas graph would be to have the collection link not to the attributes and changes, but to a file which then behaves like a left-hand version in the normal graph.
+Such a construction is possible, but whether the setup is desirable remains to be studied.
+
+\section{Summary}
 
 Future work should be conducted to reduce the size of change logs, re-connect multi-version graphs, and determine a quantitative basis for version identifiers.
 Change logs can be shortened by discovering modifications occurring over an entire column which can be summarized in a single statement.

@@ -53,12 +53,15 @@ A \textbf{work} refers to the abstract concept of a creative or artistic idea.
 \textbf{Expressions} are then different forms of that particular \textbf{work}, embodying the most similar term to versions.
 A \textbf{manifestation} is the physical embodiment of an \textbf{expression}.
 These three terms and their hierarchy establish a repeating theme throughout other versioning works.
+
 Combining these myriad of definitions together, a version is an \textbf{expression} of a \textbf{work} which exists in comparison to another object and communicates the extent to which it diverges from that object as a result of provenance changes.
+Although each definition disagrees on the form a version object takes on, all but PROV derivation agree that a version belongs to a larger collection of objects implementing a more abstract, ideal representation.
+Provenance provides the information necessary to explain semantically meaningful for the Tagger definition as \textit{prov:Derivation} captures when a data object diverges into a new object.
 
 
 \section{Version Models} \label{sec:models}
 
-Version models provide a visual a theoretical aid in understanding where a data object lies in relation to the rest of a work.
+Version models provide a visual theoretical aid in understanding where a data object lies in relation to the rest of a work.
 The Atmospheric Radiation Measurements (ARM) group used a model dividing the data into mathematical sets which versioning operations acted upon\cite{6906868}.
 Adding files already in the set created a new set which inherited all non-intersecting files and included all the new ones.
 The model provided a means to organize and automate the versioning of ARM's daily expanding data sets.
@@ -182,7 +185,20 @@ Research done involving change log content must manually link entries with compu
 While machines may still be significantly removed from the ability to comprehend the impact of changes made to a data set or software code, they are currently opaquely blocked from consuming any of the content within logs more than understanding they contain text.
 The transition between different versions of large data sets is then left largely up to the human user's ability to understand and process the modifications mentioned within the change log.
 
-\section{Introduction of Use Cases}
+\section{Introduction of Use Cases} \label{sec:usecase}
+
+The following use cases bring together features from the fields of linked data, provenance ontologies, version models, and change log practices to form a basic fundamental model of versioning.
+As mentioned in Section \ref{sec:models}, a common feature of version models is that they are tree-like and tiered.
+The HCLS data model has already begun connecting versioning models with linked data to make them digitally implementable and computable.
+The definitions of versions, however, noted that provenance is necessary to make version objects semantically meaningful.
+Extending provenance ontologies would use linked data to provide a concourse to tiered versioning models.
+Change logs, by their existence, indicate that version systems need to communicate more than the fact that two objects are different, and the versioning models must also explain the differences.
+Change logs provide the meat between two version objects and takes the work beyond just connecting versioning and provenance models.
+To summarize, version models provide a structure to separate version objects.
+Provenance provides context for the separation.
+Linked data is the mechanism used to connect provenance and versioning models.
+Change logs inform the concepts missing from both models which must be added to fill in the gaps.
+The model specified in Chapter \ref{ch:model} uses the intersection of all these features to address the following use cases.
 
 \subsection{Use Case 1: Linked Data Change Log}
 

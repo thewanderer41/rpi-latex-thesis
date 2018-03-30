@@ -6,6 +6,74 @@
 
 \chapter{CHANGE DISTANCE} \label{ch:distance}
 
+\section{Introduction}
+
+Use Case 2 addresses the use of versions to communicate how different two objects are.
+Many versioning systems use dot-decimal identifiers to signify whether a change is large, medium, or small.
+The exact requirements to determine change size differs widely across different domains and applications.
+The versioning graph provides a new, more regular method to quantify change between objects using versioning operations.
+The work done with GCMD Keywords shows the qualitative relationship between version identifiers and change distance.
+Work with the MBVL data set then extends VersOn to give more detailed accounting with the change capture method.
+
+\section{Utilized Data Sets}
+
+\subsection{GCMD Keywords}
+
+The Global Change Master Directory (GCMD) is a metadata repository used by NASA to store records of its available data sets \cite{Miled:2001:GCM:372202.372324}.
+They employ a set of keywords to make NASA Earth Science data sets searchable.
+These words tag and label datasets into strictly defined categories \cite{GCMDKey}.
+GCMD Keywords do not qualify as a standard web ontology since it does not constitute a class hierarchy.
+The management team stored early versions of the keywords in Excel spreadsheets, and a centralized distribution system was not used until June 12, 2012.
+The Key Management Service now serves the keywords directly in a variety of formats.
+Each version of the keywords, encoded in RDF, were downloaded into separate files.
+Only versions from June 12, 2012 and after were available, resulting in 9 version files.
+Each keyword corresponds to a unique identifier, and when combined with a web namespace, resolves to a data description of the keyword.
+Every identifier can be referred to per version by including the version's number at the web identifier's end, meaning that identifiers are consistent across versions.
+The taxonomy uses the concepts \textit{skos:Broader} and \textit{skos:Narrower}, where skos refers to the Simple Knowledge Organization System ontology name space, to form a tree hierarchy \cite{skos}.
+The tree's root is the keyword, "Science Keywords."
+The data set provides an interesting study case due its long sequence of versions and ready use of linked data technology \cite{Stevens2016}.
+
+\begin{table}
+	\caption{List of versions available in the KMS.}
+	\label{gcmd_table}
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+		\hline
+		June 12, 2012 & 7.0 & 8.0 & 8.1 & 8.2 & 8.3 & 8.4 & 8.4.1 & 8.5 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{MBVL Classifications} \label{sec:MBVL}
+
+The Marine Biodiversity Virtual Laboratory (MBVL), based at Woods Hole Oceanographic Institution, provides data and services for the study of marine biology with an integrative approach \cite{mbvl}.
+In the application studied, a choice of algorithm and taxonomy pairings must be tested on a known population in order to estimate their performance with an unknown microbial population.
+The original sequences belong only to the species listed in Table \ref{species_table}.
+The original population's census is not available to the author, and only the list of species are known, forming the first data set in this section.
+These sequences are then grouped and classified by a specific taxonomy and algorithm pairing.
+The workflow utilizes two taxonomies, the Ribosomal Database Project (RDP) and the Silva taxonomy.
+Using these databases, the Species-level IdentificatioN of metaGenOmic amplicons (SPINGO) or the Global Alignment for Sequence Taxonomy (GAST) algorithms assign taxonomic ranks to each sequence.
+The process produces four data sets, each using the same grouping identifiers and having the same size in each group.
+Since the data sets have the same number of sequences, the primary difference between the data sets are the ranks assigned to each sequence.
+
+\begin{table}
+	\caption{List of species in the original population.}
+	\label{species_table}
+	\centering
+	\setlength{\tabcolsep}{2pt}
+	\begin{tabular}{|c|c|c|}
+		\hline
+		Acinetobacter baumannii & Actinomyces odontolyticus & Bacillus cereus \\
+		Bacteroides vulgatus & Clostridium beijerinckii & Deinococcus radiodurans \\
+		Enterococcus faecalis & Escherichia coli & Helicobacter pylori \\
+		Lactobacillus gasseri & Listeria monocytogenes & Neisseria meningitidis\\
+		Porphyromonas gingivalis & Propionibacterium acnes & Pseudomonas aeruginosa \\
+		Rhodobacter sphaeroides & Staphylococcus aureus & Staphylococcus epidermidis\\
+		Streptococcus agalactiae & Streptococcus mutans & Streptococcus pneumoniae \\
+		\hline
+	\end{tabular}
+\end{table}
+
 \section{GCMD}
 
 \subsection{GCMD Versioning Graph}
@@ -68,7 +136,6 @@ The \textbf{additions} in ``8.4 to 8.4.1" in Figure \ref{GCMDC2} numbers almost 
 
 \section{MBVL}
 
-
 \subsection{Variant Versioning Graph}
 
 The experiment conducts activity over two phases in this procedure.
@@ -97,3 +164,53 @@ For example, in ``Silva vs RDP, Gast", a notable number of classifications diffe
 The graph also indicates that using the RDP taxonomy often produces more precise classifications since both ``Silva vs RDP, Spingo" and ``Silva vs RDP, Gast" feature a larger number of \textbf{additions} than any other change.
 The classifier comparisons feature a high number of \textbf{invalidations}; however, ``RDP, Spingo vs Gast" also displays a higher number of \textbf{modifications} than \textbf{invalidations}.
 
+\section{Analysis}
+
+\subsection{Version Identification}
+
+The versioning process discovered a discrepancy in the identifier assignment in the GCMD Keywords taxonomy.
+The original analysis was intended to determine if dot-decimal identifiers could be predicted using the change counts of the versioning graph.
+Version 8.5, however, was named with respect to perceived taxonomy changes and did not consider underlying linked data practice revisions.
+The disconnect brings into question the accuracy of all prior names and any relationships observed between identifier and change counts.
+Non-matching identifiers would explain how 8.4.1 had more additions than any previous minor change but obtains a third bracket identifier.
+After accounting for namespace differences in version 8.5, the change counts is in the tens, resembling tallies of other versions in the same identifier bracket.
+Version name assignment based on producer perception and not on more concrete measures is concerning.
+An incomplete understanding in the amount of change between two versions can lead to flawed expectations during version migration.
+
+The analysis does not to claim that change counts should be the sole mechanism in determining version identifiers.
+The counts, however, can provide a more quantitative method to compare version differences.
+In Figure \ref{GCMDC2}, the yellow line indicates the total changes made to the data set, performing a similar function as the major/minor/revision version identifier.
+Breaking up the changes into types reveals additions dominate manipulations to the data set.
+Addition, invalidation, and modification provides deeper insight into how a data set is changing, but some changes can be more impactful than others which this model does not capture.
+
+\subsection{MBVL Analysis}
+
+In Chapter \ref{ch:distance}, the versioning process was used to compare the performance of different taxonomy and algorithm combinations.
+The data set diverges from many of the common understandings of versions since each of the versions are not sequential and are largely independent.
+The data set of species names in the initial population would not have produced very meaningful results if applied to the versioning model since it lacked sufficient data to map the other data sets together well.
+
+In Figure \ref{mbvl_chart}, the first set of columns in the Silva taxonomy results are versioned against RDP using the SPINGO algorithm.
+The naming reflects the orientation in the versioning graph so Silva forms the left-hand version and RDP would be the right-hand version.
+In this comparison, using the RDP taxonomy seems to provide more accurate results, most specifically at the species level.
+The taxonomies also disagree fairly often at the species and family ranks.
+Switching to the GAST algorithm in the second set of columns, RDP once again demonstrates a noticeably greater accuracy in species classification.
+There are also significantly fewer disagreements using the GAST algorithm between the two taxonomies.
+Looking at the third set of columns, Silva demonstrates greater accuracy classifications under the SPINGO algorithm than under GAST.
+Over four thousand of these entries can be classified to the species level when GAST cannot.
+In the fourth set of columns, RDP appears to perform better with SPINGO than GAST.
+However, the comparison is dominated by a much larger number of disagreements between almost six thousand entries, primarily at the species rank.
+On closer inspection, this disagreement is explained by GAST classifying the species for a number of entries as ``uncultured bacterium".
+This analysis presents evidence that using the RDP taxonomy with the SPINGO algorithm will produce the most accurate classification results.
+
+\section{Summary}
+
+The result of testing the second hypothesis is inconclusive.
+Initial results suggested that identifier assignment and version change size followed an order scale, major changes numbered in the hundreds while minor changes were associated with tens of adds.
+The behavior of version 8.5, however, brings into question how accurate or subjective any of the identifiers may be.
+Verifying the accuracy of the change counts becomes invalid without further study using other works.
+The version graph method does provide a more nuanced view of the distance measure by dividing the total number of changes into groups by operation.
+The observation that invalidations almost equaled addition in an add dominated data set in the 8.4.1 to 8.5 transition provided evidence that the data set was completely deleted and an entirely new one added.
+
+The MBVL data set demonstrates a case where versioning graphs can be used to compare the performance of different taxonomy/algorithm pairings.
+The ability derives from sub-classing each of the add, invalidate, and modify changes to give a better perspective where the pairings differed.
+This approach of extending the versioning graph adds domain knowledge to the version comparison and helps contextualize the observed differences.

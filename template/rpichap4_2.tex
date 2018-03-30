@@ -6,7 +6,17 @@
 
 \chapter{MACHINE-READABLE CHANGE LOG}\label{ch:changelog}
 
-\subsection{Produce Change Log}
+\section{Introduction}
+
+Change logs explain the differences between versions; however, they are often only available in human-readable formats.
+Readability puts a limit on the length and extent of the log since a human will need to write it.
+Manageable change descriptions become difficult with large data sets featuring many changes, or data sets that change often, but these are exactly the data sets which need change logs the most.
+Automating the process will allow more data sets to provide change documentation in a timely fashion for data sets.
+Encoding the change logs with structured data will provide a means for users to efficiently consume change information.
+The additional encoding will inflate the size of a standard change log which becomes an issue with the Noble Gas change log.
+This chapter utilizes the Noble Gas and Copper data sets again.
+
+\section{Produce Change Log}
 
 Change logs were generated for both the Noble Gas data set and the Copper data set.
 Following the practices of other change logs, the documents present before and after values for comparison which can be seen in Figure \ref{changelog_zoomed}.
@@ -100,12 +110,12 @@ This choice allows consumers to extract pertinent change information without nee
 </table></div><br>
 \end{lstlisting}
 
-The encoded change logs struggle with intense document size.
-The Copper Minerals data set encoded in RDFa is 1.7 MB and JSON-LD is 3.3 MB.
-In the Noble Gas data set, the RDFa and JSON-LD change log sizes are 59 and 60 MB, respectively.
+The encoded change logs struggle with intense document size as summarized in Table \ref{changelog_table}.
+The Copper Minerals data set encoded in RDFa is 1.7 MB and JSON-LD is 3.4 MB.
+In the Noble Gas data set, the RDFa and JSON-LD change log sizes are 59 and 124 MB, respectively.
 The Noble Gas change logs often do not load in a browser.
 
-\begin{table}[b]
+\begin{table}
 	\caption{Sizes of change log encodings.}
 	\label{changelog_table}
 	\centering
@@ -119,3 +129,49 @@ The Noble Gas change logs often do not load in a browser.
 	\end{tabular}
 \end{table}
 
+\section{Change Log Analysis}
+
+The change logs created with RDFa or JSON-LD demonstrates progress towards documents which are both human and machine-readable.
+The implementation provides evidence that JSON-LD is better suited to embed a versioning graph into a change log than RDFa.
+RDFa suffers limitations since it is constrained by the content's structure.
+The \textbf{modify} relation presented in Figure \ref{NobleGraph1} is unbalanced and the right-hand side of ``ChangeCAM00111" links only to the column \textbf{attribute} but not to the corresponding row \textbf{attribute}.
+This stems from a mismatch between the model's structure, the order in which data appears in the change log, and the way RDFa links properties together.
+Because the row label forms the outermost encapsulation, it cannot instantiate both row identifiers and implicitly link them separately.
+To do so would require explicitly instantiating the \textbf{attribute} in a non-visible part of the document, defeating the purpose of using RDFa to implicitly encode the versioning graph into the document.
+
+Both structured data implementations break up the graph across \textbf{attributes} so that individual parts of the graph can be extracted.
+The practice of a one-node JSON object is generally helpful for many web applications to load data quickly, but since the change log is not an application, it makes more sense to break up the content.
+Changes to individual \textbf{attributes} can be identified using anchors on the web page, then agents need only extract and parse the linked data to these specific entries.
+This way, a subgraph of only the pertinent attributes can be created without first ingesting the entire versioning graph.
+
+An unexpected challenge with the change logs is the larger file size and difficulties in loading the Noble Gas data set's JSON-LD change log.
+The problem results from needing ten lines to express a single row in the change log.
+Noble Gas also had an impressive number of \textbf{modifications}, some of which are shared across all rows in the data set.
+Repeated modifications over rows would account for the explosion in entries within the change log.
+
+\section{Summary}
+
+The automated change log generation yielded some unexpected results.
+While the data sets differed in both size and structure, the process used to generate the logs followed the same steps.
+Because the process to generate versioning graphs already separates changes into groups, the change log is organized into similar categories.
+Much of the data visible in the change log does not explicitly appear in the model such as the pre and post-values.
+
+The human-readable presentation defines the structure which tags in the change log must take since maintaining human-readability is desired.
+The structure then determines the order in which linked data statements must appear in the log to encode the graph with RDFa.
+The ordering creates limitations on how strictly the encoded graph adheres to the specification from Chapter \ref{ch:model}.
+While construction of the change log is automated, encoding through RDFa significantly reduces the source HTML readability.
+In other applications using RDFa, the triples describe and link the text encapsulated by HTML tags.
+The versioning graph exclusively ignores the marked up content and links together tags or explicitly defines full triples in span tags.
+
+Change logs are much less restricted when encoded using JSON-LD rather than RDFa.
+The encoding format pulls the graph out of the attributes where they do not interact with content and into a separate script section.
+The method causes a drastic expansion per change in necessary text.
+The decision to divide up JSON-LD objects by the row in the change log they describe likely contributes significantly to the overhead necessary for the encoding.
+The division was made with the forethought that change log consumers may desire to only ingest specific subgraphs of the versioning graph.
+Separated JSON-LD objects will likely need to be merged in the future to save space for data sets with many changes.
+
+The resulting logs end up very large and sometimes do not load in a browser.
+Reassuringly, both data sets displayed the same space usage complexity with RDFa being ten times the plain text size and JSON-LD twice the size of a change long in RDFa.
+The relationship unfortunately means that a JSON-LD change log, with more readable source code, is twenty times the size of a plain text change log.
+The Copper data set's logs were reasonably responsive, displaying in seconds, but the Noble Gas's change log did not.
+In order to retain usability, there will need to be methods optimizing change log structure or representation.

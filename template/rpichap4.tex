@@ -38,63 +38,6 @@ Value formats remain consistent from one version to the next, resulting in a muc
 Compared to the Noble Gas data set, it provides a more stable data platform to implement the versioning model in Chapter \ref{ch:model}.
 The data from this work is also more processing friendly, making it agreeable to automatic change log generation.
 
-\subsection{GCMD Keywords}
-
-The Global Change Master Directory (GCMD) is a metadata repository used by NASA to store records of its available data sets \cite{Miled:2001:GCM:372202.372324}.
-They employ a set of keywords to make NASA Earth Science data sets searchable.
-These words tag and label datasets into strictly defined categories \cite{GCMDKey}.
-GCMD Keywords do not qualify as a standard web ontology since it does not constitute a class hierarchy.
-The management team stored early versions of the keywords in Excel spreadsheets, and a centralized distribution system was not used until June 12, 2012.
-The Key Management Service now serves the keywords directly in a variety of formats.
-Each version of the keywords, encoded in RDF, were downloaded into separate files.
-Only versions from June 12, 2012 and after were available, resulting in 9 version files.
-Each keyword corresponds to a unique identifier, and when combined with a web namespace, resolves to a data description of the keyword.
-Every identifier can be referred to per version by including the version's number at the web identifier's end, meaning that identifiers are consistent across versions.
-The taxonomy uses the concepts \textit{skos:Broader} and \textit{skos:Narrower}, where skos refers to the Simple Knowledge Organization System ontology name space, to form a tree hierarchy \cite{skos}.
-The tree's root is the keyword, "Science Keywords."
-The data set provides an interesting study case due its long sequence of versions and ready use of linked data technology \cite{Stevens2016}.
-
-\begin{table}
-	\caption{List of versions available in the KMS.}
-	\label{gcmd_table}
-	\centering
-	\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-		\hline
-		June 12, 2012 & 7.0 & 8.0 & 8.1 & 8.2 & 8.3 & 8.4 & 8.4.1 & 8.5 \\
-		\hline
-	\end{tabular}
-\end{table}
-
-\subsection{MBVL Classifications} \label{sec:MBVL}
-
-The Marine Biodiversity Virtual Laboratory (MBVL), based at Woods Hole Oceanographic Institution, provides data and services for the study of marine biology with an integrative approach \cite{mbvl}.
-In the application studied, a choice of algorithm and taxonomy pairings must be tested on a known population in order to estimate their performance with an unknown microbial population.
-The original sequences belong only to the species listed in Table \ref{species_table}.
-The original population's census is not available to the author, and only the list of species are known, forming the first data set in this section.
-These sequences are then grouped and classified by a specific taxonomy and algorithm pairing.
-The workflow utilizes two taxonomies, the Ribosomal Database Project (RDP) and the Silva taxonomy.
-Using these databases, the Species-level IdentificatioN of metaGenOmic amplicons (SPINGO) or the Global Alignment for Sequence Taxonomy (GAST) algorithms assign taxonomic ranks to each sequence.
-The process produces four data sets, each using the same grouping identifiers and having the same size in each group.
-Since the data sets have the same number of sequences, the primary difference between the data sets are the ranks assigned to each sequence.
-
-\begin{table}
-	\caption{List of species in the original population.}
-	\label{species_table}
-	\centering
-	\setlength{\tabcolsep}{2pt}
-	\begin{tabular}{|c|c|c|}
-		\hline
-		Acinetobacter baumannii & Actinomyces odontolyticus & Bacillus cereus \\
-		Bacteroides vulgatus & Clostridium beijerinckii & Deinococcus radiodurans \\
-		Enterococcus faecalis & Escherichia coli & Helicobacter pylori \\
-		Lactobacillus gasseri & Listeria monocytogenes & Neisseria meningitidis\\
-		Porphyromonas gingivalis & Propionibacterium acnes & Pseudomonas aeruginosa \\
-		Rhodobacter sphaeroides & Staphylococcus aureus & Staphylococcus epidermidis\\
-		Streptococcus agalactiae & Streptococcus mutans & Streptococcus pneumoniae \\
-		\hline
-	\end{tabular}
-\end{table}
-
 \section{Implementing the Versioning Model}
 
 The following subsections detail the steps used to implement a versioning graph using the model defined in Chapter \ref{ch:model} and the challenges encountered.
@@ -113,6 +56,10 @@ The Noble Gas data set needed a mapping to align the spreadsheet's columns since
 The remaining columns in the second version no longer had the same column indexes that they did in version 1 so the column headers were used instead.
 The Copper data set retains many of the original columns, but their ordering has changed between versions.
 In addition, rows must be aligned since both a row and column attribute are necessary to uniquely identify a cell.
+The Noble Gas data set split up its rows across eight files, each file representing a separate region of the Earth.
+Instead of forming eight versioning graphs or having eight left-hand versions, the files were collected together into a single abstract collection which is then mapped to the right-hand version.
+Creating eight versioning graphs would also form eight separate change logs which doesn't make sense since each file forms only a part of the entire work and the second version collects all entries into a single file.
+Multiple left-hand versions also doesn't make sense since this creates one change log and graph, but the files are no longer associated with each other.
 Cells need to be uniquely identified since this is where a comparison will be made to determine whether a \textbf{modify} change has occurred in a spreadsheet.
 
 Once aligned, determining which attributes have been added, invalidated, or modified is straight-forward.
@@ -126,15 +73,15 @@ The attributes in these sets are then minted into URIs and linked together into 
 
 \subsection{Generate Versioning Graph}
 
-The versioning graphs presented in this section were created by extracting triples from the associated change log.
-The statements making up the graph could have alternately been published by writing out the triples directly instead of encoding them into a change log.
-Figure \ref{NobleGraph1} displays a subgraph of the Noble Gas data set's versioning graph between versions 1 and 2, highlighting each of the three change operations.
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.25]{figures/NobleVersion.png}
 	\caption{Some initial entries from versions 1 and 2 of the Noble Gas data set}
 	\label{NobleGraph1}
 \end{figure}
+The versioning graphs presented in this section were created by extracting triples from the associated change log which will be covered in Chapter \ref{ch:changelog}.
+The statements making up the graph could have alternately been published by writing out the triples directly instead of encoding them into a change log.
+Figure \ref{NobleGraph1} displays a subgraph of the Noble Gas data set's versioning graph between versions 1 and 2, highlighting each of the three change operations.
 Notice how the versioning graph differs from the provenance graph in Figure \ref{CAM001ProvGraph}.
 The versioning graph unpacks the \textit{prov:wasRevisionOf} relationship into explicit components.
 These components reveal more detailed differences between version 1 and 2 of CAM001 in the provenance graph which are the differing compilation activities.
@@ -149,6 +96,11 @@ Because RDFa does not naturally support multiple predicates while also conformin
 Separating the attributes would require multiple dedicated HTML tags which don't appear along with content.
 Including these tags would diverge from benefits of encoding triples as attributes.
 Figure \ref{NobleGraph1} also shows that even though many columns are added when a new row is added, the row identifier can be used to summarize the columns additions.
+
+Another modification to the implementation differs from the original versioning model.
+The \textbf{modify} construction defined in the model only covers the case where a single attribute is sufficient to define a change relation.
+The \textbf{modification} captured in spreadsheets describes a cell which requires a row and column identifier to indicate uniquely.
+The implementation demonstrates that using multiple attributes is an allowable, sometimes necessary, construction.
 
 Listing \ref{NGA} presents the statements in turtle format necessary to express that the entry EGY001 has been added to the data set from Version 1 to Version 2 as shown along the top of Figure \ref{NobleGraph1}.
 The namespace for many of the URIs is \textlangle http://rdfa.info/play/\textrangle.
@@ -185,11 +137,6 @@ As a result, each \textbf{add}, \textbf{invalidate}, or \textbf{modify} change i
 Figures \ref{NobleGraph1} and \ref{CopperGraphVerGraph} depict a comparison between only two versions, but a project can contain more than two objects.
 Case in point, a third version of the Noble Gas data set was released on July 11, 2017.
 Figure \ref{NobleGraph2} shows a subgraph that contains changes from all three versions of the Noble Gas data set.
-From the first to second version of the data, EGY001 becomes introduced as an attribute into the data set.
-This entry then undergoes a modification change in columns 29, 31, and 43 when comparing versions two and three.
-Entry TUR030 goes through a modification change in column 11 from version one to version two.
-The entire row, however, becomes invalidated in version three.
-
 \begin{figure}
 	\centering
 	\begin{adjustbox}{addcode={\begin{minipage}{\width}}{
@@ -199,19 +146,62 @@ The entire row, however, becomes invalidated in version three.
 	\end{adjustbox}
 	\label{NobleGraph2}
 \end{figure}
+From the first to second version of the data, EGY001 becomes introduced as an attribute into the data set.
+This entry then undergoes a modification change in columns 29, 31, and 43 when comparing versions two and three.
+Entry TUR030 goes through a modification change in column 11 from version one to version two.
+The entire row, however, becomes invalidated in version three.
+
 
 Notice the difference in how Figure \ref{NobleGraph1} and Figure \ref{NobleGraph2} refer to columns.
 Figure \ref{NobleGraph1} used linked data extracted from a change log employing RDFa, forcing the row identifier and the column identifier into the same concept.
 The way nesting works in RDFa means that ChangeCAM00111 cannot back reference multiple concepts in a single statement, therefore AttributeCAM00111v2 was used to imply CAM001.
 Figure \ref{NobleGraph2} used linked data extracted from a JSON-LD encoded change log.
-Since the log can use explicit statements, the column identifier refers to the entire column and can be used to identifier changes in the same column across multiple rows.
+Since the log can use explicit statements, the column identifier refers to the entire column and can be used to identify changes in the same column across multiple rows.
 
+\section{Version Graph Analysis}
+
+The versioning graph successfully addresses the concerns of Use Case 1 by capturing all the differences within the Noble Gas data set and within the Copper data set into a versioning graph.
+Some additional concerns had to be addressed, such as multiple files in a version and dual attribute identification, during the implementation of the versioning model.
+The multiple files in the first version of the Noble Gas data set needed to be collected into a single concept in order to preserve the one-to-one relation between versions.
+The grouping simplifies the graph structure as well as reduce the complexity of a change log encoding.
+
+In Chapter \ref{ch:model}, there is only one \textbf{attribute} on each side of the interaction.
+Figure \ref{CopperGraphVerGraph}, however, shows two \textbf{attributes} used to characterize the \textit{vo:ModifyChange}.
+While the model only shows one \textbf{attribute}, it was found that in some applications, multiple \textbf{attributes} may be necessary to properly model a single change.
+The construction does not even need to have the same number \textbf{attributes} on both sides of the \textbf{change}.
+The flexibility becomes important when trying to model, for example, a single location entry being split into separate latitude and longitude entries.
+
+The version graph's construction allows multiple versions to be linked together.
+The graph provides not only greater continuity than Schema.org's properties, but also greater detail than PROV's versioning properties.
+Continuity is important since many versioning linked data alternatives view version change as a single contained \textbf{activity}.
+When linking together multiple versions using a versioning graph, the relationship between non-adjacent editions becomes implied in the graph's structure.
+The natural pathway between \textbf{attributes} in non-adjacent \textbf{versions} holistically considers the relationships among all \textbf{attributes} along that path.
+In comparison, other models only capture activity between the adjacent versions.
+
+The model struggles with discontinuous changes to an \textbf{attribute} across multiple versions.
+Since the model does not capture when an \textbf{attribute} doesn't change, it is possible for an \textbf{attribute} in an earlier \textbf{version} to become disconnected from later \textbf{versions} due to inactivity.
+For example, in Figure \ref{NobleGraph2}, column 31 of EGY001 becomes modified transitioning into the third version.
+If that column underwent no activity in the next transition but changed from version four to five, the connection between all the column 31s would no longer be continuous.
+This poses a problem for executing queries in a triple store which rely on graph traversals, but no path exists between disconnected \textbf{attributes}.
 
 \section{Summary}
 
 The results in this chapter implements the versioning model and demonstrates the process and challenges experienced in this endeavor.
 The entries in a data set is separated into groups of additions, invalidations, modifications, and unmodified by their attributes.
-These groups organizes the data into a form to publish into change logs which are much less restricted when encoded using JSON-LD rather than RDFa.
-The resulting logs end up very large and sometimes do not load in a browser.
-The versioning graphs for GCMD Keywords seem to indicate that there may be a relationship between change counts and version identifiers.
-Finally, the MBVL data set demonstrates a case where versioning graphs can be used to compare the performance of different taxonomy/algorithm pairings.
+The grouping occurs over multiple files in the first version of the Noble Gas data set, and the solution was to collect them into a single unit.
+The collection keeps the files as one unit, but does not end up addressing other approaches to multi-part versions.
+
+These operational groups organizes the data into a form to publish into a versioning graph.
+The approach used to create the graph involves extracting the linked data from a marked up change log.
+The decision resulted in constrained representations of the versioning graph, resulting from demands of the encoding methods.
+Graphs created using freer form statements, such as the one in Figure \ref{NobleGraph2}, demonstrate an opportunity enable querying over different dimensions of the data.
+Changes for specific columns can be queries as easily as individual rows.
+
+The ability to link changes of multiple versions together results as a side effect of the model construction.
+Continuously linked changes opens up avenues of exploration to follow change as it propagates through versions.
+While change logs will provide a more focused comparison, a triple store with a multi-version graph would give a more global history of the work.
+Considering the Noble Gas data set's versioning graph's size, many versions may be difficult to store with large, volatile data sets.
+
+Many statements are necessary to implement a single change in the versioning graph.
+The number of statements required may place a limit on how well a version graph can reasonably represent two drastically different versions.
+Difficulties with overly large change logs are encountered and discussed further in Chapter \ref{ch:changelog}.

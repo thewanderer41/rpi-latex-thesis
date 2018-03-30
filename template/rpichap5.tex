@@ -50,82 +50,26 @@ The resulting space complexity is \(O(7M+3A+5I)\).
 This is fairly similar with additions seeing a reduction since the left-hand version no longer contributes to the \textit{schema:AddAction}.
 Thus the primary benefit of using this model comes from semantics.
 
-\subsection{Change Log Analysis}
+\subsection{Structured Data and the Model}
 
-The change logs created with RDFa or JSON-LD demonstrates progress towards documents which are both human and machine-readable.
-The implementation provides evidence that JSON-LD is better suited to embed a versioning graph into a change log than RDFa.
-RDFa suffers limitations since it is constrained by the content's structure.
-The \textbf{modify} relation presented in Figure \ref{NobleGraph1} is unbalanced and the right-hand side of ``ChangeCAM00111" links only to the column \textbf{attribute} but not to the corresponding row \textbf{attribute}.
-This stems from a mismatch between the model's structure, the order in which data appears in the change log, and the way RDFa links properties together.
-Because the row label forms the outermost encapsulation, it cannot instantiate both row identifiers and implicitly link them separately.
-To do so would require explicitly instantiating the \textbf{attribute} in a non-visible part of the document, defeating the purpose of using RDFa to implicitly encode the versioning graph into the document.
+While machine-readable change logs have always been a desired goal of this dissertation work, their requirements diverged from the versioning model's needs.
+The model, as a result, leverages very little from visible content on the change log.
+Symmetric representation in the log also made encoding the graph using RDFa challenging without explicitly defining the whole graph in invisible span tags.
+Adherence with a log oriented approach would also likely have reduced the number of statements needed to form the versioning graph.
+The resulting ontology would likely be a collection of properties and concepts to use in annotating a document.
 
-Both structured data implementations break up the graph across \textbf{attributes} so that individual parts of the graph can be extracted.
-The practice of a one-node JSON object is generally helpful for many web applications to load data quickly, but since the change log is not an application, it makes more sense to break up the content.
-Changes to individual \textbf{attributes} can be identified using anchors on the web page, then agents need only extract and parse the linked data to these specific entries.
-This way, a subgraph of only the pertinent attributes can be created without first ingesting the entire versioning graph.
+The current model construction provides great flexibility for version and distance capture.
+The model adapts to multiple attributes smoothly.
+Greater adherence to structured data adoption may need to come in the form of graph simplification or metered release of new editions to ensure that change logs do not grow too large.
 
-An unexpected challenge with the change logs is the larger file size and difficulties in loading the Noble Gas data set's JSON-LD change log.
-The problem results from needing ten lines to express a single row in the change log.
-Noble Gas also had an impressive number of \textbf{modifications}, some of which are shared across all rows in the data set.
-Repeated modifications over rows would account for the explosion in entries within the change log.
+\section{Distance Measure}
 
-\subsection{Version Graph}
-
-In Chapter \ref{ch:model}, there is only one \textbf{attribute} on each side of the interaction.
-Figure \ref{CopperGraphVerGraph}, however, shows two \textbf{attributes} used to characterize the \textit{vo:ModifyChange}.
-While the model only shows one \textbf{attribute}, it was found that in some applications, multiple \textbf{attributes} may be necessary to properly model a single change.
-The construction does not even need to have the same number \textbf{attributes} on both sides of the \textbf{change}.
-The flexibility becomes important when trying to model a single location entry being split into separate latitude and longitude entries.
-
-The version graph's construction allows multiple versions to be linked together.
-The graph provides not only greater continuity than Schema.org's properties, but also greater detail than PROV's versioning properties.
-Continuity is important since many versioning linked data alternatives view version change as a single contained \textbf{activity}.
-When linking together multiple versions using a versioning graph, the relationship between non-adjacent editions becomes implied in the graph's structure.
-The natural pathway between \textbf{attributes} in non-adjacent \textbf{versions} holistically considers the relationships among all \textbf{attributes} along that path.
-In comparison, other models only capture activity between the adjacent versions.
-
-The model struggles with discontinuous changes to an \textbf{attribute} across multiple versions.
-Since the model does not capture when an \textbf{attribute} doesn't change, it is possible for an \textbf{attribute} in an earlier \textbf{version} to become disconnected from later \textbf{versions} due to inactivity.
-For example, in Figure \ref{NobleGraph2}, column 31 of EGY001 becomes modified transitioning into the third version.
-If that column underwent no activity in the next transition but changed from version four to five, the connection between all the column 31s would no longer be continuous.
-This poses a problem for executing queries in a triple store which rely on graph traversals, but no path exists between disconnected \textbf{attributes}.
-
-\section{Version Identification}
-
-The versioning process discovered a discrepancy in the identifier assignment in the GCMD Keywords taxonomy.
-The original analysis was intended to determine if dot-decimal identifiers could be predicted using the change counts of the versioning graph.
-Version 8.5, however, was named with respect to perceived taxonomy changes and did not consider underlying linked data practice revisions.
-The disconnect brings into question the accuracy of all prior names and any relationships observed between identifier and change counts.
-Non-matching identifiers would explain how 8.4.1 had more additions than any previous minor change but obtains a third bracket identifier.
-After accounting for namespace differences in version 8.5, the change counts is in the tens, resembling tallies of other versions in the same identifier bracket.
-Version name assignment based on producer perception and not on more concrete measures is concerning.
-An incomplete understanding in the amount of change between two versions can lead to flawed expectations during version migration.
-
-The analysis does not to claim that change counts should be the sole mechanism in determining version identifiers.
-The counts, however, can provide a more quantitative method to compare version differences.
-In Figure \ref{GCMDC2}, the yellow line indicates the total changes made to the data set, performing a similar function as the major/minor/revision version identifier.
-Breaking up the changes into types reveals additions dominate manipulations to the data set.
-Addition, invalidation, and modification provides deeper insight into how a data set is changing, but some changes can be more impactful than others which this model does not capture.
-
-\section{MBVL Analysis}
-
-In Chapter \ref{ch:distance}, the versioning process was used to compare the performance of different taxonomy and algorithm combinations.
-The data set diverges from many of the common understandings of versions since each of the versions are not sequential and are largely independent.
-The data set of species names in the initial population would not have produced very meaningful results if applied to the versioning model since it lacked sufficient data to map the other data sets together well.
-
-In Figure \ref{mbvl_chart}, the first set of columns in the Silva taxonomy results are versioned against RDP using the SPINGO algorithm.
-The naming reflects the orientation in the versioning graph so Silva forms the left-hand version and RDP would be the right-hand version.
-In this comparison, using the RDP taxonomy seems to provide more accurate results, most specifically at the species level.
-The taxonomies also disagree fairly often at the species and family ranks.
-Switching to the GAST algorithm in the second set of columns, RDP once again demonstrates a noticeably greater accuracy in species classification.
-There are also significantly fewer disagreements using the GAST algorithm between the two taxonomies.
-Looking at the third set of columns, Silva demonstrates greater accuracy classifications under the SPINGO algorithm than under GAST.
-Over four thousand of these entries can be classified to the species level when GAST cannot.
-In the fourth set of columns, RDP appears to perform better with SPINGO than GAST.
-However, the comparison is dominated by a much larger number of disagreements between almost six thousand entries, primarily at the species rank.
-On closer inspection, this disagreement is explained by GAST classifying the species for a number of entries as ``unclutured bacterium".
-This analysis presents evidence that using the RDP taxonomy with the SPINGO algorithm will produce the most accurate classification results.
+As mentioned in Section \ref{sec:usecase}, a version model provides the framework, provenance models provide the context, and change logs fill in the gap between versions.
+Change logs, therefore, provide the most substance to quantify the distance between versions.
+The automated log generation additionally ensures this by including all differences into the change log.
+Anything unmapped remains the same between versions and does not contribute towards the distance.
+While MBVL demonstrated a case where domain knowledge could be added to the versioning graph and provide context for distances, other applications may not demonstrate the same amount of uniformity within changes.
+More domain information and reasoning may be necessary to determine if one add change significantly more impactful than others in a versioning graph.
 
 \section{Summary}
 
