@@ -19,6 +19,24 @@ One observation is that a modification in one cell of the Noble Gas data set som
 The relation of all those cells could then be summarized with a singe modification statement with just the column attribute, reducing the space utilization dependency from the number of rows to a single statement.
 The summarization could reduce the change log's size to a manageable enough level to be viewable.
 
+\subsection{Dynamic Change Logs}
+
+Users often do not use entire data sets, especially expansive surveys.
+Tools using the model can help parse down the amount of unnecessary information.
+Dynamic change logs can be generated containing only the entries important to the user.
+
+\section{References to Bug Tickets}
+
+Proper version identification plays a major role in addressing and reporting bugs in software and data.
+The linked data approach provides an avenue to link the data of versions and bug trackers together.
+This shows users what changes address bugs they have reported or found.
+This helps producers trace down the sources of error during operation.
+
+\section{Supervised Versioning}
+
+The graphs in this dissertation only model one-to-one mappings.
+Attributes that split or merge were not tested or evaluated for unique behavior.
+
 \section{Multi-version Graphs}
 
 At present, the versioning model captures only changing as a matter of convention and to save space.
@@ -32,12 +50,16 @@ Versioning systems often only need to provide the changes between two specific v
 Not all changes along that profile is necessary.
 As a result, reasoning methods need to be developed to help summarize changes across multiple versions.
 
-\section{Change Distance and Dot-decimal Idnetifiers}
+\section{Change Distance and Dot-decimal Identifiers}
 
 The initial research to study the relationship between change counts and version identifiers broke down due to the subjectivity of identifier assignment.
 Not enough evidence was found to determine if identifiers were assigned accurately.
 Applying the versioning model to more data sets and comparing change counts may be necessary to determine what quantifiable methods, if any, can be used as a basis for version identifier assignment.
 The research would be conducted to determine the extent to which dot-decimal identifiers can communicate change of a data set.
+
+\section{Other Methods of Change Distance Calculation}
+
+Flow calculation seems possible.
 
 \section{Database Context}
 
