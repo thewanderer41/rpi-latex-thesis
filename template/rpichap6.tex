@@ -21,9 +21,12 @@ The summarization could reduce the change log's size to a manageable enough leve
 
 \subsection{Dynamic Change Logs}
 
-Users often do not use entire data sets, especially expansive surveys.
-Tools using the model can help parse down the amount of unnecessary information.
-Dynamic change logs can be generated containing only the entries important to the user.
+Users selectively use portions of particularly expansive data sets to filter data down to their region of study. 
+Tools can use the versioning model to identify pertinent sections of a large change log and parse out the extraneous entries.
+Means to isolate change activities are necessary for users to determine the impact a new version has on the operation of their workflow.
+The versioning graph can also contribute to the generation of unique change logs to accompany dynamically created data sets.
+As mentioned in Section \ref{sec:grid}, users can dynamically aggregate and filter data sets to produce a new unique set of data, but doing so still requires tracking of differences from the original data set or sets.
+Further work will need to be done determining requirements to automate change log creation for these data sets.
 
 \section{References to Bug Tickets}
 
@@ -56,6 +59,8 @@ The initial research to study the relationship between change counts and version
 Not enough evidence was found to determine if identifiers were assigned accurately.
 Applying the versioning model to more data sets and comparing change counts may be necessary to determine what quantifiable methods, if any, can be used as a basis for version identifier assignment.
 The research would be conducted to determine the extent to which dot-decimal identifiers can communicate change of a data set.
+
+Compressing changes into a single row or column may disproportionately affect resulting distance counts.
 
 \section{Other Methods of Change Distance Calculation}
 
