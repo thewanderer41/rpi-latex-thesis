@@ -30,15 +30,19 @@ Further work will need to be done determining requirements to automate change lo
 
 \section{References to Bug Tickets}
 
-Proper version identification plays a major role in addressing and reporting bugs in software and data.
-The linked data approach provides an avenue to link the data of versions and bug trackers together.
-This shows users what changes address bugs they have reported or found.
-This helps producers trace down the sources of error during operation.
+As mentioned previously, data versioning plays a major role in documentation for bug fixes and audits.
+Similar to the work done linking Bugzilla and GIT, bug tracking and change logs should also be connected.
+The linked data approach taken to develop versioning graphs provides an avenue to link the data of versions and bug trackers together.
+The work would add value to users' research by laying out which changes address bugs consumers have reported or found.
+The practice would also reinforce producer culpability and responsiveness to the user community.
+Linking data change and bug information would also allow data producers to document the evolution of their data in response to error corrections.
+The traceability would let producers determine if a bug is new or recurring as well.
 
 \section{Supervised Versioning}
 
-The graphs in this dissertation only model one-to-one mappings.
-Attributes that split or merge were not tested or evaluated for unique behavior.
+The comparisons utilized in executing change log creation were basic string or numerical comparisons.
+More complex data sets may need supervised input to properly model version changes.
+Attributes that split or merge were not tested or evaluated for whether they needed unique behavior to capture.
 
 \section{Multi-version Graphs}
 
