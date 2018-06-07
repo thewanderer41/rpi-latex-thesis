@@ -29,6 +29,22 @@ While usage documentation, explaining the content and use of the data, accompani
 A change log would be valuable guide with such drastic structural and content changes.
 The third and most recent publication came in July 11, 2017, with no changes to the number of files or columns, but many new rows.
 
+\begin{table}
+	\caption{Files in the Noble Gas data set.}
+	\label{noble_gas_file_table}
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		Filename & File Size (Bytes) & Rows & Columns &	Total Cells \\ \hline
+		DB\_HE\_6733.xlsx &	2682683 &	6733 &	199 &	1339867 \\
+		DB\_final-55-7262\_2015\_03 &	2729060 &	7265 &	54 &	392310 \\
+		\_08.xlsx&&&&\\
+		NG\_DB\_final\_2017\_07 &	4216595 &	8231 &	54 &	444474 \\
+		\_01.xlsx&&&&\\
+		\hline
+	\end{tabular}
+\end{table}
+
 \subsection{Copper Data set}
 
 The Paragenetic Mode for Copper Minerals database became available through collaboration with the author's lab to create new methods of visualizing mineralogy relationships \cite{Morrison2016}.
@@ -37,6 +53,21 @@ Major edits are fairly limited with only 16 column additions and 2 removals betw
 Value formats remain consistent from one version to the next, resulting in a much more condensed body of changes, making transitions more easily verifiable.
 Compared to the Noble Gas data set, it provides a more stable data platform to implement the versioning model in Chapter \ref{ch:model}.
 The data from this work is also more processing friendly, making it agreeable to automatic change log generation.
+
+\begin{table}
+	\caption{Files in the Copper data set.}
+	\label{copper_file_table}
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		Filename & File Size (Bytes) & Rows & Columns &	Total Cells \\ \hline
+		ParageneticModeTable\_Cu\_6. &	339175 & 705 &	37 &	26085\\
+		8.2016.xlsx&&&&\\
+		ParageneticModeTable\_Cu\_8. & 233715 & 685 & 51 & 34935\\
+		21.2016.xlsx&&&&\\
+		\hline
+	\end{tabular}
+\end{table}
 
 \section{Implementing the Versioning Model}
 

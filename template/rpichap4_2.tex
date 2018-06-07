@@ -116,15 +116,74 @@ In the Noble Gas data set, the RDFa and JSON-LD change log sizes are 59 and 124 
 The Noble Gas change logs often do not load in a browser.
 
 \begin{table}
-	\caption{Sizes of change log encodings.}
-	\label{changelog_table}
+	\caption{Noble Gas change log size: 1st Transition}
+	\label{table:Ng_changelog_table1}
+	\centering
+	\begin{tabular}{|c|r|c|c|}
+		\hline
+		Encoding Type & File Size (Bytes) & \% of File 1 & \% of File 2 \\
+		\hline
+		Text&	5575405&	207.8294&	204.2976\\
+		RDFa&	62175478&	2317.660&	2278.2745\\
+		Turtle&	80919783&	3016.375&	2965.1156\\
+		JSON-LD&	130134071&	4850.893&	4768.4577\\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{table}
+	\caption{Noble Gas change log size: 2st Transition}
+	\label{table:Ng_changelog_table2}
+	\centering
+	\begin{tabular}{|c|r|c|c|}
+		\hline
+		Encoding Type & File Size (Bytes) & \% of File 2 & \% of File 3 \\
+		\hline
+		Text&	670827&	24.5808&	15.9092\\
+		RDFa&	6409540&	234.8625&	152.0074\\
+		Turtle&	4521010&	165.6618&	107.2194\\
+		JSON-LD&	9834772&	360.3721&	233.2396\\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{table}
+	\caption{Noble Gas Turtle files}
+	\label{table:Ng_turtle}
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		Filename&	Add&	Invalidate&	Modify&	Total Triples\\ \hline
+		changelog.ttl&	608&	216&	102830&	110602\\
+		changelog2\_3.ttl&	990&	24&	5369&	8146\\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{table}
+	\caption{Changes to Copper Data}
+	\label{table:Cu_cells}
 	\centering
 	\begin{tabular}{|c|c|c|c|}
 		\hline
-		Dataset & No Encoding (MB) & RDFa (MB) & JSON-LD (MB) \\
+		Change Type&	Rows&	Columns&	Cells Affected\\ \hline
+		Add&	1&	16&	10995\\
+		Invalidate&	21&	2&	2145\\
+		Modify&NA&NA& 2628\\
 		\hline
-		Copper Minerals & 0.137 & 1.7 & 3.4 \\
-		Noble Gas & 5.4 & 59 & 124 \\
+	\end{tabular}
+\end{table}
+
+\begin{table}
+	\caption{Change capture efficiency in Copper Data}
+	\label{table:Cu_change}
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		Change Type&	Triples&	\% of Cells Affected\\ \hline
+		Add&	17&	0.065\%\\
+		Invalidate&	23&	1.1\%\\
+		Modify&	2628&	100\%\\
 		\hline
 	\end{tabular}
 \end{table}
@@ -156,7 +215,7 @@ While the data sets differed in both size and structure, the process used to gen
 Because the process to generate versioning graphs already separates changes into groups, the change log is organized into similar categories.
 Much of the data visible in the change log does not explicitly appear in the model such as the pre and post-values.
 
-The human-readable presentation defines the structure which tags in the change log must take since maintaining human-readability is desired.
+The human-readable presentation defines the structure which tags in the chan\-ge log must take since maintaining human-readability is desired.
 The structure then determines the order in which linked data statements must appear in the log to encode the graph with RDFa.
 The ordering creates limitations on how strictly the encoded graph adheres to the specification from Chapter \ref{ch:model}.
 While construction of the change log is automated, encoding through RDFa significantly reduces the source HTML readability.

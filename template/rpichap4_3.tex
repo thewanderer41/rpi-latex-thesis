@@ -33,17 +33,6 @@ The taxonomy uses the concepts \textit{skos:Broader} and \textit{skos:Narrower},
 The tree's root is the keyword, "Science Keywords."
 The data set provides an interesting study case due its long sequence of versions and ready use of linked data technology \cite{Stevens2016}.
 
-\begin{table}
-	\caption{List of versions available in the KMS.}
-	\label{gcmd_table}
-	\centering
-	\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-		\hline
-		June 12, 2012 & 7.0 & 8.0 & 8.1 & 8.2 & 8.3 & 8.4 & 8.4.1 & 8.5 \\
-		\hline
-	\end{tabular}
-\end{table}
-
 \subsection{MBVL Classifications} \label{sec:MBVL}
 
 The Marine Biodiversity Virtual Laboratory (MBVL), based at Woods Hole Oceanographic Institution, provides data and services for the study of marine biology with an integrative approach \cite{mbvl}.
@@ -101,10 +90,28 @@ Since the identifiers are unique, the new name space means they no longer refer 
 Because the keyword identifiers no longer match, the mapping approach results in the total invalidation of keywords from 8.4.1 and the addition of keywords from 8.5.
 The dot decimal identifier for the transition from version 8.4.1 to 8.5 does not match the number of changes in the versioning graph.
 
+\begin{table}
+	\caption{Global Change Master Directory Keyword Change Counts}
+	\label{table:GCMD_main}
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		
+		Transition&	Add&	Invalidate&	Modify&	Total\\\hline
+		June 12, 2012 to 7.0&	310&	9&	22&	341\\
+		7.0 to 8.0&	503&	6&	79&	588\\
+		8.0 to 8.1&	277&	28&	22&	327\\
+		8.1 to 8.2&	53&	1&	26&	80\\
+		8.2 to 8.3&	58&	0&	13&	71\\
+		8.3 to 8.4&	53&	0&	1&	54\\
+		8.4 to 8.4.1&	86&	13&	8&	107\\
+		\hline
+	\end{tabular}
+\end{table}
 \begin{figure}[b]
 	\centering
-	\includegraphics[scale=0.91]{figures/GCMDChart1.png}
-	\caption{Add, Invalidate, and Modify counts in Version 8.5.  The counts show change magnitudes and indicate that major and minor changes differ by orders of magnitude.}
+	\includegraphics[scale=0.83]{figures/GCMDChartShort.png}
+	\caption[Global Change Master Directory Keywords Change counts up to Version 8.4.1]{Add, Invalidate, and Modify counts from the beginning of the Keyword Management System to Version 8.4.1.}
 	\label{GCMDC1}
 \end{figure}
 
@@ -127,12 +134,81 @@ All revisions are dominated by \textbf{additions}, but major version changes hav
 The transition from version 8.4.1 to 8.5 also seems to follow this trend.
 The \textbf{additions} in ``8.4 to 8.4.1" in Figure \ref{GCMDC2} numbers almost a hundred, providing evidence that the trend of decreasing order of magnitudes may now continue as the granularity of the version identifier increases.
 
+\begin{table}
+	\caption{Difference in Version 8.5 mapping methods}
+	\label{table:GCMD_8_5}
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		Mapping Method&	Add&	Invalidate&	Move&	Modify\\ \hline
+		Standard&	3097&	3031&	0&	0\\
+		Silent&	68&	2&	22&	0\\
+		Bridged&	68&	2&	22&	3007\\		
+		\hline
+	\end{tabular}
+\end{table}
 \begin{figure}%[b]
 	\centering
-	\includegraphics[scale=1]{figures/GCMDChart2.png}
-	\caption{Add, Invalidate, and Modify counts ignoring the namespace changes in Version 8.5.  The counts show change magnitudes appropriate for the identifier.}
+	\includegraphics[scale=.9]{figures/GCMD8_5.png}
+	\caption{Add, Invalidate, and Modify counts using different methods of mapping identifiers in Global Change Master Directory Keywords Version 8.4.1 to 8.5.}
 	\label{GCMDC2}
 \end{figure}
+
+\begin{figure}%[b]
+	\centering
+	\includegraphics[scale=0.56]{figures/GCMDPlot1.png}
+	\caption[Global Change Master Direcotry counts distributed over time.]{Add counts for all versions of GCMD up to 8.5 evenly distributed over the time of version validity.}
+	\label{GCMDPlot1}
+\end{figure}
+\begin{figure}%[b]
+	\centering
+	\includegraphics[scale=0.56]{figures/GCMDPlot1_Cluster.png}
+	\caption[Global Change Master Directory count distributed over time with clusters marked.]{The change rate of different versions organize into three visible clusters. Cluster 2 denotes a sudden burst of version releases which is notable.}
+	\label{GCMDPlot1Cluster}
+\end{figure}
+\begin{table}
+	\caption{Global Change Master Directory versions with old start time changes.}
+	\label{table:GCMD_old}
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		Version Name&	Publish Date&	2008&	2014&	2015\\ \hline
+		8.2&	June 7, 2016&	0&	4&	2\\
+		8.3&	June 21, 2016&	0&	7&	1\\
+		8.4&	July 7, 2016&	5&	0&	1\\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{table}
+	\caption{Differences in VersOn and Impact Assessment metrics}
+	\label{table:GCMD_metric}
+	\centering
+	\begin{tabular}{|r|r|r|r|}
+		\hline
+		Version & Add & Invalidate & Modify\\ \hline
+		8.2(VO)&	53&	1&	26\\
+		-8.2(IA)&	48&	0&	4\\
+		\hline
+		&	5&	1&	22\\
+		\hline
+		8.3(VO)&	58&	0&	13\\
+		-8.3(IA)&	58&	0&	10\\
+		\hline
+		&	0&	0&	3\\
+		\hline
+		8.4(VO)&	53&	0&	1\\
+		-8.4(IA)&	66&	0&	5\\
+		\hline
+		&	-13&	0&	-4\\
+		\hline
+		8.5(VO)&	68&	2&	22\\
+		-8.5(IA)&	55&	0&	30\\
+		\hline
+		&	13&	2&	-8\\						
+		\hline
+	\end{tabular}
+\end{table}
 
 \section{MBVL}
 
