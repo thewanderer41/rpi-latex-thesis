@@ -4,233 +4,205 @@
 %                                                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{MACHINE-READABLE CHANGE LOG}\label{ch:changelog}
+\chapter{Data Volatility}
 
-\section{Introduction}
+\section{Determining Volatility}
 
-Change logs explain the differences between versions; however, they are often only available in human-readable formats.
-Readability puts a limit on the length and extent of the log since a human will need to write it.
-Manageable change descriptions become difficult with large data sets featuring many changes, or data sets that change often, but these are exactly the data sets which need change logs the most.
-Automating the process will allow more data sets to provide change documentation in a timely fashion for data sets.
-Encoding the change logs with structured data will provide a means for users to efficiently consume change information.
-The additional encoding will inflate the size of a standard change log which becomes an issue with the Noble Gas change log.
-This chapter utilizes the Noble Gas and Copper data sets again.
+According to the Keyword Governance and Community Guide Document \ref{gcmd_gov}, “Full GCMD keywords list releases get a new major version number (e.g., 8.0). Incremental releases for updates to topics, terms, and variables get a new minor version number (e.g., 8.1).”  This explains the activity in Cluster 1 where there are sufficient changes to warrant a full release of the keywords.  Cluster 2 captures the change rate and duration of minor versions, except those from 8.2 to 8.4.1 which are in Cluster 3.  Cluster 3 demonstrates a flurry of activity occurring between June 7, 2016, to August 2, 2016.  Considering the previous pattern of taking at least six months between releases, three minor version releases within as many months is highly unusual.  An immediate concern is that Cluster 3 does not result from a sudden incident, resulting in increased activity.  An inquiry into reasoning behind the successive publication returned a statement that the government customer had requested this action.  Investigation into these versions required a look into their associated impact assessment reports.  Impact assessments prior to Version 8.5 are not publicly available, and only assessments for versions 8.2, 8.3, and 8.4 were received upon request.  Of the 6 requests affecting Earth Science Keywords in 8.2, published June 7, 2016, 4 were made in 2014, and the remaining 2 were made in 2015.  Version 8.3 had 8 entries in its impact assessment with 7 entries originating in 2014, and the remaining entry from 2015.  The 6 entries 8.4’s impact assessment has 5 entries from 2008 and 1 entry from 2015.
 
-\section{Produce Change Log}
-
-Change logs were generated for both the Noble Gas data set and the Copper data set.
-Following the practices of other change logs, the documents present before and after values for comparison which can be seen in Figure \ref{changelog_zoomed}.
-\begin{figure}
+\begin{figure}%[b]
 	\centering
-	\includegraphics[scale=0.80]{figures/Changelog-zoomed.png}
-	\caption{Abswurmbachite entry in the Copper Dataset Change Log}
-	\label{changelog_zoomed}
+	\includegraphics[scale=0.56]{figures/GCMDPlot1.png}
+	\caption[Global Change Master Direcotry counts distributed over time.]{Add counts for all versions of GCMD up to 8.5 evenly distributed over the time of version validity.}
+	\label{GCMDPlot1}
 \end{figure}
-The partial snapshot of the change log shows that column numbers in the Copper data set also accompany the values to identify the data's location in the spreadsheet.
-Very little natural language is used in this change log to regularize the format and improve compatibility with RDFa.
-The change logs follow a common format with three sections: Additions, Invalidations, and then Modifications.
-The sections may be further grouped by column or row additions.
-The division means that changes are not published into the change log as they are found, but instead organized and grouped beforehand.
-
-Employing RDFa means that the document must be written using HTML formatting.
-Listing \ref{rdfa_list} shows the text necessary to layout the first four lines of Figure \ref{changelog_zoomed}.
-While the content only shows four lines, the underlying markup takes up three and a half times as many lines.
-Line 2 states that all following resources will be \textbf{attributes} of Version 1.
-Line 3 defines such an \textbf{attribute}.
-Lines 5 through 8 define the changes Abswurmbachite undergoes.
-Because RDFa allows the statements to be embedded within the content, the triples can appear along with the text they describe.
-Lines 11 and 12 define complete triples which do not appear in the visible document.
-The lines complete the graph, but must be included in spans because RDFa only allows a single triple within each tag.
-Modifying the tags' order so that the spans are unnecessary would cause the visible content to appear in an un-logical order, rendering the document machine-readable but not human-readable.
-
-\begin{lstlisting}[language=HTML, caption=Abswurmbachite RDFa, label=rdfa_list]
-<h3>Change Log</h3>
-<div about="Version1" rel="vo:hasAttribute">
-<div resource="v2:Abswurmbachite" typeof="vo:Attribute">
-<span style="font-weight:bold" property="http://www.w3.org/2000/01/rdf-schema#label">Abswurmbachite</span>
-<table rel="vo:Undergoes">
-<tr  about="ChangeAbswurmbachite12" typeof="vo:Change">
-<td align="right" rev="vo:Undergoes" resource="v1:AttributeAbswurmbachite12v1" typeof="vo:Attribute"> 9</td>
-<td property="vo:resultsIn" resource="v2:AttributeAbswurmbachite12v2" typeof="vo:Attribute">(12)</td>
-<td>          </td>
-<td>       0.0</td>
-<span about="Version1" property="vo:hasAttribute" resource="v1:AttributeAbswurmbachite12v1"></span>
-<span about="Version2" property="vo:hasAttribute" resource="v2:AttributeAbswurmbachite12v2"></span>
-</tr>
-</table></div></div><br>
-\end{lstlisting}
-
-After encountering the limitations of using RDFa to include the versioning graph into the change log, JSON-LD was used.
-The new format does not rely on the structure of visible content to determine the syntax triples use to be included in the change log.
-Listing \ref{json_list} provides the alternative encoding of the Abswurmbachite entry from RDFa.
-The entry is significantly longer, almost three times longer than the RDFa entry and ten times longer than the original visible content.
-Instead of including all the data in the beginning or end of the document, each change block is separated into the particular \textit{div} section for that change.
-This choice allows consumers to extract pertinent change information without needing to ingest the entire versioning graph.
-
-\begin{lstlisting}[language=HTML, caption=Abswurmbachite JSON-LD, label=json_list]
-<h3>Change Log</h3>
-<div about="v1:Abswurmbachite">
-<span style="font-weight:bold" property="http://www.w3.org/2000/01/rdf-schema#label">Abswurmbachite</span>
-<table>
-<tr  id="ModifyChangeAbswurmbachite12">
-<td align="right"> 9</td>
-<td >(12)</td>
-<td>          </td>
-<td>       0.0</td>
-<script type="application/ld+json">
-[
-{
-"@context": "https://orion.tw.rpi.edu/~blee/provdist/GCMD/VO.jsonld", 
-"@id": "http://CUdb.com/v1/AttributeAbswurmbachite9", 
-"@reverse": {
-"hasAttribute": "Version1"
-}, 
-"@type": "vo:Attribute", 
-"label": "Primary", 
-"undergoes": "http://orion.tw.rpi.edu/~blee/provdist/CU/DTDI/CUjsonlog.html#ModifyChangeAbswurmbachite12"
-}, 
-{
-"@context": "https://orion.tw.rpi.edu/~blee/provdist/GCMD/VO.jsonld", 
-"@id": "http://orion.tw.rpi.edu/~blee/provdist/CU/DTDI/CUjsonlog.html#ModifyChangeAbswurmbachite12", 
-"@type": "vo:ModifyChange", 
-"resultsIn": "http://CUdb.com/v2/AttributeAbswurmbachite12"
-}, 
-{
-"@context": "https://orion.tw.rpi.edu/~blee/provdist/GCMD/VO.jsonld", 
-"@id": "http://CUdb.com/v2/AttributeAbswurmbachite12", 
-"@reverse": {
-"hasAttribute": "Version2"
-}, 
-"@type": "vo:Attribute", 
-"label": "Primary"
-}
-]
-</script>
-</tr>
-</table></div><br>
-\end{lstlisting}
-
-The encoded change logs struggle with intense document size as summarized in Table \ref{changelog_table}.
-The Copper Minerals data set encoded in RDFa is 1.7 MB and JSON-LD is 3.4 MB.
-In the Noble Gas data set, the RDFa and JSON-LD change log sizes are 59 and 124 MB, respectively.
-The Noble Gas change logs often do not load in a browser.
-
-\begin{table}
-	\caption{Noble Gas change log size: 1st Transition}
-	\label{table:Ng_changelog_table1}
+\begin{figure}%[b]
 	\centering
-	\begin{tabular}{|c|r|c|c|}
-		\hline
-		Encoding Type & File Size (Bytes) & \% of File 1 & \% of File 2 \\
-		\hline
-		Text&	5575405&	207.8294&	204.2976\\
-		RDFa&	62175478&	2317.660&	2278.2745\\
-		Turtle&	80919783&	3016.375&	2965.1156\\
-		JSON-LD&	130134071&	4850.893&	4768.4577\\
-		\hline
-	\end{tabular}
-\end{table}
-
+	\includegraphics[scale=0.56]{figures/GCMDPlot1_Cluster.png}
+	\caption[Global Change Master Directory count distributed over time with clusters marked.]{The change rate of different versions organize into three visible clusters. Cluster 2 denotes a sudden burst of version releases which is notable.}
+	\label{GCMDPlot1Cluster}
+\end{figure}
 \begin{table}
-	\caption{Noble Gas change log size: 2st Transition}
-	\label{table:Ng_changelog_table2}
-	\centering
-	\begin{tabular}{|c|r|c|c|}
-		\hline
-		Encoding Type & File Size (Bytes) & \% of File 2 & \% of File 3 \\
-		\hline
-		Text&	670827&	24.5808&	15.9092\\
-		RDFa&	6409540&	234.8625&	152.0074\\
-		Turtle&	4521010&	165.6618&	107.2194\\
-		JSON-LD&	9834772&	360.3721&	233.2396\\
-		\hline
-	\end{tabular}
-\end{table}
-
-\begin{table}
-	\caption{Noble Gas Turtle files}
-	\label{table:Ng_turtle}
+	\caption{Global Change Master Directory versions with old start time changes.}
+	\label{table:GCMD_old}
 	\centering
 	\begin{tabular}{|c|c|c|c|c|}
 		\hline
-		Filename&	Add&	Invalidate&	Modify&	Total Triples\\ \hline
-		changelog.ttl&	608&	216&	102830&	110602\\
-		changelog2\_3.ttl&	990&	24&	5369&	8146\\
+		Version Name&	Publish Date&	2008&	2014&	2015\\ \hline
+		8.2&	June 7, 2016&	0&	4&	2\\
+		8.3&	June 21, 2016&	0&	7&	1\\
+		8.4&	July 7, 2016&	5&	0&	1\\
 		\hline
 	\end{tabular}
 \end{table}
 
 \begin{table}
-	\caption{Changes to Copper Data}
-	\label{table:Cu_cells}
+	\caption{Differences in VersOn and Impact Assessment metrics}
+	\label{table:GCMD_metric}
+	\centering
+	\begin{tabular}{|r|r|r|r|}
+		\hline
+		Version & Add & Invalidate & Modify\\ \hline
+		8.2(VO)&	53&	1&	26\\
+		-8.2(IA)&	48&	0&	4\\
+		\hline
+		&	\textbf{5}&	\textbf{1}&	\textbf{22}\\
+		\hline
+		8.3(VO)&	58&	0&	13\\
+		-8.3(IA)&	58&	0&	10\\
+		\hline
+		&	\textbf{0}&	\textbf{0}&	\textbf{3}\\
+		\hline
+		8.4(VO)&	53&	0&	1\\
+		-8.4(IA)&	66&	0&	5\\
+		\hline
+		&	\textbf{-13}&	\textbf{0}&	\textbf{-4}\\
+		\hline
+		8.5(VO)&	68&	2&	22\\
+		-8.5(IA)&	55&	0&	30\\
+		\hline
+		&	\textbf{13}&	\textbf{2}&	\textbf{-8}\\						
+		\hline
+	\end{tabular}
+\end{table}
+
+\section{Earth Observing Laboratory}
+
+Of the 1335 data sets maintained by EOL, only 180 data sets had more than one version.  
+The 1155 other data sets were filtered out since change counts could not be computed for those collections.  
+The data managers indicated that when a new version is received, the entire data set is replaced.  
+Since a unique file identifier like a hash sum was unavailable, all files that matched file names across versions were considered modified.  
+The approach will overcount the number of modifications, but provides an upper bound on the data set volatility in the repository.  
+Each count is then normalized by the number of files in the previous version to standardize comparison between data sets regardless of data set size.  
+The average for each data set is taken for each change type.
+
+\section{EOL Versioning Behavior}
+
+The data surprisingly indicates that data sets primarily gravitate towards complete addition and invalidation.  The Additions also seem to show a tendency to add either small portions of the dataset or extremely large numbers of new files.  The rightmost bar in Figure XX counts the number of outliers in Additions.  The invalidation and modification charts also show a small normalization around 0.5, but primarily revolution around 0 or 1.
+
+The high concentration of data sets towards 1 in additions and invalidations suggests a more complicated interaction within the data sets.  Instead of separating the counts into isolated dimensions, Figure XX groups unnormalized change counts for each version into a coordinate.  Notice the one-to-one trend between Adds and Invalidates which shows the tendency of data sets to replace every file and assign a new filename.  The files are more likely to be replaced when only a few files in a data set are being modified.
+
+\begin{table}
+	\caption{Version Content of Earth Observing Laboratory Data Sets}
+	\label{table:EOL_Versions}
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline
+		Number of Versions& Number of Data Sets\\ \hline
+		1&	1155\\
+		2&	141\\
+		3&	26\\
+		4&	10\\
+		5&	3\\
+		Total&	1335\\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{table}
+	\caption{Normalized Change Statistics}
+	\label{table:EOL_Change}
 	\centering
 	\begin{tabular}{|c|c|c|c|}
 		\hline
-		Change Type&	Rows&	Columns&	Cells Affected\\ \hline
-		Add&	1&	16&	10995\\
-		Invalidate&	21&	2&	2145\\
-		Modify&NA&NA& 2628\\
+		Stat&	Add&	Invalidate&	Modify\\
+		Mean&	0.714312707&	0.654819294&	0.345180706\\
+		Std. Dev&	0.509878564&	0.420093557&	0.420093557\\
+		Min&	0&	0&	0\\
+		Q1&	0.28635075&	0.142857&	0\\
+		Med&	0.9146635&	0.9642855&	0.0357145\\
+		Q3&	1.00358625&	1&	0.857143\\
+		Max&	54.25&	1&	1\\
+		IQR&	0.7172355&	0.857143&	0.857143\\
 		\hline
 	\end{tabular}
 \end{table}
+
+\begin{figure}%[b]
+	\centering
+	\includegraphics[scale=.43]{figures/Eol_Adds.png}
+	\caption{Distribution of average normalized Add counts for each data set in Eath Observing Laboratory.}
+	\label{EOL_Adds}
+\end{figure}
+
+\begin{figure}%[b]
+	\centering
+	\includegraphics[scale=.6]{figures/Eol_Inv.png}
+	\caption{Distribution of average normalized Invalidate counts for each data set in Eath Observing Laboratory.}
+	\label{EOL_Invs}
+\end{figure}
+
+\begin{figure}%[b]
+	\centering
+	\includegraphics[scale=.6]{figures/Eol_Mod.png}
+	\caption{Distribution of average normalized Modify counts of each data set in Eath Observing Laboratory.}
+	\label{EOL_Mods}
+\end{figure}
+
+\begin{figure}%[b]
+	\centering
+	\includegraphics[scale=.6]{figures/Eol_Versions_3d.png}
+	\caption{Distribution of average normalized Modify counts of each data set in Eath Observing Laboratory.}
+	\label{EOL_AIM}
+\end{figure}
+
+\section{Hidden Volatility}
+
+Each version of a data set stored in EOL is assigned three different times, “version publish time,” “version creation time,” and “version modification time.”  
+Version publish time indicates the time the version was made available to the public, usually the data set was added to the database.  
+Version creation time denotes the moment at which a version designation was given to the collection of files, beginning in mid-2014 when the versioning system was implemented.  
+Version modification time indicates the time at which the version metadata was changed.  
+Using version publish time most closely resembles the duration of version validity, and the following computations use version publish time.
+
+Some of the data needed to be filtered out to provide valid results.  
+Due to a few coding errors in time assignments, 7 versions had to be removed because the durations were negative.  
+Duration is measured in days, and the rate of version publication is determined by taking the inverse of the duration.  
+To acquire the AIM change rates, the changes are divided by the associated duration for each version.  
+Since the rates are closely concentrated at 0, the log of the rates are taken to give the values a more log-normal distribution.  
+Values where an AIM change is 0 had to be removed in order to properly apply the log function.  
+The remaining number of entries can be found in Table XX.
+
+Since the durations are not normally distributed, but concentrated close to 0, the log of the durations are taken to normalize the data.  
+The log function is also applied to the AIM changes to normalize the data.  
+The inverse of the log of the duration is taken to acquire the rate of version release.
+
+The Kolomogorov-Smirnov Test was used to determine if the Adds, Invalidates, or Modifies follow a distribution separate from the version publication distribution.  
+A difference indicates that the AIM changes exhibit a behavior apart from the version releases.  
+As seen in Figures XX, XX, and XX, the distributions of AIM changes over duration are offset due to a larger magnitude of values per version.  
+The change rates were translated by the difference in means between the version mean and the associated change mean after log normalization to make the values valid for comparison by the Kolomogorov-Smirnov test.
+
+
+\begin{figure}%[b]
+	\centering
+	\includegraphics[scale=.6]{figures/Eol_Add_Ver_Rate.png}
+	\caption{Distribution of average normalized Modify counts of each data set in Eath Observing Laboratory.}
+	\label{EOL_Add_Ver}
+\end{figure}
+
+\begin{figure}%[b]
+	\centering
+	\includegraphics[scale=.6]{figures/Eol_Inv_Ver_Rate.png}
+	\caption{Distribution of average normalized Modify counts of each data set in Eath Observing Laboratory.}
+	\label{EOL_Inv_Ver}
+\end{figure}
+
+\begin{figure}%[b]
+	\centering
+	\includegraphics[scale=.6]{figures/Eol_Mod_Ver_Rate.png}
+	\caption{Distribution of average normalized Modify counts of each data set in Eath Observing Laboratory.}
+	\label{EOL_Mod_Ver}
+\end{figure}
 
 \begin{table}
-	\caption{Change capture efficiency in Copper Data}
-	\label{table:Cu_change}
+	\caption{Summary of Kolmogorov-Smirnov Test results for Earth Observing Laboratory.}
+	\label{table:Eol_KS}
 	\centering
-	\begin{tabular}{|c|c|c|}
+	\begin{tabular}{|c|c|c|c|c|}
 		\hline
-		Change Type&	Triples&	\% of Cells Affected\\ \hline
-		Add&	17&	0.065\%\\
-		Invalidate&	23&	1.1\%\\
-		Modify&	2628&	100\%\\
+		&	Add&	Invalidate&	Modify&	Versions\\ \hline
+		Length&	205&	192&	114&	227\\
+		D-Value&	0.12919&	0.14464&	0.19727&	NA\\
+		p-Value&	0.05487&	0.02575&	0.005443&	NA\\
 		\hline
 	\end{tabular}
 \end{table}
-
-\section{Change Log Analysis}
-
-The change logs created with RDFa or JSON-LD demonstrates progress towards documents which are both human and machine-readable.
-The implementation provides evidence that JSON-LD is better suited to embed a versioning graph into a change log than RDFa.
-RDFa suffers limitations since it is constrained by the content's structure.
-The \textbf{modify} relation presented in Figure \ref{NobleGraph1} is unbalanced and the right-hand side of ``ChangeCAM00111" links only to the column \textbf{attribute} but not to the corresponding row \textbf{attribute}.
-This stems from a mismatch between the model's structure, the order in which data appears in the change log, and the way RDFa links properties together.
-Because the row label forms the outermost encapsulation, it cannot instantiate both row identifiers and implicitly link them separately.
-To do so would require explicitly instantiating the \textbf{attribute} in a non-visible part of the document, defeating the purpose of using RDFa to implicitly encode the versioning graph into the document.
-
-Both structured data implementations break up the graph across \textbf{attributes} so that individual parts of the graph can be extracted.
-The practice of a one-node JSON object is generally helpful for many web applications to load data quickly, but since the change log is not an application, it makes more sense to break up the content.
-Changes to individual \textbf{attributes} can be identified using anchors on the web page, then agents need only extract and parse the linked data to these specific entries.
-This way, a subgraph of only the pertinent attributes can be created without first ingesting the entire versioning graph.
-
-An unexpected challenge with the change logs is the larger file size and difficulties in loading the Noble Gas data set's JSON-LD change log.
-The problem results from needing ten lines to express a single row in the change log.
-Noble Gas also had an impressive number of \textbf{modifications}, some of which are shared across all rows in the data set.
-Repeated modifications over rows would account for the explosion in entries within the change log.
-
-\section{Summary}
-
-The automated change log generation yielded some unexpected results.
-While the data sets differed in both size and structure, the process used to generate the logs followed the same steps.
-Because the process to generate versioning graphs already separates changes into groups, the change log is organized into similar categories.
-Much of the data visible in the change log does not explicitly appear in the model such as the pre and post-values.
-
-The human-readable presentation defines the structure which tags in the chan\-ge log must take since maintaining human-readability is desired.
-The structure then determines the order in which linked data statements must appear in the log to encode the graph with RDFa.
-The ordering creates limitations on how strictly the encoded graph adheres to the specification from Chapter \ref{ch:model}.
-While construction of the change log is automated, encoding through RDFa significantly reduces the source HTML readability.
-In other applications using RDFa, the triples describe and link the text encapsulated by HTML tags.
-The versioning graph exclusively ignores the marked up content and links together tags or explicitly defines full triples in span tags.
-
-Change logs are much less restricted when encoded using JSON-LD rather than RDFa.
-The encoding format pulls the graph out of the attributes where they do not interact with content and into a separate script section.
-The method causes a drastic expansion per change in necessary text.
-The decision to divide up JSON-LD objects by the row in the change log they describe likely contributes significantly to the overhead necessary for the encoding.
-The division was made with the forethought that change log consumers may desire to only ingest specific subgraphs of the versioning graph.
-Separated JSON-LD objects will likely need to be merged in the future to save space for data sets with many changes.
-
-The resulting logs end up very large and sometimes do not load in a browser.
-Reassuringly, both data sets displayed the same space usage complexity with RDFa being ten times the plain text size and JSON-LD twice the size of a change long in RDFa.
-The relationship unfortunately means that a JSON-LD change log, with more readable source code, is twenty times the size of a plain text change log.
-The Copper data set's logs were reasonably responsive, displaying in seconds, but the Noble Gas's change log did not.
-In order to retain usability, there will need to be methods optimizing change log structure or representation.

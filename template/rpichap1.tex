@@ -6,34 +6,44 @@
 
 \chapter{INTRODUCTION}
 
-\section{Introduction}
+\section{Why Versioning is Important}
 
 \begin{quotation}
-	If scientific data production were easy, instruments would
+	"If scientific data production were easy, instruments would
 	have stable calibrations and validation activities would discover no need for
 	corrections that vary with time. Unfortunately, validation invariably shows that
-	instrument calibrations drift and that algorithms need a better physical basis.
-\end{quotation} \cite{Barkstrom2003}.
+	instrument calibrations drift and that algorithms need a better physical basis." \cite{Barkstrom2003}
+\end{quotation}
 
 Anyone who has used an iPhone or owned a video game console understands the basics of versioning.
 Companies brand sequential devices to indicate improvements in performance or capabilities.
-This basic identification method has given rise to a plethora of versioning systems used widely across a landscape of software and data.
-They help scientific workflows avoid losing work by managing transitions and changes while in operation \cite{Casati1996}.
-They provide necessary documentation which informs the transition to new methods and procedures \cite{Wiil:2000:RDH:338407.338517}.
-They provide accountability for the value of a project's data set when considering an agency's continued funding \cite{Cavanaugh2002}.
-The natural evolution of these systems, however, have given rise to formal architecture operating on top of very informal concepts.
+Basic numerical sequencing has given rise to a plethora of versioning systems used widely across a landscape of software and data.
+Versioning systems help scientific workflows avoid losing work by managing transitions and changes while in operation \cite{Casati1996}.
+Versioning systems provide necessary documentation which informs the transition to new methods and procedures \cite{Wiil:2000:RDH:338407.338517}.
+Versioning systems provide accountability for the value of a project's data set when considering an agency's continued funding \cite{Cavanaugh2002}.
+The natural evolution of versioning systems, however, have given rise to formal architecture operating on top of very informal concepts.
 In this dissertation, we identify gaps in versioning practices which result from tradition and develop a data model to more completely capture the interactions involved in versioning.
+
+We know that our instruments are imperfect, thus making our data also imperfect.
+The data, however, can be collected under quantifiable amounts of error for which makes the data still usable.
+When imperfections within the data exceed expectations, versioning systems allow exceptional errors to be managed.
+The data can be removed, corrected, or specially treated to bring the data error back within expectations.
+
+At the very core, versioning systems are a means of communication.
+Data producers communicate to consumers how much the producer has changed the data.
+The producer can also communicate through time using logs and other documentation.
+In order to clearly communicate changes, ideas must be clearly formalized and defined.
 
 \section{Definitions of Version}
 
-Using versions in the vernacular has become so pervasive that few documents formally define it.
+Using the term `versions' in the vernacular has become so pervasive that few documents formally define it.
 Barkstrom describes versions as \textbf{homogeneous groupings} used to control, ``production volatility induced by changes in algorithms and coefficients as result of validation and reprocessing," \cite{Barkstrom2003}.
 The \textbf{groupings} he mentions is a method of separating data objects such that they have similar scientific or technical properties.
 In order to determine when these properties have changed, he leverages the NASA workflow model shown in Figure \ref{NASALevels}.
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.35]{figures/NASALevels.png}
-	\caption[NASA organizes its data into three levels depending on the amount of aggregation and the distance the data is removed from the original sensor measurements.]{NASA organizes its data into three levels depending on the amount of aggregation and the distance the data is removed from the original sensor measurements. Figure 1 from \cite{Barkstrom2003}}
+	\caption[National Aeronautics and Space Administration organizes its data into three levels depending on the amount of aggregation and the distance the data is removed from the original sensor measurements.]{NASA organizes its data into three levels depending on the amount of aggregation and the distance the data is removed from the original sensor measurements. Figure 1 from \cite{Barkstrom2003}}
 	\label{NASALevels}
 \end{figure}
 The model describes the formal stages of processing to turn a raw remote sensing signal from satellite instruments into global aggregate summaries \cite{Barkstrom2003}.
@@ -92,7 +102,7 @@ Each edge in the tree signifies a difference with other objects at the same dept
 The difference in the number of tiers employed in the HCLS and Barkstrom models also indicates that different applications will have varying expectations of granularity to their versioning models.
 A general solution will likely need to be tiered and recursive in structure to accommodate different levels of specificity.
 
-\section{Provenance Ontologies}
+\section{Provenance Representation}
 
 Provenance ontologies form a major section of linked data approaches to data versioning.
 The coverage stems from the close relation between provenance and differentiating versions.
@@ -140,7 +150,7 @@ Using the property and concept together forms a qualified property which can be 
 
 \subsection{Provenance, Authorship, and Versioning Ontology}
 
-The Provenance, Authorship, and Versioning (PAV) Ontology is, ``a lightweight vocabulary, for capturing ``just enough" descriptions essential for web resources representing digitized knowledge" \cite{Ciccarese2013}.
+The Provenance, Authorship, and Versioning (PAV) Ontology is, ``a lightwei\-ght vocabulary, for capturing ``just enough" descriptions essential for web resources representing digitized knowledge" \cite{Ciccarese2013}.
 It provides a means to track versioning information through linked data by introducing \textit{pav:version} to cite versions and \textit{pav:previousVersion} to link them together in order \cite{Ciccarese2013}.
 It does so in comparison to the Dublin Core concept \textit{dc:isVersionOf} which records, "Changes in version imply substantive changes in content rather than differences in format" \cite{DCMI2012}.
 PAV supports the idea that a new concept becomes necessary to cover cases where new versions do not have to be substantive but can still be alternate editions of the original object.
@@ -162,7 +172,7 @@ The action only involves the object and the new state of the collection, not inv
 Schema.org defines the \textit{schema:DeleteAction} as, "the act of editing a recipient by removing one of its objects," \cite{SchemaRem}.
 The concept aligns well with other versioning systems, although deletion may be a strong assertion.
 
-\section{Change Logs} \label{sec:changelog}
+\section{Documenting Versions} \label{sec:changelog}
 
 Change logs, artifacts resulting from the versioning process, play a major role filling in gaps between versions.
 The logs document changes and explain, in human language, motivations behind the modifications \cite{uel1037}.
@@ -185,7 +195,7 @@ Research done involving change log content must manually link entries with compu
 While machines may still be significantly removed from the ability to comprehend the impact of changes made to a data set or software code, they are currently opaquely blocked from consuming any of the content within logs more than understanding they contain text.
 The transition between different versions of large data sets is then left largely up to the human user's ability to understand and process the modifications mentioned within the change log.
 
-\section{Introduction of Use Cases} \label{sec:usecase}
+\section{The Versioning Use Case} \label{sec:usecase}
 
 The following use cases bring together features from the fields of linked data, provenance ontologies, version models, and change log practices to form a basic fundamental model of versioning.
 As mentioned in Section \ref{sec:models}, a common feature of version models is that they are tree-like and tiered.
@@ -200,7 +210,61 @@ Linked data is the mechanism used to connect provenance and versioning models.
 Change logs inform the concepts missing from both models which must be added to fill in the gaps.
 The model specified in Chapter \ref{ch:model} uses the intersection of all these features to address the following use cases.
 
-\subsection{Use Case 1: Linked Data Change Log}
+\begin{table}
+	\caption{Versioning Use Case Table}
+	\label{table:UseCase}
+	\centering
+	\begin{tabular}{|L{14cm}|}
+		\hline
+		\textbf{Use Case Name}: New Version Publication \& Retrieval\\
+		\hline
+		\textbf{Goal}: Record a new version of a data set and provide it to a data consumer.\\
+		\hline
+		\textbf{Summary}: The Producer creates a new version of their data and must record it to the Versioning System while providing the Consumer with the data\\
+		\hline
+		\textbf{Actors}: Producer, Consumer\\
+		\hline
+		\textbf{Preconditions}: Producer has supplied some data to the Versioning System.   Consumer has retrieved the data from the Versioning System.\\
+		\hline
+		\textbf{Triggers}: Producer provides a different version of the data to the Versioning System.\\
+		\hline
+		\textbf{Basic Flow}: 
+		\begin{enumerate}
+			\item Producer places the next version into the Versioning System.
+			\item Producer may repeat the previous action 0 or more times.
+			\item Consumer checks the data to see if there are changes.
+			\item If there are pertinent changes:
+			\begin{enumerate}
+				\item Consumer retrieves the updated data.
+			\end{enumerate}
+		\end{enumerate}\\
+		\hline
+		\textbf{Alternate Flow}:
+		\begin{enumerate}
+			\item Producer places the next version into the Versioning System.
+			\item Producer notifies Consumer that an alternate version is available.
+			\item Consumer retrieves the updated data.
+		\end{enumerate}\\
+		\hline
+		\textbf{Post Conditions}: Producer has made the alternate version available.  Consumer possesses the pertinent newly available version.\\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1]{figures/UC_Diagram1.png}
+	\caption{Basic Flow Use Case Diagram.}
+	\label{UCD1}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1]{figures/UC_Diagram2.png}
+	\caption{Alternate Flow Use Case Diagram.}
+	\label{UCD2}
+\end{figure}
+\subsection{Research Question 1: Linked Data Change Log}
 
 The first use case's goal is to determine the differences between two versions of a data set.
 The way this is accomplished in the ``Global Database on \textsuperscript{3}He/\textsuperscript{4}He in on-shore free-circulated subsurface fluids" (Noble Gas) is to look at the use documentation for each version and manually determine the differences \cite{Polyak2015}.
@@ -220,7 +284,7 @@ Rather than complicate the approach with multiple tables, Use Case 1 focuses on 
 The spreadsheets do not innately use linked data identifiers, meaning artificial identifiers will need to be deployed referring to objects within the model.
 Methods to generate an identifier lies outside the scope of this work.
 
-\subsection{Use Case 2: Change Distance}
+\subsection{Research Question 2: Change Distance}
 
 The second use case addressed is how versioning systems capture the amount of change existing between two versions.
 Data producers often communicate the amount or significance of a particular change through version identifiers.
@@ -234,7 +298,7 @@ The encoding would mean that, unlike the Noble Gas and Copper data sets, the key
 More importantly, the GCMD data set has more than two versions with clear identifiers in the dot-decimal style, indicating three degrees of change between versions.
 The identifier indicates when a major, minor, or revisionary extent of change separates two versions.
 
-\subsection{Use Case 3: Linked Data Versioning}
+\subsection{Research Question 3: Linked Data Versioning}
 
 Use Case 3 deals with encoding versioning semantics using linked data.
 The current concepts revolve around provenance applications where PROV-O and PAV are often employed.

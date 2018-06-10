@@ -36,6 +36,7 @@
 \usepackage{adjustbox}
 \usepackage{listings}
 \usepackage{textcomp}
+\usepackage{tabularx}
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 \usepackage{bibentry}
@@ -54,6 +55,10 @@
 \newcommand{\ignore}[1]{}
 \newcommand{\nobibentry}[1]{{\let\nocite\ignore\bibentry{#1}}}
 % ------------------------
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
 
 \lstset{
 	basicstyle=\ttfamily,
@@ -77,10 +82,11 @@
 \include{rpichap4} % Version Graph
 \include{rpichap4_2} % Change Log
 \include{rpichap4_3} % Distance
+\include{rpichap4_4} % Volatility
 \include{rpichap5} % Analysis
 \include{rpichap5_1} % Discussion & Conclusion
 \include{rpichap6} % Future Work
 \include{rpibib} % bibliography
-%\include{rpiapp} % appendix
+\include{rpiapp} % appendix
 
 \end{document}

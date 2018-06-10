@@ -1,15 +1,3 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                 %
-%                            APPENDICES                           %
-%                                                                 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\appendix    % This command is used only once!
-%\addcontentsline{toc}{chapter}{APPENDICES}             %toc entry  or:
-\addtocontents{toc}{\parindent0pt\vskip12pt APPENDICES} %toc entry, no page #
-
-\chapter{NOBLE GAS CHANGE LOG GENERATOR VERSION 1 TO 2}
-\begin{lstlisting}[language=Python]
 from os.path import join, dirname, abspath, isfile
 from os import sep as separator
 import xlrd, sys, json
@@ -562,34 +550,3 @@ if __name__ == "__main__":
 	v2_file = join(v2_dir, 'DB_final-55-7262_2015_03_08.xlsx')
 
 	compare(excel_files, v2_file, out_name, mode)
-
-\end{lstlisting}
-
-\section{A Section Heading}
-
-This is how equations are numbered in an appendix:
-\begin{equation}
-x^2 + y^2 = z^2
-\end{equation}
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-
-\chapter{THIS IS ANOTHER APPENDIX}
-
-
-
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.

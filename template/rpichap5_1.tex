@@ -1,1 +1,54 @@
 \chapter{Discussion \& Conclusion}
+
+\section{Producer/Consumer Versioning Dynamic}
+
+The investigation into GCMD Keywords has demonstrated the importance of investigating beyond sequential version releases.  
+The initial hypothesis was that the dominant change count could provide a reliable indicator to differentiate major and minor versions.  
+The resulting numbers shows some reflection of the version name in the change counts.  
+A more important finding shows that different approaches can be used to evaluate the number of changes in the Version 8.4 to 8.5 transition.  
+The difference highlights a barrier between expertise of data producers and consumers within a system.  
+Without prior knowledge of the namespace change, the version indicator violates the GCMD Keyword data policy.  
+The ability for a consumer to determine the amount of change within a system becomes incredibly important as the associated change document dictates to the data consumer how the producer thinks users should interact with the data.
+
+The GCMD Keyword data set also demonstrates a transparency issue when utilizing a sequential versioning scheme since versions are not bound to a temporal or change count schedule.  
+In Figure XX, we can see that there is a sharp drop off in change counts once entering variants of the 8th major release.  
+The finding that the change counts do not consistently relate with version identifiers has already been discussed, but the chart is misleading in showing each version equally spaced from the others.  
+Temporally, the versions are separated by a variety of durations.  As mentioned in Section XX, the release rate of versions can be artificially controlled, disconnecting the rate of change from time.  
+When refactoring time back into the change measurement, we can see very distinct separation in the change rate as well as their conformance with the version identifiers assigned at the end of the change period.  
+In particular, we can see in Cluster 2 of Figure XX that versions can be arbitrarily released in quick succession even though work on the changes inside the version began in 2008, 2014, or 2015.  
+This finding indicates that version releases cannot be universally trusted to provide a complete picture of the change within a system by itself.
+
+While investigating inconsistencies between change counts found by the change log and those reported by the impact assessment, differences between the metrics became apparent.  
+The lack of alignment arose from a difference between the way the community sees and proposes the keywords and the way the keywords are digitally encapsulated and stored in the KMS.  
+As a result, the impact assessments do not capture the structural changes that result from additions to the taxonomy.
+
+\section{Hiddent Data Volatility}
+
+The EOL’s small data set size allows it to adopt a comprehensive replacement method.  
+The versioning model identified the need for unique file identifiers to determine when files are specifically changed which were not part of the original versioning metadata starting in 2014.  
+The process of capturing change within the system using the model naturally led to a set of basic requirements necessary to implement a versioning system.
+
+The 3 dimensional scatter plot in Figure XX shows a very surprising tendency in EOL data sets.  
+While the description of update methods suggests data sets should be modify dominant, many of the versions replace and rename all the files in a version.  
+The volatility analysis for these versions show that when a version is made it will likely entirely replace the previous version.  
+The trend also suggests a concerning behavior of contributing scientists to transition away from a previously established file naming scheme.
+
+The problem with change hiding is that version releases mask a data set’s true volatility.  
+From the Kolomogorov-Smirnov test results, each of the change types demonstrated a different distribution from the visible version release rate.
+
+
+\section{New Versioning Nomenclature}
+Analysis of versioned data sets has revealed three types of data, dependent on the way in which versions are released: single, periodic, and intermittent.
+Single version data sets contain data which cannot be replicated or in which modification would entirely invalidate the data.
+High energy physics, previously mentioned, and surveillance data fit within this category.
+The data sets in this category will usually only experience additions and invalidations since scientists cannot change the data.
+
+Periodic data sets exhibit version releases at regular intervals in time.  Large data collections usually exhibit a regular behavior when they follow a periodic data collection scheme.
+The ARM data center releases data at daily intervals, meaning new versions every day.
+The reasons that ARM data sets are not overloaded with version numbers is that some operations, in this case new files, are masked to increase the pertinence of each version designation.
+The problem that masking additions causes is the actual amount of change within the data set over time also becomes masked.
+The data set then appears to be intermittent when it actually undergoes periodic changes.  As seen in GCMD Keywords and EOL, changes are not necessarily evenly distributed among versions.  The changes, as a result, are also not evenly distributed across time.  As mentioned with distributed versioning methods, periodic version releases can be used to control the volatility of a data set by collecting many changes over time before publication.  Periodic data sets expend version identifiers very quickly since they must release a version even if few significant changes have occurred.
+
+The final type of data set follows intermittent versioning which is characterized by releasing versions as appropriate or as necessary.  The data sets are not bound by an established release schedules.  In the intermittent category falls GCMD Keywords, the Copper data set, and the Noble Gas data set.  Irregular version releases allows data managers the freedom to reduce the number of versions necessary to manage the data set.  When data managers wait too long to release a new version, the number of changes in a single transition can overwhelm methods to track modifications to the data as seen in the Noble Gas data set.  Since intermittent versions are not released based on time, it is very important that versions are released based on some other quantitative measure of change.  Failing to do so invites unclear or worse arbitrary distinction between versions.  GCMD Keywords define clear requirements for major and minor version releases, but the governance document does not explain the requirements for sub-minor versions which occasionally appear in the keyword repository.
+
+Each data set type can additionally be sub-divided into two categories based on the observations made with the AIM model: Add dominant and Modify dominant.  In the data sets currently studied, none exhibit behavior suggesting an Invalidate dominant data set.  A data set is either Add or Modify dominant when a majority of versions have a majority of either Adds or Modifies.  Add dominance indicates that the data is primarily growing while Modify dominance shows that a data set’s coverage is primarily stable but occasionally undergoes adjustments.  The GCMD Keywords is an example of an Add dominant data set since all its version transitions are comprised of new concepts.  The Noble Gas data set shows modify dominance.

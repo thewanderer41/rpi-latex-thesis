@@ -4,9 +4,9 @@
 %                                                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{CHANGE DISTANCE} \label{ch:distance}
+\chapter{}
 
-\section{Introduction}
+\section{CHANGE METRIC} \label{ch:distance}
 
 Use Case 2 addresses the use of versions to communicate how different two objects are.
 Many versioning systems use dot-decimal identifiers to signify whether a change is large, medium, or small.
@@ -17,7 +17,7 @@ Work with the MBVL data set then extends VersOn to give more detailed accounting
 
 \section{Utilized Data Sets}
 
-\subsection{GCMD Keywords}
+\subsection{Global Change Master Directory Keywords}
 
 The Global Change Master Directory (GCMD) is a metadata repository used by NASA to store records of its available data sets \cite{Miled:2001:GCM:372202.372324}.
 They employ a set of keywords to make NASA Earth Science data sets searchable.
@@ -33,7 +33,7 @@ The taxonomy uses the concepts \textit{skos:Broader} and \textit{skos:Narrower},
 The tree's root is the keyword, "Science Keywords."
 The data set provides an interesting study case due its long sequence of versions and ready use of linked data technology \cite{Stevens2016}.
 
-\subsection{MBVL Classifications} \label{sec:MBVL}
+\subsection{Marine Biodiversity Virtual Laboratory Classifications} \label{sec:MBVL}
 
 The Marine Biodiversity Virtual Laboratory (MBVL), based at Woods Hole Oceanographic Institution, provides data and services for the study of marine biology with an integrative approach \cite{mbvl}.
 In the application studied, a choice of algorithm and taxonomy pairings must be tested on a known population in order to estimate their performance with an unknown microbial population.
@@ -63,9 +63,9 @@ Since the data sets have the same number of sequences, the primary difference be
 	\end{tabular}
 \end{table}
 
-\section{GCMD}
+\section{Global Change Master Directory}
 
-\subsection{GCMD Versioning Graph}
+\subsection{Global Change Master Directory Versioning Graph}
 
 The Global Change Master Directory establishes the context that each \textbf{manifestation} of their keyword list are related versions.
 Since the unique identifier for each keyword remains the same across versions, they can be used to align a mapping across versions.
@@ -154,63 +154,8 @@ The \textbf{additions} in ``8.4 to 8.4.1" in Figure \ref{GCMDC2} numbers almost 
 	\label{GCMDC2}
 \end{figure}
 
-\begin{figure}%[b]
-	\centering
-	\includegraphics[scale=0.56]{figures/GCMDPlot1.png}
-	\caption[Global Change Master Direcotry counts distributed over time.]{Add counts for all versions of GCMD up to 8.5 evenly distributed over the time of version validity.}
-	\label{GCMDPlot1}
-\end{figure}
-\begin{figure}%[b]
-	\centering
-	\includegraphics[scale=0.56]{figures/GCMDPlot1_Cluster.png}
-	\caption[Global Change Master Directory count distributed over time with clusters marked.]{The change rate of different versions organize into three visible clusters. Cluster 2 denotes a sudden burst of version releases which is notable.}
-	\label{GCMDPlot1Cluster}
-\end{figure}
-\begin{table}
-	\caption{Global Change Master Directory versions with old start time changes.}
-	\label{table:GCMD_old}
-	\centering
-	\begin{tabular}{|c|c|c|c|c|}
-		\hline
-		Version Name&	Publish Date&	2008&	2014&	2015\\ \hline
-		8.2&	June 7, 2016&	0&	4&	2\\
-		8.3&	June 21, 2016&	0&	7&	1\\
-		8.4&	July 7, 2016&	5&	0&	1\\
-		\hline
-	\end{tabular}
-\end{table}
 
-\begin{table}
-	\caption{Differences in VersOn and Impact Assessment metrics}
-	\label{table:GCMD_metric}
-	\centering
-	\begin{tabular}{|r|r|r|r|}
-		\hline
-		Version & Add & Invalidate & Modify\\ \hline
-		8.2(VO)&	53&	1&	26\\
-		-8.2(IA)&	48&	0&	4\\
-		\hline
-		&	5&	1&	22\\
-		\hline
-		8.3(VO)&	58&	0&	13\\
-		-8.3(IA)&	58&	0&	10\\
-		\hline
-		&	0&	0&	3\\
-		\hline
-		8.4(VO)&	53&	0&	1\\
-		-8.4(IA)&	66&	0&	5\\
-		\hline
-		&	-13&	0&	-4\\
-		\hline
-		8.5(VO)&	68&	2&	22\\
-		-8.5(IA)&	55&	0&	30\\
-		\hline
-		&	13&	2&	-8\\						
-		\hline
-	\end{tabular}
-\end{table}
-
-\section{MBVL}
+\section{Marine Biodiversity Virtual Laboratory}
 
 \subsection{Variant Versioning Graph}
 

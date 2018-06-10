@@ -1,12 +1,91 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                 %
-%                            CHAPTER THREE                        %
+%                           CHAPTER THREE                         %
 %                                                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{MODEL SPECIFICATION}\label{ch:model}
+\chapter{MACHINE-READABLE CHANGE LOG}\label{ch:changelog}
 
 \section{Introduction}
+
+Change logs explain the differences between versions; however, they are often only available in human-readable formats.
+Readability puts a limit on the length and extent of the log since a human will need to write it.
+Manageable change descriptions become difficult with large data sets featuring many changes, or data sets that change often, but these are exactly the data sets which need change logs the most.
+Automating the process will allow more data sets to provide change documentation in a timely fashion for data sets.
+Encoding the change logs with structured data will provide a means for users to efficiently consume change information.
+The additional encoding will inflate the size of a standard change log which becomes an issue with the change logs.
+
+Change logs were generated for two data sets, the ``Global Database on \textsuperscript{3}He/\-\textsuperscript{4}He in on-shore free-circulated subsurface fluids" data set and the Paragenetic Mode for Copper Minerals database.
+Following the practices of other change logs, the documents present before and after values for comparison which can be seen in Figure \ref{changelog_zoomed}.
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.80]{figures/Changelog-zoomed.png}
+	\caption{Abswurmbachite entry in the Copper Dataset Change Log}
+	\label{changelog_zoomed}
+\end{figure}
+The change logs identify challenges to adopting thorough change logs as a practice in versioning data sets.
+
+\section{Utilized Data Sets}
+
+\subsection{Noble Gas Data set}
+
+The ``Global Database on \textsuperscript{3}He/\textsuperscript{4}He in on-shore free-circulated subsurface fluids" is a tumultuous database \cite{Polyak2015}.
+The first version, published in June 11, 2013, contains the information from 8 regions of the world united into a single file with around 199 columns.
+The next version of the database, published March 8, 2015, reduces the number of columns to 54, marking a drastic change.
+In addition, several columns changed the units with which they reported measurements.
+While usage documentation, explaining the content and use of the data, accompanied each version, no records were included indicating what changed between versions.
+A change log would be valuable guide with such drastic structural and content changes.
+The third and most recent publication came in July 11, 2017, with no changes to the number of files or columns, but many new rows.
+The structural summary of each of the files can be found in Table \ref{noble_gas_file_table}.
+
+\begin{table}
+	\caption{Files in the Noble Gas data set.}
+	\label{noble_gas_file_table}
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		Filename & File Size (Bytes) & Rows & Columns &	Total Cells \\ \hline
+		DB\_HE\_6733.xlsx &	2682683 &	6733 &	199 &	1339867 \\
+		DB\_final-55-7262\_2015\_03 &	2729060 &	7265 &	54 &	392310 \\
+		\_08.xlsx&&&&\\
+		NG\_DB\_final\_2017\_07 &	4216595 &	8231 &	54 &	444474 \\
+		\_01.xlsx&&&&\\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{Copper Data set}
+
+The Paragenetic Mode for Copper Minerals database became available through collaboration with the author's lab to create new methods of visualizing mineralogy relationships \cite{Morrison2016}.
+The first version was collected June 8, 2016, with the update following soon after on August 8, 2016.
+Major edits are fairly limited with only 16 column additions and 2 removals between the versions.
+Value formats remain consistent from one version to the next, resulting in a much more condensed body of changes, making transitions more easily verifiable.
+Compared to the Noble Gas data set, it provides a more stable data platform to implement the versioning model in Section \ref{ch:model}.
+The data from this work is also more processing friendly, making it agreeable to automatic change log generation.
+An interesting thing to note in Table \ref{copper_file_table} is that the second version takes up less storage space even though it has more data.
+
+\begin{table}
+	\caption{Files in the Copper data set.}
+	\label{copper_file_table}
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		Filename & File Size (Bytes) & Rows & Columns &	Total Cells \\ \hline
+		ParageneticModeTable\_Cu\_6. &	339175 & 705 &	37 &	26085\\
+		8.2016.xlsx&&&&\\
+		ParageneticModeTable\_Cu\_8. & 233715 & 685 & 51 & 34935\\
+		21.2016.xlsx&&&&\\
+		\hline
+	\end{tabular}
+\end{table}
+
+\section{Version Model Specification}\label{ch:model}
+
+When making change logs more approachable for usage in data sets, two approaches are available.
+The first approach continues writing change logs in only human readable language and relying on advances in natural language processing to allow computers to read the change logs.
+The second approach uses linked data to encode the change log with machine-computable statements.
+Since natural language processing is currently not sufficiently articulate, the second approach is taken.
+In doing so, a versioning data model needs to be developed which can capture changes in the way a change log organizes information.
 
 A versioning data model needs to address a variety of needs not met by provenance models.
 In PROV-O and PAV, the modeled entities are exclusively one-dimensional with each version leading sequentially to the next one.
@@ -27,7 +106,7 @@ The versioning model must contain a mechanism to convey how changes to parts of 
 The fundamental operations---\textbf{add}, \textbf{invalidate}, and \textbf{modify}---are used by the model to capture change in a more detailed manner.
 These details provide a mechanism to measure change between versions with better clarity than current methods.
 
-\section{Initial Approaches}
+\subsection{Initial Approaches}
 
 The first approach, seen in Figure \ref{DiscardedFig}, simply extends the provenance relation with additional concepts to capture more types of relationships.
 \begin{figure}
@@ -175,7 +254,7 @@ Removing the explicit relation would shorten the number of triples required to e
 The versioning graph using this highly connected model would also be easier to query if the edges were oriented in the same direction, additionally implying that change flows from one version to the next.
 These final observations result in the current versioning model.
 
-\section{Model Objects}
+\subsection{Model Objects}
 
 The versioning model incorporates three kinds of objects: \textbf{versions}, \textbf{attribut\-es}, and \textbf{changes}.
 A \textbf{version} object represents the items being compared such as a book or spreadsheet.
@@ -190,14 +269,14 @@ The presence or absence of an \textbf{attribute} is used to determine the kind o
 The \textbf{change} captures a difference between the old \textbf{version} state and the new \textbf{version} state.
 While the \textbf{change} object greatly resembles a PROV qualified property, its form can change depending on the kind of \textbf{change}, like a \textit{schema:UpdateAction}.
 
-\subsection{Left-hand Right-hand Convention}
+\subsubsection{Left-hand Right-hand Convention}
 
 In the following diagrams and figures, the original or base version and its attributes will be placed on the left-hand side and the new version will be placed on the right-hand side with its attributes.
 References to the versions as previous and next are avoided since sequencing may not play a major role in distinguishing versions.
 Scientific data in large repositories often track sequential releases of data, but a book may have different versions distinguished by printed language.
 To recognize this distinction, objects will be referred to as the left-hand \textbf{version} or left-hand \textbf{attribute} when they are not sequentially or temporally related.
 
-\section{Model Changes}
+\subsection{How Changes are Represented in the Model}
 
 The model bases \textbf{changes} around the three core versioning operations because their commonality across systems provides a fundamental basis for comparisons.
 \textbf{Additions} occur when an \textbf{attribute} appears only in the right-hand \textbf{version}.
@@ -227,7 +306,7 @@ These three combinations cover the possible situations within the model.
 	\label{ModificationFig}  % the \label command comes AFTER the caption
 \end{figure}
 
-\subsection{Modification}
+\subsubsection{Modification}
 
 The \textbf{modification} relation occurs when an \textbf{attribute} appears in both \textbf{versions} and their values are different.
 In Figure \ref{ModificationFig}, a \textbf{modification} is captured between two versions.
@@ -238,7 +317,7 @@ The specific values pertaining to Attribute 1 and Attribute 2 are not captured b
 Extending the model to properly communicate the significance of a modification for a wide variety of domains would require sizable domain knowledge and would be outside the scope for this project.
 In addition, the model would essentially begin storing a copy of the data set, leading to space and redundancy concerns.
 
-\subsection{Addition}
+\subsubsection{Addition}
 
 In Figure \ref{AdditionFig}, the \textbf{addition} model differs from the \textbf{modification} construction by the absence of Attribute 1.
 \begin{figure}
@@ -267,12 +346,12 @@ The path does not show that ``Version 1" informs or creates ``Attribute 2", whil
 The construction was also chosen to create a symmetric orientation with the \textbf{invalidation} change.
 
 
-\subsection{Invalidation}
+\subsubsection{Invalidation}
 
 The \textit{invalidation} model has a missing \textbf{attribute} on the right-hand side of the relation, contrary to the \textbf{addition} construction.
 As a result of the invalidation, an attribute no longer exists in the right-hand \textbf{version}.
 As seen in Figure \ref{InvalidationFig}, the invalidation change concept matches to the Version 2 object.
-\begin{figure}[b]
+\begin{figure}
 	\centering
 	\vspace{0.0in} % normally the command here would be \includegraphics
 	%	\includegraphics{figures/Addition.png}
@@ -295,10 +374,263 @@ Just like in \textbf{addition} model, this construction maintains a link between
 In this case, it makes more conceptual sense, however, because ``Version 2" invalidates ``Attribute 1" by omitting it.
 
 
+\section{Encoding a Change Log}
+
+Very little natural language is used in the change log to regularize the format and improve compatibility with RDFa.
+The change logs follow a common format with three sections: Additions, Invalidations, and then Modifications.
+The sections may be further grouped by column or row additions.
+The division means that changes are not published into the change log as they are found, but instead organized and grouped beforehand.
+
+Employing RDFa means that the document must be written using HTML formatting.
+Listing \ref{rdfa_list} shows the text necessary to layout the first four lines of Figure \ref{changelog_zoomed}.
+While the content only shows four lines, the underlying markup takes up three and a half times as many lines.
+Line 2 states that all following resources will be \textbf{attributes} of Version 1.
+Line 3 defines such an \textbf{attribute}.
+Lines 5 through 8 define the changes Abswurmbachite undergoes.
+Because RDFa allows the statements to be embedded within the content, the triples can appear along with the text they describe.
+Lines 11 and 12 define complete triples which do not appear in the visible document.
+The lines complete the graph, but must be included in spans because RDFa only allows a single triple within each tag.
+Modifying the tags' order so that the spans are unnecessary would cause the visible content to appear in an un-logical order, rendering the document machine-readable but not human-readable.
+
+\begin{lstlisting}[language=HTML, caption=Abswurmbachite RDFa, label=rdfa_list]
+<h3>Change Log</h3>
+<div about="Version1" rel="vo:hasAttribute">
+<div resource="v2:Abswurmbachite" typeof="vo:Attribute">
+<span style="font-weight:bold" property="http://www.w3.org/2000/01/rdf-schema#label">Abswurmbachite</span>
+<table rel="vo:Undergoes">
+<tr  about="ChangeAbswurmbachite12" typeof="vo:Change">
+<td align="right" rev="vo:Undergoes" resource="v1:AttributeAbswurmbachite12v1" typeof="vo:Attribute"> 9</td>
+<td property="vo:resultsIn" resource="v2:AttributeAbswurmbachite12v2" typeof="vo:Attribute">(12)</td>
+<td>          </td>
+<td>       0.0</td>
+<span about="Version1" property="vo:hasAttribute" resource="v1:AttributeAbswurmbachite12v1"></span>
+<span about="Version2" property="vo:hasAttribute" resource="v2:AttributeAbswurmbachite12v2"></span>
+</tr>
+</table></div></div><br>
+\end{lstlisting}
+
+After encountering the limitations of using RDFa to include the versioning graph into the change log, JSON-LD was used.
+The new format does not rely on the structure of visible content to determine the syntax triples use to be included in the change log.
+Listing \ref{json_list} provides the alternative encoding of the Abswurmbachite entry from RDFa.
+The entry is significantly longer, almost three times longer than the RDFa entry and ten times longer than the original visible content.
+Instead of including all the data in the beginning or end of the document, each change block is separated into the particular \textit{div} section for that change.
+This choice allows consumers to extract pertinent change information without needing to ingest the entire versioning graph.
+
+\begin{lstlisting}[language=HTML, caption=Abswurmbachite JSON-LD, label=json_list]
+<h3>Change Log</h3>
+<div about="v1:Abswurmbachite">
+<span style="font-weight:bold" property="http://www.w3.org/2000/01/rdf-schema#label">Abswurmbachite</span>
+<table>
+<tr  id="ModifyChangeAbswurmbachite12">
+<td align="right"> 9</td>
+<td >(12)</td>
+<td>          </td>
+<td>       0.0</td>
+<script type="application/ld+json">
+[
+{
+"@context": "https://orion.tw.rpi.edu/~blee/provdist/GCMD/VO.jsonld", 
+"@id": "http://CUdb.com/v1/AttributeAbswurmbachite9", 
+"@reverse": {
+"hasAttribute": "Version1"
+}, 
+"@type": "vo:Attribute", 
+"label": "Primary", 
+"undergoes": "http://orion.tw.rpi.edu/~blee/provdist/CU/DTDI/CUjsonlog.html#ModifyChangeAbswurmbachite12"
+}, 
+{
+"@context": "https://orion.tw.rpi.edu/~blee/provdist/GCMD/VO.jsonld", 
+"@id": "http://orion.tw.rpi.edu/~blee/provdist/CU/DTDI/CUjsonlog.html#ModifyChangeAbswurmbachite12", 
+"@type": "vo:ModifyChange", 
+"resultsIn": "http://CUdb.com/v2/AttributeAbswurmbachite12"
+}, 
+{
+"@context": "https://orion.tw.rpi.edu/~blee/provdist/GCMD/VO.jsonld", 
+"@id": "http://CUdb.com/v2/AttributeAbswurmbachite12", 
+"@reverse": {
+"hasAttribute": "Version2"
+}, 
+"@type": "vo:Attribute", 
+"label": "Primary"
+}
+]
+</script>
+</tr>
+</table></div><br>
+\end{lstlisting}
+
+The change logs created with RDFa or JSON-LD demonstrates progress towards documents which are both human and machine-readable.
+The implementation provides evidence that JSON-LD is better suited to embed a versioning graph into a change log than RDFa.
+RDFa suffers limitations since it is constrained by the content's structure.
+The \textbf{modify} relation presented in Figure \ref{NobleGraph1} is unbalanced and the right-hand side of ``ChangeCAM00111" links only to the column \textbf{attribute} but not to the corresponding row \textbf{attribute}.
+This stems from a mismatch between the model's structure, the order in which data appears in the change log, and the way RDFa links properties together.
+Because the row label forms the outermost encapsulation, it cannot instantiate both row identifiers and implicitly link them separately.
+To do so would require explicitly instantiating the \textbf{attribute} in a non-visible part of the document, defeating the purpose of using RDFa to implicitly encode the versioning graph into the document.
+
+Both structured data implementations break up the graph across \textbf{attributes} so that individual parts of the graph can be extracted.
+The practice of a one-node JSON object is generally helpful for many web applications to load data quickly, but since the change log is not an application, it makes more sense to break up the content.
+Changes to individual \textbf{attributes} can be identified using anchors on the web page, then agents need only extract and parse the linked data to these specific entries.
+This way, a subgraph of only the pertinent attributes can be created without first ingesting the entire versioning graph.
+
+An unexpected challenge with the change logs is the larger file size and difficulties in loading the Noble Gas data set's JSON-LD change log.
+The problem results from needing ten lines to express a single row in the change log.
+Noble Gas also had an impressive number of \textbf{modifications}, some of which are shared across all rows in the data set.
+Repeated modifications over rows would account for the explosion in entries within the change log.
+
+\section{Earth Observing Laboratory}
+
+
+
+\section{Change Log Analysis}
+
+With a trade-off of 14 HTML lines for every visible line and 40 HTML code lines to each visible line, space utilization is a very present concern.
+Table \ref{table:Ng_changelog_table1} shows the size of each encoding of the change log as well as the percentage in size as compared to either of the files involved in the version transition.
+\begin{table}
+	\caption{Noble Gas change log size: 1st Transition}
+	\label{table:Ng_changelog_table1}
+	\centering
+	\begin{tabular}{|c|r|c|c|}
+		\hline
+		Encoding Type & File Size (Bytes) & \% of File 1 & \% of File 2 \\
+		\hline
+		Text&	5575405&	207.8294&	204.2976\\
+		RDFa&	62175478&	2317.660&	2278.2745\\
+		Turtle&	80919783&	3016.375&	2965.1156\\
+		JSON-LD&	130134071&	4850.893&	4768.4577\\
+		\hline
+	\end{tabular}
+\end{table}
+`Text' denotes the encoding control where no structured data is included into the change log.
+Alone, the control is already double the size of either file.
+The RDFa encoding more than 20 times the size of the original files, exceeding the size of the control by more than 10 fold.
+A separate file was generated in turtle format to observe whether taking just the linked data values would reduce the information to a more manageable size, but the turtle file was still 30 times the size of the original files.
+Adopting the versioning model and encoding it into a change log will very likely require significant storage investment.
+
+Table \ref{table:Ng_changelog_table2} shows the change log sizes for the second version transition in the Noble Gas data set.
+\begin{table}
+	\caption{Noble Gas change log size: 2nd Transition}
+	\label{table:Ng_changelog_table2}
+	\centering
+	\begin{tabular}{|c|r|c|c|}
+		\hline
+		Encoding Type & File Size (Bytes) & \% of File 2 & \% of File 3 \\
+		\hline
+		Text&	670827&	24.5808&	15.9092\\
+		RDFa&	6409540&	234.8625&	152.0074\\
+		Turtle&	4521010&	165.6618&	107.2194\\
+		JSON-LD&	9834772&	360.3721&	233.2396\\
+		\hline
+	\end{tabular}
+\end{table}
+Notice that the second transition has much smaller text encodings compared to the original files.
+The RDFa and JSON-LD encodings once again 10 and 15 times, respectively, the size of the text encoding.
+The turtle encoding, however, is smaller than the RDFa encoding, but still 16 times the size of the original file.
+Looking at Table \ref{table:Ng_turtle}, the second transition had 20 times fewer \textbf{Modify} entries, leading to a much smaller turtle file.
+\begin{table}
+	\caption{Noble Gas Turtle files}
+	\label{table:Ng_turtle}
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		Filename&	Add&	Invalidate&	Modify&	Total Triples\\ \hline
+		changelog.ttl&	608&	216&	102830&	110602\\
+		changelog2\_3.ttl&	990&	24&	5369&	8146\\
+		\hline
+	\end{tabular}
+\end{table}
+
+Another way to evaluate the performance of the change log is to look at the number of change entries compared to the number of changed values, in the Copper database's case spreadsheet cells.
+From Table \ref{table:Cu_changelog_table1}, the behavior of the encodings is very similar to the second transition of Noble Gas.
+\begin{table}
+	\caption{Copper change log size: 1st Transition}
+	\label{table:Cu_changelog_table1}
+	\centering
+	\begin{tabular}{|c|r|c|c|}
+		\hline
+		Encoding Type & File Size (Bytes) & \% of File 1 & \% of File 2 \\
+		\hline
+		Text&	140131&	41.3152&	59.9580\\
+		RDFa&	2032823&	599.343&	869.787\\
+		Turtle&	1538772&	453.680&	658.396\\
+		JSON-LD&	3500067&	1031.93&	1497.57\\
+		\hline
+	\end{tabular}
+\end{table}
+The text format is smaller than the original data set, but the encoded files are at least 10 times the size of the database files.
+To determine the number of cells affected by a change, the number of cells added by new rows is summed with the number of cells added by new columns, using the width and length of file 2.
+The cells affected by removals is based on the length and width of the first file.
+The number of remaining cells, equivalent between the two files is 23940.
+Since \textbf{Modifications} are reported cell-by-cell, the number of cells affected is equal to the number of \textbf{Modifies}, 2628.
+The rows and columns that \textbf{Modify} affects are not available because the changes appear inconsistently across the rows and columns meaning a reported value would be misleading.
+The complete counts are reported in Table \ref{table:Cu_cells}.
+\begin{table}
+	\caption{Changes to Copper Data}
+	\label{table:Cu_cells}
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		Change Type&	Rows&	Columns&	Cells Affected\\ \hline
+		Add&	1&	16&	10995\\
+		Invalidate&	21&	2&	2145\\
+		Modify&NA&NA& 2628\\
+		\hline
+	\end{tabular}
+\end{table}
+
+The triples used to explain changes as a percentage of the cells affected is reported in Table \ref{table:Cu_change}.
+\begin{table}
+	\caption{Change capture efficiency in Copper Data}
+	\label{table:Cu_change}
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		Change Type&	Triples&	\% of Cells Affected\\ \hline
+		Add&	17&	0.065\%\\
+		Invalidate&	23&	1.1\%\\
+		Modify&	2628&	100\%\\
+		\hline
+	\end{tabular}
+\end{table}
+Smaller percentages indicate a higher efficiency of each triple since one triple can explain changes to multiple cells.
+Notice that \textbf{Adds} are much more efficient in explaining changes than \textbf{Invalidates} due to the kind of change each triple explains.
+\textbf{Invalidates} explained changes to rows primarily while \textbf{Adds} mostly explained changes to columns, but since columns are much longer, \textbf{Adds} ended up scoring higher on efficiency.
+\textbf{Modify} triples are extremely inefficient and also account for more than a majority of the changes to the data, meaning that \textbf{Modify} triples most likely account for the bloat in the physical representation of the triples.
+Not represented in the change log are the unmodified cells which account for 89.02\% of the matching cells between the Copper files.
+The analysis indicates that while \textbf{Add} and \textbf{Invalidate} may be very efficient in expressing changes, improvements to encoding and \textbf{Modify} capture efficiency are needed to bring down the storage costs of automated change logs.
+The bloated change log size likely explains the dearth of data set change logs in practice since using the storage space for more data would be more valuable. 
+
 \section{Summary}
+
+The automated change log generation yielded some unexpected results.
+Automated change logs standardize the process to capture change within a data set.
+While more popular text-only change logs could be adopted, a versioning data model was necessary to make the logs also machine computable.
+The computability improves user navigation over large data sets.
+The drawback is that the encoded change logs are reliably much larger than the original data set in bytes.
+The storage space cost likely contributes to the reason that change logs are often unseen in data set documentation.
+The automation and inclusion of change logs inform consumers how much the data set has changed.
 
 The versioning model provides a method to capture change information in greater detail than current provenance models.
 The inclusion of \textbf{versions} and \textbf{attributes} into the model connect changing items with the objects they influence.
 The \textbf{changes} create a ladder-like structure to connect together \textbf{version} objects in greater detail.
 Each rung of the ladder can not only be counted, but also grouped into types of change according to the respective operation.
 The method of instantiating a versioning graph will be covered in Chapter \ref{ch:graph}.
+
+The human-readable presentation defines the structure which tags in the chan\-ge log must take since maintaining human-readability is desired.
+The structure then determines the order in which linked data statements must appear in the log to encode the graph with RDFa.
+The ordering creates limitations on how strictly the encoded graph adheres to the specification from Chapter \ref{ch:model}.
+While construction of the change log is automated, encoding through RDFa significantly reduces the source HTML readability.
+In other applications using RDFa, the triples describe and link the text encapsulated by HTML tags.
+The versioning graph exclusively ignores the marked up content and links together tags or explicitly defines full triples in span tags.
+
+Change logs are much less restricted when encoded using JSON-LD rather than RDFa.
+The encoding format pulls the graph out of the attributes where they do not interact with content and into a separate script section.
+The method causes a drastic expansion per change in necessary text.
+The decision to divide up JSON-LD objects by the row in the change log they describe likely contributes significantly to the overhead necessary for the encoding.
+The division was made with the forethought that change log consumers may desire to only ingest specific subgraphs of the versioning graph.
+Separated JSON-LD objects will likely need to be merged in the future to save space for data sets with many changes.
+
+The resulting logs end up very large and sometimes do not load in a browser.
+Reassuringly, both data sets displayed the same space usage complexity with RDFa being ten times the plain text size and JSON-LD twice the size of a change long in RDFa.
+The relationship unfortunately means that a JSON-LD change log, with more readable source code, is twenty times the size of a plain text change log.
+The Copper data set's logs were reasonably responsive, displaying in seconds, but the Noble Gas's change log did not.
+In order to retain usability, there will need to be methods optimizing change log structure or representation.
