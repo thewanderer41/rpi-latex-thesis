@@ -1229,7 +1229,7 @@ be in line with traditional close source development.},
   groups       = {Provenance},
 }
 
-@TechReport{Miles:09:SSK,
+@TechReport{skos,
   author      = {Alistair Miles and Sean Bechhofer},
   title       = {{SKOS} Simple Knowledge Organization System Reference},
   institution = {W3C},
@@ -1263,6 +1263,17 @@ be in line with traditional close source development.},
   institution = {International Federation of Library Associations and Institutions},
   year        = {2009},
   doi         = {https://www.ifla.org/files/assets/cataloguing/frbr/frbr_2008.pdf},
+}
+
+@Manual{gcmd_gov,
+  title        = {Global Change Master Directory (GCMD) Keyword Governance and Community Guide Document},
+  author       = {{Global Change Master Directory (GCMD)}},
+  organization = {National Aeronautics and Space Administration (NASA)},
+  edition      = {Version 1.0},
+  month        = aug,
+  year         = {2016},
+  note         = {Accessed: June 10, 2018},
+  url          = {https://cdn.earthdata.nasa.gov/conduit/upload/5182/KeywordsCommunityGuide_Baseline_v1_SIGNED_FINAL.pdf},
 }
 
 @Comment{jabref-meta: databaseType:bibtex;}
