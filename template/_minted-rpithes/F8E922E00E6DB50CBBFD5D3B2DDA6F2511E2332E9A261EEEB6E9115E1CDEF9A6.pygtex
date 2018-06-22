@@ -1,0 +1,96 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{import} \PYG{n+nn}{csv}
+\PYG{k+kn}{from} \PYG{n+nn}{datetime} \PYG{k+kn}{import} \PYG{n}{datetime}
+
+\PYG{k}{class} \PYG{n+nc}{dataset}\PYG{p}{:}
+\PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{d\PYGZus{}id}\PYG{p}{,} \PYG{n}{d\PYGZus{}title}\PYG{p}{):}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{versions} \PYG{o}{=} \PYG{p}{\PYGZob{}\PYGZcb{}}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{num} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{d\PYGZus{}id}\PYG{p}{)}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{title} \PYG{o}{=} \PYG{n}{d\PYGZus{}title}
+
+\PYG{k}{def} \PYG{n+nf}{add\PYGZus{}file}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{v\PYGZus{}num}\PYG{p}{,} \PYG{n}{v\PYGZus{}pub}\PYG{p}{,} \PYG{n}{v\PYGZus{}crt}\PYG{p}{,} \PYG{n}{v\PYGZus{}mod}\PYG{p}{,} \PYG{n}{f\PYGZus{}name}\PYG{p}{,} \PYG{n}{f\PYGZus{}crt}\PYG{p}{,} \PYG{n}{f\PYGZus{}rev}\PYG{p}{,} \PYG{n}{f\PYGZus{}notes}\PYG{p}{):}
+\PYG{k}{if} \PYG{n}{v\PYGZus{}num} \PYG{o+ow}{not} \PYG{o+ow}{in} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{versions}\PYG{p}{:}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{versions}\PYG{p}{[}\PYG{n}{v\PYGZus{}num}\PYG{p}{]} \PYG{o}{=} \PYG{n}{eol\PYGZus{}ver}\PYG{p}{(}\PYG{n}{v\PYGZus{}num}\PYG{p}{,} \PYG{n}{v\PYGZus{}pub}\PYG{p}{,} \PYG{n}{v\PYGZus{}crt}\PYG{p}{,} \PYG{n}{v\PYGZus{}mod}\PYG{p}{)}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{versions}\PYG{p}{[}\PYG{n}{v\PYGZus{}num}\PYG{p}{]}\PYG{o}{.}\PYG{n}{add\PYGZus{}file}\PYG{p}{(}\PYG{n}{f\PYGZus{}name}\PYG{p}{,} \PYG{n}{f\PYGZus{}crt}\PYG{p}{,} \PYG{n}{f\PYGZus{}rev}\PYG{p}{,} \PYG{n}{f\PYGZus{}notes}\PYG{p}{)}
+
+\PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}repr\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+\PYG{n}{out} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+si}{\PYGZpc{}i}\PYG{l+s+s2}{: }\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{\PYGZpc{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{num}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{title}\PYG{p}{)]}
+\PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{sorted}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{versions}\PYG{o}{.}\PYG{n}{keys}\PYG{p}{()):}
+\PYG{n}{out}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{versions}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{.}\PYG{n}{string}\PYG{p}{(}\PYG{l+m+mi}{4}\PYG{p}{))}
+\PYG{k}{return} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{out}\PYG{p}{)}
+
+\PYG{k}{class} \PYG{n+nc}{eol\PYGZus{}ver}\PYG{p}{:}
+\PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{v\PYGZus{}num}\PYG{p}{,} \PYG{n}{t1}\PYG{p}{,} \PYG{n}{t2}\PYG{p}{,} \PYG{n}{t3}\PYG{p}{):}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{num} \PYG{o}{=} \PYG{n}{v\PYGZus{}num}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{files} \PYG{o}{=} \PYG{p}{[]}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{v\PYGZus{}pub} \PYG{o}{=} \PYG{n}{datetime}\PYG{o}{.}\PYG{n}{strptime}\PYG{p}{(}\PYG{n}{t1}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}\PYGZpc{}Y\PYGZhy{}\PYGZpc{}m\PYGZhy{}}\PYG{l+s+si}{\PYGZpc{}d}\PYG{l+s+s2}{ \PYGZpc{}H:\PYGZpc{}M:\PYGZpc{}S\PYGZdq{}}\PYG{p}{)}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{v\PYGZus{}crt} \PYG{o}{=} \PYG{n}{datetime}\PYG{o}{.}\PYG{n}{strptime}\PYG{p}{(}\PYG{n}{t2}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}\PYGZpc{}Y\PYGZhy{}\PYGZpc{}m\PYGZhy{}}\PYG{l+s+si}{\PYGZpc{}d}\PYG{l+s+s2}{ \PYGZpc{}H:\PYGZpc{}M:\PYGZpc{}S\PYGZdq{}}\PYG{p}{)}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{v\PYGZus{}mod} \PYG{o}{=} \PYG{n}{datetime}\PYG{o}{.}\PYG{n}{strptime}\PYG{p}{(}\PYG{n}{t3}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}\PYGZpc{}Y\PYGZhy{}\PYGZpc{}m\PYGZhy{}}\PYG{l+s+si}{\PYGZpc{}d}\PYG{l+s+s2}{ \PYGZpc{}H:\PYGZpc{}M:\PYGZpc{}S\PYGZdq{}}\PYG{p}{)}
+
+\PYG{k}{def} \PYG{n+nf}{add\PYGZus{}file}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{f\PYGZus{}name}\PYG{p}{,} \PYG{n}{t1}\PYG{p}{,} \PYG{n}{t2}\PYG{p}{,} \PYG{n}{notes}\PYG{p}{):}
+\PYG{n}{new\PYGZus{}f} \PYG{o}{=} \PYG{n}{eol\PYGZus{}file}\PYG{p}{(}\PYG{n}{f\PYGZus{}name}\PYG{p}{,} \PYG{n}{t1}\PYG{p}{,} \PYG{n}{t2}\PYG{p}{,} \PYG{n}{notes}\PYG{p}{)}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{files}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{new\PYGZus{}f}\PYG{p}{)}
+
+\PYG{k}{def} \PYG{n+nf}{string}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{indent}\PYG{p}{):}
+\PYG{n}{ind} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{} \PYGZsq{}}\PYG{o}{*}\PYG{n}{indent}
+\PYG{n}{out} \PYG{o}{=} \PYG{p}{[}\PYG{n}{ind}\PYG{o}{+}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s2}{: }\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s2}{    }\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s2}{    }\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{\PYGZpc{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{num}\PYG{p}{,} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{v\PYGZus{}pub}\PYG{p}{),} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{v\PYGZus{}crt}\PYG{p}{),} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{v\PYGZus{}mod}\PYG{p}{))]}
+\PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{files}\PYG{p}{:}
+\PYG{n}{out}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{i}\PYG{o}{.}\PYG{n}{string}\PYG{p}{(}\PYG{n}{indent}\PYG{o}{+}\PYG{l+m+mi}{4}\PYG{p}{))}
+\PYG{k}{return} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{out}\PYG{p}{)}
+
+\PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}repr\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+\PYG{n}{out} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s2}{: }\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s2}{    }\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s2}{    }\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{\PYGZpc{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{num}\PYG{p}{,} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{v\PYGZus{}pub}\PYG{p}{),} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{v\PYGZus{}crt}\PYG{p}{),} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{v\PYGZus{}mod}\PYG{p}{))]}
+\PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{files}\PYG{p}{:}
+\PYG{n}{out}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}    \PYGZdq{}}\PYG{o}{+}\PYG{n}{i}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}repr\PYGZus{}\PYGZus{}}\PYG{p}{())}
+\PYG{k}{return} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{out}\PYG{p}{)}
+
+\PYG{k}{class} \PYG{n+nc}{eol\PYGZus{}file}\PYG{p}{:}
+\PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{f\PYGZus{}name}\PYG{p}{,} \PYG{n}{t1}\PYG{p}{,} \PYG{n}{t2}\PYG{p}{,} \PYG{n}{notes}\PYG{p}{):}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name} \PYG{o}{=} \PYG{n}{f\PYGZus{}name}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{f\PYGZus{}create} \PYG{o}{=} \PYG{n}{datetime}\PYG{o}{.}\PYG{n}{strptime}\PYG{p}{(}\PYG{n}{t1}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}\PYGZpc{}Y\PYGZhy{}\PYGZpc{}m\PYGZhy{}}\PYG{l+s+si}{\PYGZpc{}d}\PYG{l+s+s2}{ \PYGZpc{}H:\PYGZpc{}M:\PYGZpc{}S\PYGZdq{}}\PYG{p}{)}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{f\PYGZus{}revise} \PYG{o}{=} \PYG{n}{datetime}\PYG{o}{.}\PYG{n}{strptime}\PYG{p}{(}\PYG{n}{t2}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}\PYGZpc{}Y\PYGZhy{}\PYGZpc{}m\PYGZhy{}}\PYG{l+s+si}{\PYGZpc{}d}\PYG{l+s+s2}{ \PYGZpc{}H:\PYGZpc{}M:\PYGZpc{}S\PYGZdq{}}\PYG{p}{)}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{f\PYGZus{}notes}  \PYG{o}{=} \PYG{n}{notes}
+
+\PYG{k}{def} \PYG{n+nf}{string}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{indent}\PYG{p}{):}
+\PYG{n}{out} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{} \PYGZsq{}}\PYG{o}{*}\PYG{n}{indent}
+\PYG{k}{return} \PYG{n}{out}\PYG{o}{+}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name}
+
+\PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}repr\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+\PYG{k}{return} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name}
+
+\PYG{k}{def} \PYG{n+nf}{import\PYGZus{}eol}\PYG{p}{(}\PYG{n}{fname}\PYG{p}{):}
+\PYG{n}{f} \PYG{o}{=} \PYG{n+nb}{open}\PYG{p}{(}\PYG{n}{fname}\PYG{p}{)}
+\PYG{n}{f\PYGZus{}reader} \PYG{o}{=} \PYG{n}{csv}\PYG{o}{.}\PYG{n}{reader}\PYG{p}{(}\PYG{n}{f}\PYG{p}{,} \PYG{n}{delimiter}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}|\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{f\PYGZus{}reader}\PYG{o}{.}\PYG{n}{next}\PYG{p}{()}
+\PYG{n}{header} \PYG{o}{=} \PYG{p}{[}\PYG{n}{i}\PYG{o}{.}\PYG{n}{strip}\PYG{p}{()} \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n}{f\PYGZus{}reader}\PYG{o}{.}\PYG{n}{next}\PYG{p}{()[}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]]}
+\PYG{n}{f\PYGZus{}reader}\PYG{o}{.}\PYG{n}{next}\PYG{p}{()}
+
+\PYG{n}{datasets} \PYG{o}{=} \PYG{p}{\PYGZob{}\PYGZcb{}}
+\PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n}{f\PYGZus{}reader}\PYG{p}{:}
+\PYG{n}{row} \PYG{o}{=} \PYG{p}{[}\PYG{n}{j}\PYG{o}{.}\PYG{n}{strip}\PYG{p}{()} \PYG{k}{for} \PYG{n}{j} \PYG{o+ow}{in} \PYG{n}{i}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]]}
+\PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{row}\PYG{p}{)} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{10}\PYG{p}{:}
+\PYG{k}{continue}
+\PYG{k}{if} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])} \PYG{o+ow}{not} \PYG{o+ow}{in} \PYG{n}{datasets}\PYG{p}{:}
+\PYG{n}{datasets}\PYG{p}{[}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])]} \PYG{o}{=} \PYG{n}{dataset}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]),} \PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{])}
+
+\PYG{n}{datasets}\PYG{p}{[}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])]}\PYG{o}{.}\PYG{n}{add\PYGZus{}file}\PYG{p}{(}\PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{],} \PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{],} \PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{],} \PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{],} \PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{6}\PYG{p}{],} \PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{7}\PYG{p}{],} \PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{8}\PYG{p}{],} \PYG{n}{row}\PYG{p}{[}\PYG{l+m+mi}{9}\PYG{p}{])}
+\PYG{k}{return} \PYG{n}{datasets}
+
+\PYG{k}{if} \PYG{n+nv+vm}{\PYGZus{}\PYGZus{}name\PYGZus{}\PYGZus{}} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}\PYGZus{}\PYGZus{}main\PYGZus{}\PYGZus{}\PYGZdq{}}\PYG{p}{:}
+\PYG{n}{filedir}  \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}/data/EOL/\PYGZdq{}}
+\PYG{c+c1}{\PYGZsh{}filename = \PYGZdq{}dataset\PYGZus{}files\PYGZus{}version\PYGZus{}metadata.txt\PYGZdq{}}
+\PYG{n}{filename} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}EOL\PYGZus{}dataset\PYGZus{}version\PYGZus{}metadata.txt\PYGZdq{}}
+
+\PYG{n}{datasets} \PYG{o}{=} \PYG{n}{import\PYGZus{}eol}\PYG{p}{(}\PYG{n}{filedir}\PYG{o}{+}\PYG{n}{filename}\PYG{p}{)}
+\PYG{k}{print} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{datasets}\PYG{o}{.}\PYG{n}{keys}\PYG{p}{())}
+
+\PYG{n}{num\PYGZus{}ver} \PYG{o}{=} \PYG{p}{\PYGZob{}\PYGZcb{}}
+\PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n}{datasets}\PYG{o}{.}\PYG{n}{keys}\PYG{p}{():}
+\PYG{n}{how\PYGZus{}many\PYGZus{}versions} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{datasets}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{.}\PYG{n}{versions}\PYG{o}{.}\PYG{n}{keys}\PYG{p}{())}
+\PYG{k}{if} \PYG{n}{how\PYGZus{}many\PYGZus{}versions} \PYG{o+ow}{not} \PYG{o+ow}{in} \PYG{n}{num\PYGZus{}ver}\PYG{p}{:}
+\PYG{n}{num\PYGZus{}ver}\PYG{p}{[}\PYG{n}{how\PYGZus{}many\PYGZus{}versions}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{1}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{n}{num\PYGZus{}ver}\PYG{p}{[}\PYG{n}{how\PYGZus{}many\PYGZus{}versions}\PYG{p}{]} \PYG{o}{+=} \PYG{l+m+mi}{1}
+\PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{sorted}\PYG{p}{(}\PYG{n}{num\PYGZus{}ver}\PYG{o}{.}\PYG{n}{keys}\PYG{p}{()):}
+\PYG{k}{print} \PYG{n}{i}\PYG{p}{,} \PYG{n}{num\PYGZus{}ver}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}
+\end{Verbatim}

@@ -7,13 +7,38 @@
 \specialhead{ABSTRACT}
 
 Data sets invariably require versioning systems to manage changes due to an imperfect collection environment.
-While importance grows, versioning discussion remains imprecise, lacking standardization or formal specifications.
+Data versioning systems are employed to manage changes to data, logging new data sets and communicating that change to data consumers.
+Versioning discussion remains imprecise, lacking standardization or formal specifications.
 Many works tend to define versions around examples and local characteristics but lack a broader foundation.
 This imprecision results in a reliance on change brackets and dot-decimal identifiers without quantitative measures to justify their application.
 No difference exists between the versioning practices of a group which updates their data regularly and a group which adds many new files but rarely replaces them.
-This work attempts to improve discussion by capturing version relationships into a linked data model, taking inspiration from provenance models that incorporate versioning concepts such as PROV and PAV.
+This work attempts to improve discussion by capturing version relationships into a linked data model, taking inspiration from provenance models that incorporate versioning concepts such as PROV and Provenance, Authorship, Versioning (PAV) ontologies.
 The model captures addition, invalidation, and modification relationships between versions to provide change log-like characterization of the differences.
-This approach demonstrated increased expressibility of change interactions, but encountered issues with space scalability.
-The model's generation also revealed a four step process to conduct versioning: validation, mapping, computation, and publishing.
-Quantifying these changes also provided a numerical basis for evaluating the GCMD Keywords taxonomy's adopted identification scheme.
-It also demonstrates the ability of versioning methods to actively influence scientific designs through performance assessment.
+
+The data set landscape largely lacks the practice of including detailed change documentation like the logs commonly accompanying software projects.
+The result likely originates from the size of data sets requiring time-intensive work to manually construct.
+A process is presented to automate change log creation for data sets, improving adoption as well as encoding the change logs with linked data.
+The linked data equipped change logs makes the documentation consumable by machines, ensuring not only efficient creation, but also utilization.
+A drawback, as found from larger data set change, the encoding causes significant bloating as compared to plain text change logs.
+The versioning graphs encoded into the document, describing the \textbf{additions}, \textbf{invalidations}, and \textbf{modifications} (AIM) made by the new version, allow new avenues of exploration into data that can be standardized across data sets.
+
+The AIM changes allow versions within the same data set to be compared using counts of the changes.
+The comparisons provide a quantifiable basis for communicating change as compared to the qualitative version identifiers currently used by the Global Change Master Directory (GCMD) Keywords.
+The analysis revealed conflicts between the observed change in the data set at Version 8.5's release depending upon the perspective of the data consumer or producers.
+Data from the Marine Biodiversity Virtual Laboratory was also explored to give new context to the linked data version comparison process.
+The changes computed provided evidence towards measurably better performance in marine biology classification using the versioning model.
+
+Version change logs link an amount of change to a particular version, but versions do not have to be published at regular intervals.
+That observation points towards the idea that just looking at versions may obscure trends in change over time by breaking up changes by version.
+An analysis was performed to observe the change rates of each version distributed over time for the GCMD Keywords and discovered that the versions could be clustered according to different change behaviors.
+The Earth Observing Laboratories were also studied for trends over time to study a collection of similar data sets.
+The AIM changes revealed unexpected behaviors in the data sets with respect to the way versions were updated, showing a strong relation between adding and removing files.
+The distribution of changes over time were also compared to the general distribution of versions over time and revealed a significant difference in behavior.
+
+Change analysis for data sets need a great amount of work as big data sets become more common.
+Terms and practices need to be standardize and formalized which begins with producing discoverable and consumable change documentation.
+The procedures explored showed promise using linked data models, but suffered from size bloating necessary to make the documents machine consumable.
+Once computable, producers can begin providing better quantitative measure for change in data, but analysis has shown that the perceived change may differ depending on the consumer of the data set.
+The experience highlights an obscured dynamic in change information between data producers and data consumer in which producers often dictate the means of evaluating version change.
+Diverging from version-primary practices and including more detailed change accounting becomes a priority after discovering that versions can hide trends in the actual change rate.
+The difference between data set change rate and behavior suggests that future research is necessary to determine if the differences indicate versioning practices also need to be different.

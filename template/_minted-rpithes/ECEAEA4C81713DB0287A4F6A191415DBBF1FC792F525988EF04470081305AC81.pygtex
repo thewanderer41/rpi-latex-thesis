@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nl}{\PYGZlt{}http://rdfa.info/play/Version1\PYGZgt{}} \PYG{k}{a} \PYG{n+nn}{vo}\PYG{p}{:}\PYG{n+nt}{Version} \PYG{p}{;}
+\PYG{n+nn}{vo}\PYG{p}{:}\PYG{n+nt}{absentFrom} \PYG{n+nl}{\PYGZlt{}http://rdfa.info/play/AddChange21\PYGZgt{}} \PYG{p}{.}
+\PYG{n+nl}{\PYGZlt{}http://rdfa.info/play/AddChange21\PYGZgt{}} \PYG{k}{a} \PYG{n+nl}{\PYGZlt{}https://orion.tw.rpi.edu/\PYGZti{}blee/VersionOntology.owl\PYGZsh{}AddChange\PYGZgt{}} \PYG{p}{;}
+\PYG{n+nn}{vo}\PYG{p}{:}\PYG{n+nt}{resultsIn} \PYG{n+nl}{\PYGZlt{}http://rdfa.info/play/Attribute21\PYGZgt{}} \PYG{p}{.}
+\PYG{n+nl}{\PYGZlt{}http://rdfa.info/play/Attribute21\PYGZgt{}} \PYG{k}{a} \PYG{n+nl}{\PYGZlt{}https://orion.tw.rpi.edu/\PYGZti{}blee/VersionOntology.owl\PYGZsh{}Attribute\PYGZgt{}} \PYG{p}{;}
+\PYG{n+nn}{rdfs}\PYG{p}{:}\PYG{n+nt}{label} \PYG{l+s}{\PYGZdq{}EGY001\PYGZdq{}}
+\PYG{n+nl}{\PYGZlt{}http://rdfa.info/play/Version2\PYGZgt{}} \PYG{k}{a} \PYG{n+nn}{vo}\PYG{p}{:}\PYG{n+nt}{Version} \PYG{p}{;}
+\PYG{n+nn}{vo}\PYG{p}{:}\PYG{n+nt}{hasAttribute} \PYG{n+nl}{\PYGZlt{}http://rdfa.info/play/Attribute21\PYGZgt{}}
+\end{Verbatim}

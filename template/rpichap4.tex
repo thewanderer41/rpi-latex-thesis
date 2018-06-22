@@ -30,7 +30,7 @@ The alignments create a formula to detect changes and assign them to either an \
 A change log can then use the assignments to organize a presentation of the change data.
 The underlying versioning graph exists as linked data encoded within the change log, but can also appear as explicit linked data statements.
 The linked data uses a custom-made versioning ontology (VersOn) to express the data model using the \textit{vo:} namespace.
-The procedure within this section defines the process used to create versioning graphs found in all the following sections of this chapter.
+The procedure within this section defines the process used to create versioning graphs found in all the following sections of this Chapter.
 
 \subsection{Form a Mapping} \label{mapping}
 
@@ -59,9 +59,18 @@ The attributes in these sets are then minted into URIs and linked together into 
 
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.25]{figures/NobleVersion.png}
-	\caption{Some initial entries from versions 1 and 2 of the Noble Gas data set}
-	\label{NobleGraph1}
+	\begin{adjustbox}{
+			addcode=
+				{\begin{minipage}{\width}}
+				{
+					\caption{Some initial entries from versions 1 and 2 of the Noble Gas data set}
+					\label{NobleGraph1}
+					\end{minipage}
+				},
+				rotate=90,
+				center}
+			\includegraphics[scale=0.39]{figures/NobleVersion.png}
+	\end{adjustbox}
 \end{figure}
 The versioning graphs presented in this section were created by extracting triples from the associated change log which will be covered in Chapter \ref{ch:changelog}.
 The statements making up the graph could have alternately been published by writing out the triples directly instead of encoding them into a change log.
@@ -69,11 +78,20 @@ Figure \ref{NobleGraph1} displays a subgraph of the Noble Gas data set's version
 Notice how the versioning graph differs from the provenance graph in Figure \ref{CAM001ProvGraph}.
 The versioning graph unpacks the \textit{prov:wasRevisionOf} relationship into explicit components.
 These components reveal more detailed differences between version 1 and 2 of CAM001 in the provenance graph which are the differing compilation activities.
-\begin{figure}[b]
+\begin{figure}
 	\centering
-	\includegraphics[scale=0.65]{figures/CAM001v1v2.png}
-	\caption{Provenance graph for the CAM001 entry of the Noble Gas Database.  Other than the labels, the structure of each data object is very much the same.}
-	\label{CAM001ProvGraph}
+	\begin{adjustbox}{
+		addcode=
+			{\begin{minipage}{\width}}
+			{
+				\caption{Provenance graph for the CAM001 entry of the Noble Gas Database.  Other than the labels, the structure of each data object is very much the same.}
+				\label{CAM001ProvGraph}
+				\end{minipage}
+			},
+			rotate=90,
+			center}
+		\includegraphics[scale=0.80]{figures/CAM001v1v2.png}
+	\end{adjustbox}
 \end{figure}
 The change log encoded the triples in RDFa, resulting in the attribute ``AttributeCAM00111v2" to the right of the \textbf{modify} change.
 Because RDFa does not naturally support multiple predicates while also conforming to the content structure of the change log, an attribute was created to combine both the row and column identifier for the changing cell.
@@ -90,7 +108,9 @@ Listing \ref{NGA} presents the statements in turtle format necessary to express 
 The namespace for many of the URIs is \textlangle http://rdfa.info/play/\textrangle.
 RDFa allows identifiers to refer to an element on the web page, and the web tool which generated the triples from RDFa, therefore, used its URL as a namespace to produce a valid URI.
 
-\begin{lstlisting}[language=SPARQL, caption=Noble Gas Add in Turtle, label=NGA]
+
+\begin{listing}
+	\begin{minted}[linenos, frame=lines, breaklines]{SPARQL}
 <http://rdfa.info/play/Version1> a vo:Version ;
 vo:absentFrom <http://rdfa.info/play/AddChange21> .
 <http://rdfa.info/play/AddChange21> a <https://orion.tw.rpi.edu/~blee/VersionOntology.owl#AddChange> ;
@@ -99,7 +119,10 @@ vo:resultsIn <http://rdfa.info/play/Attribute21> .
 rdfs:label "EGY001"
 <http://rdfa.info/play/Version2> a vo:Version ;
 vo:hasAttribute <http://rdfa.info/play/Attribute21>
-\end{lstlisting}
+	\end{minted}
+	\caption{Noble Gas Add in Turtle}
+	\label{NGA}
+\end{listing}
 
 Figure \ref{CopperGraphVerGraph} shows a similar subgraph from the Copper data set versioning graph.
 The graph was assembled using an RDFa change log and also displays a merged attribute on the right side of the \textbf{modify} change.
@@ -109,11 +132,11 @@ As a result, each \textbf{add}, \textbf{invalidate}, or \textbf{modify} change i
 \begin{figure}
 	\centering
 	\begin{adjustbox}{addcode={\begin{minipage}{\width}}{
-					\caption{Versioning Graph representing the linked data graph with selected entries of additions, invalidations, and modifications. 
-			}\end{minipage}},rotate=90,center}
+					\caption{Versioning Graph representing the linked data graph with selected entries of additions, invalidations, and modifications.}
+					\label{CopperGraphVerGraph}					
+					\end{minipage}},rotate=90,center}
 		\includegraphics[scale=0.5]{figures/VersioningGraph2.png}%
 	\end{adjustbox}
-	\label{CopperGraphVerGraph}
 \end{figure}
 
 \subsection{Graphs with Multiple Versions}\label{sec:multiver}
@@ -124,11 +147,11 @@ Figure \ref{NobleGraph2} shows a subgraph that contains changes from all three v
 \begin{figure}
 	\centering
 	\begin{adjustbox}{addcode={\begin{minipage}{\width}}{
-					\caption{Versioning Graph representing the linked data graph with selected entries of additions, invalidations, and modifications after the publication of the third version. 
-			}\end{minipage}},rotate=90,center}
+					\caption{Versioning Graph representing the linked data graph with selected entries of additions, invalidations, and modifications after the publication of the third version.}
+					\label{NobleGraph2}					
+		\end{minipage}},rotate=90,center}
 		\includegraphics[scale=0.48]{figures/NobleVersion2.png}%
 	\end{adjustbox}
-	\label{NobleGraph2}
 \end{figure}
 From the first to second version of the data, EGY001 becomes introduced as an attribute into the data set.
 This entry then undergoes a modification change in columns 29, 31, and 43 when comparing versions two and three.
@@ -158,10 +181,10 @@ Work with the MBVL data set then extends VersOn to give more detailed accounting
 The Global Change Master Directory (GCMD) is a metadata repository used by NASA to store records of its available data sets \cite{Miled:2001:GCM:372202.372324}.
 They employ a set of keywords to make NASA Earth Science data sets searchable.
 These words tag and label datasets into strictly defined categories \cite{GCMDKey}.
-GCMD Keywords do not qualify as a standard web ontology since it does not constitute a class hierarchy.
-The management team stored early versions of the keywords in Excel spreadsheets, and a centralized distribution system was not used until June 12, 2012.
+GCMD Keywords do not qualify as a standard web ontology since GCMD Keywords do not constitute a class hierarchy.
+The management team stored early versions of the keywords in Excel spreadsheets, later using a centralized distribution system, but data is not available prior to June 12, 2012.
 The Key Management Service now serves the keywords directly in a variety of formats.
-Each version of the keywords, encoded in RDF, were downloaded into separate files.
+Each version of the keywords, encoded in RDF, was downloaded into separate files.
 Only versions from June 12, 2012 and after were available, resulting in 9 version files.
 Each keyword corresponds to a unique identifier, and when combined with a web namespace, resolves to a data description of the keyword.
 Every identifier can be referred to per version by including the version's number at the web identifier's end, meaning that identifiers are consistent across versions.
@@ -174,12 +197,12 @@ The data set provides an interesting study case due its long sequence of version
 The Marine Biodiversity Virtual Laboratory (MBVL), based at Woods Hole Oceanographic Institution, provides data and services for the study of marine biology with an integrative approach \cite{mbvl}.
 In the application studied, a choice of algorithm and taxonomy pairings must be tested on a known population in order to estimate their performance with an unknown microbial population.
 The original sequences belong only to the species listed in Table \ref{species_table}.
-The original population's census is not available to the author, and only the list of species are known, forming the first data set in this section.
+The original population's census is not available to the author, and only the list of species is known, forming the first data set in this section.
 These sequences are then grouped and classified by a specific taxonomy and algorithm pairing.
 The workflow utilizes two taxonomies, the Ribosomal Database Project (RDP) and the Silva taxonomy.
-Using these databases, the Species-level IdentificatioN of metaGenOmic amplicons (SPINGO) or the Global Alignment for Sequence Taxonomy (GAST) algorithms assign taxonomic ranks to each sequence.
+Using these databases, the SPecies-level IdentificatioN of metaGenOmic amplicons (SPINGO) or the Global Alignment for Sequence Taxonomy (GAST) algorithms assign taxonomic ranks to each sequence.
 The process produces four data sets, each using the same grouping identifiers and having the same size in each group.
-Since the data sets have the same number of sequences, the primary difference between the data sets are the ranks assigned to each sequence.
+Since the data sets have the same number of sequences, the primary differences between the data sets are the ranks assigned to each sequence.
 
 \begin{table}
 	\caption{List of species in the original population.}
@@ -203,16 +226,17 @@ Since the data sets have the same number of sequences, the primary difference be
 
 \subsection{Global Change Master Directory Versioning Graph}
 
-The Global Change Master Directory establishes the context that each \textbf{manifestation} of their keyword list are related versions.
-Since the unique identifier for each keyword remains the same across versions, they can be used to align a mapping across versions.
+The Global Change Master Directory establishes the context that each \textbf{manifestation} of their keyword list is related versions.
+Since the unique identifier for each keyword remains the same across versions, the unique keyword identifier can be used to align a mapping across versions.
 \textbf{Additions} and \textbf{invalidations} are detected by checking an identifier's presence within both versions.
 A \textbf{modification} occurs when a keyword's \textit{skos:Broader} property differs between adjacent versions.
+The alignment assumes that there is not reason a keyword's preferred label would change, but still reports a value when it has new entries in the ``notes" property.
 A difference indicates that the word has been moved to a different place within the taxonomy since identifiers do not change across versions and a keyword only has one parent concept.
 Changes over consecutive versions can be collected into a single graph using the method in Section \ref{sec:multiver} to chain together versioning graphs.
 A change log was generated for each pair of consecutive versions in GCMD Keywords and embedded with JSON-LD.
 Versioning graphs for each adjacent version was created by extracting JSON-LD from the corresponding change log, and entering the triples into a Fuseki triple store.
 
-\subsection{Connecting Change Counts to Identifiers} \ref{gcmd_85}
+\subsection{Connecting Change Counts to Identifiers} \label{gcmd_85}
 
 The \textbf{add}, \textbf{invalidate}, and \textbf{modify} counts for each transition are presented in Figure \ref{GCMDC1}.
 The query used to extract the counts is found in Listing \ref{gcmd_list}.
@@ -252,7 +276,9 @@ The dot decimal identifier for the transition from version 8.4.1 to 8.5 does not
 \end{figure}
 
 %\hfill \break
-\begin{lstlisting}[language=SPARQL, caption=This query compiles the counts for each subclass of Change in a GCMD versioning graph,label=gcmd_list]
+
+\begin{listing}
+	\begin{minted}[linenos, frame=lines, breaklines]{sparql}
 PREFIX vo:<http://orion.tw.rpi.edu/~blee/VersionOntology.owl>
 PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 
@@ -261,7 +287,10 @@ SELECT ?p (COUNT (DISTINCT ?s) as ?count)
 ?s a ?p .
 ?p rdfs:subClassOf vo:Change .
 } GROUP BY ?p
-\end{lstlisting}
+	\end{minted}
+	\caption[Change count query.]{This query compiles the counts for each subclass of Change in a GCMD versioning graph.}
+	\label{gcmd_list}
+\end{listing}
 
 Changing the mapping method to account for the new namespace provides a pathway to compare the perceived change by the producer as evidenced by the version identifier with the amount of change in the versioning graph.
 To do this, the mapping treats identifiers with HTTP and HTTPS the same. 
@@ -297,7 +326,7 @@ The \textbf{additions} in ``8.4 to 8.4.1" in Figure \ref{GCMDC2} numbers almost 
 
 The experiment conducts activity over two phases in this procedure.
 The first phase takes sequences from the original known population and feeds the sequences though a particular algorithm/taxonomy combination to produce a candidate classification.
-Since the classifications for the known population sequences is unavailable, there is not sufficient context to perform a valid comparison with the candidate classifications.
+Since the classifications for the known population sequences are unavailable, there is not sufficient context to perform a valid comparison with the candidate classifications.
 The second phase compares the performances of each candidate classification of a algorithm/taxonomy pair.
 The use of \textbf{add}, \textbf{invalidate}, and \textbf{modify} varies slightly in this application since all the results use the same sequences.
 A versioning graph utilizing just the sequence identifiers would only result in \textbf{modify} changes when taxonomic ranks differ since the sequence identifier exists in both data sets.
@@ -314,21 +343,21 @@ Figure \ref{mbvl_chart} shows the changes detected when varying either the taxon
 	\caption{Compiled counts of \textbf{adds}, \textbf{invalidates}, and \textbf{modifies} grouped by taxonomic rank across algorithm and taxonomy combinations.}
 	\label{mbvl_chart}
 \end{figure}
-No comparison was conducted with different taxonomy and classifier since that would introduce too many sources of variability to differing results in a classification.
+Only the taxonomy or only the classifier differs in each comparison to control for overlapping influences that having both a different taxonomy and classifier may introduce.
 Each bar indicates the total number of differences between sequences for a specific kind of change.
 The bars are further broken down by the taxonomic rank at which the difference occurred.
 For example, in ``Silva vs RDP, Gast", a notable number of classifications differed at the species rank.
 The graph also indicates that using the RDP taxonomy often produces more precise classifications since both ``Silva vs RDP, Spingo" and ``Silva vs RDP, Gast" feature a larger number of \textbf{additions} than any other change.
 The classifier comparisons feature a high number of \textbf{invalidations}; however, ``RDP, Spingo vs Gast" also displays a higher number of \textbf{modifications} than \textbf{invalidations}.
 
-\section{Version Graph Analysis}
+\section{Version Graph Discussion}
 
 The versioning graph successfully addresses the concerns of Use Case 1 by capturing all the differences within the Noble Gas data set and within the Copper data set into a versioning graph.
 Some additional concerns had to be addressed, such as multiple files in a version and dual attribute identification, during the implementation of the versioning model.
 The multiple files in the first version of the Noble Gas data set needed to be collected into a single concept in order to preserve the one-to-one relation between versions.
 The grouping simplifies the graph structure as well as reduce the complexity of a change log encoding.
 
-In Chapter \ref{ch:model}, there is only one \textbf{attribute} on each side of the interaction.
+In Section \ref{ch:model}, there is only one \textbf{attribute} on each side of the interaction.
 Figure \ref{CopperGraphVerGraph}, however, shows two \textbf{attributes} used to characterize the \textit{vo:ModifyChange}.
 While the model only shows one \textbf{attribute}, it was found that in some applications, multiple \textbf{attributes} may be necessary to properly model a single change.
 The construction does not even need to have the same number \textbf{attributes} on both sides of the \textbf{change}.
@@ -350,23 +379,26 @@ This poses a problem for executing queries in a triple store which rely on graph
 \subsection{Version Identification}
 
 The versioning process discovered a discrepancy in the identifier assignment in the GCMD Keywords taxonomy.
-The original analysis was intended to determine if dot-decimal identifiers could be predicted using the change counts of the versioning graph.
+The original analysis was intended to determine if dot-decimal identifiers would reflect an order of magnitude division among the change counts of the versioning graph.
+According to the \textit{Keyword Governance and Community Guide Document} \cite{gcmd_gov}, ``Full GCMD keywords list releases get a new major version number (e.g., 8.0). Incremental releases for updates to topics, terms, and variables get a new minor version number (e.g., 8.1).”
+The change counts for Versions `June 12, 2012' to 8.4.1 demonstrates a threshold of changes necessitating a full keywords list release.
+The document does not explain the purpose or distinguishing qualities of versions with a new revision number, 8.4.1.
 Version 8.5, however, was named with respect to perceived taxonomy changes and did not consider underlying linked data practice revisions.
-The disconnect brings into question the accuracy of all prior names and any relationships observed between identifier and change counts.
-Non-matching identifiers would explain how 8.4.1 had more additions than any previous minor change but obtains a third bracket identifier.
-After accounting for namespace differences in version 8.5, the change counts is in the tens, resembling tallies of other versions in the same identifier bracket.
-Version name assignment based on producer perception and not on more concrete measures is concerning.
-An incomplete understanding in the amount of change between two versions can lead to flawed expectations during version migration.
+The conclusion can be obtained by looking at \ref{GCMDC2} and noticing that the only matching approach without a bar equal to the size of the entire data set is the `Silent' approach.
+For a purely URI based comparison in `Standard', Version 8.5 definitely falls under the category of full release since an entirely new list of words is released.
+Users using the `Bridged' approach would also see a new full release because all old words have had the URIs edited.
+Version name assignment based on producer perception and not allowing users to assess change measures is concerning.
+Making sure that data consumers have the ability to assess change in data sets when the requirements for change differs between producer and consumer must be addressed.
 
 The analysis does not to claim that change counts should be the sole mechanism in determining version identifiers.
 The counts, however, can provide a more quantitative method to compare version differences.
-In Figure \ref{GCMDC2}, the yellow line indicates the total changes made to the data set, performing a similar function as the major/minor/revision version identifier.
+In Figure \ref{GCMDC1}, the yellow line indicates the total changes made to the data set, performing a similar function as the major/minor/revision version identifier.
 Breaking up the changes into types reveals additions dominate manipulations to the data set.
 Addition, invalidation, and modification provides deeper insight into how a data set is changing, but some changes can be more impactful than others which this model does not capture.
 
 \subsection{MBVL Analysis}
 
-In Chapter \ref{ch:distance}, the versioning process was used to compare the performance of different taxonomy and algorithm combinations.
+In Section \ref{ch:distance}, the versioning process was used to compare the performance of different taxonomy and algorithm combinations.
 The data set diverges from many of the common understandings of versions since each of the versions are not sequential and are largely independent.
 The data set of species names in the initial population would not have produced very meaningful results if applied to the versioning model since it lacked sufficient data to map the other data sets together well.
 
@@ -386,7 +418,7 @@ This analysis presents evidence that using the RDP taxonomy with the SPINGO algo
 \section{Summary}
 
 The results in this chapter implements the versioning model and demonstrates the process and challenges experienced in this endeavor.
-The entries in a data set is separated into groups of additions, invalidations, modifications, and unmodified by their attributes.
+The entries in a data set is separated into groups of \textbf{additions}, \textbf{invalidations}, \textbf{modifications}, and unmodified by their attributes.
 The grouping occurs over multiple files in the first version of the Noble Gas data set, and the solution was to collect them into a single unit.
 The collection keeps the files as one unit, but does not end up addressing other approaches to multi-part versions.
 

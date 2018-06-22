@@ -4,18 +4,15 @@
 %                                                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Data Volatility}
+\chapter{Data Volatility} \label{Volatility}
 
 \section{Introduction}
 
-Capturing change counts is important but understanding how a data set changes over time is also valuable to users.
-
-Look at Figure \ref{GCMDC1} and notice the different total amounts of change in each version of GCMD Keywords.
-The group appears to do significantly less work in updating the data set after Version 8.1, but the appearance only occurs because the versions are disconnected from time.
-Once we're able to quantify change, we can begin looking at trends over time.
-Data volatility is the likelihood or rate of data change.
-Volatility helps explain the 
-We want to know if data versions are hiding the actual rate of change
+Capturing change counts begins to provide evidence for avoiding to use only versions to manage and describe data set change.
+Figure \ref{GCMDC1} only shows the relation of the changes to each version but disconnected from time.
+The changes were applied to each version, but the versions are not set to a strict schedule, meaning that many changes few changes could be applied to a version over a long or short period of time.
+The change rate communicates expectations for the data consumer on the value of a data set since committing to a data set that will soon be invalidated is problematic.
+The following chapter will look into data volatility, the likelihood or rate of data change, and look at how versions can hid the actual change rate of data sets.
 
 \section{Determining Volatility}
 
@@ -38,7 +35,7 @@ Three observable clusters appear in the time aware presentation of the versions,
 	\caption[Global Change Master Directory count distributed over time with clusters marked.]{The change rate of different versions organize into three visible clusters. Cluster 2 denotes a sudden burst of version releases which is notable.}
 	\label{GCMDPlot1Cluster}
 \end{figure}
-According to the Keyword Governance and Community Guide Document \cite{gcmd_gov}, ``Full GCMD keywords list releases get a new major version number (e.g., 8.0). Incremental releases for updates to topics, terms, and variables get a new minor version number (e.g., 8.1).”
+According to the \textit{Keyword Governance and Community Guide Document} \cite{gcmd_gov}, ``Full GCMD keywords list releases get a new major version number (e.g., 8.0). Incremental releases for updates to topics, terms, and variables get a new minor version number (e.g., 8.1).”
 The statement explains the activity in Cluster 1 where there are sufficient changes to warrant a full release of the keywords.
 Cluster 2 captures the change rate and duration of minor versions, except those from 8.2 to 8.4.1 which are in Cluster 3.
 Cluster 3 demonstrates a flurry of activity occurring between June 7, 2016, to August 2, 2016.
@@ -99,7 +96,7 @@ The approach will over-count the number of modifications, but provides an upper 
 Each count is then normalized by the number of files in the previous version to standardize comparison between data sets regardless of data set size.  
 The average for each data set is taken for each change type.
 
-\section{EOL Versioning Behavior}
+\section{EOL Versioning Behavior} \label{sec:behavior}
 
 Given that EOL replaces the entire old data set when updating, the expected behavior of the transitions would be \textbf{Modifies} concentrating close to 1 and \textbf{Adds} and \textbf{Invalidates} distributed close to 0.
 The assumption is that researchers have little reason to change the file naming scheme.
@@ -180,6 +177,11 @@ The files are more likely to retain filenames when only a few files in a data se
 \section{Analysis}
 
 \subsection{Impact Assessment Change Counts}
+
+The impact assessments obtained for GCMD Version 8.2, 8.3, and 8.4 revealed that some of the changes began much earlier than the valid duration of the previous version.
+Adjusting for the new duration, the change rates reduce to under 0.5, aligning with the values in Cluster 2.
+The impact assessments furthermore provide change counts in the format of \textbf{Add}, \textbf{Invalidate}, and \textbf{Modify}.
+In none of the cases, shown in Table \ref{table:GCMD_metric}, did the metrics completely align although Version 8.3 came close with a difference of 3.
 \begin{table}
 	\caption{Differences in VersOn and Impact Assessment metrics}
 	\label{table:GCMD_metric}
@@ -209,53 +211,40 @@ The files are more likely to retain filenames when only a few files in a data se
 		\hline
 	\end{tabular}
 \end{table}
+VersOn does not consistently overestimate or underestimate across the versions, but the assessments most consistently align on \textbf{Invalidations} which make up very few of the changes.
+
+A investigation into the specific differences in Version 8.3 revealed that the term ``Saline Lake" does not appear in the change log, but ``Leaf Area Index (LAI)" appears twice.
+LAI appears twice because it has two unique identifiers.
+Six terms appeared in the change log as \textbf{Modifications} but missed three terms from the impact assessment.
+The primary driver between the differences lies in impact assessments being sourced from community requests.
+The focus of the change analysis becomes arranged around the preferred label rather than the unique identifier used to implement the keyword.
+Impact assessments capture changes that modify a keyword's label and that doesn't change the keyword's place in the taxonomy as a result.
+The change log uses a keyword's unique identifier and its placement in the taxonomy to determine changes to the structure.
+The difference in metrics collection once again illustrates the producer/consumer dynamic in data version management as well as the need for clear versioning practices.
+While the comparison between the two counts would be invalid due to differences in practice, a valid comparison could be constructed using the unique identifier to align entries and just the preferred label to determine if the keywords differ.
 
 \subsection{Hidden Volatility}
 
-Each version of a data set stored in EOL is assigned three different times, “version publish time,” “version creation time,” and “version modification time.”  
+To determine if the actual change rate is being obscured by the version publication rate, the duration of each version must be calculated.
+Since only one version is published at the end of that duration, simply taking the inverse of the duration will give the version publication rate.
+The change counts are then multiplied by the version publication rate for each version to acquire the change rate for each version.
+Because the change counts are often the size of the data sets, as shown in Figure \ref{EOL_AIM}, the means must be adjusted to align with the version publication rate mean in order to perform the Kolmogorov-Smirnov test.
+The test will determine the likelihood that the change distribution comes from the same distribution that produced the version publication rates.
+
+Each version of a data set stored in EOL is assigned three different times, ``version publish time," ``version creation time," and ``version modification time." 
 Version publish time indicates the time the version was made available to the public, usually the data set was added to the database.  
 Version creation time denotes the moment at which a version designation was given to the collection of files, beginning in mid-2014 when the versioning system was implemented.  
 Version modification time indicates the time at which the version metadata was changed.  
 Using version publish time most closely resembles the duration of version validity, and the following computations use version publish time.
 
-Some of the data needed to be filtered out to provide valid results.  
+The duration is calculated by taking the publish time of the next version and subtracting the publish time of the current version.
+Some of the durations needed to be filtered out to provide valid results.  
 Due to a few coding errors in time assignments, 7 versions had to be removed because the durations were negative.  
-Duration is measured in days, and the rate of version publication is determined by taking the inverse of the duration.  
-To acquire the AIM change rates, the changes are divided by the associated duration for each version.  
-Since the rates are closely concentrated at 0, the log of the rates are taken to give the values a more log-normal distribution.  
+Duration is measured in days, and the rate of version publication is determined by taking the inverse of the duration, giving versions per day.  
+To acquire the AIM change rates, the changes are divided by the associated duration for each version, returning change per day.  
+Since the change rates are biased towards at 0, the log of the rates are taken to give the values a more normal distribution.  
 Values where an AIM change is 0 had to be removed in order to properly apply the log function.  
-The remaining number of entries can be found in Table XX.
-
-Since the durations are not normally distributed, but concentrated close to 0, the log of the durations are taken to normalize the data.  
-The log function is also applied to the AIM changes to normalize the data.  
-The inverse of the log of the duration is taken to acquire the rate of version release.
-
-The Kolomogorov-Smirnov Test was used to determine if the Adds, Invalidates, or Modifies follow a distribution separate from the version publication distribution.  
-A difference indicates that the AIM changes exhibit a behavior apart from the version releases.  
-As seen in Figures XX, XX, and XX, the distributions of AIM changes over duration are offset due to a larger magnitude of values per version.  
-The change rates were translated by the difference in means between the version mean and the associated change mean after log normalization to make the values valid for comparison by the Kolomogorov-Smirnov test.
-
-\begin{figure}%[b]
-	\centering
-	\includegraphics[scale=.6]{figures/Eol_Add_Ver_Rate.png}
-	\caption{Distribution of average normalized Modify counts of each data set in Eath Observing Laboratory.}
-	\label{EOL_Add_Ver}
-\end{figure}
-
-\begin{figure}%[b]
-	\centering
-	\includegraphics[scale=.6]{figures/Eol_Inv_Ver_Rate.png}
-	\caption{Distribution of average normalized Modify counts of each data set in Eath Observing Laboratory.}
-	\label{EOL_Inv_Ver}
-\end{figure}
-
-\begin{figure}%[b]
-	\centering
-	\includegraphics[scale=.6]{figures/Eol_Mod_Ver_Rate.png}
-	\caption{Distribution of average normalized Modify counts of each data set in Eath Observing Laboratory.}
-	\label{EOL_Mod_Ver}
-\end{figure}
-
+The size of each distribution can be found in Table \ref{table:Eol_KS}.
 \begin{table}
 	\caption{Summary of Kolmogorov-Smirnov Test results for Earth Observing Laboratory.}
 	\label{table:Eol_KS}
@@ -270,3 +259,43 @@ The change rates were translated by the difference in means between the version 
 	\end{tabular}
 \end{table}
 
+Since the durations are log-normally distributed, concentrated close to 0, the log of the durations are taken to normalize the data.  
+The log function is also applied to the AIM changes after the division by the duration.  
+The inverse of the log of the duration is taken to acquire the rate of version release.
+From Figure \ref{EOL_Add_Ver} and Figure \ref{EOL_Inv_Ver}, the change distributions, in red and green respectively, are translated a few points to the right slightly.
+\begin{figure}%[b]
+	\centering
+	\includegraphics[scale=.6]{figures/Eol_Add_Ver_Rate.png}
+	\caption{Distribution of average normalized Modify counts of each data set in Eath Observing Laboratory.}
+	\label{EOL_Add_Ver}
+\end{figure}
+\begin{figure}%[b]
+	\centering
+	\includegraphics[scale=.6]{figures/Eol_Inv_Ver_Rate.png}
+	\caption{Distribution of average normalized Modify counts of each data set in Eath Observing Laboratory.}
+	\label{EOL_Inv_Ver}
+\end{figure}
+Because the means do not not coincide well enough, the distributions must be re-aligned at the version publication rate's mean value.
+As noted in Section \ref{sec:behavior}, almost half of the versions have 0 \textbf{Modifications}, meaning that the values must be filtered out.
+The resulting graph for comparison in Figure \ref{EOL_Mod_Ver} shows a more flattened \textbf{Modify} distribution.
+\begin{figure}%[b]
+	\centering
+	\includegraphics[scale=.6]{figures/Eol_Mod_Ver_Rate.png}
+	\caption{Distribution of average normalized Modify counts of each data set in Eath Observing Laboratory.}
+	\label{EOL_Mod_Ver}
+\end{figure}
+
+The Kolomogorov-Smirnov Test was used to determine if the \textbf{Adds}, \textbf{Invalidates}, or \textbf{Modifies} follow a distribution the same as the version publication distribution as the null hypothesis.  
+Table \ref{table:Eol_KS} shows that the distribution of \textbf{Adds} is statistically significant with 90\% confidence while \textbf{Invalidates} and \textbf{Modifies} can reject the null hypothesis with at least 95\% confidence.
+The analysis demonstrates that there is strong evidence version publications do not accurately reflect the actual change rate of the EOL data sets.
+
+\section{Summary}
+
+In Chapter \ref{Volatility}, we explored different ways in which versions hide the actual change behavior within a data system.
+The GCMD keywords showed one perspective when evenly distributed, but spread across time, the versions have very different behavior.
+The change rates, once re-coupled to time, show that versions can provide a misleading view of how changes apply to a data set.
+Versions package together changes that can originate from times prior to the previous version, disrupting the assumed relationship between consecutive versions.
+GCMD also breaks assumptions when the impact assessments use different metrics to determine a data set change, reinforcing the concept that perspective and context play a major role in versioning methodology.
+Using only version names, Earth Observing Laboratory data is distributed uniformly by single versions, but \ref{EOL_AIM} shows a more vibrant behavior in the data sets.
+The chart revealed trends in file naming and replacement.
+The data sets also demonstrated that AIM changes behave significantly differently than the behavior versions reveal.

@@ -136,15 +136,15 @@ The first approach, seen in Figure \ref{DiscardedFig}, simply extends the proven
 	\label{DiscardedFig}  % the \label command comes AFTER the caption
 \end{figure}
 Until the introduction of or comparison with Version 2, none of the concepts in Version 1 can be considered new or old.
-As the responsible party for introducing changes, Version 2 becomes associated with New, Old, and modified attributes.
-Version 1 also relates to modified attributes since it provides the pre-value used to contextualize Version 2's post-value.
+As the responsible party for introducing changes, Version 2 becomes associated with \textit{New}, \textit{Old}, and \textit{modified} attributes.
+Version 1 also relates to \textit{modified} attributes since it provides the \textit{pre-value} used to contextualize Version 2's \textit{post-value}.
 The pre and post values are included so that a user can see how much the attribute has changed, much like with a change log.
 
-Adding the attributes as concepts to the model addresses PROV's and PAV's flat approach to version relations, but the attributes do not capture the inter-relation between objects for New and Old attributes.
+Adding the attributes as concepts to the model addresses PROV's and PAV's flat approach to version relations, but the attributes do not capture the inter-relation between objects for \textit{New} and \textit{Old} attributes.
 Having Version 2 be responsible for all the changes causes issues with the model since it must be associated with attributes from an entirely different object.
-The Old attributes should not exists within Version 2.
-Associating Old attributes with Version 1 would be more appropriate and intuitive to understand.
-The model does not capture the type of change, making the result a listing of attributes without the version differences to contextualize the relationship between the versions.
+The \textit{Old} attributes should not exists within Version 2.
+Associating \textit{Old} attributes with Version 1 would be more appropriate and intuitive to understand.
+The model does not capture the \textbf{type} of change, making the result a listing of attributes without the version differences to contextualize the relationship between the versions.
 
 From a different direction, Figure \ref{DiscardedFig2} shows a model created by starting from the change log.
 \begin{figure}
@@ -177,8 +177,8 @@ From a different direction, Figure \ref{DiscardedFig2} shows a model created by 
 Attributes are attached to the log as the primary indicators for old, new, and modified concepts.
 Change logs often break down and group changes by attributes.
 For modified attributes, an additional change concept is associated, encapsulating the values and nature of the change.
-At the far right side of the figure is a concept called Type which indicates more specifically the nature of the change for example a unit of speed to another.
-Pre and post values are also included to explicitly define the change concept.
+At the far right side of the figure is a concept called \textit{Type} which indicates more specifically the nature of the change, for example unit of speed to another.
+Pre- and post- values are also included to explicitly define the change concept.
 
 The primary drawback of the log-based construction is that the change log assumes all responsibility for every modification to the data even though the document only reports the differences.
 The version objects are also left out of the model, leaving the log concept in possession of the attributes.
@@ -213,11 +213,11 @@ Figure \ref{DiscardedFig3} combines the provenance and change log approaches by 
 \end{figure}
 The idea here is to enable distance capture between versions by encapsulating all changes within the log concept.
 The changes are then associated with specific attributes.
-Pre and post values do not appear in the model as knowing a change has occurred and what kind is more valuable than knowing the explicit values involved.
+Pre- and post- values do not appear in the model because the presence and kind of change is more valuable than assessing the explicit values involved.
 As a data set becomes more volatile, more values would need to be stored, resulting in more of a copy of the data rather than a summarization of the changes.
-Notice in Figure \ref{DiscardedFig3} that Attribute has now become disconnected from either version.
-Reconnecting the Attribute concept brings into question which version it should be associated with since it exists in both.
-The larger issue with both the log based and hybrid approach is that the model resembles a tree more than a graph, making linked data queries less powerful as most of the concepts are disconnected.
+Notice in Figure \ref{DiscardedFig3} that \textit{Attribute} has now become disconnected from either version.
+Reconnecting the \textit{Attribute} concept brings into question which version it should be associated with since it exists in both.
+The larger issue with both the log-based and hybrid approach is that the model resembles a tree more than a graph, making linked data queries less powerful, as most of the concepts are disconnected.
 
 A fourth formulation, in Figure \ref{DiscardedFig4}, leverages the insight that when a change interacts with an attribute, the attribute is different in the next version.
 \begin{figure}
@@ -245,11 +245,11 @@ A fourth formulation, in Figure \ref{DiscardedFig4}, leverages the insight that 
 \end{figure}
 The model addresses the attribution problem by forming two attributes, each associated with a different version.
 These attributes inform a change which acts upon both version concepts.
-The Log object is dropped for the model since it is a method to convey change and not an actor involved in the change.
-From the highly connected construction, new and old attributes no longer need to be explicitly stated, but they can be implied from the model's structure.
-A new attribute would not exist in Version 1 so Attribute 1 and its associated properties (arrows) are removed, leaving a unique construction implying an attribute addition.
+The \textit{Log} object is dropped for the model since it is a method to convey change and not an actor involved in the change.
+From the highly connected construction, new and old \textit{attributes} no longer need to be explicitly stated, but they can be implied from the model's structure.
+A new attribute would not exist in \textit{Version 1} so \textit{Attribute 1} and its associated properties (arrows) are removed, leaving a unique construction implying an attribute addition.
 
-One observation is that the relation from changes to versions is redundant since the links from version to attribute to change implies the same relationship.
+One observation is that the relation from changes to versions is redundant since the links from \textit{version} to \textit{attribute} to \textit{change} implies the same relationship.
 Removing the explicit relation would shorten the number of triples required to encode a change and improve scalability.
 The versioning graph using this highly connected model would also be easier to query if the edges were oriented in the same direction, additionally implying that change flows from one version to the next.
 These final observations result in the current versioning model.
@@ -274,14 +274,14 @@ While the \textbf{change} object greatly resembles a PROV qualified property, it
 In the following diagrams and figures, the original or base version and its attributes will be placed on the left-hand side and the new version will be placed on the right-hand side with its attributes.
 References to the versions as previous and next are avoided since sequencing may not play a major role in distinguishing versions.
 Scientific data in large repositories often track sequential releases of data, but a book may have different versions distinguished by printed language.
-To recognize this distinction, objects will be referred to as the left-hand \textbf{version} or left-hand \textbf{attribute} when they are not sequentially or temporally related.
+To recognize this distinction, objects will be referred to as the \textbf{left-hand version} or \textbf{left-hand attribute} when they are not sequentially or temporally related.
 
 \subsection{How Changes are Represented in the Model}
 
 The model bases \textbf{changes} around the three core versioning operations because their commonality across systems provides a fundamental basis for comparisons.
-\textbf{Additions} occur when an \textbf{attribute} appears only in the right-hand \textbf{version}.
-When an \textbf{attribute} only shows up in the left-hand \textbf{version}, the model captures this as an \textbf{invalidation}.
-Finally, a \textbf{modification} change has \textbf{attributes} in both the left and right-hand \textbf{versions}, but it only connects two \textbf{attributes} if their values are different.
+\textbf{Additions} occur when an \textbf{attribute} appears only in the \textbf{right-hand version}.
+When an \textbf{attribute} only shows up in the \textbf{left-hand version}, the model captures this as an \textbf{invalidation}.
+Finally, a \textbf{modification} change has \textbf{attributes} in both the \textbf{left-} and \textbf{right-hand versions}, but it only connects two \textbf{attributes} if their values are different.
 These three combinations cover the possible situations within the model.
 
 \begin{figure}
@@ -314,7 +314,7 @@ Each \textbf{version} has an \textbf{attribute}, Attribute 1 and Attribute 2, re
 Finally, a \textbf{change} object connects the two \textbf{attributes}, denoting that the values described by the attribute are different.
 
 The specific values pertaining to Attribute 1 and Attribute 2 are not captured by the model because acknowledging that a difference exists is more important.
-Extending the model to properly communicate the significance of a modification for a wide variety of domains would require sizable domain knowledge and would be outside the scope for this project.
+Extending the model to properly communicate the significance of a modification for a wide variety of domains would require sizable domain knowledge and would be outside the scope of this project.
 In addition, the model would essentially begin storing a copy of the data set, leading to space and redundancy concerns.
 
 \subsubsection{Addition}
@@ -341,7 +341,7 @@ In Figure \ref{AdditionFig}, the \textbf{addition} model differs from the \textb
 \end{figure}
 The absence creates a disconnect between ``Version 1" and ``Change A".
 We know that a connected graph will be desirable to accommodate traversal using linked data query languages so ``Version 1" must be reconnected to the other concepts in the model.
-A property is used to create a path between the two \textbf{attributes} to indicate the contribution of  ``Version 1" to the change's lineage.
+A \textbf{property} is used to create a path between the two \textbf{attributes} to indicate the contribution of  ``Version 1" to the change's lineage.
 The path does not show that ``Version 1" informs or creates ``Attribute 2", while that may be true.
 The construction was also chosen to create a symmetric orientation with the \textbf{invalidation} change.
 
@@ -349,7 +349,7 @@ The construction was also chosen to create a symmetric orientation with the \tex
 \subsubsection{Invalidation}
 
 The \textit{invalidation} model has a missing \textbf{attribute} on the right-hand side of the relation, contrary to the \textbf{addition} construction.
-As a result of the invalidation, an attribute no longer exists in the right-hand \textbf{version}.
+As a result of the invalidation, an attribute no longer exists in the \textbf{right-hand version}.
 As seen in Figure \ref{InvalidationFig}, the invalidation change concept matches to the Version 2 object.
 \begin{figure}
 	\centering
@@ -370,7 +370,7 @@ As seen in Figure \ref{InvalidationFig}, the invalidation change concept matches
 	\caption{Model of the relationships between Versions 1 and 2 when invalidating Attribute 1 from Version 1 as a result of Change I}
 	\label{InvalidationFig}  % the \label command comes AFTER the caption
 \end{figure}
-Just like in \textbf{addition} model, this construction maintains a link between the two \textbf{version} objects.
+Just like in the \textbf{addition} model, this construction maintains a link between the two \textbf{version} objects.
 In this case, it makes more conceptual sense, however, because ``Version 2" invalidates ``Attribute 1" by omitting it.
 
 
@@ -384,15 +384,16 @@ The division means that changes are not published into the change log as they ar
 Employing RDFa means that the document must be written using HTML formatting.
 Listing \ref{rdfa_list} shows the text necessary to layout the first four lines of Figure \ref{changelog_zoomed}.
 While the content only shows four lines, the underlying markup takes up three and a half times as many lines.
-Line 2 states that all following resources will be \textbf{attributes} of Version 1.
+Line 2 of Listing \ref{rdfa_list} states that all following resources will be \textbf{attributes} of Version 1.
 Line 3 defines such an \textbf{attribute}.
 Lines 5 through 8 define the changes Abswurmbachite undergoes.
 Because RDFa allows the statements to be embedded within the content, the triples can appear along with the text they describe.
 Lines 11 and 12 define complete triples which do not appear in the visible document.
 The lines complete the graph, but must be included in spans because RDFa only allows a single triple within each tag.
-Modifying the tags' order so that the spans are unnecessary would cause the visible content to appear in an un-logical order, rendering the document machine-readable but not human-readable.
+Modifying the tags' order so that the spans are unnecessary would cause the visible content to appear in a confusing and disorganized order, rendering the document machine-readable but not human-readable.
 
-\begin{lstlisting}[language=HTML, caption=Abswurmbachite RDFa, label=rdfa_list]
+\begin{listing}
+	\begin{minted}[linenos, frame=lines, framesep=2mm, breaklines]{HTML}
 <h3>Change Log</h3>
 <div about="Version1" rel="vo:hasAttribute">
 <div resource="v2:Abswurmbachite" typeof="vo:Attribute">
@@ -407,16 +408,20 @@ Modifying the tags' order so that the spans are unnecessary would cause the visi
 <span about="Version2" property="vo:hasAttribute" resource="v2:AttributeAbswurmbachite12v2"></span>
 </tr>
 </table></div></div><br>
-\end{lstlisting}
+	\end{minted}
+	\label{rdfa_list}
+	\caption{Abswurmbachite RDFa}
+\end{listing}
 
 After encountering the limitations of using RDFa to include the versioning graph into the change log, JSON-LD was used.
-The new format does not rely on the structure of visible content to determine the syntax triples use to be included in the change log.
+The JSON data does not need to conform to the structure or ordering of visible content in the change log.
 Listing \ref{json_list} provides the alternative encoding of the Abswurmbachite entry from RDFa.
 The entry is significantly longer, almost three times longer than the RDFa entry and ten times longer than the original visible content.
 Instead of including all the data in the beginning or end of the document, each change block is separated into the particular \textit{div} section for that change.
 This choice allows consumers to extract pertinent change information without needing to ingest the entire versioning graph.
 
-\begin{lstlisting}[language=HTML, caption=Abswurmbachite JSON-LD, label=json_list]
+\begin{listing}
+	\begin{minted}[linenos, frame=lines, breaklines]{HTML}
 <h3>Change Log</h3>
 <div about="v1:Abswurmbachite">
 <span style="font-weight:bold" property="http://www.w3.org/2000/01/rdf-schema#label">Abswurmbachite</span>
@@ -457,8 +462,10 @@ This choice allows consumers to extract pertinent change information without nee
 </script>
 </tr>
 </table></div><br>
-\end{lstlisting}
-
+	\end{minted}
+	\label{json_list}
+	\caption{Abswurmbachite JSON-LD}
+\end{listing}
 The change logs created with RDFa or JSON-LD demonstrates progress towards documents which are both human and machine-readable.
 The implementation provides evidence that JSON-LD is better suited to embed a versioning graph into a change log than RDFa.
 RDFa suffers limitations since it is constrained by the content's structure.
@@ -479,9 +486,30 @@ Repeated modifications over rows would account for the explosion in entries with
 
 \section{Cold Land Processes Field Experiment}
 
+The NASA's Cold Land Processes Field Experiment collects ice measurements from a wide number of sites in the arctic \cite{CLPX}.
+The data was published originally in ASCII, but the data was later ported into shapefiles as well.
+A known issue with the transition was that comments in the Summary data set were left out do to format limitations.
+A change log was created to determine whether additional differences existed within the two formats.
 
+The initial problem with forming a change log is that rows in the data did not include unique identifiers to align attributes within the versions.
+A unique tuple, using values from 5 columns of the data, was created to match rows together since the order of the rows did not correspond between the two formats.
+An immediate problem that results was some differences occurred within the columns necessary to form the unique tuple, namely some values disagreed by 0.5.
+Following the correction, the data could be correctly aligned.
 
-\section{Change Log Analysis}
+The change log found that for columns ``soil sample A" (SL\_A) and ``soil sample B" (SL\_B), many entries consistently disagreed between versions.
+Disagreements resulted from values being recorded with `y' or `n' for a number of values but with numbers for the rest.
+Since the values in the shapefiles are stored in a database format, an column must conform to a pre-specified type, causing the character encodings to appear as 0s in the shapefiles.
+Additionally, the columns experienced 0.5 misalignments and null values of -999.0 being encoded as 0.
+The columns are encoded as integers, causing the disagreement.
+
+With further investigation, misalignment in the values caused repeated inquiries into differences between expected and reported values.
+A passage in Parsons et al. \cite{CLPX2} states, \begin{quotation}
+	"After soliciting feedback from the CLP Working Group and working closely with several of the CLP investigators, we settled on a set of four simple, fixed-width, ASCII tables for each IOP. This was simple and readily understandable and, we thought, flexible enough to be used by most applications. Unfortunately, we found that, although these ASCII tables worked well for many applications, it was not very easy to import them into Excel and ArcGIS, two of the most common data analysis tools. To ensure future readability of the data, we were committed to using a textual file protocol (Raymond, 2004). Yet, we also sought to provide the data in a format that would facilitate analysis and examination. Therefore, we modified the fixed-width tables to conform to the Microsoft comma-separated value (CSV) file convention while keeping fixed-width columns. This facilitated import into Excel and other spreadsheets. The text files are the primary archival format of the data, but we also created ESRI shapefiles for GIS users. Documentation clearly describes both CSV and shapefile versions of the data, and indicates that the only differences in content are in the free-text comments recorded by the surveyors (shapefile text fields suffer from a short field width, so surveyor free-text comments are only included in the CSV files). By working closely with current data users while considering future users and applications, we were able to develop a data format that met current needs, is flexible enough to accommodate future applications, and is simple enough to survive long-term technological changes."
+\end{quotation}
+The solution resulting from the differences was to indicate that the preferred and official version of the data was the ASCII representation.
+The deference to a different format, unfortunately partially undermines the benefits of increased accessibility provided by also providing the data in shapefile format.
+
+\section{Change Log Analysis} \label{sec:CLA}
 
 With a trade-off of 14 HTML lines for every visible line and 40 HTML code lines to each visible line, space utilization is a very present concern.
 Table \ref{table:Ng_changelog_table1} shows the size of each encoding of the change log as well as the percentage in size as compared to either of the files involved in the version transition.
@@ -515,16 +543,17 @@ Table \ref{table:Ng_changelog_table2} shows the change log sizes for the second 
 		\hline
 		Encoding Type & File Size (Bytes) & \% of File 2 & \% of File 3 \\
 		\hline
-		Text&	670827&	24.5808&	15.9092\\
-		RDFa&	6409540&	234.8625&	152.0074\\
-		Turtle&	4521010&	165.6618&	107.2194\\
-		JSON-LD&	9834772&	360.3721&	233.2396\\
+		Text&	403227&	14.7753&	9.56286\\
+		RDFa&	4168390&	152.7409&	98.85678\\
+		Turtle&	4515435&	165.4575&	107.0872\\
+		JSON-LD&	8095372&	296.6359&	191.9884\\
 		\hline
 	\end{tabular}
 \end{table}
 Notice that the second transition has much smaller text encodings compared to the original files.
-The RDFa and JSON-LD encodings once again 10 and 15 times, respectively, the size of the text encoding.
-The turtle encoding, however, is smaller than the RDFa encoding, but still 16 times the size of the original file.
+The RDFa and JSON-LD encodings once again 10 and 20 times, respectively, the size of the text encoding.
+The turtle encodings, representing the most raw form of data without additional HTML text, surprisingly ends up larger than the other data encodings.
+The explanation is that in order to automate printing the formal triple statements, fewer elements can be smartly implied, leading to larger file sizes even though no markup symbols are in the file.
 Looking at Table \ref{table:Ng_turtle}, the second transition had 20 times fewer \textbf{Modify} entries, leading to a much smaller turtle file.
 \begin{table}
 	\caption{Noble Gas Turtle files}
@@ -611,7 +640,7 @@ The automation and inclusion of change logs inform consumers how much the data s
 
 The versioning model provides a method to capture change information in greater detail than current provenance models.
 The inclusion of \textbf{versions} and \textbf{attributes} into the model connect changing items with the objects they influence.
-The \textbf{changes} create a ladder-like structure to connect together \textbf{version} objects in greater detail.
+The \textbf{changes} create a ladder-like structure to connect \textbf{version} objects in greater detail.
 Each rung of the ladder can not only be counted, but also grouped into types of change according to the respective operation.
 The method of instantiating a versioning graph will be covered in Chapter \ref{ch:graph}.
 

@@ -9,7 +9,7 @@
 \addtocontents{toc}{\parindent0pt\vskip12pt APPENDICES} %toc entry, no page #
 
 \chapter{NOBLE GAS CHANGE LOG GENERATOR VERSION 1 TO 2}
-\begin{lstlisting}[language=Python]
+\begin{minted}[linenos, frame=lines, baselinestretch=1.2, breaklines]{python}
 from os.path import join, dirname, abspath, isfile
 from os import sep as separator
 import xlrd, sys, json
@@ -18,75 +18,75 @@ import re
 
 
 def index_convert(index1):
-	if index1 < 17:
-		return index1
-	elif index1 < 24:
-		return index1+1
-	elif index1 < 26:
-		return 26+(3*(index1-24))
-	elif index1 < 28:
-		return 44+(3*(index1-26))
-	elif index1 < 32:
-		return 53+(9*(index1-28))
-	elif index1 < 36:
-		return 88+(2*(index1-32))
-	elif index1 < 38:
-		return 95+(4*(index1-36))
-	elif index1 < 41:
-		return 102+(2*(index1-38))
-	elif index1 < 43:
-		return 112+(2*(index1-41))
-	elif index1 == 43:
-		return 172
-	elif index1 < 50:
-		return 174+(3*(index1-44))
-	elif index1 < 54:
-		return 191+(index1-50)
-	else:
-		print 'Error: Out of bounds'
-		return -1
+if index1 < 17:
+return index1
+elif index1 < 24:
+return index1+1
+elif index1 < 26:
+return 26+(3*(index1-24))
+elif index1 < 28:
+return 44+(3*(index1-26))
+elif index1 < 32:
+return 53+(9*(index1-28))
+elif index1 < 36:
+return 88+(2*(index1-32))
+elif index1 < 38:
+return 95+(4*(index1-36))
+elif index1 < 41:
+return 102+(2*(index1-38))
+elif index1 < 43:
+return 112+(2*(index1-41))
+elif index1 == 43:
+return 172
+elif index1 < 50:
+return 174+(3*(index1-44))
+elif index1 < 54:
+return 191+(index1-50)
+else:
+print 'Error: Out of bounds'
+return -1
 
 def test_alignment():
-	for i in range(0, 54):
-		print 'version2: {:5} version1: {:5}'.format(i, index_convert(i))
+for i in range(0, 54):
+print 'version2: {:5} version1: {:5}'.format(i, index_convert(i))
 
 def compare_print(mode, key, val1, val2, v1_file, v1_index = 0, v2_index = 0, changelog = None):
-	if changelog:
-		if mode == 'r':
-			out = u'''        <tr  about="Change{}{}" typeof="vo:ModifyChange">
-          <td align="right" rev="vo:Undergoes" resource="v1:Attribute{}{}v1" typeof="vo:Attribute">{:2}({})</td>
-          <td property="vo:resultsIn" resource="v2:Attribute{}{}v2" typeof="vo:Attribute">{:2}</td>
-          <td>{:>10}</td>
-          <td>{:>10}</td>
-          <span about="Version1" property="vo:hasAttribute" resource="v1:Attribute{}{}v1"></span>
-          <span about="Version2" property="vo:hasAttribute" resource="v2:Attribute{}{}v2"></span>
-        </tr>\n'''.format(key, v2_index, key, v1_index, v1_index, v1_file, key, v2_index, v2_index, val1, val2, key, v1_index, key, v2_index)
-		elif mode == 'j':
-			out = u'''        <tr  id="ModifyChange{}{}">
-          <td align="right">{:2}({})</td>
-          <td>{:2}</td>
-          <td>{:>10}</td>
-          <td>{:>10}</td>
-          <script type="application/ld+json">\n'''.format(key, v2_index, v1_index, v1_file, v2_index, val1, val2)
-		elif mode == 't':
-			out = u"{:2}({})\t{:2}\t{:>10}\t{:>10}\n".format(v1_index, v1_file, v2_index, val1, val2)
-		elif mode == 'u':
-			out = u"""<http://example.com/NG/Version1> vo:hasAttribute <http://example.com/NG/Version1/%s> ;
-        vo:hasAttribute <http://example.com/NG/Version1/Column%i> .
+if changelog:
+if mode == 'r':
+out = u'''        <tr  about="Change{}{}" typeof="vo:ModifyChange">
+<td align="right" rev="vo:Undergoes" resource="v1:Attribute{}{}v1" typeof="vo:Attribute">{:2}({})</td>
+<td property="vo:resultsIn" resource="v2:Attribute{}{}v2" typeof="vo:Attribute">{:2}</td>
+<td>{:>10}</td>
+<td>{:>10}</td>
+<span about="Version1" property="vo:hasAttribute" resource="v1:Attribute{}{}v1"></span>
+<span about="Version2" property="vo:hasAttribute" resource="v2:Attribute{}{}v2"></span>
+</tr>\n'''.format(key, v2_index, key, v1_index, v1_index, v1_file, key, v2_index, v2_index, val1, val2, key, v1_index, key, v2_index)
+elif mode == 'j':
+out = u'''        <tr  id="ModifyChange{}{}">
+<td align="right">{:2}({})</td>
+<td>{:2}</td>
+<td>{:>10}</td>
+<td>{:>10}</td>
+<script type="application/ld+json">\n'''.format(key, v2_index, v1_index, v1_file, v2_index, val1, val2)
+elif mode == 't':
+out = u"{:2}({})\t{:2}\t{:>10}\t{:>10}\n".format(v1_index, v1_file, v2_index, val1, val2)
+elif mode == 'u':
+out = u"""<http://example.com/NG/Version1> vo:hasAttribute <http://example.com/NG/Version1/%s> ;
+vo:hasAttribute <http://example.com/NG/Version1/Column%i> .
 <http://example.com/NG/Version1/%s> a vo:Attribute ;
-        vo:undergoes <http://example.com/Changelog#ModifyChange%s%i> .
+vo:undergoes <http://example.com/Changelog#ModifyChange%s%i> .
 <http://example.com/NG/Version1/Column%i> a vo:Attribute ;
-        vo:undergoes <http://example.com/Changelog#ModifyChange%s%i> .
+vo:undergoes <http://example.com/Changelog#ModifyChange%s%i> .
 <http://example.com/Changelog#ModifyChange%s%i> a vo:ModifyChange ;
-        vo:resultsIn <http://example.com/NG/Version2/%s> ;
-        vo:resultsIn <http://example.com/NG/Version2/Column%i> .
+vo:resultsIn <http://example.com/NG/Version2/%s> ;
+vo:resultsIn <http://example.com/NG/Version2/Column%i> .
 <http://example.com/NG/Version2> vo:hasAttribute <http://example.com/NG/Version2/%s> ;
-        vo:hasAttribute <http://example.com/NG/Version2/Column%i> .
+vo:hasAttribute <http://example.com/NG/Version2/Column%i> .
 
 """%(key, v1_index, key, key, v2_index, v1_index, key, v2_index, key, v2_index, key, v2_index, key, v2_index)
-		changelog.write(out.encode('utf8'))
-		if mode == 'j':
-			json1 = {
+changelog.write(out.encode('utf8'))
+if mode == 'j':
+json1 = {
 "@context":context,
 "@type":"vo:Attribute" ,
 "@id":"".join(["http://ngdb.com/v1/Attribute", key, str(v1_index)]) ,
@@ -94,53 +94,53 @@ def compare_print(mode, key, val1, val2, v1_file, v1_index = 0, v2_index = 0, ch
 "undergoes":"".join([host, "ModifyChange", key, str(v2_index)]) ,
 "@reverse" :    { "hasAttribute" : "Version1" }
 }
-			json2 = {
+json2 = {
 "@context":context,
 "@type":"vo:ModifyChange",
 "@id":"".join([host, "ModifyChange", key, str(v2_index)]) ,
 "resultsIn":"".join(["http://ngdb.com/v2/Attribute", key, str(v2_index)])
 }
-			json3 = {
+json3 = {
 "@context":context,
 "@type":"vo:Attribute" ,
 "@id":"".join(["http://ngdb.com/v2/Attribute", key, str(v2_index)]) ,
 "label":key ,
 "@reverse" :    { "hasAttribute" : "Version2" }
 }
-			json.dump([json1, json2, json3], changelog, indent=4, sort_keys=True)
-			changelog.write('''
-          </script>
-        </tr>
+json.dump([json1, json2, json3], changelog, indent=4, sort_keys=True)
+changelog.write('''
+</script>
+</tr>
 ''')
-	else:
-		print '{:5}  version1: {:10} version2: {:10}'.format(key, val1, val2)
+else:
+print '{:5}  version1: {:10} version2: {:10}'.format(key, val1, val2)
 
 labels = {17:"SAMPLING - DEPTH - >,<",
-		  25:"[He] - ppm - >,<", 27:"[He] - ppm - err", 28:"[He] - mkcc/ - >,<", 30:"[He] - mkcc/ - err", 31:"[He] - mol/ - >,<", 32:"[He] - mol/ - L H2O", 33:"[He] - mol/ - err",
-		  34:"[He+Ne] - ppm - >,<", 35:"[He+Ne] - ppm", 36:"[He+Ne] - ppm - err", 37:"[He+Ne] - mkcc/ - >,<", 38:"[He+Ne] - mkcc/ - g H2O", 39:"[He+Ne] - mkcc/ - err", 40:"[He+Ne] - mol/ - >,<", 41:"[He+Ne] - mol/ - L H2O", 42:"[He+Ne] - mol/ - err",
-		  43:"[Ne] - ppm - >,<", 45:"[Ne] - ppm - err", 46:"[Ne] - mkcc/ - >,<", 48:"[Ne] - mkcc/ - err", 49:"[Ne] - mol/ - >,<", 50:"[Ne] - mol/ - L H2O", 51:"[Ne] - mol/ - err",
-		  52:"[20Ne] - ppm - >,<", 54:"[20Ne] - ppm - err", 55:"[20Ne] - mkcc/ - >,<", 56:"[20Ne] - mkcc/ - g H2O", 57:"[20Ne] - mkcc/ - err", 58:"[20Ne] - mol/ - >,<", 59:"[20Ne] - mol/ - L H2O", 60:"[20Ne] - mol/ - err",
-		  61:"[Ar] - ppm - >,<", 63:"[Ar] - ppm - err", 64:"[Ar] - mkcc/ - >,<", 65:"[Ar] - mkcc/ - g H2O", 66:"[Ar] - mkcc/ - err", 67:"[Ar] - mol/ - >,<", 68:"[Ar] - mol/ - L H2O", 69:"[Ar] - mol/ err",
- 		  70:"[Kr] - ppm - >,<", 72:"[Kr] - ppm - err", 73:"[Kr] - mkcc/ - >,<", 74:"[Kr] - mkcc/ - g H2O", 75:"[Kr] - mkcc/ - err", 76:"[Kr] - mol/ - >,<", 77:"[Kr] - mol/ - L H2O", 78:"[Kr] - mol/ err",
-		  79:"[Xe] - ppm - >,<", 81:"[Xe] - ppm - err", 82:"[Xe] - mkcc/ - >,<", 83:"[Xe] - mkcc/ - g H2O", 84:"[Xe] - mkcc/ - err", 85:"[Xe] - mol/ - >,<", 86:"[Xe] - mol/ - L H2O", 87:"[Xe] - mol/ err",
-		  89:"3He/4He - (R/Ra)me - err", 91:"3He/4He - (R/Ra)corr - err", 93:"3He/4He - Rme - E-8 - err", 96:"3He/4He - Rcorr - E-8 - err", 97:"Rank",
-		  98:"He/Ne - >,<", 100:"He/Ne - >,<", 101:"4He/20Ne - >,<", 103:"4He/20Ne - err", 105:"20Ne/22Ne - err", 107:"21Ne/22Ne - (xE-2) - err", 108:"21Ne/20Ne", 109:"21Ne/20Ne - err",
-		  110:"22Ne/20Ne", 111:"22Ne/20Ne - err", 113:"38Ar/36Ar - err", 115:"40Ar/36Ar - err", 116:"delta(40Ar)rad", 117:"delta(40Ar)rad - err",
-		  118:"He/Ar - He/ - /Ar(air) - >,<", 119:"He/Ar - He/ - /Ar(air)", 120:"He/Ar - He/ - /Ar(air) - err", 121:"He/Ar - 4He/ - /36Ar - >,<", 122:"He/Ar - 4He/ - /36Ar", 123:"He/Ar - 4He/ - /36Ar - err",
-		  124:"He/Ar - 4He/ - /40Ar(air) - >,<", 125:"He/Ar - 4He/ - /40Ar(air)", 126:"He/Ar - 4He/ - /40Ar(air) - err",
-		  127:"f(He)=(He/Ar)s/(He/Ar)air - >,<", 128:"f(He)=(He/Ar)s/(He/Ar)air", 129:"f(He)=(He/Ar)s/(He/Ar)air - err",
-		  130:"Ne/Ar - Ne/ - /Ar(air) - >,<", 131:"Ne/Ar - Ne/ - /Ar(air)", 132:"Ne/Ar - Ne/ - /Ar(air) - err", 133:"Ne/Ar - 20Ne/ - /36Ar - >,<", 134:"Ne/Ar - 20Ne/ - /36Ar", 135:"Ne/Ar - 20Ne/ - /36Ar - err",
-		  136:"Ne/Ar - 20Ne/ - /40Ar(air) - >,<", 137:"Ne/Ar - 20Ne/ - /40Ar(air)", 138:"Ne/Ar - 20Ne/ - /40Ar(air) - err", 139:"Ne/Ar - 22Ne/ - /36Ar - >,<", 140:"Ne/Ar - 22Ne/ - /36Ar", 141:"Ne/Ar - 22Ne/ - /36Ar - err",
-		  142:"Ne/Ar - 22Ne/ - /40Ar(air) - >,<", 143:"Ne/Ar - 22Ne/ - /40Ar(air)", 144:"Ne/Ar - 22Ne/ - /40Ar(air) - err",
-		  145:"f(Ne)=(Ne/Ar)s/(Ne/Ar)air - >,<", 146:"f(Ne)=(Ne/Ar)s/(Ne/Ar)air", 147:"f(Ne)=(Ne/Ar)s/(Ne/Ar)air - err",
-		  148:"Kr/Ar - Kr/ - /Ar(air) - >,<", 149:"Kr/Ar - Kr/ - /Ar(air)", 150:"Kr/Ar - Kr/ - /Ar(air) - err", 151:"Kr/Ar - 84Kr/ - /36Ar - >,<", 152:"Kr/Ar - 84Kr/ - /36Ar", 153:"Kr/Ar - 84Kr/ - /36Ar - err",
-		  154:"Kr/Ar - 84Kr/ - /40Ar(air) - >,<", 155:"Kr/Ar - 84Kr/ - /40Ar(air)", 156:"Kr/Ar - 84Kr/ - /40Ar(air) - err",
-		  157:"f(Kr)=(Kr/Ar)s/(Kr/Ar)air - >,<",158:"f(Kr)=(Kr/Ar)s/(Kr/Ar)air", 159:"f(Kr)=(Kr/Ar)s/(Kr/Ar)air - err",
-		  160:"Xe/Ar - Xe/ - /Ar(air) - >,<", 161:"Xe/Ar - Xe/ - /Ar(air)", 162:"Xe/Ar - Xe/ - /Ar(air) - err", 163:"Xe/Ar - 132Xe/ - /36Ar - >,<", 164:"Xe/Ar - 132Xe/ - /36Ar", 165:"Xe/Ar - 132Xe/ - /36Ar - err",
-		  166:"Xe/Ar - 132Xe/ - /40Ar(air) - >,<", 167:"Xe/Ar - 132Xe/ - /40Ar(air)", 168:"Xe/Ar - 132Xe/ - /40Ar(air) - err",
-		  169:"f(Xe)=(Xe/Ar)s/(Xe/Ar)air - >,<", 170:"f(Xe)=(Xe/Ar)s/(Xe/Ar)air", 171:"f(Xe)=(Xe/Ar)s/(Xe/Ar)air - err",
-		  173:"H2 - >,<", 175:"H2 - ppm - err", 176:"O2 - >,<", 178:"O2 - ppm - err", 179:"N2 - >,<", 181:"N2 - ppm - err", 182:"CO2 - >,<", 184:"CO2 - ppm - err", 185:"CH4 - >,<", 187:"CH4 - ppm - err",
-		  188:"H2S - >,<", 190:"H2S - ppm - err"}
+25:"[He] - ppm - >,<", 27:"[He] - ppm - err", 28:"[He] - mkcc/ - >,<", 30:"[He] - mkcc/ - err", 31:"[He] - mol/ - >,<", 32:"[He] - mol/ - L H2O", 33:"[He] - mol/ - err",
+34:"[He+Ne] - ppm - >,<", 35:"[He+Ne] - ppm", 36:"[He+Ne] - ppm - err", 37:"[He+Ne] - mkcc/ - >,<", 38:"[He+Ne] - mkcc/ - g H2O", 39:"[He+Ne] - mkcc/ - err", 40:"[He+Ne] - mol/ - >,<", 41:"[He+Ne] - mol/ - L H2O", 42:"[He+Ne] - mol/ - err",
+43:"[Ne] - ppm - >,<", 45:"[Ne] - ppm - err", 46:"[Ne] - mkcc/ - >,<", 48:"[Ne] - mkcc/ - err", 49:"[Ne] - mol/ - >,<", 50:"[Ne] - mol/ - L H2O", 51:"[Ne] - mol/ - err",
+52:"[20Ne] - ppm - >,<", 54:"[20Ne] - ppm - err", 55:"[20Ne] - mkcc/ - >,<", 56:"[20Ne] - mkcc/ - g H2O", 57:"[20Ne] - mkcc/ - err", 58:"[20Ne] - mol/ - >,<", 59:"[20Ne] - mol/ - L H2O", 60:"[20Ne] - mol/ - err",
+61:"[Ar] - ppm - >,<", 63:"[Ar] - ppm - err", 64:"[Ar] - mkcc/ - >,<", 65:"[Ar] - mkcc/ - g H2O", 66:"[Ar] - mkcc/ - err", 67:"[Ar] - mol/ - >,<", 68:"[Ar] - mol/ - L H2O", 69:"[Ar] - mol/ err",
+70:"[Kr] - ppm - >,<", 72:"[Kr] - ppm - err", 73:"[Kr] - mkcc/ - >,<", 74:"[Kr] - mkcc/ - g H2O", 75:"[Kr] - mkcc/ - err", 76:"[Kr] - mol/ - >,<", 77:"[Kr] - mol/ - L H2O", 78:"[Kr] - mol/ err",
+79:"[Xe] - ppm - >,<", 81:"[Xe] - ppm - err", 82:"[Xe] - mkcc/ - >,<", 83:"[Xe] - mkcc/ - g H2O", 84:"[Xe] - mkcc/ - err", 85:"[Xe] - mol/ - >,<", 86:"[Xe] - mol/ - L H2O", 87:"[Xe] - mol/ err",
+89:"3He/4He - (R/Ra)me - err", 91:"3He/4He - (R/Ra)corr - err", 93:"3He/4He - Rme - E-8 - err", 96:"3He/4He - Rcorr - E-8 - err", 97:"Rank",
+98:"He/Ne - >,<", 100:"He/Ne - >,<", 101:"4He/20Ne - >,<", 103:"4He/20Ne - err", 105:"20Ne/22Ne - err", 107:"21Ne/22Ne - (xE-2) - err", 108:"21Ne/20Ne", 109:"21Ne/20Ne - err",
+110:"22Ne/20Ne", 111:"22Ne/20Ne - err", 113:"38Ar/36Ar - err", 115:"40Ar/36Ar - err", 116:"delta(40Ar)rad", 117:"delta(40Ar)rad - err",
+118:"He/Ar - He/ - /Ar(air) - >,<", 119:"He/Ar - He/ - /Ar(air)", 120:"He/Ar - He/ - /Ar(air) - err", 121:"He/Ar - 4He/ - /36Ar - >,<", 122:"He/Ar - 4He/ - /36Ar", 123:"He/Ar - 4He/ - /36Ar - err",
+124:"He/Ar - 4He/ - /40Ar(air) - >,<", 125:"He/Ar - 4He/ - /40Ar(air)", 126:"He/Ar - 4He/ - /40Ar(air) - err",
+127:"f(He)=(He/Ar)s/(He/Ar)air - >,<", 128:"f(He)=(He/Ar)s/(He/Ar)air", 129:"f(He)=(He/Ar)s/(He/Ar)air - err",
+130:"Ne/Ar - Ne/ - /Ar(air) - >,<", 131:"Ne/Ar - Ne/ - /Ar(air)", 132:"Ne/Ar - Ne/ - /Ar(air) - err", 133:"Ne/Ar - 20Ne/ - /36Ar - >,<", 134:"Ne/Ar - 20Ne/ - /36Ar", 135:"Ne/Ar - 20Ne/ - /36Ar - err",
+136:"Ne/Ar - 20Ne/ - /40Ar(air) - >,<", 137:"Ne/Ar - 20Ne/ - /40Ar(air)", 138:"Ne/Ar - 20Ne/ - /40Ar(air) - err", 139:"Ne/Ar - 22Ne/ - /36Ar - >,<", 140:"Ne/Ar - 22Ne/ - /36Ar", 141:"Ne/Ar - 22Ne/ - /36Ar - err",
+142:"Ne/Ar - 22Ne/ - /40Ar(air) - >,<", 143:"Ne/Ar - 22Ne/ - /40Ar(air)", 144:"Ne/Ar - 22Ne/ - /40Ar(air) - err",
+145:"f(Ne)=(Ne/Ar)s/(Ne/Ar)air - >,<", 146:"f(Ne)=(Ne/Ar)s/(Ne/Ar)air", 147:"f(Ne)=(Ne/Ar)s/(Ne/Ar)air - err",
+148:"Kr/Ar - Kr/ - /Ar(air) - >,<", 149:"Kr/Ar - Kr/ - /Ar(air)", 150:"Kr/Ar - Kr/ - /Ar(air) - err", 151:"Kr/Ar - 84Kr/ - /36Ar - >,<", 152:"Kr/Ar - 84Kr/ - /36Ar", 153:"Kr/Ar - 84Kr/ - /36Ar - err",
+154:"Kr/Ar - 84Kr/ - /40Ar(air) - >,<", 155:"Kr/Ar - 84Kr/ - /40Ar(air)", 156:"Kr/Ar - 84Kr/ - /40Ar(air) - err",
+157:"f(Kr)=(Kr/Ar)s/(Kr/Ar)air - >,<",158:"f(Kr)=(Kr/Ar)s/(Kr/Ar)air", 159:"f(Kr)=(Kr/Ar)s/(Kr/Ar)air - err",
+160:"Xe/Ar - Xe/ - /Ar(air) - >,<", 161:"Xe/Ar - Xe/ - /Ar(air)", 162:"Xe/Ar - Xe/ - /Ar(air) - err", 163:"Xe/Ar - 132Xe/ - /36Ar - >,<", 164:"Xe/Ar - 132Xe/ - /36Ar", 165:"Xe/Ar - 132Xe/ - /36Ar - err",
+166:"Xe/Ar - 132Xe/ - /40Ar(air) - >,<", 167:"Xe/Ar - 132Xe/ - /40Ar(air)", 168:"Xe/Ar - 132Xe/ - /40Ar(air) - err",
+169:"f(Xe)=(Xe/Ar)s/(Xe/Ar)air - >,<", 170:"f(Xe)=(Xe/Ar)s/(Xe/Ar)air", 171:"f(Xe)=(Xe/Ar)s/(Xe/Ar)air - err",
+173:"H2 - >,<", 175:"H2 - ppm - err", 176:"O2 - >,<", 178:"O2 - ppm - err", 179:"N2 - >,<", 181:"N2 - ppm - err", 182:"CO2 - >,<", 184:"CO2 - ppm - err", 185:"CH4 - >,<", 187:"CH4 - ppm - err",
+188:"H2S - >,<", 190:"H2S - ppm - err"}
 
 context = "https://orion.tw.rpi.edu/~blee/provdist/GCMD/VO.jsonld"
 host = "http://orion.tw.rpi.edu/~blee/provdist/NobleGas/changelog_json.html#"
@@ -155,81 +155,81 @@ host = "http://orion.tw.rpi.edu/~blee/provdist/NobleGas/changelog_json.html#"
 #v1_row = v1_sheet.row(4)
 
 def write_modify(r1, r2, workbook, f_out, mode):
-	if mode == 'r':
-		out = u'''  <div about="Version1" rel="vo:hasAttribute">
-    <div resource="v2:%s" typeof="vo:Attribute">
-      <span style="font-weight:bold" property="http://www.w3.org/2000/01/rdf-schema#label">%s</span>
-      <table rel="vo:Undergoes">
+if mode == 'r':
+out = u'''  <div about="Version1" rel="vo:hasAttribute">
+<div resource="v2:%s" typeof="vo:Attribute">
+<span style="font-weight:bold" property="http://www.w3.org/2000/01/rdf-schema#label">%s</span>
+<table rel="vo:Undergoes">
 '''%(r2[0].value, r2[0].value)
-	elif mode == 'j':
-		out = u'''
-    <div about="v2:%s">
-      <span style="font-weight:bold" property="http://www.w3.org/2000/01/rdf-schema#label">%s</span>
-      <table>
+elif mode == 'j':
+out = u'''
+<div about="v2:%s">
+<span style="font-weight:bold" property="http://www.w3.org/2000/01/rdf-schema#label">%s</span>
+<table>
 '''%(r2[0].value, r2[0].value)
-	elif mode == 't':
-		out = u"%s\n"%(r2[0].value)
-	elif mode == 'u':
-		out = u""
+elif mode == 't':
+out = u"%s\n"%(r2[0].value)
+elif mode == 'u':
+out = u""
 
-	if mode == 'r' or mode == 'j':
-		out = out+'''        <tr>
-          <th>Column v1</th>
-          <th>Column v2</th>
-          <th>Version 1</th>
-          <th>Version 2</th>
-        </tr>\n'''
-	elif mode == 't':
-		out = out+"Column v1\tColumn v2\tVersion 1\tVersion 2\n"
-	f_out.write(out.encode('utf8'))
-		#print '# Searching...'
-		#print '# Comparing...'
-	for i in range(0,54):
-		if r2[i].value != r1[index_convert(i)].value:
-			#compare_print(j, v1_row[index_convert(j)].value, v2_row[j].value)
-			compare_print(mode, r2[0].value, r1[index_convert(i)].value, r2[i].value, workbook.split('/')[-1], index_convert(i), i, f_out)
-	if mode == 'r' or mode == 'j':
-		f_out.write('  </table></div><br>\n')
-	elif mode == 't' or mode == 'u':
-		f_out.write("\n")
+if mode == 'r' or mode == 'j':
+out = out+'''        <tr>
+<th>Column v1</th>
+<th>Column v2</th>
+<th>Version 1</th>
+<th>Version 2</th>
+</tr>\n'''
+elif mode == 't':
+out = out+"Column v1\tColumn v2\tVersion 1\tVersion 2\n"
+f_out.write(out.encode('utf8'))
+#print '# Searching...'
+#print '# Comparing...'
+for i in range(0,54):
+if r2[i].value != r1[index_convert(i)].value:
+#compare_print(j, v1_row[index_convert(j)].value, v2_row[j].value)
+compare_print(mode, r2[0].value, r1[index_convert(i)].value, r2[i].value, workbook.split('/')[-1], index_convert(i), i, f_out)
+if mode == 'r' or mode == 'j':
+f_out.write('  </table></div><br>\n')
+elif mode == 't' or mode == 'u':
+f_out.write("\n")
 
 def write_removed(v2, col, row, f_out, mode):
-	if mode == 'r' or mode == 'j':
-		f_out.write('''
-      <h3>Columns invalidated by %s</h3>
-      <table about="Version2">
+if mode == 'r' or mode == 'j':
+f_out.write('''
+<h3>Columns invalidated by %s</h3>
+<table about="Version2">
 '''%(v2.split('/')[-1]))
-	elif mode == 't':
-		f_out.write("\nColumns invalidated by %s\n"%(v2.split('/')[-1]))
+elif mode == 't':
+f_out.write("\nColumns invalidated by %s\n"%(v2.split('/')[-1]))
 
-	print "Removed Column"
-	for i in col:
-        	v1_value = labels.get(i, "")
-		if mode == 'r':
-			out = u'''        <tr resource="InvlidateChange%i" rev="vo:invalidatedBy" typeof="vo:InvalidateChange">
-		<td resource="Attribute%i" rev="vo:Undergoes" typeof="vo:Attribute">%i</td>
-          <td about="Attribute%i" property="http://www.w3.org/2000/01/rdf-schema#label">%s</td>
-          <span about="Version1" property="vo:hasAttribute" resource="Attribute%i"/>
-        </tr>
+print "Removed Column"
+for i in col:
+v1_value = labels.get(i, "")
+if mode == 'r':
+out = u'''        <tr resource="InvlidateChange%i" rev="vo:invalidatedBy" typeof="vo:InvalidateChange">
+<td resource="Attribute%i" rev="vo:Undergoes" typeof="vo:Attribute">%i</td>
+<td about="Attribute%i" property="http://www.w3.org/2000/01/rdf-schema#label">%s</td>
+<span about="Version1" property="vo:hasAttribute" resource="Attribute%i"/>
+</tr>
 '''%(i, i, i, i, v1_value, i)
-		elif mode == 'j':
-			out = u'''        <tr id="InvlidateChange%i" about="InvlidateChange%i">
-          <td>%i</td>
-          <td>%s</td>
-          <script type="application/ld+json">
+elif mode == 'j':
+out = u'''        <tr id="InvlidateChange%i" about="InvlidateChange%i">
+<td>%i</td>
+<td>%s</td>
+<script type="application/ld+json">
 '''%(i, i, i, v1_value)
-		elif mode == 't':
-			out = u"%i\t%s\n"%(i, v1_value)
-		elif mode == 'u':
-			out = u"""<http://example.com/NG/Version1> vo:hasAttribute <http://example.com/NG/Version1/Column%s> .
+elif mode == 't':
+out = u"%i\t%s\n"%(i, v1_value)
+elif mode == 'u':
+out = u"""<http://example.com/NG/Version1> vo:hasAttribute <http://example.com/NG/Version1/Column%s> .
 <http://example.com/NG/Version1/%s> vo:undergoes <http://example.com/Changelog#InvalidateChange%i> .
 <http://example.com/Changelog#InvalidateChange%i> a vo:InvalidateChange ;
-	vo:invalidatedBy <http://example.com/NG/Version2> .
+vo:invalidatedBy <http://example.com/NG/Version2> .
 
 """%(i, i, i, i)
-		f_out.write(out.encode('utf8'))
-		if mode == 'j':
-			json1 = {
+f_out.write(out.encode('utf8'))
+if mode == 'j':
+json1 = {
 "@context":context,
 "@type":"vo:Attribute" ,
 "@id":"".join(["http://ngdb.com/v1/Attribute", str(i)]) ,
@@ -237,64 +237,64 @@ def write_removed(v2, col, row, f_out, mode):
 "undergoes":"".join([host, "InvalidateChange", str(i)]) ,
 "@reverse" :    { "hasAttribute" : "Version1" }
 }
-			json2 = {
+json2 = {
 "@context":context,
 "@type":"vo:InvalidateChange" ,
 "@id": "".join([host, "InvalidateChange", str(i)]) ,
 "invalidatedBy"  :   "Version2"
 }
-			json.dump([json1, json2], f_out, indent=4, sort_keys=True)
-			f_out.write('''
-          </script>
-        </tr>
+json.dump([json1, json2], f_out, indent=4, sort_keys=True)
+f_out.write('''
+</script>
+</tr>
 ''')
-			
 
-	if mode == 'r' or mode == 'j':
-		f_out.write('''      </table>
-      <h3>Rows invalidated by %s</h3>
-      <table about="Version2">
+
+if mode == 'r' or mode == 'j':
+f_out.write('''      </table>
+<h3>Rows invalidated by %s</h3>
+<table about="Version2">
 '''%(v2.split('/')[-1]))
-	elif mode == 't':
-		f_out.write("\nRows invalidated by %s\n"%(v2.split('/')[-1]))
-	elif mode == 'u':
-		f_out.write("\n")
+elif mode == 't':
+f_out.write("\nRows invalidated by %s\n"%(v2.split('/')[-1]))
+elif mode == 'u':
+f_out.write("\n")
 
-	print "Removed Row"
-	workbook_name = ''
-	for i, j in sorted(row, key=lambda x: x[0]):
-	        if workbook_name != j:
-			workbook_name = j
-			v1_workbook = xlrd.open_workbook(workbook_name)
-			v1_sheet = v1_workbook.sheet_by_index(0)
-			v1_col = v1_sheet.col(0)
-			v1_col = [k.value for k in v1_col]
-		v1_index = v1_col.index(i)
-		if mode == 'r':
-			out = u'''        <tr resource="InvlidateChange%i" rev="vo:invalidatedBy" typeof="vo:InvalidateChange">
-          <td resource="Attribute%i" rev="vo:Undergoes" typeof="vo:Attribute">%i(%s)</td>
-          <td about="Attribute%i" property="http://www.w3.org/2000/01/rdf-schema#label">%s</td>
-          <span about="Version1" property="vo:hasAttribute" resource="Attribute%i"/>
-        </tr>
+print "Removed Row"
+workbook_name = ''
+for i, j in sorted(row, key=lambda x: x[0]):
+if workbook_name != j:
+workbook_name = j
+v1_workbook = xlrd.open_workbook(workbook_name)
+v1_sheet = v1_workbook.sheet_by_index(0)
+v1_col = v1_sheet.col(0)
+v1_col = [k.value for k in v1_col]
+v1_index = v1_col.index(i)
+if mode == 'r':
+out = u'''        <tr resource="InvlidateChange%i" rev="vo:invalidatedBy" typeof="vo:InvalidateChange">
+<td resource="Attribute%i" rev="vo:Undergoes" typeof="vo:Attribute">%i(%s)</td>
+<td about="Attribute%i" property="http://www.w3.org/2000/01/rdf-schema#label">%s</td>
+<span about="Version1" property="vo:hasAttribute" resource="Attribute%i"/>
+</tr>
 '''%(v1_index, v1_index, v1_index, workbook_name.split('/')[-1], v1_index, i, v1_index)
-		elif mode == 'j':
-			out = u'''        <tr id="InvlidateChange%i" about="InvlidateChange%i">
-          <td>%i(%s)</td>
-          <td>%s</td>
-          <script type="application/ld+json">
+elif mode == 'j':
+out = u'''        <tr id="InvlidateChange%i" about="InvlidateChange%i">
+<td>%i(%s)</td>
+<td>%s</td>
+<script type="application/ld+json">
 '''%(v1_index, v1_index, v1_index, workbook_name.split('/')[-1], i)
-		elif mode == 't':
-			out = u"%i(%s)\t%s\n"%(v1_index, workbook_name.split('/')[-1], i)
-		elif mode == 'u':
-			out = u"""<http://example.com/NG/Version1> vo:hasAttribute <http://example.com/NG/Version1/%s> .
+elif mode == 't':
+out = u"%i(%s)\t%s\n"%(v1_index, workbook_name.split('/')[-1], i)
+elif mode == 'u':
+out = u"""<http://example.com/NG/Version1> vo:hasAttribute <http://example.com/NG/Version1/%s> .
 <http://example.com/NG/Version1/%s> vo:undergoes <http://example.com/Changelog#InvalidateChange%s> .
 <http://example.com/Changelog#InvalidateChange%s> a vo:InvalidateChange ;
-	vo:invalidatedBy <http://example.com/NG/Version2> .
+vo:invalidatedBy <http://example.com/NG/Version2> .
 
 """%(i, i, i, i)
-		f_out.write(out.encode('utf8'))
-		if mode == 'j':
-			json1 = {
+f_out.write(out.encode('utf8'))
+if mode == 'j':
+json1 = {
 "@context":context,
 "@type":"vo:Attribute" ,
 "@id":"".join(["http://ngdb.com/v1/Attribute", str(i)]) ,
@@ -302,166 +302,166 @@ def write_removed(v2, col, row, f_out, mode):
 "undergoes":"".join([host, "InvalidateChange", str(i)]) ,
 "@reverse" :    { "hasAttribute" : "Version1" }
 }
-			json2 = {
+json2 = {
 "@context":context,
 "@type":"vo:InvalidateChange" ,
 "@id": "".join([host, "InvalidateChange", str(i)]) ,
 "invalidatedBy"  :   "Version2"
 }
-			json.dump([json1, json2], f_out, indent=4, sort_keys=True)
-			f_out.write('''
-          </script>
-        </tr>
+json.dump([json1, json2], f_out, indent=4, sort_keys=True)
+f_out.write('''
+</script>
+</tr>
 ''')
-	if mode == 'r' or mode == 'j':
-		f_out.write('''      </table>
+if mode == 'r' or mode == 'j':
+f_out.write('''      </table>
 
 ''')
-	elif mode == 't' or mode == 'u':
-		f_out.write("\n")
+elif mode == 't' or mode == 'u':
+f_out.write("\n")
 
 
 def write_added(v2, col, row, f_out, mode):
-	if mode == 'r' or mode == 'j':
-		f_out.write('''
-      <h3>Columns added by %s</h3>
-      <table about="Version1" rel="vo:absentFrom">
+if mode == 'r' or mode == 'j':
+f_out.write('''
+<h3>Columns added by %s</h3>
+<table about="Version1" rel="vo:absentFrom">
 '''%(v2.split('/')[-1]))
-	elif mode == 't':
-		f_out.write("\nColumns added by %s\n\n"%(v2.split('/')[-1]))
-	
-	print "Added Column"
-	for i in col:
-		print i#, v2_value
-		if mode == 'r':
-			f_out.write('''        <tr about="AddChange%i" typeof="vo:AddChange">
-          <td property="vo:resultsIn" resource="Attribute%i" typeof="vo:Attribute">%i</td>
-          <td about="Attribute%i" property="http://www.w3.org/2000/01/rdf-schema#label"></td>
-          <span about="Version2" property="vo:hasAttribute" resource="Attribute%i"/>
-        </tr>
+elif mode == 't':
+f_out.write("\nColumns added by %s\n\n"%(v2.split('/')[-1]))
+
+print "Added Column"
+for i in col:
+print i#, v2_value
+if mode == 'r':
+f_out.write('''        <tr about="AddChange%i" typeof="vo:AddChange">
+<td property="vo:resultsIn" resource="Attribute%i" typeof="vo:Attribute">%i</td>
+<td about="Attribute%i" property="http://www.w3.org/2000/01/rdf-schema#label"></td>
+<span about="Version2" property="vo:hasAttribute" resource="Attribute%i"/>
+</tr>
 '''%(i, i, i, i, i))
-		elif mode == 'j':
-			f_out.write('''        <tr id="AddChange%i" about="v2:Attribute%i">
-          <td>%i</td>
-          <td></td>
-          <script type="application/ld+json">
+elif mode == 'j':
+f_out.write('''        <tr id="AddChange%i" about="v2:Attribute%i">
+<td>%i</td>
+<td></td>
+<script type="application/ld+json">
 '''%(i, i, i))
-			json1 = {
+json1 = {
 "@context":context,
 "@type":"vo:AddChange" ,
 "@id": "".join([host, "AddChange", str(i)]) ,
 "resultsIn" :   "".join([ "http://ngdb.com/v2/Attribute", str(i)]),
 "@reverse"  :   { "absentFrom": "Version1" }
 }
-			json2 = {
+json2 = {
 "@context":context,
 "@type":"vo:Attribute" ,
 "@id":"".join(["http://ngdb.com/v2/Attribute", str(i)]) ,
 "label":"" ,
 "@reverse" :    { "hasAttribute" : "Version2" }
 }
-			json.dump([json1, json2], f_out, indent=4, sort_keys=True)
-			f_out.write('''
-          </script>
-        </tr>
+json.dump([json1, json2], f_out, indent=4, sort_keys=True)
+f_out.write('''
+</script>
+</tr>
 ''')
-		elif mode == 't':
-			f_out.write("%i\t\n"%(i))	
-		elif mode == 'u':
-			f_out.write("""<http://example.com/NG/Version1> vo:absentFrom <http://example.com/Changelog#AddChange%i> .
+elif mode == 't':
+f_out.write("%i\t\n"%(i))	
+elif mode == 'u':
+f_out.write("""<http://example.com/NG/Version1> vo:absentFrom <http://example.com/Changelog#AddChange%i> .
 <http://example.com/Changelog#AddChange%i> a vo:AddChange ;
-	vo:resultsIn <http://example.com/NG/Version2/Column%s> .
+vo:resultsIn <http://example.com/NG/Version2/Column%s> .
 <http://example.com/NG/Version2> vo:hasAttribute <http://example.com/NG/Version2/Column%s> .
 
 """%(i, i, i, i))
-	if mode == 'r' or mode == 'j':
-		f_out.write('''      </table>
-	      <h3>Rows added by %s</h3>
-	      <table about="Version1" rel="vo:absentFrom">
+if mode == 'r' or mode == 'j':
+f_out.write('''      </table>
+<h3>Rows added by %s</h3>
+<table about="Version1" rel="vo:absentFrom">
 '''%(v2.split('/')[-1]))
-	elif mode == 't':
-		f_out.write("\nRows added by %s\n\n"%(v2.split('/')[-1]))
-	elif mode == 'u':
-		f_out.write("\n")
-	
-	print "Added Row"
-	for i, j in row:#i is the id, j is the file
-	        if mode == 'r':	                #print i, v2_sheet.cell(i,0).value
-			out = u'''        <tr about="AddChange%i" typeof="vo:AddChange">
-          <td property="vo:resultsIn" resource="Attribute%i" typeof="vo:Attribute">%i</td>
-          <td about="Attribute%i" property="http://www.w3.org/2000/01/rdf-schema#label">%s</td>
-          <span about="Version2" property="vo:hasAttribute" resource="Attribute%i"/>
-        </tr>
+elif mode == 't':
+f_out.write("\nRows added by %s\n\n"%(v2.split('/')[-1]))
+elif mode == 'u':
+f_out.write("\n")
+
+print "Added Row"
+for i, j in row:#i is the id, j is the file
+if mode == 'r':	                #print i, v2_sheet.cell(i,0).value
+out = u'''        <tr about="AddChange%i" typeof="vo:AddChange">
+<td property="vo:resultsIn" resource="Attribute%i" typeof="vo:Attribute">%i</td>
+<td about="Attribute%i" property="http://www.w3.org/2000/01/rdf-schema#label">%s</td>
+<span about="Version2" property="vo:hasAttribute" resource="Attribute%i"/>
+</tr>
 '''%(i, i, i, i, j, i)
-		elif mode == 'j':
-			out = u'''        <tr id="AddChange%i" about="v2:Attribute%i">
-          <td>%i</td>
-          <td property="http://www.w3.org/2000/01/rdf-schema#label">%s</td>
-          <script type="application/ld+json">
+elif mode == 'j':
+out = u'''        <tr id="AddChange%i" about="v2:Attribute%i">
+<td>%i</td>
+<td property="http://www.w3.org/2000/01/rdf-schema#label">%s</td>
+<script type="application/ld+json">
 '''%(i, i, i, j)
-		elif mode == 't':
-			out = u"%i\t%s\n"%(i, j)
-		elif mode == 'u':
-			out = u"""<http://example.com/NG/Version1> vo:absentFrom <http://example.com/Changelog#AddChange%i> .
+elif mode == 't':
+out = u"%i\t%s\n"%(i, j)
+elif mode == 'u':
+out = u"""<http://example.com/NG/Version1> vo:absentFrom <http://example.com/Changelog#AddChange%i> .
 <http://example.com/Changelog#AddChange%i> a vo:AddChange ;
-	vo:resultsIn <http://example.com/NG/Version2/%s> .
+vo:resultsIn <http://example.com/NG/Version2/%s> .
 <http://example.com/NG/Version2> vo:hasAttribute <http://example.com/NG/Version2/%s> .
 
 """%(i, i, i, i)
-                f_out.write(out.encode('utf8'))
-		if mode == 'j':
-			json1 = {
+f_out.write(out.encode('utf8'))
+if mode == 'j':
+json1 = {
 "@context":context,
 "@type":"vo:AddChange" ,
 "@id": "".join([host, "AddChange", str(i)]) ,
 "resultsIn" :   "".join([ "http://ngdb.com/v2/Attribute", str(i)]),
 "@reverse"  :   { "absentFrom": "Version1" }
 }
-			json2 = {
+json2 = {
 "@context":context,
 "@type":"vo:Attribute" ,
 "@id":"".join(["http://ngdb.com/v2/Attribute", str(i)]) ,
 "label": j ,
 "@reverse" :    { "hasAttribute" : "Version2" }
 }
-			json.dump([json1, json2], f_out, indent=4, sort_keys=True)
-			f_out.write('''
-          </script>
-        </tr>
+json.dump([json1, json2], f_out, indent=4, sort_keys=True)
+f_out.write('''
+</script>
+</tr>
 ''')
 
-	if mode == 'r' or mode == 'j':
-		f_out.write('''      </table>
+if mode == 'r' or mode == 'j':
+f_out.write('''      </table>
 ''')
-	elif mode == 't' or mode == 'u':
-		f_out.write("\n")
-	
+elif mode == 't' or mode == 'u':
+f_out.write("\n")
+
 def write_header(f_out, mode):
-	if mode == 'j' or mode == 'r':
-		f_out.write('''<html>
-  <head>
-  </head>
-  <body vocab="http://www.w3.org/nw/prov#" prefix="vo: https://orion.tw.rpi.edu/~blee/VersionOntology.owl# v1: http://ngdb.com/v1/ v2: http://ngdb.com/v2/">
+if mode == 'j' or mode == 'r':
+f_out.write('''<html>
+<head>
+</head>
+<body vocab="http://www.w3.org/nw/prov#" prefix="vo: https://orion.tw.rpi.edu/~blee/VersionOntology.owl# v1: http://ngdb.com/v1/ v2: http://ngdb.com/v2/">
 ''')
-	if mode == 'j':
-		f_out.write('''  <script type="application/ld+json">
+if mode == 'j':
+f_out.write('''  <script type="application/ld+json">
 ''')
-		json1 = {
+json1 = {
 "@context":context,
 "@type":"vo:Version",
 "@id":"Version1",
 "label":"ngdbv1"
 }
-		json2 = {
+json2 = {
 "@context":context,
 "@type":"vo:Version",
 "@id":"Version2",
 "label":"DB_final-55-7262_2015_03_08.xlsx"
 }
-		json.dump([json1,json2], f_out, indent=4, sort_keys=True)
-		f_out.write("\n  </script>\n")
-	if mode == 'u':
-		f_out.write("""@prefix vo: <http://orion.tw.rpi.edu/~blee/VersionOntology.owl#> .
+json.dump([json1,json2], f_out, indent=4, sort_keys=True)
+f_out.write("\n  </script>\n")
+if mode == 'u':
+f_out.write("""@prefix vo: <http://orion.tw.rpi.edu/~blee/VersionOntology.owl#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -469,127 +469,1896 @@ def write_header(f_out, mode):
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://example.com/NG/Version1> a vo:Version ;
-        skos:prefLabel "ngdbv1" .
+skos:prefLabel "ngdbv1" .
 
 <http://example.com/NG/Version2> a vo:Version ;
-        skos:prefLabel "DB_final-55-7262_2015_03_08.xlsx" .
+skos:prefLabel "DB_final-55-7262_2015_03_08.xlsx" .
 
 """)
 
 def write_footer(f_out, mode):
-	if mode == 'r':
-		f_out.write('</body>\n</html>')
+if mode == 'r':
+f_out.write('</body>\n</html>')
 
 def get_indicator_map(excel_files):
-	indicator_map = {}
-	for excel_file in excel_files:
-		print 'Importing: ' + excel_file
-		file_workbook = xlrd.open_workbook(excel_file)
-		file_sheet = file_workbook.sheet_by_index(0)
-		indicators = file_sheet.col(0)
-		for i in range(4, file_sheet.nrows):
-			indicator_map[indicators[i].value] = excel_file
-	return indicator_map
+indicator_map = {}
+for excel_file in excel_files:
+print 'Importing: ' + excel_file
+file_workbook = xlrd.open_workbook(excel_file)
+file_sheet = file_workbook.sheet_by_index(0)
+indicators = file_sheet.col(0)
+for i in range(4, file_sheet.nrows):
+indicator_map[indicators[i].value] = excel_file
+return indicator_map
 
 def compare(v1s, v2, fn_out, mode):
-	indicator_map = get_indicator_map(v1s)
-	i_keys = indicator_map.keys()
-	v2_workbook = xlrd.open_workbook(v2)
-	f_out = open(fn_out, 'w')
+indicator_map = get_indicator_map(v1s)
+i_keys = indicator_map.keys()
+v2_workbook = xlrd.open_workbook(v2)
+f_out = open(fn_out, 'w')
 
-	v2_sheet = v2_workbook.sheet_by_index(0)
-	v2_keys = [i.value for i in v2_sheet.col(0)]
+v2_sheet = v2_workbook.sheet_by_index(0)
+v2_keys = [i.value for i in v2_sheet.col(0)]
 
-	converted = [index_convert(i) for i in range(0,54)]
-	new_col = [i for i in range(0, v2_sheet.ncols) if index_convert(i) == -1]
-	new_row = [(i, v2_sheet.cell(i,0).value) for i in range(3, v2_sheet.nrows) if v2_sheet.cell(i,0).value not in i_keys]
-	old_col = [i for i in range(0,194) if i not in converted]
-	old_row = [(i, indicator_map.get(i, None)) for i in i_keys if i not in v2_keys]
+converted = [index_convert(i) for i in range(0,54)]
+new_col = [i for i in range(0, v2_sheet.ncols) if index_convert(i) == -1]
+new_row = [(i, v2_sheet.cell(i,0).value) for i in range(3, v2_sheet.nrows) if v2_sheet.cell(i,0).value not in i_keys]
+old_col = [i for i in range(0,194) if i not in converted]
+old_row = [(i, indicator_map.get(i, None)) for i in i_keys if i not in v2_keys]
 
-	write_header(f_out, mode)
-	write_added(v2, new_col, new_row, f_out, mode)
-	write_removed(v2, old_col, old_row, f_out, mode)
+write_header(f_out, mode)
+write_added(v2, new_col, new_row, f_out, mode)
+write_removed(v2, old_col, old_row, f_out, mode)
 
-	if mode == 'r' or mode == 'j':
-		f_out.write('''
-      <h3>Change Log</h3>
+if mode == 'r' or mode == 'j':
+f_out.write('''
+<h3>Change Log</h3>
 ''')
-	elif mode == 't':
-		f_out.write("Change Log\n")
+elif mode == 't':
+f_out.write("Change Log\n")
 
-	workbook_name = ''
-	for i in range(3,v2_sheet.nrows):
-		v2_row = v2_sheet.row(i)
-		#workbook_name = v1_file
-		if v2_row[0].value in [j for i, j in new_row] or v2_row[0].value in [i for i, j in old_row]:
-			continue
-		if workbook_name == indicator_map.get(v2_row[0].value, None):
-			pass
-		else:
-			workbook_name = indicator_map.get(v2_row[0].value, None)
-			v1_workbook = xlrd.open_workbook(workbook_name)
-			v1_sheet = v1_workbook.sheet_by_index(0)
-			v1_col = v1_sheet.col(0)
-			v1_col = [j.value for j in v1_col]
-		#print v2_row[0].value
-		v1_index = v1_col.index(v2_row[0].value)
-		v1_row = v1_sheet.row(v1_index)
-		write_modify(v1_row, v2_row, workbook_name, f_out, mode)
-	
-	write_footer(f_out, mode)
-	f_out.close()
+workbook_name = ''
+for i in range(3,v2_sheet.nrows):
+v2_row = v2_sheet.row(i)
+#workbook_name = v1_file
+if v2_row[0].value in [j for i, j in new_row] or v2_row[0].value in [i for i, j in old_row]:
+continue
+if workbook_name == indicator_map.get(v2_row[0].value, None):
+pass
+else:
+workbook_name = indicator_map.get(v2_row[0].value, None)
+v1_workbook = xlrd.open_workbook(workbook_name)
+v1_sheet = v1_workbook.sheet_by_index(0)
+v1_col = v1_sheet.col(0)
+v1_col = [j.value for j in v1_col]
+#print v2_row[0].value
+v1_index = v1_col.index(v2_row[0].value)
+v1_row = v1_sheet.row(v1_index)
+write_modify(v1_row, v2_row, workbook_name, f_out, mode)
+
+write_footer(f_out, mode)
+f_out.close()
 
 if __name__ == "__main__":
-	if '-json' in sys.argv:
-		mode = 'j'
-		out_name = 'changelog_json.html'
-	elif '-rdfa' in sys.argv:
-		mode = 'r'
-		out_name = 'changelog_test.html'
-	elif '-txt' in sys.argv:
-		mode = 't'
-		out_name = 'changelog.txt'
-	elif '-ttl' in sys.argv:
-		mode = 'u'
-		out_name = 'changelog.ttl'
+if '-json' in sys.argv:
+mode = 'j'
+out_name = 'changelog_json.html'
+elif '-rdfa' in sys.argv:
+mode = 'r'
+out_name = 'changelog_test.html'
+elif '-txt' in sys.argv:
+mode = 't'
+out_name = 'changelog.txt'
+elif '-ttl' in sys.argv:
+mode = 'u'
+out_name = 'changelog.ttl'
 
-	v2_dir = join(separator, 'data', 'NGdata', 'v2')
-	v1_dir = join(separator, 'data', 'NGdata', 'v1')
-	
-	excel_files = glob.glob("/data/NGdata/v1/DB_HE_6733.xlsx") #join(v1_dir, '*.xlsx'))
-	
-	v1_file = join(v1_dir, 'America_906.xlsx')
-	v2_file = join(v2_dir, 'DB_final-55-7262_2015_03_08.xlsx')
+v2_dir = join(separator, 'data', 'NGdata', 'v2')
+v1_dir = join(separator, 'data', 'NGdata', 'v1')
 
-	compare(excel_files, v2_file, out_name, mode)
+excel_files = glob.glob("/data/NGdata/v1/DB_HE_6733.xlsx") #join(v1_dir, '*.xlsx'))
 
-\end{lstlisting}
+v1_file = join(v1_dir, 'America_906.xlsx')
+v2_file = join(v2_dir, 'DB_final-55-7262_2015_03_08.xlsx')
 
-\section{A Section Heading}
+compare(excel_files, v2_file, out_name, mode)
+\end{minted}
 
-This is how equations are numbered in an appendix:
-\begin{equation}
-x^2 + y^2 = z^2
-\end{equation}
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
+\chapter{NOBLE GAS CHANGE LOG GENERATOR VERSION 2 TO 3}
 
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-
-\chapter{THIS IS ANOTHER APPENDIX}
+\begin{minted}[linenos, frame=lines, baselinestretch=1.2, breaklines]{Python}
+from os.path import join, dirname, abspath, isfile
+from os import sep as separator
+import xlrd, sys, json
+import glob
+import re
 
 
+def index_convert(index1):
+return index1
 
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
+def test_alignment():
+for i in range(0, 54):
+print 'version2: {:5} version1: {:5}'.format(i, index_convert(i))
+
+def compare_print(mode, key, val1, val2, v1_file, v1_index = 0, v2_index = 0, changelog = None):
+if changelog:
+if mode == 'r':
+out = u'''        <tr  about="Change{}{}" typeof="vo:ModifyChange">
+<td align="right" rev="vo:Undergoes" resource="v2:Attribute{}{}v2" typeof="vo:Attribute">{:2}({})</td>
+<td property="vo:resultsIn" resource="v3:Attribute{}{}v3" typeof="vo:Attribute">{:2}</td>
+<td>{:>10}</td>
+<td>{:>10}</td>
+<span about="Version2" property="vo:hasAttribute" resource="v2:Attribute{}{}v2"></span>
+<span about="Version3" property="vo:hasAttribute" resource="v3:Attribute{}{}v3"></span>
+</tr>\n'''.format(key, v2_index, key, v1_index, v1_index, v1_file, key, v2_index, v2_index, val1, val2, key, v1_index, key, v2_index)
+elif mode == 'j':
+out = u'''        <tr  id="ModifyChange{}{}">
+<td align="right">{:2}</td>
+<td>{:2}</td>
+<td>{:>10}</td>
+<td>{:>10}</td>
+<script type="application/ld+json">\n'''.format(key, v2_index, v1_index, v2_index, val1, val2)
+elif mode == 't':
+out = u"{:2}\t{:2}\t{:>10}\t{:>10}\n".format(v1_index, v2_index, val1, val2)
+elif mode == 'u':
+out = u"""<http://example.com/NG/Version2> vo:hasAttribute <http://example.com/NG/Version2/%s> ;
+vo:hasAttribute <http://example.com/NG/Version2/Column%i> .
+<http://example.com/NG/Version2/%s> a vo:Attribute ;
+vo:undergoes <http://example.com/Changelog#ModifyChange%s%i> .
+<http://example.com/NG/Version2/Column%i> a vo:Attribute ;
+vo:undergoes <http://example.com/Changelog#ModifyChange%s%i> .
+<http://example.com/Changelog#ModifyChange%s%i> a vo:ModifyChange ;
+vo:resultsIn <http://example.com/NG/Version3/%s> ;
+vo:resultsIn <http://example.com/NG/Version3/Column%i> .
+<http://example.com/NG/Version3> vo:hasAttribute <http://example.com/NG/Version3/%s> ;
+vo:hasAttribute <http://example.com/NG/Version3/Column%i> .
+
+"""%(key, v1_index, key, key, v2_index, v1_index, key, v2_index, key, v2_index, key, v2_index, key, v2_index)
+changelog.write(out.encode('utf8'))
+if mode == 'j':
+json1 = {
+"@context":context,
+"@type":"vo:Attribute" ,
+"@id":"".join(["http://ngdb.com/v2/Attribute", key, str(v1_index)]) ,
+"label":key ,
+"undergoes":"".join([host, "ModifyChange", key, str(v2_index)]) ,
+"@reverse" :    { "hasAttribute" : "Version2" }
+}
+json2 = {
+"@context":context,
+"@type":"vo:ModifyChange",
+"@id":"".join([host, "ModifyChange", key, str(v2_index)]) ,
+"resultsIn":"".join(["http://ngdb.com/v3/Attribute", key, str(v2_index)])
+}
+json3 = {
+"@context":context,
+"@type":"vo:Attribute" ,
+"@id":"".join(["http://ngdb.com/v3/Attribute", key, str(v2_index)]) ,
+"label":key ,
+"@reverse" :    { "hasAttribute" : "Version3" }
+}
+json.dump([json1, json2, json3], changelog, indent=4, sort_keys=True)
+changelog.write('''
+</script>
+</tr>
+''')
+else:
+print '{:5}  version2: {:10} version3: {:10}'.format(key, val1, val2)
+
+labels = {}
+
+context = "https://orion.tw.rpi.edu/~blee/provdist/GCMD/VO.jsonld"
+host = "http://orion.tw.rpi.edu/~blee/provdist/NobleGas/changelog_json.html#"
+#test_alignment()
+
+
+#print v2_row[0].value
+#print indicator_map[v2_row[0].value]
+
+#v1_workbook = xlrd.open_workbook(v1_file)
+#v1_sheet = v1_workbook.sheet_by_index(0)
+#v1_row = v1_sheet.row(4)
+
+def write_modify(r1, r2, workbook, f_out, mode):
+if mode == 'r':
+out = u'''  <div about="Version2" rel="vo:hasAttribute">
+<div resource="v3:%s" typeof="vo:Attribute">
+<span style="font-weight:bold" property="http://www.w3.org/2000/01/rdf-schema#label">%s</span>
+<table rel="vo:Undergoes">
+'''%(r2[0].value, r2[0].value)
+elif mode == 'j':
+out = u'''
+<div about="v3:%s">
+<span style="font-weight:bold" property="http://www.w3.org/2000/01/rdf-schema#label">%s</span>
+<table>
+'''%(r2[0].value, r2[0].value)
+elif mode == 't':
+out = u"%s\n"%(r2[0].value)
+elif mode == 'u':
+out = u""
+
+if mode == 'r' or mode == 'j':
+out = out+'''        <tr>
+<th>Column v2</th>
+<th>Column v3</th>
+<th>Version 2</th>
+<th>Version 3</th>
+</tr>\n'''
+elif mode == 't':
+out = out+"Column v2\tColumn v3\tVersion 2\tVersion 3\n"
+f_out.write(out.encode('utf8'))
+#print '# Searching...'
+#print '# Comparing...'
+for i in range(0,54):
+if r2[i].value != r1[i].value:
+#compare_print(j, v1_row[index_convert(j)].value, v2_row[j].value)
+compare_print(mode, r2[0].value, r1[i].value, r2[i].value, workbook.split('/')[-1], i, i, f_out)
+if mode == 'r' or mode == 'j':
+f_out.write('  </table></div><br>\n')
+elif mode == 't' or mode == 'u':
+f_out.write("\n")
+
+def write_removed(v2, col, row, f_out, mode):
+if mode == 'r' or mode == 'j':
+f_out.write('''
+<h3>Columns invalidated by %s</h3>
+<table about="Version2">
+'''%(v2.split('/')[-1]))
+elif mode == 't':
+f_out.write("\nColumns invalidated by %s\n"%(v2.split('/')[-1]))
+
+print "Removed Column"
+for i in col:
+v1_value = labels.get(i, "")
+if mode == 'r':
+out = u'''        <tr resource="InvlidateChange%i" rev="vo:invalidatedBy" typeof="vo:InvalidateChange">
+<td resource="Attribute%i" rev="vo:Undergoes" typeof="vo:Attribute">%i</td>
+<td about="Attribute%i" property="http://www.w3.org/2000/01/rdf-schema#label">%s</td>
+<span about="Version1" property="vo:hasAttribute" resource="Attribute%i"/>
+</tr>
+'''%(i, i, i, i, v1_value, i)
+elif mode == 'j':
+out = u'''        <tr id="InvlidateChange%i" about="InvlidateChange%i">
+<td>%i</td>
+<td>%s</td>
+<script type="application/ld+json">
+'''%(i, i, i, v1_value)
+elif mode == 't':
+out = u"%i\t%s\n"%(i, v1_value)
+elif mode == 'u':
+out = u"""<http://example.com/NG/Version2> vo:hasAttribute <http://example.com/NG/Version2/Column%i> .
+<http://example.com/NG/Version2/Column%i> vo:undergoes <http://example.com/Changelog#InvalidateChange%i> .
+<http://example.com/Changelog#InvalidateChange%i> a vo:InvalidateChange ;
+vo:invalidatedBy <http://example.com/NG/Version3> .
+
+"""%(i, i, i, i)
+f_out.write(out.encode('utf8'))
+if mode == 'j':
+json1 = {
+"@context":context,
+"@type":"vo:Attribute" ,
+"@id":"".join(["http://ngdb.com/v2/Attribute", str(i)]) ,
+"label": v1_value,
+"undergoes":"".join([host, "InvalidateChange", str(i)]) ,
+"@reverse" :    { "hasAttribute" : "Version2" }
+}
+json2 = {
+"@context":context,
+"@type":"vo:InvalidateChange" ,
+"@id": "".join([host, "InvalidateChange", str(i)]) ,
+"invalidatedBy"  :   "Version3"
+}
+json.dump([json1, json2], f_out, indent=4, sort_keys=True)
+f_out.write('''
+</script>
+</tr>
+''')
+
+
+if mode == 'r' or mode == 'j':
+f_out.write('''      </table>
+<h3>Rows invalidated by %s</h3>
+<table about="Version2">
+'''%(v2.split('/')[-1]))
+elif mode == 't':
+f_out.write("\nRows invalidated by %s\n"%(v2.split('/')[-1]))
+elif mode == 'u':
+f_out.write("\n")
+
+print "Removed Row"
+for i, j in sorted(row):#i is row #, j is row id
+if mode == 'r':
+out = u'''        <tr resource="InvlidateChange%s" rev="vo:invalidatedBy" typeof="vo:InvalidateChange">
+<td resource="Attribute%s" rev="vo:Undergoes" typeof="vo:Attribute">%i</td>
+<td about="Attribute%s" property="http://www.w3.org/2000/01/rdf-schema#label">%s</td>
+<span about="Version2" property="vo:hasAttribute" resource="Attribute%s"/>
+</tr>
+'''%(j, j, i, j, j, j)
+elif mode == 'j':
+out = u'''        <tr id="InvlidateChange%s" about="InvlidateChange%s">
+<td>%i</td>
+<td>%s</td>
+<script type="application/ld+json">
+'''%(j, j, i,  j)
+elif mode == 't':
+out = u"%i\t%s\n"%(i, j)
+elif mode == 'u':
+out = u"""<http://example.com/NG/Version2> vo:hasAttribute <http://example.com/NG/Version2/%s> .
+<http://example.com/NG/Version2/%s> vo:undergoes <http://example.com/Changelog#InvalidateChange%s> .
+<http://example.com/Changelog#InvalidateChange%s> a vo:InvalidateChange ;
+vo:invalidatedBy <http://example.com/NG/Version2> .
+
+"""%(j, j, j, j)
+f_out.write(out.encode('utf8'))
+if mode == 'j':
+json1 = {
+"@context":context,
+"@type":"vo:Attribute" ,
+"@id":"".join(["http://ngdb.com/v2/Attribute", j]) ,
+"label": j,
+"undergoes":"".join([host, "InvalidateChange", j]) ,
+"@reverse" :    { "hasAttribute" : "Version2" }
+}
+json2 = {
+"@context":context,
+"@type":"vo:InvalidateChange" ,
+"@id": "".join([host, "InvalidateChange", j]) ,
+"invalidatedBy"  :   "Version3"
+}
+json.dump([json1, json2], f_out, indent=4, sort_keys=True)
+f_out.write('''
+</script>
+</tr>
+''')
+if mode == 'r' or mode == 'j':
+f_out.write('''      </table>
+
+''')
+elif mode == 't' or mode == 'u':
+f_out.write("\n")
+
+
+def write_added(v2, col, row, f_out, mode):
+if mode == 'r' or mode == 'j':
+f_out.write('''
+<h3>Columns added by %s</h3>
+<table about="Version2" rel="vo:absentFrom">
+'''%(v2.split('/')[-1]))
+elif mode == 't':
+f_out.write("\nColumns added by %s\n\n"%(v2.split('/')[-1]))
+
+print "Added Column"
+for i in col:
+print i#, v2_value
+if mode == 'r':
+f_out.write('''        <tr about="AddChange%i" typeof="vo:AddChange">
+<td property="vo:resultsIn" resource="Attribute%i" typeof="vo:Attribute">%i</td>
+<td about="Attribute%i" property="http://www.w3.org/2000/01/rdf-schema#label"></td>
+<span about="Version3" property="vo:hasAttribute" resource="Attribute%i"/>
+</tr>
+'''%(i, i, i, i, i))
+elif mode == 'j':
+f_out.write('''        <tr id="AddChange%i" about="v2:Attribute%i">
+<td>%i</td>
+<td></td>
+<script type="application/ld+json">
+'''%(i, i, i))
+json1 = {
+"@context":context,
+"@type":"vo:AddChange" ,
+"@id": "".join([host, "AddChange", str(i)]) ,
+"resultsIn" :   "".join([ "http://ngdb.com/v3/Attribute", str(i)]),
+"@reverse"  :   { "absentFrom": "Version2" }
+}
+json2 = {
+"@context":context,
+"@type":"vo:Attribute" ,
+"@id":"".join(["http://ngdb.com/v3/Attribute", str(i)]) ,
+"label":"" ,
+"@reverse" :    { "hasAttribute" : "Version3" }
+}
+json.dump([json1, json2], f_out, indent=4, sort_keys=True)
+f_out.write('''
+</script>
+</tr>
+''')
+elif mode == 't':
+f_out.write("%i\t\n"%(i))	
+elif mode == 'u':
+f_out.write("""<http://example.com/NG/Version2> vo:absentFrom <http://example.com/Changelog#AddChange%i> .
+<http://example.com/Changelog#AddChange%i> a vo:AddChange ;
+vo:resultsIn <http://example.com/NG/Version3/Column%s> .
+<http://example.com/NG/Version3> vo:hasAttribute <http://example.com/NG/Version3/Column%s> .
+
+"""%(i, i, i, i))
+if mode == 'r' or mode == 'j':
+f_out.write('''      </table>
+<h3>Rows added by %s</h3>
+<table about="Version2" rel="vo:absentFrom">
+'''%(v2.split('/')[-1]))
+elif mode == 't':
+f_out.write("\nRows added by %s\n\n"%(v2.split('/')[-1]))
+elif mode == 'u':
+f_out.write("\n")
+
+print "Added Row"
+for i, j in row:#i is the row #, j is the id
+if mode == 'r':	                #print i, v2_sheet.cell(i,0).value
+out = u'''        <tr about="AddChange%s" typeof="vo:AddChange">
+<td property="vo:resultsIn" resource="Attribute%s" typeof="vo:Attribute">%i</td>
+<td about="Attribute%s" property="http://www.w3.org/2000/01/rdf-schema#label">%s</td>
+<span about="Version3" property="vo:hasAttribute" resource="Attribute%s"/>
+</tr>
+'''%(j, j, i, j, j, j)
+elif mode == 'j':
+out = u'''        <tr id="AddChange%s" about="v3:Attribute%s">
+<td>%i</td>
+<td property="http://www.w3.org/2000/01/rdf-schema#label">%s</td>
+<script type="application/ld+json">
+'''%(j, j, i, j)
+elif mode == 't':
+out = u"%i\t%s\n"%(i, j)
+elif mode == 'u':
+out = u"""<http://example.com/NG/Version2> vo:absentFrom <http://example.com/Changelog#AddChange%s> .
+<http://example.com/Changelog#AddChange%s> a vo:AddChange ;
+vo:resultsIn <http://example.com/NG/Version3/%s> .
+<http://example.com/NG/Version3> vo:hasAttribute <http://example.com/NG/Version3/%s> .
+
+"""%(j, j, j, j)
+f_out.write(out.encode('utf8'))
+if mode == 'j':
+json1 = {
+"@context":context,
+"@type":"vo:AddChange" ,
+"@id": "".join([host, "AddChange", j]) ,
+"resultsIn" :   "".join([ "http://ngdb.com/v3/Attribute", j]),
+"@reverse"  :   { "absentFrom": "Version2" }
+}
+json2 = {
+"@context":context,
+"@type":"vo:Attribute" ,
+"@id":"".join(["http://ngdb.com/v3/Attribute", j]) ,
+"label": j ,
+"@reverse" :    { "hasAttribute" : "Version2" }
+}
+json.dump([json1, json2], f_out, indent=4, sort_keys=True)
+f_out.write('''
+</script>
+</tr>
+''')
+
+if mode == 'r' or mode == 'j':
+f_out.write('''      </table>
+''')
+elif mode == 't' or mode == 'u':
+f_out.write("\n")
+
+def write_header(f_out, mode):
+if mode == 'j' or mode == 'r':
+f_out.write('''<html>
+<head>
+</head>
+<body vocab="http://www.w3.org/nw/prov#" prefix="vo: https://orion.tw.rpi.edu/~blee/VersionOntology.owl# v2: http://ngdb.com/v2/ v3: http://ngdb.com/v3/">
+''')
+if mode == 'j':
+f_out.write('''  <script type="application/ld+json">
+''')
+json1 = {
+"@context":context,
+"@type":"vo:Version",
+"@id":"Version2",
+"label":"DB_final-55-7262_2015_03_08.xlsx"
+}
+json2 = {
+"@context":context,
+"@type":"vo:Version",
+"@id":"Version3",
+"label":"NG_DB_final_2017_07_01.xlsx"
+}
+json.dump([json1,json2], f_out, indent=4, sort_keys=True)
+f_out.write("\n  </script>\n")
+if mode == 'u':
+f_out.write("""@prefix vo: <http://orion.tw.rpi.edu/~blee/VersionOntology.owl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/NG/Version3> a vo:Version ;
+skos:prefLabel "NG_DB_final_2017_07_01.xlsx" .
+
+<http://example.com/NG/Version2> a vo:Version ;
+skos:prefLabel "DB_final-55-7262_2015_03_08.xlsx" .
+
+""")
+
+def write_footer(f_out, mode):
+if mode == 'r':
+f_out.write('</body>\n</html>')
+
+def get_indicator_map(excel_files):
+indicator_map = {}
+for excel_file in excel_files:
+print 'Importing: ' + excel_file
+file_workbook = xlrd.open_workbook(excel_file)
+file_sheet = file_workbook.sheet_by_index(0)
+indicators = file_sheet.col(0)
+for i in range(4, file_sheet.nrows):
+indicator_map[indicators[i].value] = excel_file
+return indicator_map
+
+def compare(v1s, v2, fn_out, mode):
+v1_workbook = xlrd.open_workbook(v1s)
+v1_sheet = v1_workbook.sheet_by_index(0)
+i_keys = {j.value:i for i,j in enumerate(v1_sheet.col(0)[3:],3)}
+
+v2_workbook = xlrd.open_workbook(v2)
+v2_sheet = v2_workbook.sheet_by_index(0)
+v2_keys = {j.value:i for i,j in enumerate(v2_sheet.col(0)[3:],3)}
+
+f_out = open(fn_out, 'w')
+
+new_col = [i for i in range(0, v2_sheet.ncols) if index_convert(i) == -1]
+new_row = [(v2_keys[i], i) for i in v2_keys.keys() if i not in i_keys.keys()]
+old_col = [i for i in range(0, v1_sheet.ncols) if index_convert(i) == -1]
+old_row = [(i_keys[i], i) for i in i_keys.keys() if i not in v2_keys.keys()]
+
+write_header(f_out, mode)
+write_added(v2, new_col, new_row, f_out, mode)
+write_removed(v2, old_col, old_row, f_out, mode)
+
+if mode == 'r' or mode == 'j':
+f_out.write('''
+<h3>Change Log</h3>
+''')
+elif mode == 't':
+f_out.write("Change Log\n")
+
+workbook_name = ''
+for i in range(3,v2_sheet.nrows):
+v2_row = v2_sheet.row(i)
+#workbook_name = v1_file
+if v2_row[0].value in [j for i, j in new_row] or v2_row[0].value in [j for i, j in old_row]:
+continue
+v1_row = v1_sheet.row(i_keys[v2_row[0].value])
+write_modify(v1_row, v2_row, workbook_name, f_out, mode)
+
+write_footer(f_out, mode)
+f_out.close()
+
+if __name__ == "__main__":
+if '-json' in sys.argv:
+mode = 'j'
+out_name = 'isotope2_3_json.html'
+elif '-rdfa' in sys.argv:
+mode = 'r'
+out_name = 'isotope2_3_rdfa.html'
+elif '-txt' in sys.argv:
+mode = 't'
+out_name = 'changelog2_3.txt'
+elif '-ttl' in sys.argv:
+mode = 'u'
+out_name = 'changelog2_3.ttl'
+
+v2_dir = join(separator, 'data', 'NGdata', 'v2')
+v3_dir = join(separator, 'data', 'NGdata', 'v3')
+
+v2_file = join(v2_dir, 'DB_final-55-7262_2015_03_08.xlsx')
+v3_file = join(v3_dir, 'NG_DB_final_2017_07_01.xlsx')
+
+compare(v2_file, v3_file, out_name, mode)
+\end{minted}
+
+\chapter{GLOBAL CHANGE MASTER DIRECTORY CHANGE LOG GENERATOR VERSION JUNE 12, 2012 TO VERSION 8.4.1}
+
+\begin{minted}[linenos, frame=lines, baselinestretch=1.2, breaklines]{Python}
+import glob, json, rdflib, re
+from rdflib import URIRef, Literal, Namespace
+from rdflib.namespace import RDF, SKOS
+
+def GCMDChangeLogGenerator(GCMDfile):
+GCMD = Namespace("http://gcmdservices.gsfc.nasa.gov/kms/concept/")
+
+#GCMDfile = ['GCMD8_3.rdf', 'GCMD8_4.rdf','GCMD8_4_1.rdf']
+numbers = [re.search('GCMD(.*).rdf', i).group(1).replace("_","") for i in GCMDfile]
+print numbers
+filename = 'ChangelogGCMD'+"_".join(numbers)+'.html'
+output = open(filename, 'w') #'/home/blee/provdist/GCMD/webGCMD83_84.html', 'w')
+#output = codecs.open('/home/blee/GCMD/GCMD8_3to8_4.html', mode='w', encoding='utf-8')
+
+g0 = rdflib.Graph()
+g0.parse(GCMDfile[0])
+g1 = rdflib.Graph()
+g1.parse(GCMDfile[1])
+
+ver = [re.search('GCMD(.*).rdf', i).group(1).replace("_",".") for i in GCMDfile]#['8.3', '8.4']
+print ver
+new = g1-g0
+old = g0-g1
+
+#Get the date for the change notes in the new changes made in version 2
+#This will help determine if some concepts were changed without being moved
+#Their change notes should have a date on the same day as the new additions.
+#This is probably a bad way of determining this.
+date = g1.value(new.value(predicate=RDF.type, object=SKOS.Concept), SKOS.changeNote).split()[0]
+context = "https://orion.tw.rpi.edu/~blee/provdist/GCMD/VO.jsonld"
+
+##################
+###   Header   ###
+##################
+
+output.write('''<html>
+<head>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body vocab="http://www.w3.org/nw/prov#" prefix="gcmd: http://gcmdservices.gsfc.nasa.gov/kms/concept/">
+<h2 property="http://purl.org/dc/terms/title">
+<span about="gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" property="http://www.w3.org/2000/01/rdf-schema#label">%s</span> to 
+<span about="gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" property="http://www.w3.org/2000/01/rdf-schema#label">%s</span>
+'''%(ver[0], GCMDfile[0], ver[1], GCMDfile[1]))
+
+output.write('''      <script type="application/ld+json">
+[
+{
+"@context" : "%s" ,
+"type"	:	"vo:Version" ,
+"id"	:	"gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" ,
+"label" :       "%s"
+},
+{
+"@context" : "%s",
+"type"  :       "vo:Version" ,
+"id"    :       "gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" ,
+"label" :       "%s"
+}
+]
+</script>
+</h2>
+'''%(context, ver[0], GCMDfile[0], context, ver[1], GCMDfile[1]))
+
+#################
+###   ADDED   ###
+#################
+
+output.write('''
+<h3>Concepts added to %s</h3>
+<table about="gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" class="table table-striped">
+<tr>
+<th>Link</th>
+<th>Concept</th>
+<th>Change Note</th>
+</tr>
+'''%(GCMDfile[1], ver[1]))
+
+c = 0
+
+for i in new.subjects(RDF.type, SKOS.Concept):
+changeNote = "<br>\n              ".join(g1.objects(i, SKOS.changeNote))
+output.write((u'''        <tr id="AddChange%i" about="%s?version=%s">
+<td>
+<a href="%s?version=%s">Link</a>
+</td>
+<td property="http://www.w3.org/2004/02/skos/core#prefLabel">%s</td>
+<td property="http://www.w3.org/2004/02/skos/core#changeNote">%s</td>
+'''%(c, str(i), ver[1], str(i), ver[1], g1.value(i, SKOS.prefLabel), changeNote)).encode('utf8'))
+output.write((u'''
+<script type="application/ld+json">
+[
+{
+"@context" : "%s" ,
+"type"	:	"vo:AddChange" ,
+"id"	:	"this:AddChange%i" ,
+"resultsIn" :	"gcmd:%s?version=%s" ,
+"@reverse"  :	{ "absentFrom": "gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" }
+},
+{
+"@context" : "%s" ,
+"type"	:	"vo:Attribute" ,
+"id"	:	"gcmd:%s?version=%s" ,
+"label" :	"%s" ,
+"@reverse" :	{ "hasAttribute" : "gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" }
+}
+]
+</script>
+</tr>
+'''%(context, c, i.split('/')[-1], ver[1], ver[0], context, i.split('/')[-1], ver[1], g1.value(i, SKOS.prefLabel), ver[1])).encode('utf8'))
+c += 1
+
+output.write('''      </table>
+
+''')
+
+#print date
+
+#################
+### REMOVED   ###
+#################
+
+output.write('''
+<h3>Concepts removed from %s</h3>
+<table about="gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" class="table table-striped">
+<tr>
+<th>Link</th>
+<th>Concept</th>
+</tr>
+'''%(GCMDfile[0], ver[0]))
+
+c = 0
+
+for i in old.subjects(RDF.type, SKOS.Concept):#Reverse relations due to ordering and structure
+output.write((u'''        <tr id="InvlidateChange%i" about="%s?version=%s">
+<td>
+<a href="%s?version=%s">Link</a>
+</td>
+<td property="http://www.w3.org/2004/02/skos/core#prefLabel">%s</td>
+'''%(c, str(i), ver[0], str(i), ver[0], g0.value(i, SKOS.prefLabel), )).encode('utf8'))
+output.write((u'''          <script type="application/ld+json">
+[
+{
+"@context" : "%s" ,
+"type"	:	"vo:Attribute" ,
+"id"	:	"gcmd:%s?version=%s" ,
+"label"	:	"%s" ,
+"undergoes" :	"this:InvalidateChange%i" ,
+"@reverse" :	{ "hasAttribute" : "gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" }
+},
+{
+"@context" : "%s" ,
+"type"	:	"vo:InvalidateChange" ,
+"id"	:	"this:InvalidateChange%i" ,
+"invalidatedBy"	:	"gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s"
+}
+]
+</script>
+</tr>
+'''%(context, i.split('/')[-1], ver[0], g0.value(i, SKOS.prefLabel), c, ver[0], context, c, ver[1])).encode('utf8'))
+c += 1
+output.write('''      </table>
+
+''')
+
+##################
+###   Modify   ###
+##################
+
+output.write('''
+<h3>Moved Concepts</h3>
+<table class="table table-striped">
+<tr>
+<th>Link v1</th>
+<th>Link v2</th>
+<th>Label</th>
+<th>Old Parent</th>
+<th>New Parent</th>
+</tr>\n
+''')
+
+c = 0
+
+for i in g1.subjects(RDF.type, SKOS.Concept):
+if (i, None, None) in g0:
+b0 = g0.value(i, SKOS.broader)
+b1 = g1.value(i, SKOS.broader)
+if b0 != b1:
+output.write((u'''        <tr id="MoveChange%i" about="%s?version=%s">
+<td><a href=%s?version=%s>Link</a></td>
+<td><a href=%s?version=%s>Link</a></td>
+<td property="http://www.w3.org/2004/02/skos/core#prefLabel">%s</td>
+<td about="%s?version=%s" property="http://www.w3.org/2004/02/skos/core#prefLabel">%s</td>
+<td about="%s?version=%s" property="http://www.w3.org/2004/02/skos/core#prefLabel">%s</td>
+'''%(c, str(i), ver[1],
+str(i), ver[0],
+str(i), ver[1],
+g1.value(i, SKOS.prefLabel),
+b0, ver[0], g0.value(b0, SKOS.prefLabel),
+b1, ver[1], g1.value(b1, SKOS.prefLabel))  ).encode('utf8'))
+
+output.write((u'''          <script  type="application/ld+json">
+[
+{
+"@context" : "%s" ,
+"type"	:	"vo:Attribute" ,
+"id"	:	"gcmd:%s?version=%s" ,
+"label"	:	"%s" ,
+"undergoes" :	"this:MoveChange%i" ,
+"@reverse" :	{ "hasAttribute" : "gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" }
+},
+{
+"@context" : "%s" ,
+"type"	:	"vo:MoveChange" ,
+"id"	:	"this:MoveChange%i" ,
+"resultsIn"	:	"gcmd:%s?version=%s"
+},
+{
+"@context" : "%s" ,
+"type"	:	"vo:Attribute" ,
+"id"	:	"gcmd:%s?version=%s" ,
+"label"	:	"%s" ,
+"@reverse" :	{ "hasAttribute" : "gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" }
+}
+]
+</script>
+</tr>
+'''%(context, i.split('/')[-1], ver[0], g0.value(i, SKOS.prefLabel), c, ver[0], 
+context, c, i.split('/')[-1], ver[1], 
+context, i.split('/')[-1], ver[1], g1.value(i, SKOS.prefLabel), ver[1])  ).encode('utf8'))
+c += 1
+
+output.write('''      </table>
+
+''')
+
+##################################
+###   NON-STRUCTURAL CHANGES   ###
+##################################
+
+output.write('''
+<h3>Non-Structural Changes</h3>
+<table class="table table-striped">
+<tr>
+<th>Link v1</th>
+<th>Link v2</th>
+<th>Label</th>
+<th>Change Notes</th>
+</tr>\n
+''')
+
+c = 0
+
+for i in g1.subjects(RDF.type, SKOS.Concept):
+if (i, None, None) in g0:
+b0 = g0.value(i, SKOS.broader)
+b1 = g1.value(i, SKOS.broader)
+if b0 == b1:
+new_note = False
+notes = []
+for note in g1.objects(i, SKOS.changeNote):
+note_date = note.split()[0]
+#print note_date
+if note_date == date:
+new_note = True
+notes.append(note)
+if new_note:
+output.write((u'''        <tr id="ModifyChange%i" about="%s?version=%s">
+<td><a href=%s?version=%s>Link</a></td>
+<td><a href=%s?version=%s>Link</a></td>
+<td property="http://www.w3.org/2004/02/skos/core#prefLabel">%s</td>
+<td property="http://www.w3.org/2004/02/skos/core#changeNote">%s</td>
+'''%(c, str(i), ver[1],
+str(i), ver[0],
+str(i), ver[1],
+g1.value(i, SKOS.prefLabel),
+"<br>\n              ".join(notes)
+)).encode('utf8'))
+output.write((u'''
+</tr>
+'''%()).encode('utf8'))
+c += 1
+
+output.write('''      </table>
+
+''')
+output.write("\t</body>\n</html>")
+output.close()
+
+if __name__ == "__main__":
+GCMDfiles = sorted(glob.glob("*.rdf"))
+for i in range(len(GCMDfiles)-1):
+print "Starting",GCMDfiles[i-1],"and",GCMDfiles[i] #It's done this way because GCMDJun1220012 sorts to the last item
+GCMDChangeLogGenerator([GCMDfiles[i-1],GCMDfiles[i]])
+\end{minted}
+
+\chapter{GLOBAL CHANGE MASTER DIRECTORY CHANGE LOG GENERATOR VERSION 8.4.1 TO 8.5}
+\begin{minted}[linenos, frame=lines, baselinestretch=1.2, breaklines]{Python}
+import glob, json, rdflib, re
+from rdflib import URIRef, Literal, Namespace
+from rdflib.namespace import RDF, SKOS
+
+def GCMDChangeLogGenerator(GCMDfile):
+GCMD = Namespace("http://gcmdservices.gsfc.nasa.gov/kms/concept/")
+GCMD8_5 = Namespace("https://gcmdservices.gsfc.nasa.gov/kms/concept/")
+
+#GCMDfile = ['GCMD8_3.rdf', 'GCMD8_4.rdf','GCMD8_4_1.rdf']
+numbers = [re.search('GCMD(.*).rdf', i).group(1).replace("_","") for i in GCMDfile]
+print numbers
+filename = 'ChangelogGCMD2'+"_".join(numbers)+'.html'
+output = open(filename, 'w') #'/home/blee/provdist/GCMD/webGCMD83_84.html', 'w')
+#output = codecs.open('/home/blee/GCMD/GCMD8_3to8_4.html', mode='w', encoding='utf-8')
+
+g0 = rdflib.Graph()
+g0.parse(GCMDfile[0])
+g1 = rdflib.Graph()
+g1.parse(GCMDfile[1])
+
+ver = [re.search('GCMD(.*).rdf', i).group(1).replace("_",".") for i in GCMDfile]#['8.3', '8.4']
+print ver
+new = rdflib.Graph()
+for s, p, o in g1.triples((None, RDF.type, SKOS.Concept)):
+if not (GCMD[s.split('/')[-1]], p, o) in g0:
+new.add((s, p, o))
+old = rdflib.Graph()
+for s, p, o in g0.triples((None, RDF.type, SKOS.Concept)):
+if not (GCMD8_5[s.split('/')[-1]], p, o) in g1:
+old.add((s, p, o))
+
+#Get the date for the change notes in the new changes made in version 2
+#This will help determine if some concepts were changed without being moved
+#Their change notes should have a date on the same day as the new additions.
+#This is probably a bad way of determining this.
+date = g1.value(new.value(predicate=RDF.type, object=SKOS.Concept), SKOS.changeNote).split()[0]
+context = "https://orion.tw.rpi.edu/~blee/provdist/GCMD/VO.jsonld"
+
+##################
+###   Header   ###
+##################
+
+output.write('''<html>
+<head>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body vocab="http://www.w3.org/nw/prov#" prefix="gcmd: http://gcmdservices.gsfc.nasa.gov/kms/concept/">
+<h2 property="http://purl.org/dc/terms/title">
+<span about="gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" property="http://www.w3.org/2000/01/rdf-schema#label">%s</span> to 
+<span about="gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" property="http://www.w3.org/2000/01/rdf-schema#label">%s</span>
+'''%(ver[0], GCMDfile[0], ver[1], GCMDfile[1]))
+
+output.write('''      <script type="application/ld+json">
+[
+{
+"@context" : "%s" ,
+"type"	:	"vo:Version" ,
+"id"	:	"gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" ,
+"label" :       "%s"
+},
+{
+"@context" : "%s",
+"type"  :       "vo:Version" ,
+"id"    :       "gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" ,
+"label" :       "%s"
+}
+]
+</script>
+</h2>
+'''%(context, ver[0], GCMDfile[0], context, ver[1], GCMDfile[1]))
+
+#################
+###   ADDED   ###
+#################
+
+output.write('''
+<h3>Concepts added to %s</h3>
+<table about="gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" class="table table-striped">
+<tr>
+<th>Link</th>
+<th>Concept</th>
+<th>Change Note</th>
+</tr>
+'''%(GCMDfile[1], ver[1]))
+
+c = 0
+
+for i in new.subjects(RDF.type, SKOS.Concept):
+changeNote = "<br>\n              ".join(g1.objects(i, SKOS.changeNote))
+output.write((u'''        <tr id="AddChange%i" about="%s?version=%s">
+<td>
+<a href="%s?version=%s">Link</a>
+</td>
+<td property="http://www.w3.org/2004/02/skos/core#prefLabel">%s</td>
+<td property="http://www.w3.org/2004/02/skos/core#changeNote">%s</td>
+'''%(c, str(i), ver[1], str(i), ver[1], g1.value(i, SKOS.prefLabel), changeNote)).encode('utf8'))
+output.write((u'''
+<script type="application/ld+json">
+[
+{
+"@context" : "%s" ,
+"type"	:	"vo:AddChange" ,
+"id"	:	"this:AddChange%i" ,
+"resultsIn" :	"gcmd:%s?version=%s" ,
+"@reverse"  :	{ "absentFrom": "gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" }
+},
+{
+"@context" : "%s" ,
+"type"	:	"vo:Attribute" ,
+"id"	:	"gcmd:%s?version=%s" ,
+"label" :	"%s" ,
+"@reverse" :	{ "hasAttribute" : "gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" }
+}
+]
+</script>
+</tr>
+'''%(context, c, i.split('/')[-1], ver[1], ver[0], context, i.split('/')[-1], ver[1], g1.value(i, SKOS.prefLabel), ver[1])).encode('utf8'))
+c += 1
+
+output.write('''      </table>
+
+''')
+
+#print date
+
+#################
+### REMOVED   ###
+#################
+
+output.write('''
+<h3>Concepts removed from %s</h3>
+<table about="gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" class="table table-striped">
+<tr>
+<th>Link</th>
+<th>Concept</th>
+</tr>
+'''%(GCMDfile[0], ver[0]))
+
+c = 0
+
+for i in old.subjects(RDF.type, SKOS.Concept):#Reverse relations due to ordering and structure
+output.write((u'''        <tr id="InvlidateChange%i" about="%s?version=%s">
+<td>
+<a href="%s?version=%s">Link</a>
+</td>
+<td property="http://www.w3.org/2004/02/skos/core#prefLabel">%s</td>
+'''%(c, str(i), ver[0], str(i), ver[0], g0.value(i, SKOS.prefLabel), )).encode('utf8'))
+output.write((u'''          <script type="application/ld+json">
+[
+{
+"@context" : "%s" ,
+"type"	:	"vo:Attribute" ,
+"id"	:	"gcmd:%s?version=%s" ,
+"label"	:	"%s" ,
+"undergoes" :	"this:InvalidateChange%i" ,
+"@reverse" :	{ "hasAttribute" : "gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" }
+},
+{
+"@context" : "%s" ,
+"type"	:	"vo:InvalidateChange" ,
+"id"	:	"this:InvalidateChange%i" ,
+"invalidatedBy"	:	"gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s"
+}
+]
+</script>
+</tr>
+'''%(context, i.split('/')[-1], ver[0], g0.value(i, SKOS.prefLabel), c, ver[0], context, c, ver[1])).encode('utf8'))
+c += 1
+output.write('''      </table>
+
+''')
+
+##################
+###   Modify   ###
+##################
+
+output.write('''
+<h3>Moved Concepts</h3>
+<table class="table table-striped">
+<tr>
+<th>Link v1</th>
+<th>Link v2</th>
+<th>Label</th>
+<th>Old Parent</th>
+<th>New Parent</th>
+</tr>\n
+''')
+
+c = 0
+
+for i in g1.subjects(RDF.type, SKOS.Concept):
+i_ = GCMD[i.split('/')[-1]]
+if (i_, None, None) in g0:
+b0 = g0.value(i_, SKOS.broader)
+b1 = g1.value(i, SKOS.broader)
+if b1 != None:
+b1_ = GCMD[b1.split('/')[-1]]
+if b0 != b1_:
+output.write((u'''        <tr id="MoveChange%i" about="%s?version=%s">
+<td><a href=%s?version=%s>Link</a></td>
+<td><a href=%s?version=%s>Link</a></td>
+<td property="http://www.w3.org/2004/02/skos/core#prefLabel">%s</td>
+<td about="%s?version=%s" property="http://www.w3.org/2004/02/skos/core#prefLabel">%s</td>
+<td about="%s?version=%s" property="http://www.w3.org/2004/02/skos/core#prefLabel">%s</td>
+'''%(c, str(i), ver[1],
+str(i), ver[0],
+str(i), ver[1],
+g1.value(i, SKOS.prefLabel),
+b0, ver[0], g0.value(b0, SKOS.prefLabel),
+b1, ver[1], g1.value(b1, SKOS.prefLabel))  ).encode('utf8'))
+
+output.write((u'''          <script  type="application/ld+json">
+[
+{
+"@context" : "%s" ,
+"type"	:	"vo:Attribute" ,
+"id"	:	"gcmd:%s?version=%s" ,
+"label"	:	"%s" ,
+"undergoes" :	"this:MoveChange%i" ,
+"@reverse" :	{ "hasAttribute" : "gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" }
+},
+{
+"@context" : "%s" ,
+"type"	:	"vo:MoveChange" ,
+"id"	:	"this:MoveChange%i" ,
+"resultsIn"	:	"gcmd:%s?version=%s"
+},
+{
+"@context" : "%s" ,
+"type"	:	"vo:Attribute" ,
+"id"	:	"gcmd:%s?version=%s" ,
+"label"	:	"%s" ,
+"@reverse" :	{ "hasAttribute" : "gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" }
+}
+]
+</script>
+</tr>
+'''%(context, i.split('/')[-1], ver[0], g0.value(i_, SKOS.prefLabel), c, ver[0], 
+context, c, i.split('/')[-1], ver[1], 
+context, i.split('/')[-1], ver[1], g1.value(i, SKOS.prefLabel), ver[1])  ).encode('utf8'))
+c += 1
+
+output.write('''      </table>
+
+''')
+
+output.write('''
+<h3>Modified Concepts</h3>
+<table class="table table-striped">
+<tr>
+<th>Link v1</th>
+<th>Link v2</th>
+<th>Label</th>
+</tr>\n
+''')
+
+c = 0
+
+
+##################################
+###   NON-STRUCTURAL CHANGES   ###
+##################################
+
+output.write('''
+<h3>Non-Structural Changes</h3>
+<table class="table table-striped">
+<tr>
+<th>Link v1</th>
+<th>Link v2</th>
+<th>Label</th>
+<th>Change Notes</th>
+</tr>\n
+''')
+
+c = 0
+
+for i in g1.subjects(RDF.type, SKOS.Concept):
+i_ = GCMD[i.split('/')[-1]]
+if (i_, None, None) in g0:
+b0 = g0.value(i_, SKOS.broader)
+b1 = g1.value(i, SKOS.broader)
+if b1 != None:
+b1_ = GCMD[b1.split('/')[-1]]
+if b0 == b1_ and i != i_:
+output.write((u'''        <tr id="NameChange%i" about="%s?version=%s">
+<td><a href=%s?version=%s>Link</a></td>
+<td><a href=%s?version=%s>Link</a></td>
+<td property="http://www.w3.org/2004/02/skos/core#prefLabel">%s</td>
+'''%(c, str(i), ver[1],
+str(i_), ver[0],
+str(i), ver[1],
+g1.value(i, SKOS.prefLabel)
+)))
+output.write((u'''          <script  type="application/ld+json">
+[
+{
+"@context" : "%s" ,
+"type"	:	"vo:Attribute" ,
+"id"	:	"%s?version=%s" ,
+"label"	:	"%s" ,
+"undergoes" :	"this:NameChange%i" ,
+"@reverse" :	{ "hasAttribute" : "gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" }
+},
+{
+"@context" : "%s" ,
+"type"	:	"vo:ModifyChange" ,
+"id"	:	"this:NameChange%i" ,
+"resultsIn"	:	"%s?version=%s"
+},
+{
+"@context" : "%s" ,
+"type"	:	"vo:Attribute" ,
+"id"	:	"%s?version=%s" ,
+"label"	:	"%s" ,
+"@reverse" :	{ "hasAttribute" : "gcmd:concept_scheme/sciencekeywords/?format=xml&version=%s" }
+}
+]
+</script>
+</tr>
+'''%(context, i_, ver[0], g0.value(i_, SKOS.prefLabel), c, ver[0], 
+context, c, i, ver[1], 
+context, i, ver[1], g1.value(i, SKOS.prefLabel), ver[1])  ).encode('utf8'))
+c += 1
+
+output.write('''      </table>
+
+''')
+
+for i in g1.subjects(RDF.type, SKOS.Concept):
+i_ = GCMD[i.split('/')[-1]]
+if (i_, None, None) in g0:
+b0 = g0.value(i_, SKOS.broader)
+b1 = g1.value(i, SKOS.broader)
+if b1 != None:
+b1_ = GCMD[b1.split('/')[-1]]
+if b0 == b1_:
+new_note = False
+notes = []
+for note in g1.objects(i, SKOS.changeNote):
+note_date = note.split()[0]
+#print note_date
+if note_date == date:
+new_note = True
+notes.append(note)
+if new_note:
+output.write((u'''        <tr id="ModifyChange%i" about="%s?version=%s">
+<td><a href=%s?version=%s>Link</a></td>
+<td><a href=%s?version=%s>Link</a></td>
+<td property="http://www.w3.org/2004/02/skos/core#prefLabel">%s</td>
+<td property="http://www.w3.org/2004/02/skos/core#changeNote">%s</td>
+'''%(c, str(i), ver[1],
+str(i), ver[0],
+str(i), ver[1],
+g1.value(i, SKOS.prefLabel),
+"<br>\n              ".join(notes)
+)).encode('utf8'))
+output.write((u'''
+</tr>
+'''%()).encode('utf8'))
+c += 1
+
+output.write('''      </table>
+
+''')
+output.write("\t</body>\n</html>")
+output.close()
+
+if __name__ == "__main__":
+GCMDfiles = sorted(glob.glob("*.rdf"))
+GCMDfiles = ["GCMD8_5.rdf", "GCMD8_4_1.rdf"]
+for i in range(len(GCMDfiles)-1):
+print "Starting",GCMDfiles[i-1],"and",GCMDfiles[i] #It's done this way because GCMDJun1220012 sorts to the last item
+GCMDChangeLogGenerator([GCMDfiles[i-1],GCMDfiles[i]])
+\end{minted}
+
+\chapter{TURTLE EXTRACTOR}
+\begin{minted}[linenos, frame=lines, baselinestretch=1.2, breaklines]{Python}
+from bs4 import BeautifulSoup
+import glob, rdflib, json, re
+
+def extracting(f, d):
+#f = 'ChangelogGCMD70_80.html'
+#d = 'Graph'+re.search('ChangelogGCMD(.*).html', f).group(1)+'.ttl'
+
+fp = open(f)
+soup = BeautifulSoup(fp, 'html5lib')
+fp.close()
+
+print 'extracting...'
+js = soup.find_all('script')
+items = [item for sublist in js for item in json.loads(sublist.text)]
+
+print 'loading...'
+g = rdflib.Graph()
+g.parse(data = json.dumps(items), format='json-ld')
+
+print 'writing...'
+g.serialize(destination=d, format='turtle')
+print 'written'
+
+if __name__ == "__main__":
+l = glob.glob('Changelog*.html')
+for i in l:
+d = 'Graph'+re.search('ChangelogGCMD(.*).html', i).group(1)+'.ttl'
+print "Extracting: "+i
+print "\tto", d
+extracting(i, d)
+\end{minted}
+
+\chapter{MARINE BIODIVERSITY VIRTUAL LABORATORY CLASSIFIER COMPARISON}
+\begin{minted}[linenos, frame=lines, baselinestretch=1.2, breaklines]{Python}
+import urllib
+
+class entry:
+query = None
+dist = None
+freq = None
+tax = None
+poss = None
+
+def __lt__(self, other):
+if self.query == other.query:
+return self.freq < other.freq
+else:
+return self.query < other.query
+
+def is_number(s):
+try:
+float(s)
+return True
+except ValueError:
+return False
+
+def file_parse(f_name):
+f = open(f_name, 'r')
+found = {}
+for i in mock:
+found[i] = [[],[],0]
+ambiguous = []
+fp = []
+fn_count = 0
+fn = []
+results = {}
+total = 0
+if f_name.split('_')[1] == 'spingo':
+if f_name == "silva_spingo":
+family[4] = 'Clostridiaceae_1'
+else:
+family[2] = 'Bacillaceae 1'
+family[4] = 'Clostridiaceae 1'
+for line in f:
+x = line.split('\t')
+entry_id = x[0].split('|')[0]
+results[entry_id] = entry()
+results[entry_id].query = x[0]
+results[entry_id].freq = int(results[entry_id].query.split('|')[-1].split(':')[1])
+results[entry_id].dist = float(x[1])
+results[entry_id].tax = x[2:]
+
+total += results[entry_id].freq
+
+if not is_number(results[entry_id].tax[-1]):
+results[entry_id].poss = results[entry_id].tax[-1].split(',')
+results[entry_id].tax = results[entry_id].tax[:-1]
+if results[entry_id].tax[-2] != 'AMBIGUOUS':
+print results[entry_id].tax[-2]
+
+clean_tax = [x for x in results[entry_id].tax if not is_number(x)]
+if len(clean_tax) < 7:
+clean_tax[0:0] = ['Pass', 'Pass', 'Pass', 'Pass']
+del clean_tax[5]
+results[entry_id].tax = clean_tax
+
+if clean_tax[4] == 'AMBIGUOUS':
+fn_count += 1
+ambiguous.append(entry_id)
+elif not clean_tax[4] in family:
+fp.append((entry_id, 'family'))
+elif clean_tax[5] == 'AMBIGUOUS':
+for i in range(len(family)):
+if clean_tax[4] == family[i]:
+found[mock[i]][0].append(entry_id)
+elif not clean_tax[5] in genus:
+fp.append((entry_id, 'genus'))
+elif clean_tax[6] == 'AMBIGUOUS':
+for i in range(len(genus)):
+if clean_tax[5] == genus[i]:
+found[mock[i]][1].append(entry_id)
+elif not ' '.join(clean_tax[6].split('_')) in mock:
+fp.append((entry_id, 'species'))
+else:
+found[' '.join(clean_tax[6].split('_'))][2] += 1
+
+elif f_name.split('_')[1] == 'gast':
+skip = False
+if f_name == "rdp_gast":
+family[2] = 'Bacillaceae 1'
+family[4] = 'Clostridiaceae 1'
+for line in f:
+if not skip:
+skip = True
+continue
+x = line.split('\t')
+entry_id = x[0].split('|')[0]
+results[entry_id] = entry()
+results[entry_id].query = x[0]
+results[entry_id].freq = int(results[entry_id].query.split('|')[-1].split(':')[1])
+results[entry_id].dist = float(x[2])
+results[entry_id].tax = x[1].split(';')
+
+total += results[entry_id].freq
+temp_tax = results[entry_id].tax
+
+if len(temp_tax) < 5:
+fn_count += 1
+ambiguous.append(entry_id)
+elif not temp_tax[4] in family:
+fp.append((entry_id, 'family'))
+elif len(temp_tax) < 6:
+for i in range(len(family)):
+if temp_tax[4] == family[i]:
+found[mock[i]][0].append(entry_id)
+elif not temp_tax[5] in genus:
+fp.append((entry_id, 'genus'))
+elif len(temp_tax) < 7:
+for i in range(len(genus)):
+if temp_tax[5] == genus[i]:
+found[mock[i]][1].append(entry_id)
+elif not ' '.join(results[entry_id].tax[5:7]) in mock:
+fp.append((entry_id, 'species'))
+else:
+found[' '.join(results[entry_id].tax[5:7])][2] += 1
+
+fp_file = open("fp_"+f_name+".txt", 'w')
+for fid, frank in fp:
+fp_file.write("\t".join([fid, str(results[fid].freq), frank, str(results[fid].tax)])+"\n")
+fp_file.close()
+
+for i in found.keys():
+if sum([len(found[i][0]), len(found[i][1]), found[i][2]]) == 0:
+fn.append(i)
+print fn
+ttl_output(f_name, fp, fn, found, results)
+total = len(results.keys())
+print "\t".join(["False Positives:", str(len(fp))])
+print "\t".join(["Ambiguous:", str(len(ambiguous))])
+print "\t".join(["Total:", str(len(results.keys()))])
+coverage = sum([len(found[i][0])+len(found[i][1])+found[i][2] for i in found.keys()])
+print "\t".join(["Coverage:", str(coverage)])
+print "\t".join(["Percentage:", str(float(coverage)/total*100)])
+for k in sorted(mock):
+print "\t".join([k+":", str(len(found[k][0])), str(len(found[k][1])), str(found[k][2])])
+
+return results
+
+def ttl_output(f_name, false_positive, false_negative, found, results):
+fp_file = open("fp_"+f_name+".ttl", 'w')
+fp_file.write("""@prefix vo: <http://orion.tw.rpi.edu/~blee/VersionOntology.owl#> .
+@prefix mbvl: <http://example.com/MBVL/> .
+@prefix next: <http://example.com/MBVL/%s> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.com/MBVL/db> a vo:Version .
+<http://example.com/MBVL/%s> a vo:Version .\n"""%(f_name, f_name))
+for i in range(len(false_positive)):
+fid, j = false_positive[i]
+clean_fid = urllib.quote(fid.split()[0])
+if results[fid].freq > 10:
+fp_file.write("""mbvl:db vo:absentFrom mbvl:AddChange%i .
+next:%s a vo:Attribute .
+mbvl:%s vo:hasAttribute next:%s .
+mbvl:AddChange%i a vo:AddChange ;
+vo:resultsIn next:%s .\n
+"""%(i, clean_fid, f_name, clean_fid, i, clean_fid))
+fp_file.close()
+
+def get_output(tax1, alg1, tax2, alg2):
+if alg1 == 'silva_spingo':
+t1 = [x for x in tax1 if not is_number(x)]
+del t1[5]
+elif alg1 == 'rdp_spingo':
+t1 = [x for x in tax1 if not is_number(x)]
+print t1
+del t1[1]
+t1[0:0] = ['Pass', 'Pass', 'Pass', 'Pass']
+else:
+t1 = tax1
+
+if alg2 == 'silva_spingo':
+t2 = [x for x in tax2 if not is_number(x)]
+del t2[5]
+elif alg2 == 'rdp_spingo':
+t2 = [x for x in tax2 if not is_number(x)]
+del t2[1]
+t2[0:0] = ['Pass', 'Pass', 'Pass', 'Pass']
+else:
+t2 = tax2
+
+if alg1.split('_')[1] != alg2.split('_')[1]:
+for j in range(7):
+if t1[j] == 'Pass':
+continue
+if j >= len(t2):
+if t1[j] != 'AMBIGUOUS':
+return "\t".join([ '---', rank[j], str(t1[j:])])
+elif j == 6:
+if t1[j] == 'AMBIGUOUS':
+return "\t".join(['+++', rank[j], str(t2[j:])])
+elif t1[j] != '_'.join(t2[5:7]):
+return "\t".join([ '>>>', rank[j], t1[j], str(tax2[5:])])
+elif t1[j] == 'AMBIGUOUS':
+return "\t".join([ '+++', rank[j], str(t2[j:])])
+elif t1[j] != t2[j]:
+return "\t".join([ '>>>', rank[j], str(t1[j]), str(t2[j:])])
+return None
+elif alg1.split('_')[1] == 'spingo':
+for j in range(7):
+if t1[j] == 'Pass' or t2[j] == 'Pass':
+continue
+if t1[j] == 'AMBIGUOUS':
+if t2[j] == 'AMBIGUOUS':
+return None
+else:
+return "\t".join(['+++', rank[j], str(t2[j:])])
+elif t2[j] == 'AMBIGUOUS':
+return "\t".join(['---', rank[j], str(t1[j:])])
+elif t1[j] != t2[j]:
+return "\t".join(['>>>', rank[j], str(t1[j]), str(t2[j])])
+return None
+elif alg1.split('_')[1] == 'gast':
+if len(t1) > len(t2):
+return "\t".join(['---', rank[len(t2)], str(t1[len(t2):])])
+elif len(t1) < len(t2):
+return "\t".join(['+++', rank[len(t1)], str(t2[len(t1):])])
+else:
+for j in range(len(t1)):
+if t1[j] != t2[j]:
+return "\t".join(['>>>', rank[j], str(t1[j]), str(t2[j])])
+return None
+else:
+return -1
+
+mock = ['Acinetobacter baumannii',
+'Actinomyces odontolyticus',
+'Bacillus cereus',
+'Bacteroides vulgatus',
+'Clostridium beijerinckii',
+'Deinococcus radiodurans',
+'Enterococcus faecalis',
+'Escherichia coli',
+'Helicobacter pylori',
+'Lactobacillus gasseri',
+'Listeria monocytogenes',
+'Neisseria meningitidis',
+'Porphyromonas gingivalis',
+'Propionibacterium acnes',
+'Pseudomonas aeruginosa',
+'Rhodobacter sphaeroides',
+'Staphylococcus aureus',
+'Staphylococcus epidermidis',
+'Streptococcus agalactiae',
+'Streptococcus mutans',
+'Streptococcus pneumoniae']
+
+genus = [x.split()[0] for x in mock]
+
+family = ['Moraxellaceae',
+'Actinomycetaceae',
+'Bacillaceae',
+'Bacteroidaceae',
+'Clostridiaceae',
+'Deinococcaceae',
+'Enterococcaceae',
+'Enterobacteriaceae',
+'Helicobacteraceae',
+'Lactobacillaceae',
+'Listeriaceae',
+'Neisseriaceae',
+'Porphyromonadaceae',
+'Propionibacteriaceae',
+'Pseudomonadaceae',
+'Rhodobacteraceae',
+'Staphylococcaceae',
+'Staphylococcaceae',
+'Streptococcaceae',
+'Streptococcaceae',
+'Streptococcaceae']
+
+rank = ['Kingdom', 'Phylum', 'Class', 'Order', 'Family', 'Genus', 'Species', 'Strain']
+
+if __name__ == "__main__":
+fList = ['silva_spingo', 'silva_gast', 'rdp_spingo', 'rdp_gast']
+#f1_name = fList[1]
+#f2_name = fList[3]
+#f1 = file_parse(f1_name)
+#f2 = file_parse(f2_name)
+
+for i in fList:
+f1 = file_parse(i)
+#out = file('silva_rdp_gast.txt', 'w')
+#for i in sorted(f1.keys()):
+#	x = get_output(f1[i].tax, f1_name, f2[i].tax, f2_name)
+#	if not x == None:
+#		out.write("\t".join([i,x])+"\n")
+#out.close()
+\end{minted}
+
+\chapter{COLD LAND PROCESS FIELD EXPERIMENT CHANGE LOG GENERATOR}
+\begin{minted}[linenos, frame=lines, baselinestretch=1.2, breaklines]{Python}
+from glob import glob
+from datetime import datetime
+import csv
+import dbfread
+import sys
+
+class Version:
+unique_id = None
+
+def __eq__(self, other):
+if isinstance(other, self.__class__):
+return self.unique_id == other.unique_id
+else:
+return self.unique_id == other
+
+class StratVer(Version):
+
+def __init__(self, headers, values):
+v = [i.strip() for i in csv.reader([values]).next()]
+self.data = {}
+self.load_strat(headers, v)
+self.unique_id = (self.data['PIT_NAME'], self.data['IOP'], int(self.data['TOP']), int(self.data['BOT']))		
+
+def load_strat(self, headers, v):
+for i in range(len(headers)):
+if i == 2:
+self.data[headers[i]] = datetime.strptime(v[i], "%Y-%m-%d").date()
+elif i > 2 and i < 14:
+if '.' in v[i]:
+self.data[headers[i]] = float(v[i])
+else:
+self.data[headers[i]] = int(v[i])
+else:
+self.data[headers[i]] = v[i]
+
+class SummVer(Version):
+
+def __init__(self, headers, values):
+v = [i.strip() for i in csv.reader([values]).next()]
+self.data = {}
+self.load_summ(headers, v)
+self.unique_id = (self.data['PIT'], self.data['IOP'])
+
+def load_summ(self, headers, v):
+for i in range(len(headers)):
+if i == 3:
+try:
+self.data[headers[i]] = datetime.strptime(v[i], "%Y-%m-%d").date()
+except ValueError:
+self.data[headers[i]] = None
+elif (i > 3 and i < 7) or (i > 8 and i < 11) or (i > 11 and i < 34):
+try:
+self.data[headers[i]] = int(v[i])
+except ValueError:
+pass
+try:
+self.data[headers[i]] = float(v[i])
+except ValueError:
+self.data[headers[i]] = v[i]
+else:
+self.data[headers[i]] = v[i]
+
+def helper_factory( section, mode, arg1=None):
+if mode == "strat":
+if section == "names":
+return ("/data/ice/shape_files/pit_iop_v2_strat.dbf", "strat")
+elif section == "key":
+return "Key = (PIT, IOP, TOP, BOT)\n\n"
+elif section == "mapper":
+return strat_col_map
+elif section == "table_ids":
+return [(r['PIT'], r['IOP'], r['TOP'], r['BOT']) for r in arg1]
+elif mode == "summary":
+if section == "names":
+return ("/data/ice/shape_files/pit_iop_v2_summary.dbf", "summary")
+elif section == "key":
+return "Key = (PIT, IOP)\n\n"
+elif section == "mapper":
+return summ_col_map
+elif section == "table_ids":
+return [(r['PIT'], r['IOP']) for r in arg1]
+
+def strat_col_map(index, mode):
+if mode == "ascii":
+if index == "DATE_":
+return "DATE"
+elif index == "PIT":
+return "PIT_NAME"
+elif mode == "shape":
+if index == "DATE":
+return "DATE_"
+elif index == "PIT_NAME":
+return "PIT"
+return index
+
+def summ_col_map(index, mode):
+if mode == "ascii" and index == "DATE_":
+return "DATE"
+elif mode == "shape" and index == "DATE":
+return "DATE_"
+return index
+
+def ice_import(category):
+if category == "strat":
+fn = glob("/data/ice/ascii/*strat.csv")
+elif category == "summary":
+fn = glob("/data/ice/ascii/*summary.csv")
+
+entries = {}
+for i in fn:
+f = open(i)
+ll = f.readlines()
+headers = [c.strip() for c in csv.reader([ll[0]]).next()]
+for j in ll[2:]:
+if category == "strat":
+sv = StratVer(headers, j)
+elif category == "summary":
+sv = SummVer(headers, j)
+entries[sv.unique_id] = sv
+f.close()
+return headers, entries
+
+def generate_logs(table_name, text_name, f):
+table = dbfread.DBF(table_name)
+table_ids = helper_factory("table_ids", text_name, table)
+
+headers, text_entries = ice_import(text_name)
+
+f.write("Shape Entries not in Ascii Files\n")
+for i in table_ids:
+if i not in text_entries.keys():
+f.write(str(i)+"\n")
+f.write("\n")
+
+f.write("Shape Columns not in Ascii Files\n")
+for i in table.field_names:
+if i not in [column_map(j, "shape") for j in headers]:
+f.write(i+"\n")
+f.write("\n")
+
+f.write("Ascii Entries not in Shape Files\n")
+for i in sorted(text_entries.keys()):
+if i not in table_ids:
+f.write(str(i)+"\n")
+f.write("\n")
+
+f.write("Ascii Columns not in Shape Files\n")
+for i in headers:
+if i not in [column_map(j, "ascii") for j in table.field_names]:
+f.write(i+"\n")
+f.write("\n")
+
+c = 0
+f.write("Modified Entries\n")
+for r in table:
+if text_name == "strat":
+i = (r['PIT'], r['IOP'], r['TOP'], r['BOT'])
+elif text_name == "summary":
+i = (r['PIT'], r['IOP'])
+
+if i in text_entries.keys():
+v = text_entries[i]
+start = True
+for j in table.field_names:
+if column_map(j, "ascii") not in v.data.keys():
+pass
+elif r[j] == 'NoData' and v.data[column_map(j, "ascii")] == '-999':
+pass
+elif r[j] != v.data[column_map(j, "ascii")]:
+if start:
+f.write("%s\n"%(str(v.unique_id)))
+f.write("Column|\tShape|\tAscii\n")
+start = False
+f.write("%s|\t%s|\t%s\n"%(j, r[j], v.data[column_map(j, "ascii")]))
+#print v.unique_id, j, r[j], v.data[attribute_map(j)]
+c += 1
+if not start:
+f.write("\n")
+
+if __name__ == "__main__":
+if "-strat" in sys.argv:
+table_name, text_name = helper_factory("names", "strat")
+elif "-summ" in sys.argv:
+table_name, text_name = helper_factory("names", "summary")
+
+change_log = "changelog_"+text_name+".txt"
+f = open(change_log, 'w')
+f.write("Change Log %s to ascii files\n"%(table_name.split('/')[-1]))
+f.write(helper_factory("key", text_name))
+
+column_map = helper_factory("mapper", text_name)
+generate_logs(table_name, text_name, f)
+f.close()
+\end{minted}
+
+\section{Versions as a Class}
+
+In the CLPX data, versions were encapsulated into individual classes so that computations between versions could be standardized and automated.
+The code could handle ingesting a variety of different formats of data while keeping the core comparison functions independent of individualized fields.
+
+\chapter{EARTH OBSERVING LABORATORY ANALYSER}
+\begin{minted}[linenos, frame=lines, baselinestretch=1.2, breaklines]{Python}
+import csv
+from datetime import datetime
+
+class dataset:
+def __init__(self, d_id, d_title):
+self.versions = {}
+self.num = int(d_id)
+self.title = d_title
+
+def add_file(self, v_num, v_pub, v_crt, v_mod, f_name, f_crt, f_rev, f_notes):
+if v_num not in self.versions:
+self.versions[v_num] = eol_ver(v_num, v_pub, v_crt, v_mod)
+self.versions[v_num].add_file(f_name, f_crt, f_rev, f_notes)
+
+def __repr__(self):
+out = ["%i: %s"%(self.num, self.title)]
+for i in sorted(self.versions.keys()):
+out.append(self.versions[i].string(4))
+return "\n".join(out)
+
+class eol_ver:
+def __init__(self, v_num, t1, t2, t3):
+self.num = v_num
+self.files = []
+self.v_pub = datetime.strptime(t1, "%Y-%m-%d %H:%M:%S")
+self.v_crt = datetime.strptime(t2, "%Y-%m-%d %H:%M:%S")
+self.v_mod = datetime.strptime(t3, "%Y-%m-%d %H:%M:%S")
+
+def add_file(self, f_name, t1, t2, notes):
+new_f = eol_file(f_name, t1, t2, notes)
+self.files.append(new_f)
+
+def string(self, indent):
+ind = ' '*indent
+out = [ind+"%s: %s    %s    %s"%(self.num, str(self.v_pub), str(self.v_crt), str(self.v_mod))]
+for i in self.files:
+out.append(i.string(indent+4))
+return "\n".join(out)
+
+def __repr__(self):
+out = ["%s: %s    %s    %s"%(self.num, str(self.v_pub), str(self.v_crt), str(self.v_mod))]
+for i in self.files:
+out.append("    "+i.__repr__())
+return "\n".join(out)
+
+class eol_file:
+def __init__(self, f_name, t1, t2, notes):
+self.name = f_name
+self.f_create = datetime.strptime(t1, "%Y-%m-%d %H:%M:%S")
+self.f_revise = datetime.strptime(t2, "%Y-%m-%d %H:%M:%S")
+self.f_notes  = notes
+
+def string(self, indent):
+out = ' '*indent
+return out+self.name
+
+def __repr__(self):
+return self.name
+
+def import_eol(fname):
+f = open(fname)
+f_reader = csv.reader(f, delimiter='|')
+f_reader.next()
+header = [i.strip() for i in f_reader.next()[1:-1]]
+f_reader.next()
+
+datasets = {}
+for i in f_reader:
+row = [j.strip() for j in i[1:-1]]
+if len(row) < 10:
+continue
+if int(row[0]) not in datasets:
+datasets[int(row[0])] = dataset(int(row[0]), row[1])
+
+datasets[int(row[0])].add_file(row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9])
+return datasets
+
+if __name__ == "__main__":
+filedir  = "/data/EOL/"
+#filename = "dataset_files_version_metadata.txt"
+filename = "EOL_dataset_version_metadata.txt"
+
+datasets = import_eol(filedir+filename)
+print len(datasets.keys())
+
+num_ver = {}
+for i in datasets.keys():
+how_many_versions = len(datasets[i].versions.keys())
+if how_many_versions not in num_ver:
+num_ver[how_many_versions] = 1
+else:
+num_ver[how_many_versions] += 1
+for i in sorted(num_ver.keys()):
+print i, num_ver[i]
+\end{minted}

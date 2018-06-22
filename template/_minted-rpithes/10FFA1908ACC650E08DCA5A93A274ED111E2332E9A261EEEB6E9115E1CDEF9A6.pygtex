@@ -1,0 +1,300 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{import} \PYG{n+nn}{urllib}
+
+\PYG{k}{class} \PYG{n+nc}{entry}\PYG{p}{:}
+\PYG{n}{query} \PYG{o}{=} \PYG{n+nb+bp}{None}
+\PYG{n}{dist} \PYG{o}{=} \PYG{n+nb+bp}{None}
+\PYG{n}{freq} \PYG{o}{=} \PYG{n+nb+bp}{None}
+\PYG{n}{tax} \PYG{o}{=} \PYG{n+nb+bp}{None}
+\PYG{n}{poss} \PYG{o}{=} \PYG{n+nb+bp}{None}
+
+\PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}lt\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{other}\PYG{p}{):}
+\PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{query} \PYG{o}{==} \PYG{n}{other}\PYG{o}{.}\PYG{n}{query}\PYG{p}{:}
+\PYG{k}{return} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{freq} \PYG{o}{\PYGZlt{}} \PYG{n}{other}\PYG{o}{.}\PYG{n}{freq}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{k}{return} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{query} \PYG{o}{\PYGZlt{}} \PYG{n}{other}\PYG{o}{.}\PYG{n}{query}
+
+\PYG{k}{def} \PYG{n+nf}{is\PYGZus{}number}\PYG{p}{(}\PYG{n}{s}\PYG{p}{):}
+\PYG{k}{try}\PYG{p}{:}
+\PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{s}\PYG{p}{)}
+\PYG{k}{return} \PYG{n+nb+bp}{True}
+\PYG{k}{except} \PYG{n+ne}{ValueError}\PYG{p}{:}
+\PYG{k}{return} \PYG{n+nb+bp}{False}
+
+\PYG{k}{def} \PYG{n+nf}{file\PYGZus{}parse}\PYG{p}{(}\PYG{n}{f\PYGZus{}name}\PYG{p}{):}
+\PYG{n}{f} \PYG{o}{=} \PYG{n+nb}{open}\PYG{p}{(}\PYG{n}{f\PYGZus{}name}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}r\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{found} \PYG{o}{=} \PYG{p}{\PYGZob{}\PYGZcb{}}
+\PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n}{mock}\PYG{p}{:}
+\PYG{n}{found}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{=} \PYG{p}{[[],[],}\PYG{l+m+mi}{0}\PYG{p}{]}
+\PYG{n}{ambiguous} \PYG{o}{=} \PYG{p}{[]}
+\PYG{n}{fp} \PYG{o}{=} \PYG{p}{[]}
+\PYG{n}{fn\PYGZus{}count} \PYG{o}{=} \PYG{l+m+mi}{0}
+\PYG{n}{fn} \PYG{o}{=} \PYG{p}{[]}
+\PYG{n}{results} \PYG{o}{=} \PYG{p}{\PYGZob{}\PYGZcb{}}
+\PYG{n}{total} \PYG{o}{=} \PYG{l+m+mi}{0}
+\PYG{k}{if} \PYG{n}{f\PYGZus{}name}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZus{}\PYGZsq{}}\PYG{p}{)[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}spingo\PYGZsq{}}\PYG{p}{:}
+\PYG{k}{if} \PYG{n}{f\PYGZus{}name} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}silva\PYGZus{}spingo\PYGZdq{}}\PYG{p}{:}
+\PYG{n}{family}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{]} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}Clostridiaceae\PYGZus{}1\PYGZsq{}}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{n}{family}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}Bacillaceae 1\PYGZsq{}}
+\PYG{n}{family}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{]} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}Clostridiaceae 1\PYGZsq{}}
+\PYG{k}{for} \PYG{n}{line} \PYG{o+ow}{in} \PYG{n}{f}\PYG{p}{:}
+\PYG{n}{x} \PYG{o}{=} \PYG{n}{line}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{entry\PYGZus{}id} \PYG{o}{=} \PYG{n}{x}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}|\PYGZsq{}}\PYG{p}{)[}\PYG{l+m+mi}{0}\PYG{p}{]}
+\PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]} \PYG{o}{=} \PYG{n}{entry}\PYG{p}{()}
+\PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{query} \PYG{o}{=} \PYG{n}{x}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+\PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{freq} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{query}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}|\PYGZsq{}}\PYG{p}{)[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}:\PYGZsq{}}\PYG{p}{)[}\PYG{l+m+mi}{1}\PYG{p}{])}
+\PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{dist} \PYG{o}{=} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{x}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{])}
+\PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{tax} \PYG{o}{=} \PYG{n}{x}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{:]}
+
+\PYG{n}{total} \PYG{o}{+=} \PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{freq}
+
+\PYG{k}{if} \PYG{o+ow}{not} \PYG{n}{is\PYGZus{}number}\PYG{p}{(}\PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{tax}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]):}
+\PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{poss} \PYG{o}{=} \PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{tax}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{},\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{tax} \PYG{o}{=} \PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{tax}\PYG{p}{[:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}
+\PYG{k}{if} \PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{tax}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{2}\PYG{p}{]} \PYG{o}{!=} \PYG{l+s+s1}{\PYGZsq{}AMBIGUOUS\PYGZsq{}}\PYG{p}{:}
+\PYG{k}{print} \PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{tax}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{2}\PYG{p}{]}
+
+\PYG{n}{clean\PYGZus{}tax} \PYG{o}{=} \PYG{p}{[}\PYG{n}{x} \PYG{k}{for} \PYG{n}{x} \PYG{o+ow}{in} \PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{tax} \PYG{k}{if} \PYG{o+ow}{not} \PYG{n}{is\PYGZus{}number}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)]}
+\PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{clean\PYGZus{}tax}\PYG{p}{)} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{7}\PYG{p}{:}
+\PYG{n}{clean\PYGZus{}tax}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{:}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}Pass\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Pass\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Pass\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Pass\PYGZsq{}}\PYG{p}{]}
+\PYG{k}{del} \PYG{n}{clean\PYGZus{}tax}\PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{]}
+\PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{tax} \PYG{o}{=} \PYG{n}{clean\PYGZus{}tax}
+
+\PYG{k}{if} \PYG{n}{clean\PYGZus{}tax}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}AMBIGUOUS\PYGZsq{}}\PYG{p}{:}
+\PYG{n}{fn\PYGZus{}count} \PYG{o}{+=} \PYG{l+m+mi}{1}
+\PYG{n}{ambiguous}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{entry\PYGZus{}id}\PYG{p}{)}
+\PYG{k}{elif} \PYG{o+ow}{not} \PYG{n}{clean\PYGZus{}tax}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{]} \PYG{o+ow}{in} \PYG{n}{family}\PYG{p}{:}
+\PYG{n}{fp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{((}\PYG{n}{entry\PYGZus{}id}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}family\PYGZsq{}}\PYG{p}{))}
+\PYG{k}{elif} \PYG{n}{clean\PYGZus{}tax}\PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}AMBIGUOUS\PYGZsq{}}\PYG{p}{:}
+\PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{family}\PYG{p}{)):}
+\PYG{k}{if} \PYG{n}{clean\PYGZus{}tax}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{]} \PYG{o}{==} \PYG{n}{family}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]:}
+\PYG{n}{found}\PYG{p}{[}\PYG{n}{mock}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]][}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{entry\PYGZus{}id}\PYG{p}{)}
+\PYG{k}{elif} \PYG{o+ow}{not} \PYG{n}{clean\PYGZus{}tax}\PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{]} \PYG{o+ow}{in} \PYG{n}{genus}\PYG{p}{:}
+\PYG{n}{fp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{((}\PYG{n}{entry\PYGZus{}id}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}genus\PYGZsq{}}\PYG{p}{))}
+\PYG{k}{elif} \PYG{n}{clean\PYGZus{}tax}\PYG{p}{[}\PYG{l+m+mi}{6}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}AMBIGUOUS\PYGZsq{}}\PYG{p}{:}
+\PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{genus}\PYG{p}{)):}
+\PYG{k}{if} \PYG{n}{clean\PYGZus{}tax}\PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{]} \PYG{o}{==} \PYG{n}{genus}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]:}
+\PYG{n}{found}\PYG{p}{[}\PYG{n}{mock}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]][}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{entry\PYGZus{}id}\PYG{p}{)}
+\PYG{k}{elif} \PYG{o+ow}{not} \PYG{l+s+s1}{\PYGZsq{} \PYGZsq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{clean\PYGZus{}tax}\PYG{p}{[}\PYG{l+m+mi}{6}\PYG{p}{]}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZus{}\PYGZsq{}}\PYG{p}{))} \PYG{o+ow}{in} \PYG{n}{mock}\PYG{p}{:}
+\PYG{n}{fp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{((}\PYG{n}{entry\PYGZus{}id}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}species\PYGZsq{}}\PYG{p}{))}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{n}{found}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{} \PYGZsq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{clean\PYGZus{}tax}\PYG{p}{[}\PYG{l+m+mi}{6}\PYG{p}{]}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZus{}\PYGZsq{}}\PYG{p}{))][}\PYG{l+m+mi}{2}\PYG{p}{]} \PYG{o}{+=} \PYG{l+m+mi}{1}
+
+\PYG{k}{elif} \PYG{n}{f\PYGZus{}name}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZus{}\PYGZsq{}}\PYG{p}{)[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}gast\PYGZsq{}}\PYG{p}{:}
+\PYG{n}{skip} \PYG{o}{=} \PYG{n+nb+bp}{False}
+\PYG{k}{if} \PYG{n}{f\PYGZus{}name} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}rdp\PYGZus{}gast\PYGZdq{}}\PYG{p}{:}
+\PYG{n}{family}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}Bacillaceae 1\PYGZsq{}}
+\PYG{n}{family}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{]} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}Clostridiaceae 1\PYGZsq{}}
+\PYG{k}{for} \PYG{n}{line} \PYG{o+ow}{in} \PYG{n}{f}\PYG{p}{:}
+\PYG{k}{if} \PYG{o+ow}{not} \PYG{n}{skip}\PYG{p}{:}
+\PYG{n}{skip} \PYG{o}{=} \PYG{n+nb+bp}{True}
+\PYG{k}{continue}
+\PYG{n}{x} \PYG{o}{=} \PYG{n}{line}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{entry\PYGZus{}id} \PYG{o}{=} \PYG{n}{x}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}|\PYGZsq{}}\PYG{p}{)[}\PYG{l+m+mi}{0}\PYG{p}{]}
+\PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]} \PYG{o}{=} \PYG{n}{entry}\PYG{p}{()}
+\PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{query} \PYG{o}{=} \PYG{n}{x}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+\PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{freq} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{query}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}|\PYGZsq{}}\PYG{p}{)[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}:\PYGZsq{}}\PYG{p}{)[}\PYG{l+m+mi}{1}\PYG{p}{])}
+\PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{dist} \PYG{o}{=} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{x}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{])}
+\PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{tax} \PYG{o}{=} \PYG{n}{x}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{};\PYGZsq{}}\PYG{p}{)}
+
+\PYG{n}{total} \PYG{o}{+=} \PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{freq}
+\PYG{n}{temp\PYGZus{}tax} \PYG{o}{=} \PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{tax}
+
+\PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{temp\PYGZus{}tax}\PYG{p}{)} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{5}\PYG{p}{:}
+\PYG{n}{fn\PYGZus{}count} \PYG{o}{+=} \PYG{l+m+mi}{1}
+\PYG{n}{ambiguous}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{entry\PYGZus{}id}\PYG{p}{)}
+\PYG{k}{elif} \PYG{o+ow}{not} \PYG{n}{temp\PYGZus{}tax}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{]} \PYG{o+ow}{in} \PYG{n}{family}\PYG{p}{:}
+\PYG{n}{fp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{((}\PYG{n}{entry\PYGZus{}id}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}family\PYGZsq{}}\PYG{p}{))}
+\PYG{k}{elif} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{temp\PYGZus{}tax}\PYG{p}{)} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{6}\PYG{p}{:}
+\PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{family}\PYG{p}{)):}
+\PYG{k}{if} \PYG{n}{temp\PYGZus{}tax}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{]} \PYG{o}{==} \PYG{n}{family}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]:}
+\PYG{n}{found}\PYG{p}{[}\PYG{n}{mock}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]][}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{entry\PYGZus{}id}\PYG{p}{)}
+\PYG{k}{elif} \PYG{o+ow}{not} \PYG{n}{temp\PYGZus{}tax}\PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{]} \PYG{o+ow}{in} \PYG{n}{genus}\PYG{p}{:}
+\PYG{n}{fp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{((}\PYG{n}{entry\PYGZus{}id}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}genus\PYGZsq{}}\PYG{p}{))}
+\PYG{k}{elif} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{temp\PYGZus{}tax}\PYG{p}{)} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{7}\PYG{p}{:}
+\PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{genus}\PYG{p}{)):}
+\PYG{k}{if} \PYG{n}{temp\PYGZus{}tax}\PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{]} \PYG{o}{==} \PYG{n}{genus}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]:}
+\PYG{n}{found}\PYG{p}{[}\PYG{n}{mock}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]][}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{entry\PYGZus{}id}\PYG{p}{)}
+\PYG{k}{elif} \PYG{o+ow}{not} \PYG{l+s+s1}{\PYGZsq{} \PYGZsq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{tax}\PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{:}\PYG{l+m+mi}{7}\PYG{p}{])} \PYG{o+ow}{in} \PYG{n}{mock}\PYG{p}{:}
+\PYG{n}{fp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{((}\PYG{n}{entry\PYGZus{}id}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}species\PYGZsq{}}\PYG{p}{))}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{n}{found}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{} \PYGZsq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{results}\PYG{p}{[}\PYG{n}{entry\PYGZus{}id}\PYG{p}{]}\PYG{o}{.}\PYG{n}{tax}\PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{:}\PYG{l+m+mi}{7}\PYG{p}{])][}\PYG{l+m+mi}{2}\PYG{p}{]} \PYG{o}{+=} \PYG{l+m+mi}{1}
+
+\PYG{n}{fp\PYGZus{}file} \PYG{o}{=} \PYG{n+nb}{open}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}fp\PYGZus{}\PYGZdq{}}\PYG{o}{+}\PYG{n}{f\PYGZus{}name}\PYG{o}{+}\PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}w\PYGZsq{}}\PYG{p}{)}
+\PYG{k}{for} \PYG{n}{fid}\PYG{p}{,} \PYG{n}{frank} \PYG{o+ow}{in} \PYG{n}{fp}\PYG{p}{:}
+\PYG{n}{fp\PYGZus{}file}\PYG{o}{.}\PYG{n}{write}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{([}\PYG{n}{fid}\PYG{p}{,} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{results}\PYG{p}{[}\PYG{n}{fid}\PYG{p}{]}\PYG{o}{.}\PYG{n}{freq}\PYG{p}{),} \PYG{n}{frank}\PYG{p}{,} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{results}\PYG{p}{[}\PYG{n}{fid}\PYG{p}{]}\PYG{o}{.}\PYG{n}{tax}\PYG{p}{)])}\PYG{o}{+}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{fp\PYGZus{}file}\PYG{o}{.}\PYG{n}{close}\PYG{p}{()}
+
+\PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n}{found}\PYG{o}{.}\PYG{n}{keys}\PYG{p}{():}
+\PYG{k}{if} \PYG{n+nb}{sum}\PYG{p}{([}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{found}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{]),} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{found}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{]),} \PYG{n}{found}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{l+m+mi}{2}\PYG{p}{]])} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+\PYG{n}{fn}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{i}\PYG{p}{)}
+\PYG{k}{print} \PYG{n}{fn}
+\PYG{n}{ttl\PYGZus{}output}\PYG{p}{(}\PYG{n}{f\PYGZus{}name}\PYG{p}{,} \PYG{n}{fp}\PYG{p}{,} \PYG{n}{fn}\PYG{p}{,} \PYG{n}{found}\PYG{p}{,} \PYG{n}{results}\PYG{p}{)}
+\PYG{n}{total} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{results}\PYG{o}{.}\PYG{n}{keys}\PYG{p}{())}
+\PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{([}\PYG{l+s+s2}{\PYGZdq{}False Positives:\PYGZdq{}}\PYG{p}{,} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{fp}\PYG{p}{))])}
+\PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{([}\PYG{l+s+s2}{\PYGZdq{}Ambiguous:\PYGZdq{}}\PYG{p}{,} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{ambiguous}\PYG{p}{))])}
+\PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{([}\PYG{l+s+s2}{\PYGZdq{}Total:\PYGZdq{}}\PYG{p}{,} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{results}\PYG{o}{.}\PYG{n}{keys}\PYG{p}{()))])}
+\PYG{n}{coverage} \PYG{o}{=} \PYG{n+nb}{sum}\PYG{p}{([}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{found}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{])}\PYG{o}{+}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{found}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{])}\PYG{o}{+}\PYG{n}{found}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{l+m+mi}{2}\PYG{p}{]} \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n}{found}\PYG{o}{.}\PYG{n}{keys}\PYG{p}{()])}
+\PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{([}\PYG{l+s+s2}{\PYGZdq{}Coverage:\PYGZdq{}}\PYG{p}{,} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{coverage}\PYG{p}{)])}
+\PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{([}\PYG{l+s+s2}{\PYGZdq{}Percentage:\PYGZdq{}}\PYG{p}{,} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{coverage}\PYG{p}{)}\PYG{o}{/}\PYG{n}{total}\PYG{o}{*}\PYG{l+m+mi}{100}\PYG{p}{)])}
+\PYG{k}{for} \PYG{n}{k} \PYG{o+ow}{in} \PYG{n+nb}{sorted}\PYG{p}{(}\PYG{n}{mock}\PYG{p}{):}
+\PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{([}\PYG{n}{k}\PYG{o}{+}\PYG{l+s+s2}{\PYGZdq{}:\PYGZdq{}}\PYG{p}{,} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{found}\PYG{p}{[}\PYG{n}{k}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{])),} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{found}\PYG{p}{[}\PYG{n}{k}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{])),} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{found}\PYG{p}{[}\PYG{n}{k}\PYG{p}{][}\PYG{l+m+mi}{2}\PYG{p}{])])}
+
+\PYG{k}{return} \PYG{n}{results}
+
+\PYG{k}{def} \PYG{n+nf}{ttl\PYGZus{}output}\PYG{p}{(}\PYG{n}{f\PYGZus{}name}\PYG{p}{,} \PYG{n}{false\PYGZus{}positive}\PYG{p}{,} \PYG{n}{false\PYGZus{}negative}\PYG{p}{,} \PYG{n}{found}\PYG{p}{,} \PYG{n}{results}\PYG{p}{):}
+\PYG{n}{fp\PYGZus{}file} \PYG{o}{=} \PYG{n+nb}{open}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}fp\PYGZus{}\PYGZdq{}}\PYG{o}{+}\PYG{n}{f\PYGZus{}name}\PYG{o}{+}\PYG{l+s+s2}{\PYGZdq{}.ttl\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}w\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{fp\PYGZus{}file}\PYG{o}{.}\PYG{n}{write}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}\PYGZdq{}@prefix vo: \PYGZlt{}http://orion.tw.rpi.edu/\PYGZti{}blee/VersionOntology.owl\PYGZsh{}\PYGZgt{} .}
+\PYG{l+s+s2}{@prefix mbvl: \PYGZlt{}http://example.com/MBVL/\PYGZgt{} .}
+\PYG{l+s+s2}{@prefix next: \PYGZlt{}http://example.com/MBVL/}\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s2}{\PYGZgt{} .}
+\PYG{l+s+s2}{@prefix skos: \PYGZlt{}http://www.w3.org/2004/02/skos/core\PYGZsh{}\PYGZgt{} .}
+\PYG{l+s+s2}{@prefix rdf: \PYGZlt{}http://www.w3.org/1999/02/22\PYGZhy{}rdf\PYGZhy{}syntax\PYGZhy{}ns\PYGZsh{}\PYGZgt{} .}
+\PYG{l+s+s2}{@prefix rdfs: \PYGZlt{}http://www.w3.org/2000/01/rdf\PYGZhy{}schema\PYGZsh{}\PYGZgt{} .}
+\PYG{l+s+s2}{@prefix xml: \PYGZlt{}http://www.w3.org/XML/1998/namespace\PYGZgt{} .}
+\PYG{l+s+s2}{@prefix xsd: \PYGZlt{}http://www.w3.org/2001/XMLSchema\PYGZsh{}\PYGZgt{} .}
+
+\PYG{l+s+s2}{\PYGZlt{}http://example.com/MBVL/db\PYGZgt{} a vo:Version .}
+\PYG{l+s+s2}{\PYGZlt{}http://example.com/MBVL/}\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s2}{\PYGZgt{} a vo:Version .}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}\PYG{o}{\PYGZpc{}}\PYG{p}{(}\PYG{n}{f\PYGZus{}name}\PYG{p}{,} \PYG{n}{f\PYGZus{}name}\PYG{p}{))}
+\PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{false\PYGZus{}positive}\PYG{p}{)):}
+\PYG{n}{fid}\PYG{p}{,} \PYG{n}{j} \PYG{o}{=} \PYG{n}{false\PYGZus{}positive}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}
+\PYG{n}{clean\PYGZus{}fid} \PYG{o}{=} \PYG{n}{urllib}\PYG{o}{.}\PYG{n}{quote}\PYG{p}{(}\PYG{n}{fid}\PYG{o}{.}\PYG{n}{split}\PYG{p}{()[}\PYG{l+m+mi}{0}\PYG{p}{])}
+\PYG{k}{if} \PYG{n}{results}\PYG{p}{[}\PYG{n}{fid}\PYG{p}{]}\PYG{o}{.}\PYG{n}{freq} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{10}\PYG{p}{:}
+\PYG{n}{fp\PYGZus{}file}\PYG{o}{.}\PYG{n}{write}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}\PYGZdq{}mbvl:db vo:absentFrom mbvl:AddChange}\PYG{l+s+si}{\PYGZpc{}i}\PYG{l+s+s2}{ .}
+\PYG{l+s+s2}{next:}\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s2}{ a vo:Attribute .}
+\PYG{l+s+s2}{mbvl:}\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s2}{ vo:hasAttribute next:}\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s2}{ .}
+\PYG{l+s+s2}{mbvl:AddChange}\PYG{l+s+si}{\PYGZpc{}i}\PYG{l+s+s2}{ a vo:AddChange ;}
+\PYG{l+s+s2}{vo:resultsIn next:}\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s2}{ .}\PYG{l+s+se}{\PYGZbs{}n}
+\PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}\PYG{o}{\PYGZpc{}}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,} \PYG{n}{clean\PYGZus{}fid}\PYG{p}{,} \PYG{n}{f\PYGZus{}name}\PYG{p}{,} \PYG{n}{clean\PYGZus{}fid}\PYG{p}{,} \PYG{n}{i}\PYG{p}{,} \PYG{n}{clean\PYGZus{}fid}\PYG{p}{))}
+\PYG{n}{fp\PYGZus{}file}\PYG{o}{.}\PYG{n}{close}\PYG{p}{()}
+
+\PYG{k}{def} \PYG{n+nf}{get\PYGZus{}output}\PYG{p}{(}\PYG{n}{tax1}\PYG{p}{,} \PYG{n}{alg1}\PYG{p}{,} \PYG{n}{tax2}\PYG{p}{,} \PYG{n}{alg2}\PYG{p}{):}
+\PYG{k}{if} \PYG{n}{alg1} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}silva\PYGZus{}spingo\PYGZsq{}}\PYG{p}{:}
+\PYG{n}{t1} \PYG{o}{=} \PYG{p}{[}\PYG{n}{x} \PYG{k}{for} \PYG{n}{x} \PYG{o+ow}{in} \PYG{n}{tax1} \PYG{k}{if} \PYG{o+ow}{not} \PYG{n}{is\PYGZus{}number}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)]}
+\PYG{k}{del} \PYG{n}{t1}\PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{]}
+\PYG{k}{elif} \PYG{n}{alg1} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}rdp\PYGZus{}spingo\PYGZsq{}}\PYG{p}{:}
+\PYG{n}{t1} \PYG{o}{=} \PYG{p}{[}\PYG{n}{x} \PYG{k}{for} \PYG{n}{x} \PYG{o+ow}{in} \PYG{n}{tax1} \PYG{k}{if} \PYG{o+ow}{not} \PYG{n}{is\PYGZus{}number}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)]}
+\PYG{k}{print} \PYG{n}{t1}
+\PYG{k}{del} \PYG{n}{t1}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}
+\PYG{n}{t1}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{:}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}Pass\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Pass\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Pass\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Pass\PYGZsq{}}\PYG{p}{]}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{n}{t1} \PYG{o}{=} \PYG{n}{tax1}
+
+\PYG{k}{if} \PYG{n}{alg2} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}silva\PYGZus{}spingo\PYGZsq{}}\PYG{p}{:}
+\PYG{n}{t2} \PYG{o}{=} \PYG{p}{[}\PYG{n}{x} \PYG{k}{for} \PYG{n}{x} \PYG{o+ow}{in} \PYG{n}{tax2} \PYG{k}{if} \PYG{o+ow}{not} \PYG{n}{is\PYGZus{}number}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)]}
+\PYG{k}{del} \PYG{n}{t2}\PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{]}
+\PYG{k}{elif} \PYG{n}{alg2} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}rdp\PYGZus{}spingo\PYGZsq{}}\PYG{p}{:}
+\PYG{n}{t2} \PYG{o}{=} \PYG{p}{[}\PYG{n}{x} \PYG{k}{for} \PYG{n}{x} \PYG{o+ow}{in} \PYG{n}{tax2} \PYG{k}{if} \PYG{o+ow}{not} \PYG{n}{is\PYGZus{}number}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)]}
+\PYG{k}{del} \PYG{n}{t2}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}
+\PYG{n}{t2}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{:}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}Pass\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Pass\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Pass\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Pass\PYGZsq{}}\PYG{p}{]}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{n}{t2} \PYG{o}{=} \PYG{n}{tax2}
+
+\PYG{k}{if} \PYG{n}{alg1}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZus{}\PYGZsq{}}\PYG{p}{)[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{!=} \PYG{n}{alg2}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZus{}\PYGZsq{}}\PYG{p}{)[}\PYG{l+m+mi}{1}\PYG{p}{]:}
+\PYG{k}{for} \PYG{n}{j} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{7}\PYG{p}{):}
+\PYG{k}{if} \PYG{n}{t1}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}Pass\PYGZsq{}}\PYG{p}{:}
+\PYG{k}{continue}
+\PYG{k}{if} \PYG{n}{j} \PYG{o}{\PYGZgt{}=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{t2}\PYG{p}{):}
+\PYG{k}{if} \PYG{n}{t1}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{!=} \PYG{l+s+s1}{\PYGZsq{}AMBIGUOUS\PYGZsq{}}\PYG{p}{:}
+\PYG{k}{return} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{([} \PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{rank}\PYG{p}{[}\PYG{n}{j}\PYG{p}{],} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{t1}\PYG{p}{[}\PYG{n}{j}\PYG{p}{:])])}
+\PYG{k}{elif} \PYG{n}{j} \PYG{o}{==} \PYG{l+m+mi}{6}\PYG{p}{:}
+\PYG{k}{if} \PYG{n}{t1}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}AMBIGUOUS\PYGZsq{}}\PYG{p}{:}
+\PYG{k}{return} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{([}\PYG{l+s+s1}{\PYGZsq{}+++\PYGZsq{}}\PYG{p}{,} \PYG{n}{rank}\PYG{p}{[}\PYG{n}{j}\PYG{p}{],} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{t2}\PYG{p}{[}\PYG{n}{j}\PYG{p}{:])])}
+\PYG{k}{elif} \PYG{n}{t1}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{!=} \PYG{l+s+s1}{\PYGZsq{}\PYGZus{}\PYGZsq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{t2}\PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{:}\PYG{l+m+mi}{7}\PYG{p}{]):}
+\PYG{k}{return} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{([} \PYG{l+s+s1}{\PYGZsq{}\PYGZgt{}\PYGZgt{}\PYGZgt{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{rank}\PYG{p}{[}\PYG{n}{j}\PYG{p}{],} \PYG{n}{t1}\PYG{p}{[}\PYG{n}{j}\PYG{p}{],} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{tax2}\PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{:])])}
+\PYG{k}{elif} \PYG{n}{t1}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}AMBIGUOUS\PYGZsq{}}\PYG{p}{:}
+\PYG{k}{return} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{([} \PYG{l+s+s1}{\PYGZsq{}+++\PYGZsq{}}\PYG{p}{,} \PYG{n}{rank}\PYG{p}{[}\PYG{n}{j}\PYG{p}{],} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{t2}\PYG{p}{[}\PYG{n}{j}\PYG{p}{:])])}
+\PYG{k}{elif} \PYG{n}{t1}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{!=} \PYG{n}{t2}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]:}
+\PYG{k}{return} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{([} \PYG{l+s+s1}{\PYGZsq{}\PYGZgt{}\PYGZgt{}\PYGZgt{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{rank}\PYG{p}{[}\PYG{n}{j}\PYG{p}{],} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{t1}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]),} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{t2}\PYG{p}{[}\PYG{n}{j}\PYG{p}{:])])}
+\PYG{k}{return} \PYG{n+nb+bp}{None}
+\PYG{k}{elif} \PYG{n}{alg1}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZus{}\PYGZsq{}}\PYG{p}{)[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}spingo\PYGZsq{}}\PYG{p}{:}
+\PYG{k}{for} \PYG{n}{j} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{7}\PYG{p}{):}
+\PYG{k}{if} \PYG{n}{t1}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}Pass\PYGZsq{}} \PYG{o+ow}{or} \PYG{n}{t2}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}Pass\PYGZsq{}}\PYG{p}{:}
+\PYG{k}{continue}
+\PYG{k}{if} \PYG{n}{t1}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}AMBIGUOUS\PYGZsq{}}\PYG{p}{:}
+\PYG{k}{if} \PYG{n}{t2}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}AMBIGUOUS\PYGZsq{}}\PYG{p}{:}
+\PYG{k}{return} \PYG{n+nb+bp}{None}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{k}{return} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{([}\PYG{l+s+s1}{\PYGZsq{}+++\PYGZsq{}}\PYG{p}{,} \PYG{n}{rank}\PYG{p}{[}\PYG{n}{j}\PYG{p}{],} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{t2}\PYG{p}{[}\PYG{n}{j}\PYG{p}{:])])}
+\PYG{k}{elif} \PYG{n}{t2}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}AMBIGUOUS\PYGZsq{}}\PYG{p}{:}
+\PYG{k}{return} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{([}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{rank}\PYG{p}{[}\PYG{n}{j}\PYG{p}{],} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{t1}\PYG{p}{[}\PYG{n}{j}\PYG{p}{:])])}
+\PYG{k}{elif} \PYG{n}{t1}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{!=} \PYG{n}{t2}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]:}
+\PYG{k}{return} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{([}\PYG{l+s+s1}{\PYGZsq{}\PYGZgt{}\PYGZgt{}\PYGZgt{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{rank}\PYG{p}{[}\PYG{n}{j}\PYG{p}{],} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{t1}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]),} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{t2}\PYG{p}{[}\PYG{n}{j}\PYG{p}{])])}
+\PYG{k}{return} \PYG{n+nb+bp}{None}
+\PYG{k}{elif} \PYG{n}{alg1}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZus{}\PYGZsq{}}\PYG{p}{)[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}gast\PYGZsq{}}\PYG{p}{:}
+\PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{t1}\PYG{p}{)} \PYG{o}{\PYGZgt{}} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{t2}\PYG{p}{):}
+\PYG{k}{return} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{([}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{rank}\PYG{p}{[}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{t2}\PYG{p}{)],} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{t1}\PYG{p}{[}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{t2}\PYG{p}{):])])}
+\PYG{k}{elif} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{t1}\PYG{p}{)} \PYG{o}{\PYGZlt{}} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{t2}\PYG{p}{):}
+\PYG{k}{return} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{([}\PYG{l+s+s1}{\PYGZsq{}+++\PYGZsq{}}\PYG{p}{,} \PYG{n}{rank}\PYG{p}{[}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{t1}\PYG{p}{)],} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{t2}\PYG{p}{[}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{t1}\PYG{p}{):])])}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{k}{for} \PYG{n}{j} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{t1}\PYG{p}{)):}
+\PYG{k}{if} \PYG{n}{t1}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]} \PYG{o}{!=} \PYG{n}{t2}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]:}
+\PYG{k}{return} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{([}\PYG{l+s+s1}{\PYGZsq{}\PYGZgt{}\PYGZgt{}\PYGZgt{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{rank}\PYG{p}{[}\PYG{n}{j}\PYG{p}{],} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{t1}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]),} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{t2}\PYG{p}{[}\PYG{n}{j}\PYG{p}{])])}
+\PYG{k}{return} \PYG{n+nb+bp}{None}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{k}{return} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}
+
+\PYG{n}{mock} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}Acinetobacter baumannii\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Actinomyces odontolyticus\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Bacillus cereus\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Bacteroides vulgatus\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Clostridium beijerinckii\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Deinococcus radiodurans\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Enterococcus faecalis\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Escherichia coli\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Helicobacter pylori\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Lactobacillus gasseri\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Listeria monocytogenes\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Neisseria meningitidis\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Porphyromonas gingivalis\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Propionibacterium acnes\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Pseudomonas aeruginosa\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Rhodobacter sphaeroides\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Staphylococcus aureus\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Staphylococcus epidermidis\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Streptococcus agalactiae\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Streptococcus mutans\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Streptococcus pneumoniae\PYGZsq{}}\PYG{p}{]}
+
+\PYG{n}{genus} \PYG{o}{=} \PYG{p}{[}\PYG{n}{x}\PYG{o}{.}\PYG{n}{split}\PYG{p}{()[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{k}{for} \PYG{n}{x} \PYG{o+ow}{in} \PYG{n}{mock}\PYG{p}{]}
+
+\PYG{n}{family} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}Moraxellaceae\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Actinomycetaceae\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Bacillaceae\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Bacteroidaceae\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Clostridiaceae\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Deinococcaceae\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Enterococcaceae\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Enterobacteriaceae\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Helicobacteraceae\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Lactobacillaceae\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Listeriaceae\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Neisseriaceae\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Porphyromonadaceae\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Propionibacteriaceae\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Pseudomonadaceae\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Rhodobacteraceae\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Staphylococcaceae\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Staphylococcaceae\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Streptococcaceae\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Streptococcaceae\PYGZsq{}}\PYG{p}{,}
+\PYG{l+s+s1}{\PYGZsq{}Streptococcaceae\PYGZsq{}}\PYG{p}{]}
+
+\PYG{n}{rank} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}Kingdom\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Phylum\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Class\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Order\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Family\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Genus\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Species\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Strain\PYGZsq{}}\PYG{p}{]}
+
+\PYG{k}{if} \PYG{n+nv+vm}{\PYGZus{}\PYGZus{}name\PYGZus{}\PYGZus{}} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}\PYGZus{}\PYGZus{}main\PYGZus{}\PYGZus{}\PYGZdq{}}\PYG{p}{:}
+\PYG{n}{fList} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}silva\PYGZus{}spingo\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}silva\PYGZus{}gast\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}rdp\PYGZus{}spingo\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}rdp\PYGZus{}gast\PYGZsq{}}\PYG{p}{]}
+\PYG{c+c1}{\PYGZsh{}f1\PYGZus{}name = fList[1]}
+\PYG{c+c1}{\PYGZsh{}f2\PYGZus{}name = fList[3]}
+\PYG{c+c1}{\PYGZsh{}f1 = file\PYGZus{}parse(f1\PYGZus{}name)}
+\PYG{c+c1}{\PYGZsh{}f2 = file\PYGZus{}parse(f2\PYGZus{}name)}
+
+\PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n}{fList}\PYG{p}{:}
+\PYG{n}{f1} \PYG{o}{=} \PYG{n}{file\PYGZus{}parse}\PYG{p}{(}\PYG{n}{i}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{}out = file(\PYGZsq{}silva\PYGZus{}rdp\PYGZus{}gast.txt\PYGZsq{}, \PYGZsq{}w\PYGZsq{})}
+\PYG{c+c1}{\PYGZsh{}for i in sorted(f1.keys()):}
+\PYG{c+c1}{\PYGZsh{}	x = get\PYGZus{}output(f1[i].tax, f1\PYGZus{}name, f2[i].tax, f2\PYGZus{}name)}
+\PYG{c+c1}{\PYGZsh{}	if not x == None:}
+\PYG{c+c1}{\PYGZsh{}		out.write(\PYGZdq{}\PYGZbs{}t\PYGZdq{}.join([i,x])+\PYGZdq{}\PYGZbs{}n\PYGZdq{})}
+\PYG{c+c1}{\PYGZsh{}out.close()}
+\end{Verbatim}

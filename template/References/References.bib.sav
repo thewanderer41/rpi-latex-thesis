@@ -1285,6 +1285,38 @@ be in line with traditional close source development.},
   url          = {https://www.eol.ucar.edu/about-eol},
 }
 
+@Article{CLPX,
+  author   = {Kelly Elder and Don Cline and Glen E. Liston and Richard Armstrong},
+  title    = {NASA Cold Land Processes Experiment (CLPX 2002/03): Field Measurements of Snowpack Properties and Soil Moisture},
+  journal  = {Journal of Hydrometeorology},
+  year     = {2009},
+  volume   = {10},
+  number   = {1},
+  pages    = {320-329},
+  abstract = { Abstract A field measurement program was undertaken as part NASA’s Cold Land Processes Experiment (CLPX). Extensive snowpack and soil measurements were taken at field sites in Colorado over four study periods during the two study years (2002 and 2003). Measurements included snow depth, density, temperature, grain type and size, surface wetness, surface roughness, and canopy cover. Soil moisture measurements were made in the near-surface layer in snow pits. Measurements were taken in the Fraser valley, North Park, and Rabbit Ears Pass areas of Colorado. Sites were chosen to gain a wide representation of snowpack types and physiographies typical of seasonally snow-covered regions of the world. The data have been collected with rigorous protocol to ensure consistency and quality, and they have undergone several levels of quality assurance to produce a high-quality spatial dataset for continued cold lands hydrological research. The dataset is archived at the National Snow and Ice Data Center (NSIDC) in Boulder, Colorado. },
+  doi      = {10.1175/2008JHM877.1},
+  eprint   = {https://doi.org/10.1175/2008JHM877.1},
+  url      = { 
+        https://doi.org/10.1175/2008JHM877.1
+    
+},
+}
+
+@Article{CLPX2,
+  author   = {Parsons, Mark A. and Brodzik, Mary J. and Rutter, Nick J.},
+  title    = {Data management for the Cold Land Processes Experiment: improving hydrological science},
+  journal  = {Hydrological Processes},
+  year     = {2004},
+  volume   = {18},
+  number   = {18},
+  pages    = {3637-3653},
+  abstract = {Abstract The Cold Land Processes Field Experiment (CLPX) produced 37 data sets totalling about one terabyte in volume. This presented a considerable challenge for data managers. Two unique aspects of the CLPX data management process include participation of data specialists in field data collection and identification of one person, the ‘data wrangler’, to coordinate the acquisition of the entire collection of the experiment data. These unique aspects increased the quality and completeness of the overall CLPX collection. Data managers were guided by basic data management principles from the literature, including consideration of potential future users and applications and an imperative to keep data as simple and as flexible as possible. These principles guided data management decisions about data formats, data integration, data presentation, and documentation. This principle‐based approach improved the usability and long‐term viability of CLPX data. It is recommended that data managers be involved early in the planning of future large‐scale field experiments and that data managers develop appropriate principle‐based rubrics for guidance through persistent data‐management challenges. Copyright © 2004 John Wiley \& Sons, Ltd.},
+  doi      = {10.1002/hyp.5801},
+  eprint   = {https://onlinelibrary.wiley.com/doi/pdf/10.1002/hyp.5801},
+  keywords = {data management, long‐term archive, field experiment, snow, cold land processes, CLPX, remote sensing},
+  url      = {https://onlinelibrary.wiley.com/doi/abs/10.1002/hyp.5801},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}
 
 @Comment{jabref-meta: grouping:

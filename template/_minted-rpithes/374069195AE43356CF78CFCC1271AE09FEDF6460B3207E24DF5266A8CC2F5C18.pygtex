@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{PREFIX} \PYG{n+nn}{vo}\PYG{p}{:}\PYG{n+nl}{\PYGZlt{}http://orion.tw.rpi.edu/\PYGZti{}blee/VersionOntology.owl\PYGZgt{}}
+\PYG{k}{PREFIX} \PYG{n+nn}{rdfs}\PYG{p}{:}\PYG{n+nl}{\PYGZlt{}http://www.w3.org/2000/01/rdf\PYGZhy{}schema\PYGZsh{}\PYGZgt{}}
+
+\PYG{k}{SELECT} \PYG{n+nv}{?p} \PYG{p}{(}\PYG{n+nf}{COUNT} \PYG{p}{(}\PYG{k}{DISTINCT} \PYG{n+nv}{?s}\PYG{p}{)} \PYG{k}{as} \PYG{n+nv}{?count}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{n+nv}{?s} \PYG{k}{a} \PYG{n+nv}{?p} \PYG{p}{.}
+\PYG{n+nv}{?p} \PYG{n+nn}{rdfs}\PYG{p}{:}\PYG{n+nt}{subClassOf} \PYG{n+nn}{vo}\PYG{p}{:}\PYG{n+nt}{Change} \PYG{p}{.}
+\PYG{p}{\PYGZcb{}} \PYG{k}{GROUP BY} \PYG{n+nv}{?p}
+\end{Verbatim}

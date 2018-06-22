@@ -9,7 +9,7 @@
 \section{Why Versioning is Important}
 
 \begin{quotation}
-	"If scientific data production were easy, instruments would
+	``If scientific data production were easy, instruments would
 	have stable calibrations and validation activities would discover no need for
 	corrections that vary with time. Unfortunately, validation invariably shows that
 	instrument calibrations drift and that algorithms need a better physical basis." \cite{Barkstrom2003}
@@ -39,11 +39,11 @@ In order to clearly communicate changes, ideas must be clearly formalized and de
 Using the term `versions' in the vernacular has become so pervasive that few documents formally define it.
 Barkstrom describes versions as \textbf{homogeneous groupings} used to control, ``production volatility induced by changes in algorithms and coefficients as result of validation and reprocessing," \cite{Barkstrom2003}.
 The \textbf{groupings} he mentions is a method of separating data objects such that they have similar scientific or technical properties.
-In order to determine when these properties have changed, he leverages the NASA workflow model shown in Figure \ref{NASALevels}.
+In order to determine when these properties have changed, he leverages the NASA Earth Science workflow model shown in Figure \ref{NASALevels}.
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.35]{figures/NASALevels.png}
-	\caption[National Aeronautics and Space Administration organizes its data into three levels depending on the amount of aggregation and the distance the data is removed from the original sensor measurements.]{NASA organizes its data into three levels depending on the amount of aggregation and the distance the data is removed from the original sensor measurements. Figure 1 from \cite{Barkstrom2003}}
+	\caption[National Aeronautics and Space Administration Earth Science organizes its data into three levels depending on the amount of aggregation and the distance the data is removed from the original sensor measurements.]{National Aeronatuics Space Administration Earth Science organizes its data into three levels depending on the amount of aggregation and the distance the data is removed from the original sensor measurements. Figure 1 from \cite{Barkstrom2003}}
 	\label{NASALevels}
 \end{figure}
 The model describes the formal stages of processing to turn a raw remote sensing signal from satellite instruments into global aggregate summaries \cite{Barkstrom2003}.
@@ -54,17 +54,17 @@ Another definition comes from Tagger in which versions are a, ``semantically mea
 He, unfortunately, does not further clarify what he means by semantically meaningful.
 The design object unifies the versions as their primary subject, capturing the object's state over the course of its design.
 
-The derivation, PROV Ontology's analog for a version and covered more in Section \ref{sec:prov}, is defined as, ``a transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a pre-existing entity," \cite{Lebo2013}.
+The \textit{derivation}, PROV Ontology's analog for a version and covered more in Section \ref{sec:prov}, is defined as, ``a transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a pre-existing entity," \cite{Lebo2013}.
 In this view, a \textbf{version} exists in comparison to another object.
 
 The Functional Requirements for Bibliographical Records (FRBR) avoids the terms \textbf{edition} and \textbf{version} since ``those terms are neither clearly defined nor uniformly applied" \cite{frbr}.
-Instead, they use the terms: work, expression, and manifestation.
+Instead, they use the terms: \textbf{work}, \textbf{expression}, and \textbf{manifestation}.
 A \textbf{work} refers to the abstract concept of a creative or artistic idea.
-\textbf{Expressions} are then different forms of that particular \textbf{work}, embodying the most similar term to versions.
+\textbf{Expressions} are then different forms of that particular \textbf{work}, embodying the most similar term to the previous definitions of versions.
 A \textbf{manifestation} is the physical embodiment of an \textbf{expression}.
 These three terms and their hierarchy establish a repeating theme throughout other versioning works.
 
-Combining these myriad of definitions together, a version is an \textbf{expression} of a \textbf{work} which exists in comparison to another object and communicates the extent to which it diverges from that object as a result of provenance changes.
+Combining these myriad of definitions together, a version is ``an \textbf{expression} of a \textbf{work} which exists in comparison to another object and communicates the extent to which it diverges from that object as a result of provenance changes".
 Although each definition disagrees on the form a version object takes on, all but PROV derivation agree that a version belongs to a larger collection of objects implementing a more abstract, ideal representation.
 Provenance provides the information necessary to explain semantically meaningful for the Tagger definition as \textit{prov:Derivation} captures when a data object diverges into a new object.
 
@@ -158,12 +158,14 @@ While it documents related versions well, PAV does not dive deeper in explaining
 
 \subsection{Schema.org}
 
+\sloppy
 The Schema.org ontology is not a provenance ontology but provides a means to supply searchable web pages with standardized micro-data.
 The ontology has a collection of concepts which could be applied to versioning.
 The \textit{schema:UpdateAction} is defined as, ``the act of managing by changing/editing the state of the object," which encompasses the same responsibilities expected of versioning systems \cite{Schema}.
 The terms \textit{schema:AddAction}, \textit{schema:DeleteAction}, and \textit{schema:ReplaceAction} subclass the \textit{shcema:UpdateAction}.
 These classes model actions which further cement parallels between versioning and \textit{schema:UpdateAction}.
 
+\fussy
 Schema.org defines a \textit{schema:ReplaceAction} as, ``the act of editing a recipient by replacing an old object with a new object" \cite{SchemaRep}.
 The concept has two properties, \textit{schema:replacee} and \textit{schema:replacer} which indicates that a new object replaces an old one.
 Schema.org models the interaction by placing the replacement action at the relation's center.
@@ -178,12 +180,12 @@ Change logs, artifacts resulting from the versioning process, play a major role 
 The logs document changes and explain, in human language, motivations behind the modifications \cite{uel1037}.
 Since identifiers denote that a change has occurred, the logs provide details on how the changes modify an object's attributes.
 They demonstrate a need and utility in understanding the deeper content of change beyond knowing that an object did transform.
-While some data sets will provide a change log, software projects have normalized their use in version release documentation.
-As a result, these projects provide a basis for understanding the value these logs can supply data sets with multiple versions.
+While some data sets will contain a change log, software projects have normalized their use in version release documentation.
+As a result, these projects provide a basis for understanding the value of change logs to data sets with multiple versions.
 The change log's common drawback is the limitation to only human readable text.
 Wider adoption among data sets may be possible by making these texts machine computable.
 
-Open source projects use change logs more consistently than data projects, which usually sport only use documentation.
+Open source projects use change logs more consistently than data projects, which usually sport only use documentation \cite{German03automatingthe}.
 Logs play an important communication role in these projects since developers can contribute without having been part of the original development team.
 The change logs allow developers to link bugs and errors with their corrections in new versions of the code \cite{Chen:2004:OCL:990374.990391}.
 The links gives insight into motivations behind particular design decisions.
@@ -197,19 +199,7 @@ The transition between different versions of large data sets is then left largel
 
 \section{The Versioning Use Case} \label{sec:usecase}
 
-The following use cases bring together features from the fields of linked data, provenance ontologies, version models, and change log practices to form a basic fundamental model of versioning.
-As mentioned in Section \ref{sec:models}, a common feature of version models is that they are tree-like and tiered.
-The HCLS data model has already begun connecting versioning models with linked data to make them digitally implementable and computable.
-The definitions of versions, however, noted that provenance is necessary to make version objects semantically meaningful.
-Extending provenance ontologies would use linked data to provide a concourse to tiered versioning models.
-Change logs, by their existence, indicate that version systems need to communicate more than the fact that two objects are different, and the versioning models must also explain the differences.
-Change logs provide the meat between two version objects and takes the work beyond just connecting versioning and provenance models.
-To summarize, version models provide a structure to separate version objects.
-Provenance provides context for the separation.
-Linked data is the mechanism used to connect provenance and versioning models.
-Change logs inform the concepts missing from both models which must be added to fill in the gaps.
-The model specified in Chapter \ref{ch:model} uses the intersection of all these features to address the following use cases.
-
+The research questions addressed by work in the following chapters revolve around different aspects of the flow in use case shown in Table \ref{table:UseCase}.
 \begin{table}
 	\caption{Versioning Use Case Table}
 	\label{table:UseCase}
@@ -250,63 +240,65 @@ The model specified in Chapter \ref{ch:model} uses the intersection of all these
 		\hline
 	\end{tabular}
 \end{table}
+The use case begins when a data producer wishes to distribute the next version of a data set.
+While versions for observations of phenomena is often sequential, alternate versions can deal with older data or occur concurrently with the object the alternate changes so the adjective new or newer is avoided when possible.
+The use case features the data producer and data consumer as actors using the versioning system as an intermediary.
+The actors do not follow separate use cases because each actor relies on the actions of the other actor to contextualize the actions in the use case.
 
+The basic flow of the use case is seen in Figure \ref{UCD1} where the producer logs a version into the versioning system, and the consumer retrieves that data version.
 \begin{figure}
 	\centering
 	\includegraphics[scale=1]{figures/UC_Diagram1.png}
 	\caption{Basic Flow Use Case Diagram.}
 	\label{UCD1}
 \end{figure}
+At a later point in time, the producer can add any number of corrections to the versioning system.
+The repeated corrections reflect a practice of passively logging additional changes.
+At some final time after 0 or more corrections, the Consumer returns to check the versioning system for any changes to the data set the Consumer retrieved.
+If there are changes to parts pertinent to the Consumer, the actor retrieves the corrected data.
+In the interaction, the Producer only passively provides additional versions of the data while the responsibility of remaining up-to-date lies with the Consumer.
+The ability of the  versioning system to communicate to the Consumer that the data has changed determines whether the use case succeeds or fails for the data consumer.
+The relationship creates a Producer/Consumer dynamic which influences the performance of the versioning system.
 
+The alternate flow in Figure \ref{UCD2} requires additional information from the Consumer which is a means of notification.
 \begin{figure}
 	\centering
 	\includegraphics[scale=1]{figures/UC_Diagram2.png}
 	\caption{Alternate Flow Use Case Diagram.}
 	\label{UCD2}
 \end{figure}
-\subsection{Research Question 1: Linked Data Change Log}
+The flow begins the same as the basic flow, but after a single correction, the Producer notifies the Consumer that the data has changed.
+The notification causes the Consumer to come and retrieve the updated data set.
+The alternate flow poses a few problems in that the Producer must now manage notification information, but the Producer must also notify all consumers of the data which may cause scalability issues.
 
-The first use case's goal is to determine the differences between two versions of a data set.
-The way this is accomplished in the ``Global Database on \textsuperscript{3}He/\textsuperscript{4}He in on-shore free-circulated subsurface fluids" (Noble Gas) is to look at the use documentation for each version and manually determine the differences \cite{Polyak2015}.
-The ``Paragenetic Mode for Copper Minerals" (Copper) database became available through collaboration with the author's lab to create new methods of visualizing mineralogy relationships \cite{Morrison2016}.
-In the Copper data set, changes were reported by word of mouth through interaction with the author.
-These data sets were chosen because they had at least two versions in the same format, Excel spreadsheets.
-Software projects normally use a change log to summarize the modifications separating two versions, but a document was not included with either data set.
+\subsection{Research Question 1: What has changed?}
 
-The spreadsheets offered a very enticing point of entry since changes could easily be detected by comparing matching cells in a regular table format and tools to access the data were readily available.
-Both data sets displayed content and structural changes, new or deleted rows and columns as well as re-ordered columns in the Copper data set's case.
-Each version of the spreadsheets were also instanced, allowing multiple versions to simultaneously exist.
-Separate linked data identifiers can then be assigned to each file, making graph generation possible.
-Centralized databases were avoided because they generally only make available a single instance, causing manual verification and visual comparisons difficult.
-In addition, users of centralized databases primarily interact with the data through queries, merging and filtering data tables to slice out the desired data set.
-Rather than complicate the approach with multiple tables, Use Case 1 focuses on the primary unified table of the Noble Gas and Copper data sets.
+The primary research question addressed in the following chapters pertains to step 3 in the basic flow of the use case.
+In order to execute this step, the Consumer must have a means of determining whether the data set is different from the one the Consumer currently possesses.
+In a large number of software projects, especially open-source projects, change logs document for the producer changes to the code base and communicate alterations to the Consumer.
+Very few data sets provide detailed change logs along with versions in the versioning system.
+Either general descriptions of changes are made or new usage documentation is provided, requiring the data consumer to manually acclimate to changes.
 
-The spreadsheets do not innately use linked data identifiers, meaning artificial identifiers will need to be deployed referring to objects within the model.
-Methods to generate an identifier lies outside the scope of this work.
+The prevailing hypothesis in addressing Research Question 1 is that automating the generation of change logs will provide detailed change documentation for even large data sets.
+Different standards exist across various national agencies, but few fundamentals have been established on what needs to be included and how the information is to be captured or presented.
+A linked data versioning model would provide a standardized basis for discussing version change as well as allow tools to be developed to assist in step 3 for large data sets of which Consumers may only use a part.
 
-\subsection{Research Question 2: Change Distance}
+\subsection{Research Question 2: How much has changed?}
 
-The second use case addressed is how versioning systems capture the amount of change existing between two versions.
-Data producers often communicate the amount or significance of a particular change through version identifiers.
-The practice forces producers to make assumptions about how users will employ their data and the impact changes will have on most data consumers.
-We can see how software projects address summarizing change by the existence of change logs in many open source projects.
-In the logs, projects detail specific changes in features and behavior, but the logs are also difficult to quantify since they are often written in human readable language.
+A follow-up query to Research Question 1 is that once the changes have been determined, Consumers need to evaluate the impact of significance of the changes.
+At the moment, Producers regularly make dot-decimal identifiers pull double duty in organizing versions sequentially and implying change magnitude.
+Version counts, as shown in Chapter \ref{ch:graph}, provide a very bland description of the changes in a version, lacking nuance and effected by multiple outside practices.
+Using the versioning model to answer Research Question 1, the changes can be broken down into \textbf{Add}, \textbf{Invalidate}, and \textbf{Modify} (AIM) classifications which provide a more encapsulating description of a version transition.
+The AIM change counts would tie change metrics back to data differences rather than to versions.
+The AIM changes also provide a means to compare the difference between the amount of change declared by the Producer and quantity of change as seen by various Consumers.
 
-The Global Change Master Directory (GCMD) Keyword taxonomy contains a hierarchy of terms used to search a wide range of NASA climate data sets \cite{GCMDKey}.
-All versions of the keywords are available through the GCMD Keyword Management System (KMS) which can serve the words in linked data format.
-The encoding would mean that, unlike the Noble Gas and Copper data sets, the keywords would not need a custom encoding.
-More importantly, the GCMD data set has more than two versions with clear identifiers in the dot-decimal style, indicating three degrees of change between versions.
-The identifier indicates when a major, minor, or revisionary extent of change separates two versions.
+\subsection{Research Question 3: How fast does the data change?}
 
-\subsection{Research Question 3: Linked Data Versioning}
-
-Use Case 3 deals with encoding versioning semantics using linked data.
-The current concepts revolve around provenance applications where PROV-O and PAV are often employed.
-The Marine Biodiversity Virtual Laboratory (MBVL), based at Woods Hole Oceanographic Institution, provides data and services for the study of marine biology with an integrative approach \cite{mbvl}.
-This virtual laboratory has produced sets of data which, under FRBR and Barkstrom's definitions, belong to the same work but do not satisfy the semantics of PROV or other provenance ontologies.
-Because the semantics do not fit, the ontologies should not be employed to capture their changes.
-Provenance graphs, additionally, do not focus on change or differences between objects.
-Since PROV and Schema.org have the most detailed definitions for change relations, they are used as the primary comparison for the development of a versioning graph.
+An important idea to understand is how often will the consumer need to execute the versioning use case.
+Research takes time and if the data is unstable, new versions of the data may be produced before results can be extracted from the data, invalidating the findings.
+With the ability to measure changes from Research Question 2, changes in each version can be tied back to time.
+Versions package and release changes in a bundle, disconnecting the changes from time but limiting the data volatility to an acceptable level.
+The hypothesis is that versions are masking the actual change rate, the giving a false sense to the expected change in the data over time.
 
 \section{Hypothesis Statement}
 
