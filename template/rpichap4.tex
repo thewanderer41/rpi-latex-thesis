@@ -1,438 +1,301 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                 %
-%                            CHAPTER FOUR                         %
-%                                                                 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\chapter{CHANGE METRICS}\label{ch:graph}
+\chapter{MACHINE-READABLE CHANGE LOG}\label{ch:changelog}
 
 \section{Introduction}
 
-Machine computable change logs provides a very powerful means to begin answering basic versioning questions in a formal and systematic manner.
-From the change log, a linked data versioning graph can be extracted and the changes counted to communicate how different are two versions.
-The data model was constructed to allow a wide variety of ways to connect together versions such that more complex analytics could be performed using the versioning graphs.
-The analytics show that producers must be very transparent when communicating the methods data producers use to assess change impacts as shown in Section \ref{gcmd_85}.
+\Glspl{log} explain the differences between \glspl{version}; however, they are often only available in human-readable formats.
+Readability puts a limit on the length and extent of the \gls{log} since a human will need to write it.
+Manageable change descriptions become difficult with large data sets featuring many changes, or data sets that change often, but large data sets are exactly the data sets which need \glspl{log} the most.
+Automating the process will allow more data sets to provide change documentation in a timely fashion for data sets.
+Encoding the change logs with structured data will provide a means for users to efficiently consume change information.
+The additional encoding will inflate the size of a standard change log which becomes an issue with the \glspl{log}.
 
-When versioning a data set, researchers very rarely ask whether two objects can be compared.
-The data producer often establishes the context in which data objects are sufficiently similar---to use terms from FRBR---\textbf{expressions} of the same \textbf{work}.
-Confirming the context prior to making version comparisons is fundamental to ensuring that the resulting versioning graph contains meaningful results.
-The data sets described in the following section have sufficient context as established by their producers.
-Using the data in these data sets, the model from Chapter \ref{ch:model} is instantiated into versioning graphs.
-The graphs are encoded into HTML change logs using RDFa and JSON-LD.
-These graphs allow for an analysis of the change between versions, which gives insight into the version identifier.
-Finally, a version graph is used to classify the kinds of change separating versions of a data set to determine the utility.
 
-\section{Implementing the Versioning Model}
-
-The following subsections detail the steps used to implement a versioning graph using the model defined in Chapter \ref{ch:model} and the challenges encountered.
-Section \ref{mapping} goes through the decisions made to align the attributes within the Noble Gas dataset and within the Copper data set.
-The alignments create a formula to detect changes and assign them to either an \textbf{add}, \textbf{invalidate}, or \textbf{modify} change.
-A change log can then use the assignments to organize a presentation of the change data.
-The underlying versioning graph exists as linked data encoded within the change log, but can also appear as explicit linked data statements.
-The linked data uses a custom-made versioning ontology (VersOn) to express the data model using the \textit{vo:} namespace.
-The procedure within this section defines the process used to create versioning graphs found in all the following sections of this Chapter.
-
-\subsection{Form a Mapping} \label{mapping}
-
-A mapping specifies the method to determine the \textbf{attributes} of a versioning graph and how to compare them.
-For spreadsheets and table-based data, row and column indexes initially seem an ideal attribute, but edits often show the contrary.
-The Noble Gas data set needed a mapping to align the spreadsheet's columns since 140 columns were removed from the first version.
-The remaining columns in the second version no longer had the same column indexes that they did in version 1 so the column headers were used instead.
-The Copper data set retains many of the original columns, but their ordering has changed between versions.
-In addition, rows must be aligned since both a row and column attribute are necessary to uniquely identify a cell.
-The Noble Gas data set split up its rows across eight files, each file representing a separate region of the Earth.
-Instead of forming eight versioning graphs or having eight left-hand versions, the files were collected together into a single abstract collection which is then mapped to the right-hand version.
-Creating eight versioning graphs would also form eight separate change logs which doesn't make sense since each file forms only a part of the entire work and the second version collects all entries into a single file.
-Multiple left-hand versions also doesn't make sense since this creates one change log and graph, but the files are no longer associated with each other.
-Cells need to be uniquely identified since this is where a comparison will be made to determine whether a \textbf{modify} change has occurred in a spreadsheet.
-
-Once aligned, determining which attributes have been added, invalidated, or modified is straight-forward.
-Attributes which only exist in the original or left-hand version have been invalidated.
-More specifically, a set of attributes \(\mathcal{I} = \mathcal{R}_{l} - \mathcal{R}_{r}\) where \(\mathcal{R}_{l}\) and \(\mathcal{R}_{r}\) correspond to the row identifiers of the left-hand and right-hand versions, respectively.
-Likewise, a set of attributes \(\mathcal{A} = \mathcal{R}_{r} - \mathcal{R}_{l}\) contain all the added attributes.
-Performing the same operations on the columns result in sets of the added and invalidated columns.
-A script then iterates over the remaining cells which exist in both versions to determine if they differ, resulting in a \textbf{modify} change.
-The unchanged cells form a set of entries which do not appear in a change log or the versioning graph.
-The attributes in these sets are then minted into URIs and linked together into the versioning graph, or they can be used to publish a change log.
-
-\subsection{Generate Versioning Graph}
-
+\Glspl{log} were generated for two data sets, the ``Global Database on \textsuperscript{3}He/\-\textsuperscript{4}He in on-shore free-circulated subsurface fluids" data set and the Paragenetic Mode for Copper Minerals database.
+Following the practices of other \glspl{log}, the documents present before and after values for comparison which can be seen in Figure \ref{changelog_zoomed}.
 \begin{figure}
 	\centering
-	\begin{adjustbox}{
-			addcode=
-				{\begin{minipage}{\width}}
-				{
-					\caption{Some initial entries from versions 1 and 2 of the Noble Gas data set}
-					\label{NobleGraph1}
-					\end{minipage}
-				},
-				rotate=90,
-				center}
-			\includegraphics[scale=0.39]{figures/NobleVersion.png}
-	\end{adjustbox}
+	\includegraphics[scale=0.80]{figures/Changelog-zoomed.png}
+	\caption{Abswurmbachite entry in the Copper Dataset Change Log}
+	\label{changelog_zoomed}
 \end{figure}
-The versioning graphs presented in this section were created by extracting triples from the associated change log which will be covered in Chapter \ref{ch:changelog}.
-The statements making up the graph could have alternately been published by writing out the triples directly instead of encoding them into a change log.
-Figure \ref{NobleGraph1} displays a subgraph of the Noble Gas data set's versioning graph between versions 1 and 2, highlighting each of the three change operations.
-Notice how the versioning graph differs from the provenance graph in Figure \ref{CAM001ProvGraph}.
-The versioning graph unpacks the \textit{prov:wasRevisionOf} relationship into explicit components.
-These components reveal more detailed differences between version 1 and 2 of CAM001 in the provenance graph which are the differing compilation activities.
-\begin{figure}
-	\centering
-	\begin{adjustbox}{
-		addcode=
-			{\begin{minipage}{\width}}
-			{
-				\caption{Provenance graph for the CAM001 entry of the Noble Gas Database.  Other than the labels, the structure of each data object is very much the same.}
-				\label{CAM001ProvGraph}
-				\end{minipage}
-			},
-			rotate=90,
-			center}
-		\includegraphics[scale=0.80]{figures/CAM001v1v2.png}
-	\end{adjustbox}
-\end{figure}
-The change log encoded the triples in RDFa, resulting in the attribute ``AttributeCAM00111v2" to the right of the \textbf{modify} change.
-Because RDFa does not naturally support multiple predicates while also conforming to the content structure of the change log, an attribute was created to combine both the row and column identifier for the changing cell.
-Separating the attributes would require multiple dedicated HTML tags which don't appear along with content.
-Including these tags would diverge from benefits of encoding triples as attributes.
-Figure \ref{NobleGraph1} also shows that even though many columns are added when a new row is added, the row identifier can be used to summarize the columns additions.
+The change logs identify challenges to adopting thorough change logs as a practice in versioning data sets.
 
-Another modification to the implementation differs from the original versioning model.
-The \textbf{modify} construction defined in the model only covers the case where a single attribute is sufficient to define a change relation.
-The \textbf{modification} captured in spreadsheets describes a cell which requires a row and column identifier to indicate uniquely.
-The implementation demonstrates that using multiple attributes is an allowable, sometimes necessary, construction.
+\subsection{On the Importance of Change Log Automation}
 
-Listing \ref{NGA} presents the statements in turtle format necessary to express that the entry EGY001 has been added to the data set from Version 1 to Version 2 as shown along the top of Figure \ref{NobleGraph1}.
-The namespace for many of the URIs is \textlangle http://rdfa.info/play/\textrangle.
-RDFa allows identifiers to refer to an element on the web page, and the web tool which generated the triples from RDFa, therefore, used its URL as a namespace to produce a valid URI.
+The \gls{nasa}'s \gls{clpx} collects ice measurements from a wide number of sites in the arctic \cite{CLPX}.
+The data was published originally in ASCII, but the data was later ported into shapefiles as well.
+A known issue with the transition was that comments in the Summary data set were left out due to format limitations.
+A \gls{log} was created to determine whether additional differences existed within the two formats.
 
+The initial problem with forming a \gls{log} is that rows in the data did not include unique identifiers to align \glspl{attribute} within the \glspl{version}.
+A unique tuple, using values from five columns of the data, was created to match rows together since the order of the rows did not correspond between the two formats.
+An immediate problem that resulted was some differences occurred within the columns necessary to form the unique tuple, namely some values disagreed by 0.5.
+Following the correction, the data could be correctly aligned.
 
+The \gls{log} found that for columns ``soil sample A" (SL\_A) and ``soil sample B" (SL\_B), many entries consistently disagreed between \glspl{version}.
+Disagreements resulted from values being recorded with `y' or `n' for a number of values but with numbers for the rest.
+Since the values in the shapefiles are stored in a database format, a column must conform to a pre-specified type, causing the character encodings to appear as 0s in the shapefiles.
+Additionally, the columns experienced 0.5 misalignments and null values of -999.0 being encoded as 0.
+The columns are encoded as integers, causing the disagreement.
+
+With further investigation, misalignment in the values caused repeated inquiries into differences between expected and reported values.
+Parsons et al. \cite{CLPX2} state that the, ``text files are the primary archival format of the data."
+The solution resolve differences between the formats was to defer to an official version rather than compute or provide change information.
+The deference to a different format, unfortunately partially undermines the benefits of increased accessibility provided by the shapefile format.
+
+\section{Encoding a Change Log}
+
+Very little natural language is used in the \gls{log} to regularize the format and improve compatibility with \gls{rdfa}.
+The \glspl{log} follow a common format with three sections as seen in: Additions, Invalidations, and then Modifications.
+The sections may be further grouped by column or row additions.
+The division means that \glspl{change} are not published into the \gls{log} as they are found, but instead organized and grouped beforehand.
+
+Employing \gls{rdfa} means that the document must be written using \gls{html} formatting.
+Listing \ref{rdfa_list} shows the text necessary to layout the first four lines of Figure \ref{changelog_zoomed}, showing \glspl{modify} for the Abswurmbachite mineral from the Copper Minerals database.
+While the content only shows four lines, the underlying markup takes up three and a half times as many lines.
+Line 2 of Listing \ref{rdfa_list} states that all following resources will be \glspl{attribute} of Version 1.
 \begin{listing}
-	\begin{minted}[linenos, frame=lines, breaklines]{SPARQL}
-<http://rdfa.info/play/Version1> a vo:Version ;
-vo:absentFrom <http://rdfa.info/play/AddChange21> .
-<http://rdfa.info/play/AddChange21> a <https://orion.tw.rpi.edu/~blee/VersionOntology.owl#AddChange> ;
-vo:resultsIn <http://rdfa.info/play/Attribute21> .
-<http://rdfa.info/play/Attribute21> a <https://orion.tw.rpi.edu/~blee/VersionOntology.owl#Attribute> ;
-rdfs:label "EGY001"
-<http://rdfa.info/play/Version2> a vo:Version ;
-vo:hasAttribute <http://rdfa.info/play/Attribute21>
+	\begin{minted}[linenos, frame=lines, framesep=2mm, breaklines]{HTML}
+<h3>Change Log</h3>
+  <div about="Version1" rel="vo:hasAttribute">
+    <div resource="v2:Abswurmbachite" typeof="vo:Attribute">
+    <span style="font-weight:bold" property="http://www.w3.org/2000/01/rdf-schema#label">Abswurmbachite</span>
+    <table rel="vo:Undergoes">
+      <tr  about="ChangeAbswurmbachite12" typeof="vo:Change">
+        <td align="right" rev="vo:Undergoes" resource="v1:AttributeAbswurmbachite12v1" typeof="vo:Attribute"> 9</td>
+        <td property="vo:resultsIn" resource="v2:AttributeAbswurmbachite12v2" typeof="vo:Attribute">(12)</td>
+        <td>          </td>
+        <td>       0.0</td>
+        <span about="Version1" property="vo:hasAttribute" resource="v1:AttributeAbswurmbachite12v1"></span>
+        <span about="Version2" property="vo:hasAttribute" resource="v2:AttributeAbswurmbachite12v2"></span>
+      </tr>
+</table></div></div><br>
 	\end{minted}
-	\caption{Noble Gas Add in Turtle}
-	\label{NGA}
+	\caption{Abswurmbachite RDFa\label{rdfa_list}}
 \end{listing}
-
-Figure \ref{CopperGraphVerGraph} shows a similar subgraph from the Copper data set versioning graph.
-The graph was assembled using an RDFa change log and also displays a merged attribute on the right side of the \textbf{modify} change.
-In the full versioning graph, multiple of each change is present, forming a zipper or ladder-like structure.
-As a result, each \textbf{add}, \textbf{invalidate}, or \textbf{modify} change is given separate names for each instantiation.
-
-\begin{figure}
-	\centering
-	\begin{adjustbox}{addcode={\begin{minipage}{\width}}{
-					\caption{Versioning Graph representing the linked data graph with selected entries of additions, invalidations, and modifications.}
-					\label{CopperGraphVerGraph}					
-					\end{minipage}},rotate=90,center}
-		\includegraphics[scale=0.5]{figures/VersioningGraph2.png}%
-	\end{adjustbox}
-\end{figure}
-
-\subsection{Graphs with Multiple Versions}\label{sec:multiver}
-
-Figures \ref{NobleGraph1} and \ref{CopperGraphVerGraph} depict a comparison between only two versions, but a project can contain more than two objects.
-Case in point, a third version of the Noble Gas data set was released on July 11, 2017.
-Figure \ref{NobleGraph2} shows a subgraph that contains changes from all three versions of the Noble Gas data set.
-\begin{figure}
-	\centering
-	\begin{adjustbox}{addcode={\begin{minipage}{\width}}{
-					\caption{Versioning Graph representing the linked data graph with selected entries of additions, invalidations, and modifications after the publication of the third version.}
-					\label{NobleGraph2}					
-		\end{minipage}},rotate=90,center}
-		\includegraphics[scale=0.48]{figures/NobleVersion2.png}%
-	\end{adjustbox}
-\end{figure}
-From the first to second version of the data, EGY001 becomes introduced as an attribute into the data set.
-This entry then undergoes a modification change in columns 29, 31, and 43 when comparing versions two and three.
-Entry TUR030 goes through a modification change in column 11 from version one to version two.
-The entire row, however, becomes invalidated in version three.
+Line 3 defines such an \gls{attribute}.
+Lines 5 through 8 define the \glspl{change} Abswurmbachite undergoes.
+Because \gls{rdfa} allows the statements to be embedded within the content, the triples can appear along with the text they describe.
+Lines 11 and 12 define complete triples which do not appear in the visible document.
+The lines complete the graph, but must be included in \gls{html} span tags because \gls{rdfa} only allows a single triple within each tag.
+Modifying the tags' order so that the spans are unnecessary would cause the visible content to appear in a confusing and disorganized order, rendering the document machine-readable but not human-readable.
 
 
-Notice the difference in how Figure \ref{NobleGraph1} and Figure \ref{NobleGraph2} refer to columns.
-Figure \ref{NobleGraph1} used linked data extracted from a change log employing RDFa, forcing the row identifier and the column identifier into the same concept.
-The way nesting works in RDFa means that ChangeCAM00111 cannot back reference multiple concepts in a single statement, therefore AttributeCAM00111v2 was used to imply CAM001.
-Figure \ref{NobleGraph2} used linked data extracted from a JSON-LD encoded change log.
-Since the log can use explicit statements, the column identifier refers to the entire column and can be used to identify changes in the same column across multiple rows.
+After encountering the limitations of using \gls{rdfa} to include the versioning graph into the change log, \gls{jsonld} was used.
+The \gls{json} data does not need to conform to the structure or ordering of visible content in the change log.
+Listing \ref{json_list} provides the alternative encoding of the Abswurmbachite entry from \gls{rdfa}.
+The entry is significantly longer, almost three times longer than the \gls{rdfa} entry and ten times longer than the original visible content.
+Instead of including all the data in the beginning or end of the document, each change block is separated into the particular \textit{div} section for that change.
+This choice allows consumers to extract pertinent change information without needing to ingest the entire \gls{vergraph}.
+\begin{mdframed}[topline=false, bottomline=false, leftline=false, rightline=false]
+	\begin{minted}[linenos, frame=lines, breaklines]{HTML}
+<h3>Change Log</h3>
+  <div about="v1:Abswurmbachite">
+  <span style="font-weight:bold" property="http://www.w3.org/2000/01/rdf-schema#label">Abswurmbachite</span>
+  <table>
+    <tr  id="ModifyChangeAbswurmbachite12">
+      <td align="right"> 9</td>
+      <td >(12)</td>
+      <td>          </td>
+      <td>       0.0</td>
+      <script type="application/ld+json">
+[
+  {
+    "@context": "https://orion.tw.rpi.edu/~blee/provdist/GCMD/VO.jsonld", 
+    "@id": "http://CUdb.com/v1/AttributeAbswurmbachite9", 
+    "@reverse": {
+      "hasAttribute": "Version1"
+    }, 
+    "@type": "vo:Attribute", 
+    "label": "Primary", 
+    "undergoes": "http://orion.tw.rpi.edu/~blee/provdist/CU/DTDI/CUjsonlog.html#ModifyChangeAbswurmbachite12"
+  }, 
+  {
+    "@context": "https://orion.tw.rpi.edu/~blee/provdist/GCMD/VO.jsonld", 
+    "@id": "http://orion.tw.rpi.edu/~blee/provdist/CU/DTDI/CUjsonlog.html#ModifyChangeAbswurmbachite12", 
+    "@type": "vo:ModifyChange", 
+    "resultsIn": "http://CUdb.com/v2/AttributeAbswurmbachite12"
+  }, 
+  {
+    "@context": "https://orion.tw.rpi.edu/~blee/provdist/GCMD/VO.jsonld", 
+    "@id": "http://CUdb.com/v2/AttributeAbswurmbachite12", 
+    "@reverse": {
+      "hasAttribute": "Version2"
+    }, 
+    "@type": "vo:Attribute", 
+    "label": "Primary"
+  }
+]
+      </script>
+    </tr>
+</table></div><br>
+	\end{minted}
+	
+	\captionof{listing}{Abswurmbachite JSON-LD\label{json_list}}
+\end{mdframed}
 
-\section{Change Metric} \label{ch:distance}
+The change logs created with \gls{rdfa} or \gls{jsonld} demonstrates progress towards documents which are both human and machine-readable.
+The implementation provides evidence that \gls{jsonld} is better suited to embed a versioning graph into a \gls{log} than \gls{rdfa}.
+\gls{rdfa} suffers limitations since it is constrained by the content's structure.
+The \gls{modify} relation presented in Figure \ref{NobleGraph1} is unbalanced and the right-hand side of ``ChangeCAM00111" links only to the column \gls{attribute} but not to the corresponding row \gls{attribute}.
+This stems from a mismatch between the model's structure, the order in which data appears in the \gls{log}, and the way \gls{rdfa} links properties together.
+Because the row label forms the outermost encapsulation, it cannot instantiate both row identifiers and implicitly link them separately.
+To do so would require explicitly instantiating the \gls{attribute} in a non-visible part of the document, defeating the purpose of using \gls{rdfa} to implicitly encode the \gls{vergraph} into the document.
 
-Use Case 2 addresses the use of versions to communicate how different two objects are.
-Many versioning systems use dot-decimal identifiers to signify whether a change is large, medium, or small.
-The exact requirements to determine change size differs widely across different domains and applications.
-The versioning graph provides a new, more regular method to quantify change between objects using versioning operations.
-The work done with GCMD Keywords shows the qualitative relationship between version identifiers and change distance.
-Work with the MBVL data set then extends VersOn to give more detailed accounting with the change capture method.
+Both structured data implementations break up the graph across \glspl{attribute} so that individual parts of the graph can be extracted.
+The practice of a one-node \gls{json} object is generally helpful for many web applications to load data quickly, but since the \gls{log} is not an application, it makes more sense to break up the content.
+Changes to individual \glspl{attribute} can be identified using anchors on the web page, then agents need only extract and parse the \gls{linked} to the \glspl{attribute}' specific entries.
+This way, a subgraph of only the pertinent \glspl{attribute} can be created without first ingesting the entire \gls{vergraph}.
 
-\subsection{Utilized Data Sets}
+An unexpected challenge with the \glspl{log} is the larger file size and difficulties in loading the Noble Gas data set's \gls{jsonld} change log.
+The problem results from needing ten lines to express a single row in the change log.
+Noble Gas also had an impressive number of \glspl{modify}, some of which are shared across all rows in the data set.
+Repeated \glspl{modify} over rows would account for the explosion in entries within the \gls{log}.
 
-\subsubsection{Global Change Master Directory Keywords}
+\section{Change Log Analysis} \label{sec:CLA}
 
-The Global Change Master Directory (GCMD) is a metadata repository used by NASA to store records of its available data sets \cite{Miled:2001:GCM:372202.372324}.
-They employ a set of keywords to make NASA Earth Science data sets searchable.
-These words tag and label datasets into strictly defined categories \cite{GCMDKey}.
-GCMD Keywords do not qualify as a standard web ontology since GCMD Keywords do not constitute a class hierarchy.
-The management team stored early versions of the keywords in Excel spreadsheets, later using a centralized distribution system, but data is not available prior to June 12, 2012.
-The Key Management Service now serves the keywords directly in a variety of formats.
-Each version of the keywords, encoded in RDF, was downloaded into separate files.
-Only versions from June 12, 2012 and after were available, resulting in 9 version files.
-Each keyword corresponds to a unique identifier, and when combined with a web namespace, resolves to a data description of the keyword.
-Every identifier can be referred to per version by including the version's number at the web identifier's end, meaning that identifiers are consistent across versions.
-The taxonomy uses the concepts \textit{skos:Broader} and \textit{skos:Narrower}, where skos refers to the Simple Knowledge Organization System ontology name space, to form a tree hierarchy \cite{skos}.
-The tree's root is the keyword, "Science Keywords."
-The data set provides an interesting study case due its long sequence of versions and ready use of linked data technology \cite{Stevens2016}.
-
-\subsubsection{Marine Biodiversity Virtual Laboratory Classifications} \label{sec:MBVL}
-
-The Marine Biodiversity Virtual Laboratory (MBVL), based at Woods Hole Oceanographic Institution, provides data and services for the study of marine biology with an integrative approach \cite{mbvl}.
-In the application studied, a choice of algorithm and taxonomy pairings must be tested on a known population in order to estimate their performance with an unknown microbial population.
-The original sequences belong only to the species listed in Table \ref{species_table}.
-The original population's census is not available to the author, and only the list of species is known, forming the first data set in this section.
-These sequences are then grouped and classified by a specific taxonomy and algorithm pairing.
-The workflow utilizes two taxonomies, the Ribosomal Database Project (RDP) and the Silva taxonomy.
-Using these databases, the SPecies-level IdentificatioN of metaGenOmic amplicons (SPINGO) or the Global Alignment for Sequence Taxonomy (GAST) algorithms assign taxonomic ranks to each sequence.
-The process produces four data sets, each using the same grouping identifiers and having the same size in each group.
-Since the data sets have the same number of sequences, the primary differences between the data sets are the ranks assigned to each sequence.
-
+With a trade-off of 14 \gls{html} lines for every visible line and 40 \gls{html} code lines to each visible line, space utilization is a very present concern.
+Table \ref{table:Ng_changelog_table1} shows the size of each encoding of the \gls{log} as well as the percentage in size as compared to either of the files involved in the version transition.
 \begin{table}
-	\caption{List of species in the original population.}
-	\label{species_table}
+	\caption{Noble Gas change log size: 1st Transition}
+	\label{table:Ng_changelog_table1}
 	\centering
-	\setlength{\tabcolsep}{2pt}
+	\begin{tabular}{|c|r|c|c|}
+		\hline
+		Encoding Type & File Size (Bytes) & \% of File 1 & \% of File 2 \\
+		\hline
+		Text&	5575405&	207.8294&	204.2976\\
+		RDFa&	62175478&	2317.660&	2278.2745\\
+		Turtle&	80919783&	3016.375&	2965.1156\\
+		JSON-LD&	130134071&	4850.893&	4768.4577\\
+		\hline
+	\end{tabular}
+\end{table}
+`Text' denotes the encoding control where no structured data is included into the \gls{log}.
+Alone, the control is already double the size of either file.
+The \gls{rdfa} encoding more than 20 times the size of the original files, exceeding the size of the control by more than ten fold.
+A separate file was generated in turtle format to observe whether taking just the \gls{linked} values would reduce the information to a more manageable size, but the turtle file was still 30 times the size of the original files.
+Adopting the versioning model and encoding it into a \gls{log} will very likely require significant storage investment.
+
+Table \ref{table:Ng_changelog_table2} shows the \gls{log} sizes for the second version transition in the Noble Gas data set.
+\begin{table}
+	\caption{Noble Gas change log size: 2nd Transition}
+	\label{table:Ng_changelog_table2}
+	\centering
+	\begin{tabular}{|c|r|c|c|}
+		\hline
+		Encoding Type & File Size (Bytes) & \% of File 2 & \% of File 3 \\
+		\hline
+		Text&	403227&	14.7753&	9.56286\\
+		RDFa&	4168390&	152.7409&	98.85678\\
+		Turtle&	4515435&	165.4575&	107.0872\\
+		JSON-LD&	8095372&	296.6359&	191.9884\\
+		\hline
+	\end{tabular}
+\end{table}
+Notice that the second transition has much smaller text encodings compared to the original files.
+The \gls{rdfa} and \gls{jsonld} encodings once again 10 and 20 times, respectively, the size of the text encoding.
+The turtle encodings, representing the most raw form of data without additional \gls{html} text, surprisingly ends up larger than the other data encodings.
+The explanation is that in order to automate printing the formal triple statements, fewer elements can be smartly implied, leading to larger file sizes even though no markup symbols are in the file.
+Looking at Table \ref{table:Ng_turtle}, the second transition had 20 times fewer \gls{modify} entries, leading to a much smaller turtle file.
+\begin{table}
+	\caption{Noble Gas Turtle files}
+	\label{table:Ng_turtle}
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		Filename&	Add&	Invalidate&	Modify&	Total Triples\\ \hline
+		changelog.ttl&	608&	216&	102830&	110602\\
+		changelog2\_3.ttl&	990&	24&	5369&	8146\\
+		\hline
+	\end{tabular}
+\end{table}
+
+Another way to evaluate the performance of the \gls{log} is to look at the number of \gls{change} entries compared to the number of changed values in the Copper database's case spreadsheet cells.
+From Table \ref{table:Cu_changelog_table1}, the behavior of the encodings is very similar to the second transition of Noble Gas.
+\begin{table}
+	\caption{Copper change log size: 1st Transition}
+	\label{table:Cu_changelog_table1}
+	\centering
+	\begin{tabular}{|c|r|c|c|}
+		\hline
+		Encoding Type & File Size (Bytes) & \% of File 1 & \% of File 2 \\
+		\hline
+		Text&	140131&	41.3152&	59.9580\\
+		RDFa&	2032823&	599.343&	869.787\\
+		Turtle&	1538772&	453.680&	658.396\\
+		JSON-LD&	3500067&	1031.93&	1497.57\\
+		\hline
+	\end{tabular}
+\end{table}
+The text format is smaller than the original data set, but the encoded files are at least 10 times the size of the database files.
+To determine the number of cells affected by a \gls{change}, the number of cells added by new rows is summed with the number of cells added by new columns, using the width and length of Version 2.
+The cells affected by removals is based on the length and width of Version 1.
+The number of remaining cells, equivalent between the two files is 23940.
+Since \glspl{modify} are reported cell-by-cell, the number of cells affected is equal to the number of \glspl{modify}, 2628.
+The rows and columns that \gls{modify} affects are not available because the \glspl{change} appear inconsistently across the rows and columns meaning a reported value would be misleading.
+The complete counts are reported in Table \ref{table:Cu_cells}.
+\begin{table}
+	\caption{Changes to Copper Data}
+	\label{table:Cu_cells}
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		Change Type&	Rows&	Columns&	Cells Affected\\ \hline
+		Add&	1&	16&	10995\\
+		Invalidate&	21&	2&	2145\\
+		Modify&NA&NA& 2628\\
+		\hline
+	\end{tabular}
+\end{table}
+
+The triples used to explain \glspl{change} as a percentage of the cells affected is reported in Table \ref{table:Cu_change}.
+\begin{table}
+	\caption{Change capture compression in Copper Data}
+	\label{table:Cu_change}
+	\centering
 	\begin{tabular}{|c|c|c|}
 		\hline
-		Acinetobacter baumannii & Actinomyces odontolyticus & Bacillus cereus \\
-		Bacteroides vulgatus & Clostridium beijerinckii & Deinococcus radiodurans \\
-		Enterococcus faecalis & Escherichia coli & Helicobacter pylori \\
-		Lactobacillus gasseri & Listeria monocytogenes & Neisseria meningitidis\\
-		Porphyromonas gingivalis & Propionibacterium acnes & Pseudomonas aeruginosa \\
-		Rhodobacter sphaeroides & Staphylococcus aureus & Staphylococcus epidermidis\\
-		Streptococcus agalactiae & Streptococcus mutans & Streptococcus pneumoniae \\
+		Change Type&	Triples&	\% of Cells Affected\\ \hline
+		Add&	17&	0.065\%\\
+		Invalidate&	23&	1.1\%\\
+		Modify&	2628&	100\%\\
 		\hline
 	\end{tabular}
 \end{table}
-
-\section{Global Change Master Directory}
-
-\subsection{Global Change Master Directory Versioning Graph}
-
-The Global Change Master Directory establishes the context that each \textbf{manifestation} of their keyword list is related versions.
-Since the unique identifier for each keyword remains the same across versions, the unique keyword identifier can be used to align a mapping across versions.
-\textbf{Additions} and \textbf{invalidations} are detected by checking an identifier's presence within both versions.
-A \textbf{modification} occurs when a keyword's \textit{skos:Broader} property differs between adjacent versions.
-The alignment assumes that there is not reason a keyword's preferred label would change, but still reports a value when it has new entries in the ``notes" property.
-A difference indicates that the word has been moved to a different place within the taxonomy since identifiers do not change across versions and a keyword only has one parent concept.
-Changes over consecutive versions can be collected into a single graph using the method in Section \ref{sec:multiver} to chain together versioning graphs.
-A change log was generated for each pair of consecutive versions in GCMD Keywords and embedded with JSON-LD.
-Versioning graphs for each adjacent version was created by extracting JSON-LD from the corresponding change log, and entering the triples into a Fuseki triple store.
-
-\subsection{Connecting Change Counts to Identifiers} \label{gcmd_85}
-
-The \textbf{add}, \textbf{invalidate}, and \textbf{modify} counts for each transition are presented in Figure \ref{GCMDC1}.
-The query used to extract the counts is found in Listing \ref{gcmd_list}.
-Notice the sharp spike in adds and invalidates when transitioning from version 8.4.1 to 8.5.
-The version identifiers indicate that at most a minor or technical change has occurred, but the counts of \textbf{addition} and \textbf{invalidation} changes in this transition is more than triple the counts in either of the previous \textbf{major} transitions.
-Not only should a small transition not produce changes of this quantity, but the data set's size is on the order magnitude of the recorded \textbf{invalidates}.
-In addition, no \textbf{modifications} are revealed, and even the root node "Science Keywords" has been invalidated.
-Further investigation of the root word reveals that the name space for the keywords has changed from HTTP to HTTPS.
-To provide context, NASA mandated a transition to secure protocols, and the group changed the name space to ensure the URIs remained resolvable.
-Since the identifiers are unique, the new name space means they no longer refer to the same object after the protocol change.
-Because the keyword identifiers no longer match, the mapping approach results in the total invalidation of keywords from 8.4.1 and the addition of keywords from 8.5.
-The dot decimal identifier for the transition from version 8.4.1 to 8.5 does not match the number of changes in the versioning graph.
-
-\begin{table}
-	\caption{Global Change Master Directory Keyword Change Counts}
-	\label{table:GCMD_main}
-	\centering
-	\begin{tabular}{|c|c|c|c|c|}
-		\hline
-		
-		Transition&	Add&	Invalidate&	Modify&	Total\\\hline
-		June 12, 2012 to 7.0&	310&	9&	22&	341\\
-		7.0 to 8.0&	503&	6&	79&	588\\
-		8.0 to 8.1&	277&	28&	22&	327\\
-		8.1 to 8.2&	53&	1&	26&	80\\
-		8.2 to 8.3&	58&	0&	13&	71\\
-		8.3 to 8.4&	53&	0&	1&	54\\
-		8.4 to 8.4.1&	86&	13&	8&	107\\
-		\hline
-	\end{tabular}
-\end{table}
-\begin{figure}[b]
-	\centering
-	\includegraphics[scale=0.83]{figures/GCMDChartShort.png}
-	\caption[Global Change Master Directory Keywords Change counts up to Version 8.4.1]{Add, Invalidate, and Modify counts from the beginning of the Keyword Management System to Version 8.4.1.}
-	\label{GCMDC1}
-\end{figure}
-
-%\hfill \break
-
-\begin{listing}
-	\begin{minted}[linenos, frame=lines, breaklines]{sparql}
-PREFIX vo:<http://orion.tw.rpi.edu/~blee/VersionOntology.owl>
-PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-
-SELECT ?p (COUNT (DISTINCT ?s) as ?count)
-{
-?s a ?p .
-?p rdfs:subClassOf vo:Change .
-} GROUP BY ?p
-	\end{minted}
-	\caption[Change count query.]{This query compiles the counts for each subclass of Change in a GCMD versioning graph.}
-	\label{gcmd_list}
-\end{listing}
-
-Changing the mapping method to account for the new namespace provides a pathway to compare the perceived change by the producer as evidenced by the version identifier with the amount of change in the versioning graph.
-To do this, the mapping treats identifiers with HTTP and HTTPS the same. 
-Differences in change magnitudes become much clearer after controlling for the altered name space in Figure \ref{GCMDC2}.
-All revisions are dominated by \textbf{additions}, but major version changes have counts around 300 to 500 while minor revisions are an order of magnitude smaller.
-The transition from version 8.4.1 to 8.5 also seems to follow this trend.
-The \textbf{additions} in ``8.4 to 8.4.1" in Figure \ref{GCMDC2} numbers almost a hundred, providing evidence that the trend of decreasing order of magnitudes may now continue as the granularity of the version identifier increases.
-
-\begin{table}
-	\caption{Difference in Version 8.5 mapping methods}
-	\label{table:GCMD_8_5}
-	\centering
-	\begin{tabular}{|c|c|c|c|c|}
-		\hline
-		Mapping Method&	Add&	Invalidate&	Move&	Modify\\ \hline
-		Standard&	3097&	3031&	0&	0\\
-		Silent&	68&	2&	22&	0\\
-		Bridged&	68&	2&	22&	3007\\		
-		\hline
-	\end{tabular}
-\end{table}
-\begin{figure}%[b]
-	\centering
-	\includegraphics[scale=.9]{figures/GCMD8_5.png}
-	\caption{Add, Invalidate, and Modify counts using different methods of mapping identifiers in Global Change Master Directory Keywords Version 8.4.1 to 8.5.}
-	\label{GCMDC2}
-\end{figure}
-
-
-\section{Marine Biodiversity Virtual Laboratory}
-
-\subsection{Variant Versioning Graph}
-
-The experiment conducts activity over two phases in this procedure.
-The first phase takes sequences from the original known population and feeds the sequences though a particular algorithm/taxonomy combination to produce a candidate classification.
-Since the classifications for the known population sequences are unavailable, there is not sufficient context to perform a valid comparison with the candidate classifications.
-The second phase compares the performances of each candidate classification of a algorithm/taxonomy pair.
-The use of \textbf{add}, \textbf{invalidate}, and \textbf{modify} varies slightly in this application since all the results use the same sequences.
-A versioning graph utilizing just the sequence identifiers would only result in \textbf{modify} changes when taxonomic ranks differ since the sequence identifier exists in both data sets.
-The mapping instead uses the sequence identifiers to align comparisons and then the taxonomic rank classification to determine the kind of change.
-If the right-hand result specifies more taxonomic ranks, the relationship is an \textbf{addition}.
-If the left-hand result is more specific, then the relationship is classified as an \textbf{invalidation}.
-If both results have the same precision but the name differs, then the link is a \textbf{modification}.
-Otherwise, no change is detected.
-
-Figure \ref{mbvl_chart} shows the changes detected when varying either the taxonomy or the classification algorithm.
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.75]{figures/mbvl_chart.png}
-	\caption{Compiled counts of \textbf{adds}, \textbf{invalidates}, and \textbf{modifies} grouped by taxonomic rank across algorithm and taxonomy combinations.}
-	\label{mbvl_chart}
-\end{figure}
-Only the taxonomy or only the classifier differs in each comparison to control for overlapping influences that having both a different taxonomy and classifier may introduce.
-Each bar indicates the total number of differences between sequences for a specific kind of change.
-The bars are further broken down by the taxonomic rank at which the difference occurred.
-For example, in ``Silva vs RDP, Gast", a notable number of classifications differed at the species rank.
-The graph also indicates that using the RDP taxonomy often produces more precise classifications since both ``Silva vs RDP, Spingo" and ``Silva vs RDP, Gast" feature a larger number of \textbf{additions} than any other change.
-The classifier comparisons feature a high number of \textbf{invalidations}; however, ``RDP, Spingo vs Gast" also displays a higher number of \textbf{modifications} than \textbf{invalidations}.
-
-\section{Version Graph Discussion}
-
-The versioning graph successfully addresses the concerns of Use Case 1 by capturing all the differences within the Noble Gas data set and within the Copper data set into a versioning graph.
-Some additional concerns had to be addressed, such as multiple files in a version and dual attribute identification, during the implementation of the versioning model.
-The multiple files in the first version of the Noble Gas data set needed to be collected into a single concept in order to preserve the one-to-one relation between versions.
-The grouping simplifies the graph structure as well as reduce the complexity of a change log encoding.
-
-In Section \ref{ch:model}, there is only one \textbf{attribute} on each side of the interaction.
-Figure \ref{CopperGraphVerGraph}, however, shows two \textbf{attributes} used to characterize the \textit{vo:ModifyChange}.
-While the model only shows one \textbf{attribute}, it was found that in some applications, multiple \textbf{attributes} may be necessary to properly model a single change.
-The construction does not even need to have the same number \textbf{attributes} on both sides of the \textbf{change}.
-The flexibility becomes important when trying to model, for example, a single location entry being split into separate latitude and longitude entries.
-
-The version graph's construction allows multiple versions to be linked together.
-The graph provides not only greater continuity than Schema.org's properties, but also greater detail than PROV's versioning properties.
-Continuity is important since many versioning linked data alternatives view version change as a single contained \textbf{activity}.
-When linking together multiple versions using a versioning graph, the relationship between non-adjacent editions becomes implied in the graph's structure.
-The natural pathway between \textbf{attributes} in non-adjacent \textbf{versions} holistically considers the relationships among all \textbf{attributes} along that path.
-In comparison, other models only capture activity between the adjacent versions.
-
-The model struggles with discontinuous changes to an \textbf{attribute} across multiple versions.
-Since the model does not capture when an \textbf{attribute} doesn't change, it is possible for an \textbf{attribute} in an earlier \textbf{version} to become disconnected from later \textbf{versions} due to inactivity.
-For example, in Figure \ref{NobleGraph2}, column 31 of EGY001 becomes modified transitioning into the third version.
-If that column underwent no activity in the next transition but changed from version four to five, the connection between all the column 31s would no longer be continuous.
-This poses a problem for executing queries in a triple store which rely on graph traversals, but no path exists between disconnected \textbf{attributes}.
-
-\subsection{Version Identification}
-
-The versioning process discovered a discrepancy in the identifier assignment in the GCMD Keywords taxonomy.
-The original analysis was intended to determine if dot-decimal identifiers would reflect an order of magnitude division among the change counts of the versioning graph.
-According to the \textit{Keyword Governance and Community Guide Document} \cite{gcmd_gov}, ``Full GCMD keywords list releases get a new major version number (e.g., 8.0). Incremental releases for updates to topics, terms, and variables get a new minor version number (e.g., 8.1).”
-The change counts for Versions `June 12, 2012' to 8.4.1 demonstrates a threshold of changes necessitating a full keywords list release.
-The document does not explain the purpose or distinguishing qualities of versions with a new revision number, 8.4.1.
-Version 8.5, however, was named with respect to perceived taxonomy changes and did not consider underlying linked data practice revisions.
-The conclusion can be obtained by looking at \ref{GCMDC2} and noticing that the only matching approach without a bar equal to the size of the entire data set is the `Silent' approach.
-For a purely URI based comparison in `Standard', Version 8.5 definitely falls under the category of full release since an entirely new list of words is released.
-Users using the `Bridged' approach would also see a new full release because all old words have had the URIs edited.
-Version name assignment based on producer perception and not allowing users to assess change measures is concerning.
-Making sure that data consumers have the ability to assess change in data sets when the requirements for change differs between producer and consumer must be addressed.
-
-The analysis does not to claim that change counts should be the sole mechanism in determining version identifiers.
-The counts, however, can provide a more quantitative method to compare version differences.
-In Figure \ref{GCMDC1}, the yellow line indicates the total changes made to the data set, performing a similar function as the major/minor/revision version identifier.
-Breaking up the changes into types reveals additions dominate manipulations to the data set.
-Addition, invalidation, and modification provides deeper insight into how a data set is changing, but some changes can be more impactful than others which this model does not capture.
-
-\subsection{MBVL Analysis}
-
-In Section \ref{ch:distance}, the versioning process was used to compare the performance of different taxonomy and algorithm combinations.
-The data set diverges from many of the common understandings of versions since each of the versions are not sequential and are largely independent.
-The data set of species names in the initial population would not have produced very meaningful results if applied to the versioning model since it lacked sufficient data to map the other data sets together well.
-
-In Figure \ref{mbvl_chart}, the first set of columns in the Silva taxonomy results are versioned against RDP using the SPINGO algorithm.
-The naming reflects the orientation in the versioning graph so Silva forms the left-hand version and RDP would be the right-hand version.
-In this comparison, using the RDP taxonomy seems to provide more accurate results, most specifically at the species level.
-The taxonomies also disagree fairly often at the species and family ranks.
-Switching to the GAST algorithm in the second set of columns, RDP once again demonstrates a noticeably greater accuracy in species classification.
-There are also significantly fewer disagreements using the GAST algorithm between the two taxonomies.
-Looking at the third set of columns, Silva demonstrates greater accuracy classifications under the SPINGO algorithm than under GAST.
-Over four thousand of these entries can be classified to the species level when GAST cannot.
-In the fourth set of columns, RDP appears to perform better with SPINGO than GAST.
-However, the comparison is dominated by a much larger number of disagreements between almost six thousand entries, primarily at the species rank.
-On closer inspection, this disagreement is explained by GAST classifying the species for a number of entries as ``uncultured bacterium".
-This analysis presents evidence that using the RDP taxonomy with the SPINGO algorithm will produce the most accurate classification results.
+Smaller percentages indicate how well one triple can explain changes to multiple cells by compressing the number of entries.
+Notice that \glspl{add} are much more efficient in explaining changes than \glspl{invalidate} due to triple explains a row or column relation.
+\Glspl{invalidate} explained changes to rows primarily while \glspl{add} mostly explained changes to columns, but since columns are much longer, \glspl{add} ended up scoring higher on efficiency.
+\Gls{modify} triples do not compress change information well and also account for more than a majority of the changes to the data, meaning that \gls{modify} triples most likely account for the bloat in the physical representation of the triples.
+Not represented in the \gls{log} are the unmodified cells which account for 89.02\% of the matching cells between the Copper files.
+The analysis indicates that while \gls{add} and \gls{invalidate} may be very efficient in expressing changes, improvements to encoding and \gls{modify} capture are needed to bring down the storage costs of automated \glspl{log}.
+The bloated \gls{log} size likely explains the dearth of data set \glspl{log} in practice since using the storage space for more data would be more valuable. 
 
 \section{Summary}
 
-The results in this chapter implements the versioning model and demonstrates the process and challenges experienced in this endeavor.
-The entries in a data set is separated into groups of \textbf{additions}, \textbf{invalidations}, \textbf{modifications}, and unmodified by their attributes.
-The grouping occurs over multiple files in the first version of the Noble Gas data set, and the solution was to collect them into a single unit.
-The collection keeps the files as one unit, but does not end up addressing other approaches to multi-part versions.
+The automated \gls{log} generation yielded some unexpected results.
+Automated \glspl{log} standardize the process to capture change within a data set.
+While more popular text-only \glspl{log} could be adopted, a versioning data model was necessary to make the logs also machine computable.
+The computability improves digital comprehension of the change document.
+The drawback is that the encoded \glspl{log} are reliably much larger than the original data set in bytes.
+The storage space cost likely contributes to the reason that \glspl{log} are often unseen in data set documentation.
+The automation and inclusion of \glspl{log} inform consumers how much the data set has changed.
 
-These operational groups organizes the data into a form to publish into a versioning graph.
-The approach used to create the graph involves extracting the linked data from a marked up change log.
-The decision resulted in constrained representations of the versioning graph, resulting from demands of the encoding methods.
-Graphs created using freer form statements, such as the one in Figure \ref{NobleGraph2}, demonstrate an opportunity enable querying over different dimensions of the data.
-Changes for specific columns can be queries as easily as individual rows.
+The human-readable presentation defines the structure which tags in the \gls{log} must take since maintaining human-readability is desired.
+The structure then determines the order in which \gls{linked} statements must appear in the log to encode the \gls{log} using \gls{rdfa}.
+The ordering creates limitations on how strictly the encoded graph adheres to the specification from Chapter \ref{ch:model}.
+While construction of the \gls{log} is automated, encoding through \gls{rdfa} significantly reduces the source \gls{html} readability.
+In other applications using \gls{rdfa}, the triples describe and link the text encapsulated by \gls{html} tags.
+The \gls{vergraph} exclusively ignores the marked up content and links together tags or explicitly defines full triples in span tags.
 
-The ability to link changes of multiple versions together results as a side effect of the model construction.
-Continuously linked changes opens up avenues of exploration to follow change as it propagates through versions.
-While change logs will provide a more focused comparison, a triple store with a multi-version graph would give a view of the work through time.
-Considering the Noble Gas data set's versioning graph's size, many versions may be difficult to store with large, volatile data sets.
+\Glspl{log} are much less restricted when encoded using \gls{jsonld} rather than \gls{rdfa}.
+The encoding format pulls the graph out of the attributes where they do not interact with content and into a separate script section.
+The method causes a drastic expansion per \gls{change} in necessary text.
+The decision to divide up \gls{jsonld} objects by the row in the \gls{log} they describe likely contributes significantly to the overhead necessary for the encoding.
+The division was made with the forethought that \gls{log} consumers may desire to only ingest specific subgraphs of the \gls{vergraph}.
+Separated \gls{jsonld} objects will likely need to be merged in the future to save space for data sets with many changes.
 
-The MBVL data set demonstrates a case where versioning graphs can be used to compare the performance of different taxonomy/algorithm pairings.
-The ability derives from sub-classing each of the add, invalidate, and modify changes to give a better perspective where the pairings differed.
-This approach of extending the versioning graph adds domain knowledge to the version comparison and helps contextualize the observed differences.
+The resulting logs end up very large and sometimes do not load in a browser.
+Reassuringly, both data sets displayed the same space usage complexity with \gls{rdfa} being ten times the plain text size and \gls{jsonld} twice the size of a \gls{log} in \gls{rdfa}.
+The relationship unfortunately means that a \gls{jsonld} \gls{log}, with more readable source code, is twenty times the size of a plain text \gls{log}.
+In order to retain usability, there will need to be methods optimizing change log structure or representation.

@@ -1303,9 +1303,10 @@ be in line with traditional close source development.},
 }
 
 @Article{CLPX2,
-  author   = {Parsons Mark A. and Brodzik Mary J. and Rutter Nick J.},
+  author   = {Parsons, Mark A. and Brodzik, Mary J. and Rutter, Nick J.},
   title    = {Data management for the Cold Land Processes Experiment: improving hydrological science},
   journal  = {Hydrological Processes},
+  year     = {2004},
   volume   = {18},
   number   = {18},
   pages    = {3637-3653},

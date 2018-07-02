@@ -33,27 +33,27 @@ While many of the modern systems requiring versioning managers store digital pro
 Libraries curate multiple editions of the same work, sometimes with significant revisions \cite{Wiil:2000:RDH:338407.338517}.
 In many ways, versioned objects resemble multi-edition books or documents.
 Digital librarians have faced many challenges when searching for a persistent identifier due to evolving web technologies.
-Early citations referred to on-line documents using stagnant Uniform Resource Locators (URL), but this frequently lead to a condition known as link rot where moving the document would invalidate the URL \cite{Lyons2005}.
+Early citations referred to on-line documents using stagnant \gls{url}, but this frequently lead to a condition known as link rot where moving the document would invalidate the URL \cite{Lyons2005}.
 Locators required a system to manage changes of old identifiers to new locations when people attempted to utilize references from print.
-The need eventually led to the development of Persistent URLs (PURL), which also suffered from link rot, and this eventually led to the distributed Digital Object Identifier (DOI) system used to track documents today \cite{Duerr2011}.
-The PURL used a centralized system that would translate dead links and redirect to a document's latest location.
+The need eventually led to the development of \glspl{purl}, which also suffered from link rot, and this eventually led to the distributed \gls{doi} system used to track documents today \cite{Duerr2011}.
+The \gls{purl} used a centralized system that would translate dead links and redirect to a document's latest location.
 The system would still need to be manually updated, meaning links would rot if a document was lost or overlooked.
-DOIs rely on a network of managing agencies to collect and host submitted documents.
+\Glspl{doi} rely on a network of managing agencies to collect and host submitted documents.
 In the specialized Handle system, the network has member agencies internally assign an unique name and concatenate it to the end of their host name.
-In Figure \ref{table:Duerr}, DOIs represent the most suitable identifier used for citation in scholarly literature \cite{Duerr2011}.
+In Figure \ref{table:Duerr}, \glspl{doi} represent the most suitable identifier used for citation in scholarly literature \cite{Duerr2011}.
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.28]{figures/DigitalIdentifierTable.png}
 	\caption[Table of predominant identifiers used in science.]{Table of predominant identifiers used in science.  From Duerr, et al. \cite{Duerr2011}}
 	\label{table:Duerr}
 \end{figure}
-The DOI network provides a robust system to track documents, but when tracking data, it faces difficulty following the rate of change with more volatile data sets.
-Under current definitions, distribution organizations assign different DOIs to separate editions of a document.
+The \gls{doi} network provides a robust system to track documents, but when tracking data, it faces difficulty following the rate of change with more volatile data sets.
+Under current definitions, distribution organizations assign different \glspl{doi} to separate editions of a document.
 Documents often do not need new identifiers since they change very rarely as a result of the publication process.
 Data set production and distribution cycles move more quickly and react more sensitively to small content changes, including when data collection continues on after initial publication.
 Data set behavior becomes entirely too slow as data providers begin allowing users to dynamically generate data products from existing data according to their needs \cite{Barkstrom2003a}.
-Some agencies have begun assigning versioned DOIs, but this has not become common practice.
-Other groups do not assign a new DOI, but reference the latest release of the document or object \cite{Ands2017}.
+Some agencies have begun assigning versioned \glspl{doi}, but this has not become common practice.
+Other groups do not assign a new \gls{doi}, but reference the latest release of the document or object \cite{Ands2017}.
 
 As digital methods have evolved, so have digital libraries.
 The documents that digital libraries store are no longer constrained by physical organization \cite{Barkstrom_digitallibrary}.
@@ -65,25 +65,25 @@ The regularizing edition tracking methods significantly improved the response ti
 
 Software versions form the most visible displays of versioning often experienced by researchers.
 Version managers provide tools to archive and restore code through the development lifecycle.
-The Revision Control System (RCS), developed in originally in 1985, documents one of the earliest uses of the dot-decimal identifier \cite{tichy1985rcs}.
+The \gls{rcs}, developed in originally in 1985, documents one of the earliest uses of the dot-decimal identifier \cite{tichy1985rcs}.
 This identifier uses a sequence of whole numbers concatenated by decimals.
-The system possessed many features of modern SVMs such as branches, a separate copy of the code for developing changes safely, which were identified by extending the dot-decimal identifier as seen in Figure \ref{RCSTree}.
+The system possessed many features of modern \glspl{svm} such as branches, a separate copy of the code for developing changes safely, which were identified by extending the dot-decimal identifier as seen in Figure \ref{RCSTree}.
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.75]{figures/RCSCommitTree.png}
 	\caption[Commit history of an object in RCS with changes in the main line stored as back deltas and side branches stored as forward deltas.]{Commit history of an object in RCS with changes in the main line stored as back deltas and side branches stored as forward deltas.  Figure 5 in \cite{tichy1985rcs}}
 	\label{RCSTree}
 \end{figure}
-Not long after, the Concurrent Versions System (CVS) gained popularity with methods allowing multiple users to concurrently develop code to a central repository \cite{cederqvist2002version}.
-The most popular modern SVM is GIT which also allows concurrent development but enables distributed repositories \cite{Chacon:2009:PG:1618548}.
+Not long after, the \gls{cvs} gained popularity with methods allowing multiple users to concurrently develop code to a central repository \cite{cederqvist2002version}.
+The most popular modern \gls{svm} is Git which also allows concurrent development but enables distributed repositories \cite{Chacon:2009:PG:1618548}.
 Each developer contributing to a project is considered by the system to possess the master copy of that project.
 The users collaborate by requesting and pulling other developer's master copies into their project.
-In previous SVMs, only the differences between software files were stored, but GIT stores the entirety of each file version.
-Figure \ref{GITFile} demonstrates an example of how GIT employs storage space for multiple versions \cite{Chacon:2009:PG:1618548}.
+In previous \glspl{svm}, only the differences between software files were stored, but Git stores the entirety of each file version.
+Figure \ref{GITFile} demonstrates an example of how Git employs storage space for multiple versions \cite{Chacon:2009:PG:1618548}.
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.50]{figures/GITFiles.png}
-	\caption[GIT stores changes in the repository as snapshots of individual files.]{GIT stores changes in the repository as snapshots of individual files. Figure 1.5 from \cite{Chacon:2009:PG:1618548}}
+	\caption[Git stores changes in the repository as snapshots of individual files.]{Git stores changes in the repository as snapshots of individual files. Figure 1.5 from \cite{Chacon:2009:PG:1618548}}
 	\label{GITFile}
 \end{figure}
 Only a pointer is stored in subsequent versions for unchanged files, saving space.
@@ -91,7 +91,7 @@ Fischer, et al., demonstrate the importance of software version systems by integ
 
 \subsection{Database Versioning}
 
-The need for dta versioning methods grew alongside the growing popularity and power of relational databases.
+The need for data versioning methods grew alongside the growing popularity and power of relational databases.
 Klahold, et al., introduced using abstract versioning environments in 1986 to separate the temporal features and organize the data into related groupings \cite{Klahold:1986:GMV:645913.671314}.
 Research in the versioning area focused primarily on the database schema.
 The results were temporal databases where schemas included time and dated transactions modifying the schema \cite{roddick1996model}.
@@ -107,7 +107,7 @@ The grid provides a sensitive environment for versioning where there are many us
 The CERN grid for the Compact Muon Solenoid experiment carefully developed processes which allow references by multiple users to the same file without copying that file across the grid \cite{Holtman:687353}.
 Versions lock and release to permit parallel processing while still archiving additions and modifications to the data.
 Grid versioning applications also begins to highlight the difference in versioning usage patterns between users and producers \cite{Branco2008}.
-Deeper exploration into the ATLAS system documentation did not reveal specific use cases explaining the differences.
+Deeper exploration into the \gls{atlas} system documentation did not reveal specific use cases explaining the differences.
 The grid also provides users with the ability to begin dynamically defining data sets to their needs by aggregating results from across the network \cite{Barkstrom2003a}.
 The process would create new data sets without prior existing change documentation and fueled a demand for responsive frameworks which could track the discordant data collection conditions assimilated by the system \cite{Kovse2003VGridAVS}.
 
@@ -145,7 +145,7 @@ Understanding these would give insight into the maturity and health of a data se
 While data addition and modification remain fairly uncontroversial, there is a mild division between practical and theoretical approaches to data deletion \cite{Flouris04clotho:transparent}.
 A removed object provides evidence of an erroneous activity's results or intermediary steps leading to a final product.
 As a result, version management should maintain and track invalidated data instead of deleting it.
-The software versioning manager GIT uses a method of compressing older data to conserve space without deleting the data \cite{Chacon:2009:PG:1618548}.
+The software versioning manager Git uses a method of compressing older data to conserve space without deleting the data \cite{Chacon:2009:PG:1618548}.
 Available storage space places pragmatic constraints on the number of projects which can adopt snapshotting practices.
 In applications which cannot recover erroneous data nor use it as documentation artifacts, like corrupted surveillance images.
 Some high energy physics experiments cannot re-collect observational data due to cost, and as a result, they cannot replace or re-process poor quality data \cite{Cavanaugh2002}.
@@ -153,7 +153,7 @@ While the distinction between `deletion' and `invalidations' remains largely sem
 As a result, invalidation is adopted as a broad, general term to also encompass data deletions.
 
 A handful of other operations exist among version managers, but they do not prove ubiquitous across most applications.
-Software versioning tools like RCS commonly feature branching and merging functions to create a versioning line separate from the stable master branch \cite{tichy1985rcs}.
+Software versioning tools like \gls{rcs} commonly feature branching and merging functions to create a versioning line separate from the stable master branch \cite{tichy1985rcs}.
 Branching mostly provides an organizational role in development by allowing developers to experiment without contaminating a stable software release.
 Figure \ref{GITTree} models a branching operation, showing versions C3 and C5 in branch iss53 before being merged back into the production line as C6.
 Branching allows for more orderly management of versions, but does not conduct versioning itself.
@@ -164,7 +164,7 @@ Many version control tools, likewise, include functions to display the versionin
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.75]{figures/GITCommitTree.png}
-	\caption[Example of a commit history with branching stored in GIT.]{Example of a commit history with branching stored in GIT.  Figure 3.17 from \cite{Chacon:2009:PG:1618548}}
+	\caption[Example of a commit history with branching stored in Git.]{Example of a commit history with branching stored in Git.  Figure 3.17 from \cite{Chacon:2009:PG:1618548}}
 	\label{GITTree}
 \end{figure}
 
@@ -207,15 +207,15 @@ There is also little standardization or formal requirements in naming methods.
 Ubuntu utilizes a dot-decimal version labeling scheme where the two number identifier corresponds to the year-month values of the release \cite{Ubuntu}.
 A common method used to address the distinction between versions is a human-readable change log, further discussed in Section \ref{sec:changelog}.
 
-The discourse on DOIs highlights the importance of understanding the limitations of particular identifier schemes.
+The discourse on \glspl{doi} highlights the importance of understanding the limitations of particular identifier schemes.
 With respect to Figure \ref{table:Duerr}, no identification scheme fits the description of a scientific identifier.
 Duerr, et al., define a use case to make the argument that scientifically unique identifiers are necessary, ``to be able to tell that two data instances contain the same information even if the formats are different" \cite{Duerr2011}.
 A possibility to consider is that identifiers may require incorporation into a data model to discern between scientific differences.
 An identifier works well in revealing the characteristics of an individual object, but it should not be expected to explain its relationship with other objects.
 A data model provides better insight into the different roles objects play in a relationship.
-DOIs also provide a new means to identify versions using URIs which can be dereferenced to provide change information or the data depending on the context.
+DOIs also provide a new means to identify versions using \glspl{uri} which can be dereferenced to provide change information or the data depending on the context.
 
-Using identifiers to convey extended versioning information becomes more difficult with the adoption of distributed version managers like GIT \cite{cederqvist2002version}.
+Using identifiers to convey extended versioning information becomes more difficult with the adoption of distributed version managers like Git \cite{cederqvist2002version}.
 Each participant in the federated repository is the master of their personal copy of the code.
 Upon completion of their distribution's part, they may request that it be pulled into another participant's distribution.
 While each developer's individual repository can follow a linear identifier scheme, the identifiers would not work as the overall project bounces around different primary repositories with mismatching sequential identifiers.
@@ -233,7 +233,7 @@ As a result, relying on identifiers to convey and contain versioning information
 
 \section{Structured Data}
 
-The Resource Description Framework in Attributes (RDFa) framework encodes linked data vocabularies into HTML documents, and provides an opportunity to make change logs machine interpretable. \cite{Adida2015}.
+The \gls{rdfa} framework encodes \gls{linked} vocabularies into \gls{html} documents, and provides an opportunity to make change logs machine interpretable. \cite{Adida2015}.
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.40]{figures/RDFaSemantics.png}
@@ -241,23 +241,23 @@ The Resource Description Framework in Attributes (RDFa) framework encodes linked
 	\label{RDFa}
 \end{figure}Figure \ref{RDFa} illustrates the semantic difference between what web crawlers and what humans see when they consume web pages.
 People intuitively understand that certain strings represent meaningful information based on location and style.
-RDFa seeks to encode that understanding natively for effective machine consumption.
+\gls{rdfa} seeks to encode that understanding natively for effective machine consumption.
 Extending this approach into publishing change logs, will allow linked data to capture the metaphorical meat of change content.
 
-The implementation requires changing publishing practices from plain-text documents to something structured-data compatible such as HTML.
+The implementation requires changing publishing practices from plain-text documents to something structured-data compatible such as \gls{html}.
 The change also has the added benefit of making the logs available on-line, and thus, more openly accessible to data users through the utilization of web based search engines.
-Large companies such as Google have already begun equipping their web crawlers to consume structured data such as RDFa from web pages.
-RDFa has already had significant success in adoption across a variety of web publication platforms and eases the search for their content \cite{Bizer2013}.
-The design of RDFa focuses on describing the web page's content through markup \cite{Herman2015}.
+Large companies such as Google have already begun equipping their web crawlers to consume structured data such as \gls{rdfa} from web pages.
+\gls{rdfa} has already had significant success in adoption across a variety of web publication platforms and eases the search for their content \cite{Bizer2013}.
+The design of \gls{rdfa} focuses on describing the web page's content through markup \cite{Herman2015}.
 The underlying or resulting versioning data model may not conform with the format of content presented in the change log.
 Poor affinity would lead to a poorly structured graph or missing content, undermining the value gained by encoding linked data into the change log.
-As a result, another method using JavaScript Object Notation for Linked Data (JSON-LD) was pursued since its purpose is to store data separate from visible content.
+As a result, another method using \gls{jsonld} was pursued since its purpose is to store data separate from visible content.
 
-The JSON data format allows web pages to store data for JavaScript applications within the document.
+The \gls{json} data format allows web pages to store data for JavaScript applications within the document.
 It utilizes a simple and robust syntax to accommodate a wide variety of content.
-JSON-LD extends the original specification by defining rules which allow entries to resolve as web vocabularies, giving them a meaningful context \cite{JSONLD}.
-Because it stores data separate from visible content, JSON-LD does not need to adhere with the constraints of visible content.
-Every linked data triple must instead be explicitly defined, meaning that resulting documents may likely be much larger than their RDFa counterparts.
+\gls{jsonld} extends the original specification by defining rules which allow entries to resolve as web vocabularies, giving them a meaningful context \cite{JSONLD}.
+Because it stores data separate from visible content, \gls{jsonld} does not need to adhere with the constraints of visible content.
+Every linked data triple must instead be explicitly defined, meaning that resulting documents may likely be much larger than their \gls{rdfa} counterparts.
 
 \section{Change Distance}
 
@@ -274,15 +274,15 @@ Previous endeavors to extract insight into data set performance or behavior usin
 The research, however, generally studies the current state of an object's provenance rather than compare two provenance graphs.
 As stated previously, versions result from slight variations between the provenance of two objects.
 The connection suggests that studying the variations' magnitudes will help predict the change's impact.
-The measurement known as provenance distance seeks to determine the impact of changes in provenance on new data versions through measuring graph edit distances.
+The measurement known as \gls{provdist} seeks to determine the impact of changes in provenance on new data versions through measuring graph edit distances.
 
 \begin{figure}
 	\centering
 	\begin{adjustbox}{addcode={\begin{minipage}{\width}}{
-					\caption[Provenance graph of a Level 3 data product, showing the inter-relations between different data products in generating the final product.]{Provenance graph of a Level 3 data product, showing the inter-relations between different data products in generating the final product.  Figure 2 from \cite{TILMES2011548}}\end{minipage}},rotate=90,center}
+					\caption[Provenance graph of a Level 3 data product, showing the inter-relations between different data products in generating the final product.]{Provenance graph of a Level 3 data product, showing the inter-relations between different data products in generating the final product.  Figure 2 from \cite{TILMES2011548}\label{ProvGraph}}\end{minipage}},rotate=90,center}
 		\includegraphics[scale=0.45]{figures/OzoneProvGraph.png}
 	\end{adjustbox}
-	\label{ProvGraph}
+	
 \end{figure}
 
 The first ingredient necessary to calculate provenance distance is a linked data graph capturing the sequence of events leading to the old and new objects' creation, like the one shown in Figure \ref{ProvGraph}.

@@ -1,301 +1,431 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                 %
-%                            CHAPTER FIVE                         %
+%                            CHAPTER FOUR                         %
 %                                                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Data Volatility} \label{Volatility}
+\chapter{CHANGE METRICS}\label{ch:graph}
 
 \section{Introduction}
 
-Capturing change counts begins to provide evidence for avoiding to use only versions to manage and describe data set change.
-Figure \ref{GCMDC1} only shows the relation of the changes to each version but disconnected from time.
-The changes were applied to each version, but the versions are not set to a strict schedule, meaning that many changes few changes could be applied to a version over a long or short period of time.
-The change rate communicates expectations for the data consumer on the value of a data set since committing to a data set that will soon be invalidated is problematic.
-The following chapter will look into data volatility, the likelihood or rate of data change, and look at how versions can hid the actual change rate of data sets.
+Machine computable \glspl{log} provide a very powerful means to begin answering basic versioning questions in a formal and systematic manner.
+From the \gls{log}, a \gls{linked} versioning graph can be extracted and the changes counted to communicate how different are two \glspl{version}.
+The data model was constructed to allow a wide variety of ways to connect together \glspl{version} such that more complex analytics could be performed using the \glspl{vergraph}.
+The analytics show that producers must be very transparent when communicating the methods data producers use to assess change impacts as shown in Section \ref{gcmd_85}.
 
-\section{Determining Volatility}
+When versioning a data set, researchers very rarely ask whether two objects can be compared.
+The data producer often establishes the context in which data objects are sufficiently similar---to use terms from \gls{frbr}---\textbf{expressions} of the same \textbf{work}.
+Confirming the context prior to making version comparisons is fundamental to ensuring that the resulting \gls{vergraph} contains meaningful results.
+The data sets described in the following section have sufficient context as established by their producers.
+Using the data in these data sets, the model from Chapter \ref{ch:model} is instantiated into \glspl{vergraph}.
+The \glspl{vergraph} are encoded into \gls{html} \glspl{log} using \gls{rdfa} and \gls{jsonld}.
+These \glspl{vergraph} allow for an analysis of the change between versions, which gives insight into the version identifier.
+Finally, a \gls{vergraph} is used to classify the kinds of \gls{change} separating \glspl{version} of a data set to determine the utility.
 
-Instead of charting the version changes in evenly wide bars, the versions are spread across time based on the time of publication to the KMS as seen in Figure \ref{GCMDPlot1}.
+\section{Implementing the Versioning Model}
+
+The following subsections detail the steps used to implement a \gls{vergraph} using the model defined in Chapter \ref{ch:model} and the challenges encountered.
+Section \ref{mapping} procured the decisions made to align the \glspl{attribute} within the Noble Gas dataset and within the Copper data set.
+The alignments create a formula to detect changes and assign them to either an \gls{add}, \gls{invalidate}, or \gls{modify} \gls{change}.
+A \gls{log} can then use the assignments to organize a presentation of the change data.
+The underlying \gls{vergraph} exists as \gls{linked} encoded within the \gls{log}, but can also appear as explicit \gls{linked} statements.
+The \gls{linked} uses \gls{vo}, a versioning ontology made by me, to express the data model using the \textit{vo:} namespace.
+The procedure within this section defines the process used to create \glspl{vergraph} found in all the following sections of this Chapter.
+
+\subsection{Form a Mapping} \label{mapping}
+
+A mapping specifies the method to determine the \glspl{attribute} of a \gls{vergraph} and how to compare them.
+For spreadsheets and table-based data, row and column indexes initially seem an ideal \gls{attribute}, but edits often show the contrary.
+The Noble Gas data set needed a mapping to align the spreadsheet's columns since 140 columns were removed from Version 1.
+The remaining columns in the Version 2 no longer had the same column indexes that they did in Version 1 so the column headers were used instead.
+The Copper data set retains many of the original columns, but their ordering has changed between \glspl{version}.
+In addition, rows must be aligned since both a row and column \gls{attribute} are necessary to uniquely identify a cell.
+The Noble Gas data set split up its rows across eight files, each file representing a separate region of the Earth.
+Cells need to be uniquely identified since this is where a comparison will be made to determine whether a \gls{modify} \gls{change} has occurred in a spreadsheet.
+
+Once aligned determining which attributes have been added, invalidated, or modified is straightforward.
+\Glspl{attribute} which only exist in the original or left-hand \gls{version} have been invalidated.
+More specifically, a set of \glspl{attribute} \[\mathcal{I} = \mathcal{R}_{l} - \mathcal{R}_{r}\] where \(\mathcal{R}_{l}\) and \(\mathcal{R}_{r}\) correspond to the row identifiers of the left-hand and right-hand \glspl{version}, respectively.
+Likewise, a set of \glspl{attribute} \[\mathcal{A} = \mathcal{R}_{r} - \mathcal{R}_{l}\] contain all the added \glspl{attribute}.
+Performing the same operations on the columns result in sets of the added and invalidated columns.
+A script then iterates over the remaining cells which exist in both \glspl{version} to determine if they differ, resulting in a \gls{modify} \gls{change}.
+The unchanged cells form a set of entries which do not appear in a \gls{log} or the \gls{vergraph}.
+The \glspl{attribute} in these sets are then minted into \glspl{uri} and linked together into the \gls{vergraph}, or they can be used to publish a \gls{log}.
+
+\subsection{Generate Versioning Graph}
+
+\begin{figure}
+	\centering
+	\begin{adjustbox}{
+			addcode=
+				{\begin{minipage}{\width}}
+				{
+					\caption{Some initial entries from versions 1 and 2 of the Noble Gas data set}
+					\label{NobleGraph1}
+					\end{minipage}
+				},
+				rotate=90,
+				center}
+			\includegraphics[scale=0.39]{figures/NobleVersion.png}
+	\end{adjustbox}
+\end{figure}
+The \glspl{vergraph} presented in this section were created by extracting triples, using the code in Appendix \ref{extractor} from the associated \gls{log} which was covered in Chapter \ref{ch:changelog}.
+The statements making up the \gls{vergraph} could have alternately been published by writing out the triples directly instead of encoding them into a \gls{log}.
+Figure \ref{NobleGraph1} displays a subgraph of the Noble Gas data set's \gls{vergraph} between Versions 1 and 2, highlighting each of the \gls{AIM} \glspl{change}.
+Notice how the \gls{vergraph} differs from the provenance graph in Figure \ref{CAM001ProvGraph}.
+The \gls{vergraph} unpacks the \textit{prov:wasRevisionOf} relationship into explicit components.
+These components reveal more detailed differences between version 1 and 2 of CAM001 in the provenance graph which are the differing compilation activities.
+\begin{figure}
+	\centering
+	\begin{adjustbox}{
+		addcode=
+			{\begin{minipage}{\width}}
+			{
+				\caption{Provenance graph for the CAM001 entry of the Noble Gas Database.  Other than the labels, the structure of each data object is very much the same.}
+				\label{CAM001ProvGraph}
+				\end{minipage}
+			},
+			rotate=90,
+			center}
+		\includegraphics[scale=0.80]{figures/CAM001v1v2.png}
+	\end{adjustbox}
+\end{figure}
+The \gls{log} encoded the triples in \gls{rdfa}, resulting in the \gls{attribute} ``AttributeCAM00111v2" to the right of the \gls{modify} change.
+Because \gls{rdfa} does not naturally support multiple predicates while also conforming to the content structure of the \gls{log}, an \gls{attribute} was created to combine both the row and column identifier for the changing cell.
+Separating the \glspl{attribute} would require multiple dedicated \gls{html} tags which don't appear along with content.
+Including these tags would diverge from benefits of encoding triples as \glspl{attribute}.
+Figure \ref{NobleGraph1} also shows that even though many columns are added when a new row is added, the row identifier can be used to summarize the columns additions.
+
+Another modification to the implementation differs from the original versioning model.
+The \gls{modify} construction defined in the model only covers the case where a single \gls{attribute} is sufficient to define a \gls{change}.
+The \gls{modify} captured in spreadsheets describes a cell which requires a row and column identifier to indicate uniquely.
+The implementation demonstrates that using multiple \glspl{attribute} is an allowable, sometimes necessary, construction.
+
+Listing \ref{NGA} presents the statements in turtle format necessary to express that the entry EGY001 has been added to the data set from Version 1 to Version 2 as shown along the top of Figure \ref{NobleGraph1}.
+The namespace for many of the \glspl{uri} is \textlangle http://rdfa.info/play/\textrangle.
+\gls{rdfa} allows identifiers to refer to an element on the web page, and the web tool which generated the triples from \gls{rdfa}, therefore, used its \gls{url} as a namespace to produce a valid \gls{uri}.
+
+\begin{listing}
+	\begin{minted}[linenos, frame=lines, breaklines]{SPARQL}
+<http://rdfa.info/play/Version1> a vo:Version ;
+vo:absentFrom <http://rdfa.info/play/AddChange21> .
+<http://rdfa.info/play/AddChange21> a <https://orion.tw.rpi.edu/~blee/VersionOntology.owl#AddChange> ;
+vo:resultsIn <http://rdfa.info/play/Attribute21> .
+<http://rdfa.info/play/Attribute21> a <https://orion.tw.rpi.edu/~blee/VersionOntology.owl#Attribute> ;
+rdfs:label "EGY001"
+<http://rdfa.info/play/Version2> a vo:Version ;
+vo:hasAttribute <http://rdfa.info/play/Attribute21>
+	\end{minted}
+	\caption{Noble Gas Statements in Turtle for Addition 21 as an example for instantiating a versioning relation}
+	\label{NGA}
+\end{listing}
+
+Figure \ref{CopperGraphVerGraph} shows a similar subgraph from the Copper data set \gls{vergraph}.
+The \gls{vergraph} was assembled using an \gls{rdfa} \gls{log} and also displays a merged \gls{attribute} on the right side of the \gls{modify}.
+In the full \gls{vergraph}, multiple of each \gls{change} is present, forming a zipper or ladder-like structure.
+As a result, each \gls{add}, \gls{invalidate}, or \gls{modify} is given separate names for each instantiation.
+
+\begin{figure}
+	\centering
+	\begin{adjustbox}{addcode={\begin{minipage}{\width}}{
+					\caption{Versioning Graph representing the Copper Minerals linked data graph with selected entries of additions, invalidations, and modifications.}
+					\label{CopperGraphVerGraph}					
+					\end{minipage}},rotate=90,center}
+		\includegraphics[scale=0.5]{figures/VersioningGraph2.png}%
+	\end{adjustbox}
+\end{figure}
+
+\subsection{Graphs with Multiple Versions}\label{sec:multiver}
+
+Figures \ref{NobleGraph1} and \ref{CopperGraphVerGraph} depict a comparison between only two \glspl{version}, but a project can contain more than two objects.
+Case in point, Version 3 of the Noble Gas data set was released on July 11, 2017.
+Figure \ref{NobleGraph2} shows a subgraph that contains changes from all three \glspl{version} of the Noble Gas data set.
+\begin{figure}
+	\centering
+	\begin{adjustbox}{addcode={\begin{minipage}{\width}}{
+					\caption{Versioning Graph representing the Noble Gas linked data graph with selected entries of additions, invalidations, and modifications after the publication of the third version.}
+					\label{NobleGraph2}					
+		\end{minipage}},rotate=90,center}
+		\includegraphics[scale=0.48]{figures/NobleVersion2.png}%
+	\end{adjustbox}
+\end{figure}
+From Version 1 to Version 2 of the data, EGY001 becomes introduced as an \gls{attribute} into the data set.
+This entry then undergoes a \gls{modify} in columns 29, 31, and 43 when comparing Version 2 and Version 3.
+Entry TUR030 goes through a \gls{modify} change in column 11 from Version 1 to Version 2.
+The entire row, however, becomes invalidated in Version 3.
+
+
+Notice the difference in how Figure \ref{NobleGraph1} and Figure \ref{NobleGraph2} refer to columns.
+Figure \ref{NobleGraph1} used \gls{linked} extracted from a \gls{log} employing \gls{rdfa}, forcing the row identifier and the column identifier into the same concept.
+The way nesting works in \gls{rdfa} means that ChangeCAM00111 cannot back reference multiple concepts in a single statement, therefore AttributeCAM00111v2 was used to imply CAM001.
+Figure \ref{NobleGraph2} used \gls{linked} extracted from a \gls{jsonld} encoded \gls{log}.
+Since the \gls{log} can use explicit statements, the column identifier refers to the entire column and can be used to identify changes in the same column across multiple rows.
+
+\section{Change Metric} \label{ch:distance}
+
+Use Case 2 addresses the use of \glspl{version} to communicate how different two objects are.
+Many versioning systems use dot-decimal identifiers to signify whether a change is large, medium, or small.
+The exact requirements to determine change size differs widely across different domains and applications.
+The \gls{vergraph} provides a new, more regular method to quantify change between objects using versioning operations.
+The work done with \gls{gcmd} Keywords shows the qualitative relationship between version identifiers and change distance.
+Work with the \gls{mbvl} data set then extends \gls{vo} to give more detailed accounting with the change capture method.
+
+\subsection{Utilized Data Sets}
+
+\subsubsection{Global Change Master Directory Keywords}
+
+The \gls{gcmd} is a metadata repository used by \gls{nasa} to store records of its available data sets \cite{Miled:2001:GCM:372202.372324}.
+They employ a set of keywords to make \gls{nasa} Earth Science data sets searchable.
+These words tag and label datasets into strictly defined categories \cite{GCMDKey}.
+\gls{gcmd} Keywords do not qualify as a standard web ontology since \gls{gcmd} Keywords do not constitute a class hierarchy.
+The management team stored early versions of the keywords in Excel spreadsheets, later using a centralized distribution system, but data is not available prior to June 12, 2012.
+The \gls{kms} now serves the keywords directly in a variety of formats.
+Each version of the keywords, encoded in \gls{rdf}, was downloaded into separate files.
+Only versions from June 12, 2012 and after were available, resulting in 9 version files.
+Each keyword corresponds to a unique identifier, and when combined with a web namespace, resolves to a data description of the keyword.
+Every identifier can be referred to per version by including the version's number at the web identifier's end, meaning that identifiers are consistent across versions.
+The taxonomy uses the concepts \textit{skos:Broader} and \textit{skos:Narrower}, where skos refers to the \gls{skos} ontology name space, to form a tree hierarchy \cite{skos}.
+The tree's root is the keyword, "Science Keywords."
+The data set provides an interesting study case due its long sequence of versions and ready use of \gls{linked} technology \cite{Stevens2016}.
+
+\subsubsection{Marine Biodiversity Virtual Laboratory Classifications} \label{sec:MBVL}
+
+The \gls{mbvl}, based at Woods Hole Oceanographic Institution, provides data and services for the study of marine biology with an integrative approach \cite{mbvl}.
+In the application studied, a choice of algorithm and taxonomy pairings must be tested on a known population in order to estimate their performance with an unknown microbial population.
+The original sequences belong only to the species listed in Table \ref{species_table}.
+The original population's census is not available to the author, and only the list of species is known, forming the first data set in this section.
+These sequences are then grouped and classified by a specific taxonomy and algorithm pairing.
+The workflow utilizes two taxonomies, the \gls{rdp} and the Silva taxonomy.
+Using these databases, the \gls{spingo} or the \gls{gast} algorithms assign taxonomic ranks to each sequence.
+The process produces four data sets, each using the same grouping identifiers and having the same size in each group.
+Since the data sets have the same number of sequences, the primary differences between the data sets are the ranks assigned to each sequence.
+
+\begin{table}
+	\caption{List of species in the original population.}
+	\label{species_table}
+	\centering
+	\setlength{\tabcolsep}{2pt}
+	\begin{tabular}{|c|c|c|}
+		\hline
+		Acinetobacter baumannii & Actinomyces odontolyticus & Bacillus cereus \\
+		Bacteroides vulgatus & Clostridium beijerinckii & Deinococcus radiodurans \\
+		Enterococcus faecalis & Escherichia coli & Helicobacter pylori \\
+		Lactobacillus gasseri & Listeria monocytogenes & Neisseria meningitidis\\
+		Porphyromonas gingivalis & Propionibacterium acnes & Pseudomonas aeruginosa \\
+		Rhodobacter sphaeroides & Staphylococcus aureus & Staphylococcus epidermidis\\
+		Streptococcus agalactiae & Streptococcus mutans & Streptococcus pneumoniae \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\section{Global Change Master Directory}
+
+\subsection{Global Change Master Directory Versioning Graph}
+
+The \gls{gcmd} establishes the context that each \textbf{manifestation} of their keyword list is related versions.
+Since the unique identifier for each keyword remains the same across versions, the unique keyword identifier can be used to align a mapping across \glspl{version}.
+\Glspl{add} and \glspl{invalidate} are detected by checking an identifier's presence within both versions.
+A \gls{modify} occurs when a keyword's \textit{skos:Broader} property differs between adjacent \gls{version}.
+The alignment assumes that there is not reason a keyword's preferred label would change, but still reports a value when it has new entries in the ``notes" property.
+A difference indicates that the word has been moved to a different place within the taxonomy since identifiers do not change across versions and a keyword only has one parent concept.
+\Glspl{change} over consecutive \glspl{version} can be collected into a single graph using the method in Section \ref{sec:multiver} to chain together \glspl{vergraph}.
+A \gls{log} was generated for each pair of consecutive versions in \gls{gcmd} Keywords and embedded with \gls{jsonld}.
+\Glspl{vergraph} for each adjacent \gls{version} was created by extracting \gls{jsonld} from the corresponding \gls{log}, and entering the triples into a Fuseki triple store.
+
+\subsection{Connecting Change Counts to Identifiers} \label{gcmd_85}
+
+The \gls{add}, \gls{invalidate}, and \gls{modify} counts for each transition are presented in Figure \ref{GCMDC1}.
+The query used to extract the counts is found in Listing \ref{gcmd_list}.
+Notice the sharp spike in \glspl{add} and \glspl{invalidate} when transitioning from Version 8.4.1 to 8.5.
+The version identifiers indicate that at most a minor or technical change has occurred, but the counts of \gls{add} and \gls{invalidate} in this transition is more than triple the counts in either of the previous \textbf{major} transitions.
+Not only should a small transition not produce changes of this quantity, but the data set's size is on the order magnitude of the recorded \glspl{invalidate}.
+In addition, no \glspl{modify} are revealed, and even the root node "Science Keywords" has been invalidated.
+Further investigation of the root word reveals that the name space for the keywords has changed from \mintinline{HTML}{http} to \mintinline{HTML}{https}.
+To provide context, \gls{nasa} mandated a transition to secure protocols, and the group changed the name space to ensure the \glspl{uri} remained resolvable.
+Since the identifiers are unique, the new name space means they no longer refer to the same object after the protocol change.
+Because the keyword identifiers no longer match, the mapping approach results in the total invalidation of keywords from 8.4.1 and the addition of keywords from 8.5.
+The dot decimal identifier for the transition from Version 8.4.1 to 8.5 does not match the number of changes in the \gls{vergraph}.
+
+\begin{table}
+	\caption{Global Change Master Directory Keyword Change Counts}
+	\label{table:GCMD_main}
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		
+		Transition&	Add&	Invalidate&	Modify&	Total\\\hline
+		June 12, 2012 to 7.0&	310&	9&	22&	341\\
+		7.0 to 8.0&	503&	6&	79&	588\\
+		8.0 to 8.1&	277&	28&	22&	327\\
+		8.1 to 8.2&	53&	1&	26&	80\\
+		8.2 to 8.3&	58&	0&	13&	71\\
+		8.3 to 8.4&	53&	0&	1&	54\\
+		8.4 to 8.4.1&	86&	13&	8&	107\\
+		\hline
+	\end{tabular}
+\end{table}
+\begin{figure}[b]
+	\centering
+	\includegraphics[scale=0.83]{figures/GCMDChartShort.png}
+	\caption[Global Change Master Directory Keywords Change counts up to Version 8.4.1]{Add, Invalidate, and Modify counts from the beginning of the Keyword Management System to Version 8.4.1.}
+	\label{GCMDC1}
+\end{figure}
+
+%\hfill \break
+
+\begin{listing}
+	\begin{minted}[linenos, frame=lines, breaklines]{sparql}
+PREFIX vo:<http://orion.tw.rpi.edu/~blee/VersionOntology.owl>
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?p (COUNT (DISTINCT ?s) as ?count)
+{
+?s a ?p .
+?p rdfs:subClassOf vo:Change .
+} GROUP BY ?p
+	\end{minted}
+	\caption[Change count query.]{Query to compile the counts for each subclass of Change in a GCMD versioning graph.}
+	\label{gcmd_list}
+\end{listing}
+
+Changing the mapping method to account for the new namespace provides a pathway to compare the perceived change by the producer as evidenced by the version identifier with the \gls{changedist} in the \gls{vergraph}.
+To do this, the mapping treats identifiers with \mintinline{html}{http} and \mintinline{html}{https} the same. 
+Differences in \gls{changedist} become much clearer after controlling for the altered name space in Figure \ref{GCMDC2}.
+All revisions are dominated by \glspl{add}, but major version changes have counts around 300 to 500 while minor revisions are an order of magnitude smaller.
+The transition from Version 8.4.1 to 8.5 also seems to follow this trend.
+The \glspl{add} in ``8.4 to 8.4.1" in Figure \ref{GCMDC2} numbers almost a hundred, providing evidence that the trend of decreasing order of magnitudes may now continue as the granularity of the version identifier increases.
+
+\begin{table}
+	\caption{Difference in Version 8.5 mapping methods}
+	\label{table:GCMD_8_5}
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		Mapping Method&	Add&	Invalidate&	Move&	Modify\\ \hline
+		Standard&	3097&	3031&	0&	0\\
+		Silent&	68&	2&	22&	0\\
+		Bridged&	68&	2&	22&	3007\\		
+		\hline
+	\end{tabular}
+\end{table}
 \begin{figure}%[b]
 	\centering
-	\includegraphics[scale=0.56]{figures/GCMDPlot1.png}
-	\caption[Global Change Master Direcotry counts distributed over time.]{Add counts for all versions of GCMD up to 8.5 evenly distributed over the time of version validity.}
-	\label{GCMDPlot1}
+	\includegraphics[scale=.9]{figures/GCMD8_5.png}
+	\caption{Add, Invalidate, and Modify counts using different methods of mapping identifiers in Global Change Master Directory Keywords Version 8.4.1 to 8.5.}
+	\label{GCMDC2}
 \end{figure}
-Since each of the versions were dominated by the \textbf{Add} counts, the count is divided by the number of days between the publication of a version on the left side of the line and the release of the replacement version on the right side of the line.
-The height of the line on the chart gives the steady rate of change until the release of the new version.
-The area underneath the line is the total amount of change the new version introduces.
-Since each version packages together all the changes into a single release, the actual change rate is unknown.
 
-Three observable clusters appear in the time aware presentation of the versions, highlighted in Figure \ref{GCMDPlot1Cluster}.
-\begin{figure}%[b]
+
+\section{Marine Biodiversity Virtual Laboratory}
+
+\subsection{Variant Versioning Graph}
+
+The experiment conducts activity over two phases in this procedure.
+The first phase takes sequences from the original known population and feeds the sequences though a particular algorithm/taxonomy combination to produce a candidate classification.
+Since the classifications for the known population sequences are unavailable, there is not sufficient context to perform a valid comparison with the candidate classifications.
+The second phase compares the performances of each candidate classification of a algorithm/taxonomy pair.
+The use of \gls{add}, \gls{invalidate}, and \gls{modify} varies slightly in this application since all the results use the same sequences.
+A \gls{vergraph} utilizing just the sequence identifiers would only result in \textbf{modify} changes when taxonomic ranks differ since the sequence identifier exists in both data sets.
+The mapping instead uses the sequence identifiers to align comparisons and then the taxonomic rank classification to determine the kind of \gls{change}.
+If the right-hand result specifies more taxonomic ranks, the relationship is an \gls{add}.
+If the left-hand result is more specific, then the relationship is classified as an \gls{invalidate}.
+If both results have the same precision but the name differs, then the link is a \gls{modify}.
+Otherwise, no \gls{change} is detected.
+
+Figure \ref{mbvl_chart} shows the changes detected when varying either the taxonomy or the classification algorithm.
+\begin{figure}
 	\centering
-	\includegraphics[scale=0.56]{figures/GCMDPlot1_Cluster.png}
-	\caption[Global Change Master Directory count distributed over time with clusters marked.]{The change rate of different versions organize into three visible clusters. Cluster 2 denotes a sudden burst of version releases which is notable.}
-	\label{GCMDPlot1Cluster}
+	\includegraphics[scale=0.75]{figures/mbvl_chart.png}
+	\caption{Compiled counts of \textbf{adds}, \textbf{invalidates}, and \textbf{modifies} grouped by taxonomic rank across algorithm and taxonomy combinations.}
+	\label{mbvl_chart}
 \end{figure}
+Only the taxonomy or only the classifier differs in each comparison to control for overlapping influences that having both a different taxonomy and classifier may introduce.
+Each bar indicates the total number of differences between sequences for a specific kind of \gls{change}.
+The bars are further broken down by the taxonomic rank at which the difference occurred.
+For example, in ``Silva vs RDP, Gast", a notable number of classifications differed at the species rank.
+The graph also indicates that using the \gls{rdp} taxonomy often produces more precise classifications since both ``Silva vs RDP, Spingo" and ``Silva vs RDP, Gast" feature a larger number of \glspl{add} than any other change.
+The classifier comparisons feature a high number of \glspl{invalidate}; however, ``RDP, Spingo vs Gast" also displays a higher number of \glspl{modify} than \glspl{invalidate}.
+
+\section{Version Graph Discussion}
+
+The \gls{vergraph} successfully addresses the concerns of Use Case 1 by capturing all the differences within the Noble Gas data set and within the Copper data set into a \gls{vergraph}.
+Some additional concerns had to be addressed, such as multiple files in a \gls{version} and dual \gls{attribute} identification, during the implementation of the versioning model.
+The multiple files in the first version of the Noble Gas data set needed to be collected into a single concept in order to preserve the one-to-one relation between \glspl{version}.
+The grouping simplifies the \gls{vergraph} structure as well as reduce the complexity of a \gls{log} encoding.
+
+In Chapter \ref{ch:model}, there is only one \gls{attribute} on each side of the interaction.
+Figure \ref{CopperGraphVerGraph}, however, shows two \glspl{attribute} used to characterize the \textit{vo:ModifyChange}.
+While the model only shows one \gls{attribute}, it was found that in some applications, multiple \glspl{attribute} may be necessary to properly model a single \gls{change}.
+The construction does not even need to have the same number \glspl{attribute} on both sides of the \gls{change}.
+The flexibility becomes important when trying to model, for example, a single location entry being split into separate latitude and longitude entries.
+
+The \gls{vergraph}'s construction allows multiple \glspl{version} to be linked together.
+The \gls{vergraph} provides not only greater continuity than Schema.org's properties, but also greater detail than \gls{prov}'s versioning properties.
+Continuity is important since many versioning \gls{linked} alternatives view version change as a single contained \textit{activity}.
+When linking together multiple \glspl{version} using a \gls{vergraph}, the relationship between non-adjacent \glspl{version} becomes implied in the graph's structure.
+The natural pathway between \glspl{attribute} in non-adjacent \glspl{version} holistically considers the relationships among all \glspl{attribute} along that path.
+In comparison, other models only capture activity between the adjacent \glspl{version}.
+
+The model struggles with discontinuous changes to an \gls{attribute} across multiple \glspl{version}.
+Since the model does not capture when an \gls{attribute} doesn't change, it is possible for an \gls{attribute} in an earlier \gls{version} to become disconnected from later \glspl{version} due to inactivity.
+For example, in Figure \ref{NobleGraph2}, column 31 of EGY001 becomes modified transitioning into the Version 3.
+If that column underwent no activity in the next transition but changed from Version 4 to 5, the connection between all the column 31s would no longer be continuous.
+This poses a problem for executing queries in a triple store which rely on graph traversals, but no path exists between disconnected \glspl{attribute}.
+
+\subsection{Version Identification}
+
+The versioning process discovered a discrepancy in the identifier assignment in the \gls{gcmd} Keywords taxonomy.
+The original analysis was intended to determine if dot-decimal identifiers would reflect an order of magnitude division among the change counts of the \gls{vergraph}.
 According to the \textit{Keyword Governance and Community Guide Document} \cite{gcmd_gov}, ``Full GCMD keywords list releases get a new major version number (e.g., 8.0). Incremental releases for updates to topics, terms, and variables get a new minor version number (e.g., 8.1).”
-The statement explains the activity in Cluster 1 where there are sufficient changes to warrant a full release of the keywords.
-Cluster 2 captures the change rate and duration of minor versions, except those from 8.2 to 8.4.1 which are in Cluster 3.
-Cluster 3 demonstrates a flurry of activity occurring between June 7, 2016, to August 2, 2016.
-Considering the previous pattern of taking at least six months between releases, three minor version releases within as many months is highly unusual.
+The change counts for Versions `June 12, 2012' to 8.4.1 demonstrates a threshold of \glspl{change} necessitating a full keywords list release.
+The document does not explain the purpose or distinguishing qualities of \glspl{version} with a new revision number, 8.4.1.
+Version 8.5, however, was named with respect to perceived taxonomy changes and did not consider underlying \gls{linked} practice revisions.
+The conclusion can be obtained by looking at \ref{GCMDC2} and noticing that the only matching approach without a bar equal to the size of the entire data set is the `Silent' approach.
+For a purely \gls{uri} based comparison in `Standard', Version 8.5 definitely falls under the category of full release since an entirely new list of words is released.
+Users using the `Bridged' approach would also see a new full release because all old words have had the \glspl{uri} edited.
+Version name assignment based on producer perception and not allowing users to assess change measures is concerning.
+Making sure that data consumers have the ability to assess change in data sets when the requirements for change differs between producer and consumer must be addressed.
 
-An immediate concern is that Cluster 3 does not result from a sudden burst of activity, necessitating rapid version replacement.
-An inquiry into reasoning behind the successive publication returned a statement that the government customer had requested the action.
-Another way to dig into the behavior is to look into the impact assessments accompanying the versions.
-Impact assessments prior to Version 8.5 are not publicly available, and only assessments for versions 8.2, 8.3, and 8.4 were received upon request.
-Of the 6 requests affecting Earth Science Keywords in 8.2, published June 7, 2016, 4 were made in 2014, and the remaining 2 were made in 2015.
-Version 8.3 had 8 entries in its impact assessment with 7 entries originating in 2014, and the remaining entry from 2015.
-The 6 entries 8.4’s impact assessment has 5 entries from 2008 and 1 entry from 2015.
-The data is collected in Table \ref{table:GCMD_old}.
-\begin{table}
-	\caption{Global Change Master Directory versions with old start time changes.}
-	\label{table:GCMD_old}
-	\centering
-	\begin{tabular}{|c|c|c|c|c|}
-		\hline
-		Version Name&	Publish Date&	2008&	2014&	2015\\ \hline
-		8.2&	June 7, 2016&	0&	4&	2\\
-		8.3&	June 21, 2016&	0&	7&	1\\
-		8.4&	July 7, 2016&	5&	0&	1\\
-		\hline
-	\end{tabular}
-\end{table}
+The analysis does not to claim that \gls{changedist} should be the sole mechanism in determining version identifiers.
+The counts, however, can provide a more quantitative method to compare version differences.
+In Figure \ref{GCMDC1}, the yellow line indicates the total changes made to the data set, performing a similar function as the major/minor/revision version identifier.
+Breaking up the changes into types reveals additions dominate manipulations to the data set.
+\Gls{add}, \gls{invalidate}, and \gls{modify} provides deeper insight into how a data set is changing, but some \glspl{change} can be more impactful than others which this model does not capture.
 
+\subsection{MBVL Analysis}
 
-\section{Earth Observing Laboratory}
+In Section \ref{ch:distance}, the versioning process was used to compare the performance of different taxonomy and algorithm combinations.
+The data set diverges from many of the common understandings of \glspl{version} since each of the \glspl{version} are not sequential and are largely independent.
+The data set of species names in the initial population would not have produced very meaningful results if applied to the versioning model since it lacked sufficient data to map the other data sets together well.
 
-The Earth Observing Laboratory (EOL) of the National Center for Atmospheric Research (NCAR) distributes small data sets, around 10-12 files per data set, regarding lower atmospheric data beginning in 2005 \cite{EOL}.
-The EOL data sets are somewhat unique in the data set size means management often does not require automation.
-In mid-2014, EOL began assigning versions to stored data sets.
-When receiving a new version of a data set from a researcher, the practice is to upload the entire new data set, and replace all old files.
-
-Of the 1335 data sets maintained by EOL with versions, only 180 data sets had more than one version.  
-The full distribution of version counts is in Table \ref{table:EOL_Versions}
-\begin{table}
-	\caption{Version Content of Earth Observing Laboratory Data Sets}
-	\label{table:EOL_Versions}
-	\centering
-	\begin{tabular}{|c|c|}
-		\hline
-		Number of Versions& Number of Data Sets\\ \hline
-		1&	1155\\
-		2&	141\\
-		3&	26\\
-		4&	10\\
-		5&	3\\
-		Total&	1335\\
-		\hline
-	\end{tabular}
-\end{table}
-The 1155 other data sets were filtered out since change counts could not be computed for single-version collections.
-Since all the files are replaced on an update and a unique file identifier like a hash sum was unavailable, file matching between versions rely on filenames to perform change mappings.
-For all files that matched names across versions, the relation was classified as \textbf{Modify}.  
-The approach will over-count the number of modifications, but provides an upper bound on the data set volatility in the repository.  
-Each count is then normalized by the number of files in the previous version to standardize comparison between data sets regardless of data set size.  
-The average for each data set is taken for each change type.
-
-\section{EOL Versioning Behavior} \label{sec:behavior}
-
-Given that EOL replaces the entire old data set when updating, the expected behavior of the transitions would be \textbf{Modifies} concentrating close to 1 and \textbf{Adds} and \textbf{Invalidates} distributed close to 0.
-The assumption is that researchers have little reason to change the file naming scheme.
-The data surprisingly indicates that data sets in EOL primarily gravitate towards \textbf{Addition} and \textbf{Invalidation} values of 1.
-\textbf{Modify} counts score more close to 0 in a complete reversal of expectations.
-
-Figure \ref{EOL_Adds} shows the distribution of \textbf{Add} scores.
-\begin{figure}%[b]
-	\centering
-	\includegraphics[scale=.43]{figures/Eol_Adds.png}
-	\caption{Distribution of average normalized Add counts for each data set in Eath Observing Laboratory.}
-	\label{EOL_Adds}
-\end{figure}
-The primary feature of the chart is the bar situated in the `[0.9-1' range, meaning that about 45 data sets add a number of files equal to the original size of the data set.
-Secondary features include the bars on the far right and far left of the chart, but the bar on the right side is a collection of outliers.
-In the outlier data sets, the size of the data set increased drastically compared to the behavior of other data sets managed by EOL.
-Outliers are determined by collecting values above 1.5 times the interquartile range (IQR) showing in Table \ref{table:EOL_Change}.
-\begin{table}
-	\caption{Normalized Change Statistics}
-	\label{table:EOL_Change}
-	\centering
-	\begin{tabular}{|c|c|c|c|}
-		\hline
-		Stat&	Add&	Invalidate&	Modify\\ \hline
-		Mean&	0.714312707&	0.654819294&	0.345180706\\
-		Std. Dev&	0.509878564&	0.420093557&	0.420093557\\
-		Min&	0&	0&	0\\
-		Q1&	0.28635075&	0.142857&	0\\
-		Med&	0.9146635&	0.9642855&	0.0357145\\
-		Q3&	1.00358625&	1&	0.857143\\
-		Max&	54.25&	1&	1\\
-		IQR&	0.7172355&	0.857143&	0.857143\\
-		\hline
-	\end{tabular}
-\end{table}
-A more muted distribution appears around the 0.5 mark where data sets grow more gradually.
-
-The normalized \textbf{Invalidation} score in Figure \ref{EOL_Invs} shows a majority of data sets removing all or almost all files in the data set.
-\begin{figure}%[b]
-	\centering
-	\includegraphics[scale=.6]{figures/Eol_Inv.png}
-	\caption{Distribution of average normalized Invalidate counts for each data set in Eath Observing Laboratory.}
-	\label{EOL_Invs}
-\end{figure}
-Coupled with the information that a quarter of the data sets added close to the original data sets' size of files suggests that the entire data set is being replaced.
-\textbf{Invalidations} do not have outliers since only files within the data set can be removed.
-The data is extremely biased with only 0.04 separating the median and maximum value.
-From Table \ref{table:EOL_Change}, at least a quarter of values are 1.
-Figure \ref{EOL_Invs} also shows a muted distrubtion around 0.5.
-
-Figure \ref{EOL_Mods}, representing the normalized \textbf{Modify} distribution, is almost a mirror of the \textbf{Invalidation} chart.
-\begin{figure}%[b]
-	\centering
-	\includegraphics[scale=.6]{figures/Eol_Mod.png}
-	\caption{Distribution of average normalized Modify counts of each data set in Eath Observing Laboratory.}
-	\label{EOL_Mods}
-\end{figure}
-The right bar is specifically cut off to capture only 0s, showing that almost a majority of data sets modify 0 files, having 0 files that share names between versions.
-The distribution is consistent with a practice of removing all the files in a data set and replacing the files with a new data set using different filenames.
-The second feature of this graph shows around 40 data sets in which all or almost all files match across versions.
-A small spike of data sets are centralized around 0.5, very much like the other normalized change graphs.
-
-The high concentration of data sets towards 1 in \textbf{additions} and \textbf{invalidations} suggests a more complicated interaction within the data sets.
-Individually, the normalized distributions do not show the connection between all three changes since the changes share a common feature, the version transition the changes describe.
-Together, the AIM changes create a coordinate in three dimensional space, showing the inter-relation of the changes. 
-Figure \ref{EOL_AIM} shows a scatter plot grouping unnormalized change counts for each version.
-\begin{figure}%[b]
-	\centering
-	\includegraphics[scale=.6]{figures/Eol_Versions_3d.png}
-	\caption{Distribution of average normalized Modify counts of each data set in Eath Observing Laboratory.}
-	\label{EOL_AIM}
-\end{figure}
-Unlike the other charts, the size of the changes are not normalized by data set size, but the values have the log1p function applied to account for a heavy bias towards 12 and 13.
-Notice the one-to-one trend between \textbf{Adds} and \textbf{Invalidates} which shows the tendency of data sets to replace every file and assign a new filename.
-If the two changes did not co-occur, a normalized \textbf{Add} score of 1 would indicate that data sets tend to double in size instead.
-The files are more likely to retain filenames when only a few files in a data set are being modified.
-
-\section{Analysis}
-
-\subsection{Impact Assessment Change Counts}
-
-The impact assessments obtained for GCMD Version 8.2, 8.3, and 8.4 revealed that some of the changes began much earlier than the valid duration of the previous version.
-Adjusting for the new duration, the change rates reduce to under 0.5, aligning with the values in Cluster 2.
-The impact assessments furthermore provide change counts in the format of \textbf{Add}, \textbf{Invalidate}, and \textbf{Modify}.
-In none of the cases, shown in Table \ref{table:GCMD_metric}, did the metrics completely align although Version 8.3 came close with a difference of 3.
-\begin{table}
-	\caption{Differences in VersOn and Impact Assessment metrics}
-	\label{table:GCMD_metric}
-	\centering
-	\begin{tabular}{|r|r|r|r|}
-		\hline
-		Version & Add & Invalidate & Modify\\ \hline
-		8.2(VO)&	53&	1&	26\\
-		-8.2(IA)&	48&	0&	4\\
-		\hline
-		&	\textbf{5}&	\textbf{1}&	\textbf{22}\\
-		\hline
-		8.3(VO)&	58&	0&	13\\
-		-8.3(IA)&	58&	0&	10\\
-		\hline
-		&	\textbf{0}&	\textbf{0}&	\textbf{3}\\
-		\hline
-		8.4(VO)&	53&	0&	1\\
-		-8.4(IA)&	66&	0&	5\\
-		\hline
-		&	\textbf{-13}&	\textbf{0}&	\textbf{-4}\\
-		\hline
-		8.5(VO)&	68&	2&	22\\
-		-8.5(IA)&	55&	0&	30\\
-		\hline
-		&	\textbf{13}&	\textbf{2}&	\textbf{-8}\\						
-		\hline
-	\end{tabular}
-\end{table}
-VersOn does not consistently overestimate or underestimate across the versions, but the assessments most consistently align on \textbf{Invalidations} which make up very few of the changes.
-
-A investigation into the specific differences in Version 8.3 revealed that the term ``Saline Lake" does not appear in the change log, but ``Leaf Area Index (LAI)" appears twice.
-LAI appears twice because it has two unique identifiers.
-Six terms appeared in the change log as \textbf{Modifications} but missed three terms from the impact assessment.
-The primary driver between the differences lies in impact assessments being sourced from community requests.
-The focus of the change analysis becomes arranged around the preferred label rather than the unique identifier used to implement the keyword.
-Impact assessments capture changes that modify a keyword's label and that doesn't change the keyword's place in the taxonomy as a result.
-The change log uses a keyword's unique identifier and its placement in the taxonomy to determine changes to the structure.
-The difference in metrics collection once again illustrates the producer/consumer dynamic in data version management as well as the need for clear versioning practices.
-While the comparison between the two counts would be invalid due to differences in practice, a valid comparison could be constructed using the unique identifier to align entries and just the preferred label to determine if the keywords differ.
-
-\subsection{Hidden Volatility}
-
-To determine if the actual change rate is being obscured by the version publication rate, the duration of each version must be calculated.
-Since only one version is published at the end of that duration, simply taking the inverse of the duration will give the version publication rate.
-The change counts are then multiplied by the version publication rate for each version to acquire the change rate for each version.
-Because the change counts are often the size of the data sets, as shown in Figure \ref{EOL_AIM}, the means must be adjusted to align with the version publication rate mean in order to perform the Kolmogorov-Smirnov test.
-The test will determine the likelihood that the change distribution comes from the same distribution that produced the version publication rates.
-
-Each version of a data set stored in EOL is assigned three different times, ``version publish time," ``version creation time," and ``version modification time." 
-Version publish time indicates the time the version was made available to the public, usually the data set was added to the database.  
-Version creation time denotes the moment at which a version designation was given to the collection of files, beginning in mid-2014 when the versioning system was implemented.  
-Version modification time indicates the time at which the version metadata was changed.  
-Using version publish time most closely resembles the duration of version validity, and the following computations use version publish time.
-
-The duration is calculated by taking the publish time of the next version and subtracting the publish time of the current version.
-Some of the durations needed to be filtered out to provide valid results.  
-Due to a few coding errors in time assignments, 7 versions had to be removed because the durations were negative.  
-Duration is measured in days, and the rate of version publication is determined by taking the inverse of the duration, giving versions per day.  
-To acquire the AIM change rates, the changes are divided by the associated duration for each version, returning change per day.  
-Since the change rates are biased towards at 0, the log of the rates are taken to give the values a more normal distribution.  
-Values where an AIM change is 0 had to be removed in order to properly apply the log function.  
-The size of each distribution can be found in Table \ref{table:Eol_KS}.
-\begin{table}
-	\caption{Summary of Kolmogorov-Smirnov Test results for Earth Observing Laboratory.}
-	\label{table:Eol_KS}
-	\centering
-	\begin{tabular}{|c|c|c|c|c|}
-		\hline
-		&	Add&	Invalidate&	Modify&	Versions\\ \hline
-		Length&	205&	192&	114&	227\\
-		D-Value&	0.12919&	0.14464&	0.19727&	NA\\
-		p-Value&	0.05487&	0.02575&	0.005443&	NA\\
-		\hline
-	\end{tabular}
-\end{table}
-
-Since the durations are log-normally distributed, concentrated close to 0, the log of the durations are taken to normalize the data.  
-The log function is also applied to the AIM changes after the division by the duration.  
-The inverse of the log of the duration is taken to acquire the rate of version release.
-From Figure \ref{EOL_Add_Ver} and Figure \ref{EOL_Inv_Ver}, the change distributions, in red and green respectively, are translated a few points to the right slightly.
-\begin{figure}%[b]
-	\centering
-	\includegraphics[scale=.6]{figures/Eol_Add_Ver_Rate.png}
-	\caption{Distribution of average normalized Modify counts of each data set in Eath Observing Laboratory.}
-	\label{EOL_Add_Ver}
-\end{figure}
-\begin{figure}%[b]
-	\centering
-	\includegraphics[scale=.6]{figures/Eol_Inv_Ver_Rate.png}
-	\caption{Distribution of average normalized Modify counts of each data set in Eath Observing Laboratory.}
-	\label{EOL_Inv_Ver}
-\end{figure}
-Because the means do not not coincide well enough, the distributions must be re-aligned at the version publication rate's mean value.
-As noted in Section \ref{sec:behavior}, almost half of the versions have 0 \textbf{Modifications}, meaning that the values must be filtered out.
-The resulting graph for comparison in Figure \ref{EOL_Mod_Ver} shows a more flattened \textbf{Modify} distribution.
-\begin{figure}%[b]
-	\centering
-	\includegraphics[scale=.6]{figures/Eol_Mod_Ver_Rate.png}
-	\caption{Distribution of average normalized Modify counts of each data set in Eath Observing Laboratory.}
-	\label{EOL_Mod_Ver}
-\end{figure}
-
-The Kolomogorov-Smirnov Test was used to determine if the \textbf{Adds}, \textbf{Invalidates}, or \textbf{Modifies} follow a distribution the same as the version publication distribution as the null hypothesis.  
-Table \ref{table:Eol_KS} shows that the distribution of \textbf{Adds} is statistically significant with 90\% confidence while \textbf{Invalidates} and \textbf{Modifies} can reject the null hypothesis with at least 95\% confidence.
-The analysis demonstrates that there is strong evidence version publications do not accurately reflect the actual change rate of the EOL data sets.
+In Figure \ref{mbvl_chart}, the first set of columns in the Silva taxonomy results are versioned against \gls{rdp} using the \gls{spingo} algorithm.
+The naming reflects the orientation in the \gls{vergraph} so Silva forms the left-hand version and \gls{rdp} would be the right-hand \gls{version}.
+In this comparison, using the \gls{rdp} taxonomy seems to provide more accurate results, most specifically at the species level.
+The taxonomies also disagree fairly often at the species and family ranks.
+Switching to the \gls{gast} algorithm in the second set of columns, \gls{rdp} once again demonstrates a noticeably greater accuracy in species classification.
+There are also significantly fewer disagreements using the \gls{gast} algorithm between the two taxonomies.
+Looking at the third set of columns, Silva demonstrates greater accuracy classifications under the \gls{spingo} algorithm than under \gls{gast}.
+Over four thousand of these entries can be classified to the species level when \gls{gast} cannot.
+In the fourth set of columns, \gls{rdp} appears to perform better with \gls{spingo} than \gls{gast}.
+However, the comparison is dominated by a much larger number of disagreements between almost six thousand entries, primarily at the species rank.
+On closer inspection, this disagreement is explained by \gls{gast} classifying the species for a number of entries as ``uncultured bacterium".
+This analysis presents evidence that using the \gls{rdp} taxonomy with the \gls{spingo} algorithm will produce the most accurate classification results.
 
 \section{Summary}
 
-In Chapter \ref{Volatility}, we explored different ways in which versions hide the actual change behavior within a data system.
-The GCMD keywords showed one perspective when evenly distributed, but spread across time, the versions have very different behavior.
-The change rates, once re-coupled to time, show that versions can provide a misleading view of how changes apply to a data set.
-Versions package together changes that can originate from times prior to the previous version, disrupting the assumed relationship between consecutive versions.
-GCMD also breaks assumptions when the impact assessments use different metrics to determine a data set change, reinforcing the concept that perspective and context play a major role in versioning methodology.
-Using only version names, Earth Observing Laboratory data is distributed uniformly by single versions, but \ref{EOL_AIM} shows a more vibrant behavior in the data sets.
-The chart revealed trends in file naming and replacement.
-The data sets also demonstrated that AIM changes behave significantly differently than the behavior versions reveal.
+The results in this chapter implements the versioning model and demonstrates the process and challenges experienced in this endeavor.
+The entries in a data set is separated into groups of \glspl{add}, \glspl{invalidate}, \glspl{modify}, and unmodified by their \glspl{attribute}.
+These operational groups organizes the data into a form to publish into a \gls{vergraph}.
+The approach used to create the \gls{vergraph} involves extracting the \gls{linked} from a marked up \gls{log}.
+The decision resulted in constrained representations of the \gls{vergraph}, resulting from demands of the encoding methods.
+\Glspl{vergraph} created using freer form statements, such as the one in Figure \ref{NobleGraph2}, demonstrate an opportunity enable querying over different dimensions of the data.
+Changes for specific columns can be queries as easily as individual rows.
+
+The ability to link \glspl{change} of multiple \glspl{version} together results as a side effect of the model construction.
+Continuously linked \glspl{change} opens up avenues of exploration to follow change as it propagates through \glspl{version}.
+While \glspl{log} will provide a more focused comparison, a triple store with a multi-version graph would give a view of the work through time.
+Considering the Noble Gas data set's \gls{vergraph}'s size, many \glspl{version} may be difficult to store with large, volatile data sets.
+
+The \gls{mbvl} data set demonstrates a case where \glspl{vergraph} can be used to compare the performance of different taxonomy/algorithm pairings.
+The ability derives from sub-classing each of the \gls{AIM} \glspl{change} to give a better perspective where the pairings differed.
+This approach of extending the \glspl{vergraph} adds domain knowledge to the version comparison and helps contextualize the observed differences.

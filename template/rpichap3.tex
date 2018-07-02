@@ -4,92 +4,14 @@
 %                                                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{MACHINE-READABLE CHANGE LOG}\label{ch:changelog}
+
+\chapter{Version Model Specification}\label{ch:model}
 
 \section{Introduction}
 
-Change logs explain the differences between versions; however, they are often only available in human-readable formats.
-Readability puts a limit on the length and extent of the log since a human will need to write it.
-Manageable change descriptions become difficult with large data sets featuring many changes, or data sets that change often, but these are exactly the data sets which need change logs the most.
-Automating the process will allow more data sets to provide change documentation in a timely fashion for data sets.
-Encoding the change logs with structured data will provide a means for users to efficiently consume change information.
-The additional encoding will inflate the size of a standard change log which becomes an issue with the change logs.
-
-Change logs were generated for two data sets, the ``Global Database on \textsuperscript{3}He/\-\textsuperscript{4}He in on-shore free-circulated subsurface fluids" data set and the Paragenetic Mode for Copper Minerals database.
-Following the practices of other change logs, the documents present before and after values for comparison which can be seen in Figure \ref{changelog_zoomed}.
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.80]{figures/Changelog-zoomed.png}
-	\caption{Abswurmbachite entry in the Copper Dataset Change Log}
-	\label{changelog_zoomed}
-\end{figure}
-The change logs identify challenges to adopting thorough change logs as a practice in versioning data sets.
-
-\section{Utilized Data Sets}
-
-\subsection{Noble Gas Data set}
-
-The ``Global Database on \textsuperscript{3}He/\textsuperscript{4}He in on-shore free-circulated subsurface fluids" is a tumultuous database \cite{Polyak2015}.
-The first version, published in June 11, 2013, contains the information from 8 regions of the world united into a single file with around 199 columns.
-The next version of the database, published March 8, 2015, reduces the number of columns to 54, marking a drastic change.
-In addition, several columns changed the units with which they reported measurements.
-While usage documentation, explaining the content and use of the data, accompanied each version, no records were included indicating what changed between versions.
-A change log would be valuable guide with such drastic structural and content changes.
-The third and most recent publication came in July 11, 2017, with no changes to the number of files or columns, but many new rows.
-The structural summary of each of the files can be found in Table \ref{noble_gas_file_table}.
-
-\begin{table}
-	\caption{Files in the Noble Gas data set.}
-	\label{noble_gas_file_table}
-	\centering
-	\begin{tabular}{|c|c|c|c|c|}
-		\hline
-		Filename & File Size (Bytes) & Rows & Columns &	Total Cells \\ \hline
-		DB\_HE\_6733.xlsx &	2682683 &	6733 &	199 &	1339867 \\
-		DB\_final-55-7262\_2015\_03 &	2729060 &	7265 &	54 &	392310 \\
-		\_08.xlsx&&&&\\
-		NG\_DB\_final\_2017\_07 &	4216595 &	8231 &	54 &	444474 \\
-		\_01.xlsx&&&&\\
-		\hline
-	\end{tabular}
-\end{table}
-
-\subsection{Copper Data set}
-
-The Paragenetic Mode for Copper Minerals database became available through collaboration with the author's lab to create new methods of visualizing mineralogy relationships \cite{Morrison2016}.
-The first version was collected June 8, 2016, with the update following soon after on August 8, 2016.
-Major edits are fairly limited with only 16 column additions and 2 removals between the versions.
-Value formats remain consistent from one version to the next, resulting in a much more condensed body of changes, making transitions more easily verifiable.
-Compared to the Noble Gas data set, it provides a more stable data platform to implement the versioning model in Section \ref{ch:model}.
-The data from this work is also more processing friendly, making it agreeable to automatic change log generation.
-An interesting thing to note in Table \ref{copper_file_table} is that the second version takes up less storage space even though it has more data.
-
-\begin{table}
-	\caption{Files in the Copper data set.}
-	\label{copper_file_table}
-	\centering
-	\begin{tabular}{|c|c|c|c|c|}
-		\hline
-		Filename & File Size (Bytes) & Rows & Columns &	Total Cells \\ \hline
-		ParageneticModeTable\_Cu\_6. &	339175 & 705 &	37 &	26085\\
-		8.2016.xlsx&&&&\\
-		ParageneticModeTable\_Cu\_8. & 233715 & 685 & 51 & 34935\\
-		21.2016.xlsx&&&&\\
-		\hline
-	\end{tabular}
-\end{table}
-
-\section{Version Model Specification}\label{ch:model}
-
-When making change logs more approachable for usage in data sets, two approaches are available.
-The first approach continues writing change logs in only human readable language and relying on advances in natural language processing to allow computers to read the change logs.
-The second approach uses linked data to encode the change log with machine-computable statements.
-Since natural language processing is currently not sufficiently articulate, the second approach is taken.
-In doing so, a versioning data model needs to be developed which can capture changes in the way a change log organizes information.
-
-A versioning data model needs to address a variety of needs not met by provenance models.
-In PROV-O and PAV, the modeled entities are exclusively one-dimensional with each version leading sequentially to the next one.
-The HCLS model, Figure \ref{HCLSModel}, and Barkstrom model, Figure \ref{hierarchy}, however, display a more complex two-dimensional hierarchy.
+A versioning data model needs to address a variety of needs not met by provenance models as indicated in as indicated in Section \ref{sec:def}.
+In \gls{prov}-O and \gls{pav}, the modeled entities are exclusively one-dimensional with each version leading sequentially to the next one.
+The \gls{hcls} model, Figure \ref{HCLSModel}, and Barkstrom model, Figure \ref{hierarchy}, however, display a more complex two-dimensional hierarchy.
 The tree models better capture the tiered granularity separating different versions which can result from a higher-tier macro change.
 These models also tightly couple new objects with changes to their underlying attributes.
 The tiered approach more clearly explains the scale on which two objects within the tree differ.
@@ -103,12 +25,18 @@ Additional annotations are often in natural language and do not provide a regula
 
 The provenance models, on the other hand, do a much better job in explicitly defining the connection between objects which the tree models imply with structure.
 The versioning model must contain a mechanism to convey how changes to parts of an object contribute to that object's transition into a new version.
-The fundamental operations---\textbf{add}, \textbf{invalidate}, and \textbf{modify}---are used by the model to capture change in a more detailed manner.
+The fundamental operations---\gls{add}, \gls{invalidate}, and \gls{modify}---are used by the model to capture change in a more detailed manner.
 These details provide a mechanism to measure change between versions with better clarity than current methods.
 
-\subsection{Initial Approaches}
+When making \glspl{log} more approachable for usage in data sets, two options are available.
+The first approach continues writing \glspl{log} in only human-readable language and relying on advances in natural language processing to allow computers to read the \glspl{log}.
+The second approach uses linked data to encode the \gls{log} with machine-computable statements.
+Since natural language processing is currently not sufficiently articulate, the second approach is taken.
+In doing so, a versioning data model needs to be developed which can capture changes in the way a \gls{log} organizes information.
 
-The first approach, seen in Figure \ref{DiscardedFig}, simply extends the provenance relation with additional concepts to capture more types of relationships.
+\section{Exploring Possible Approaches}
+
+The first approach, seen in Figure \ref{DiscardedFig}, simply extends the \gls{provenance} relation with additional concepts to capture more types of relationships.
 \begin{figure}
 	\centering
 	\vspace{0.0in} % normally the command here would be \includegraphics
@@ -136,17 +64,17 @@ The first approach, seen in Figure \ref{DiscardedFig}, simply extends the proven
 	\label{DiscardedFig}  % the \label command comes AFTER the caption
 \end{figure}
 Until the introduction of or comparison with Version 2, none of the concepts in Version 1 can be considered new or old.
-As the responsible party for introducing changes, Version 2 becomes associated with \textit{New}, \textit{Old}, and \textit{modified} attributes.
-Version 1 also relates to \textit{modified} attributes since it provides the \textit{pre-value} used to contextualize Version 2's \textit{post-value}.
-The pre and post values are included so that a user can see how much the attribute has changed, much like with a change log.
+As the responsible party for introducing changes, Version 2 becomes associated with \textit{New}, \textit{Old}, and modified attributes.
+Version 1 also relates to altered \glspl{attribute} since it provides the \textit{pre-value} used to contextualize Version 2's \textit{post-value}.
+The pre- and post- values are included so that a user can see how much the \gls{attribute} has changed, much like with a \gls{log}.
 
-Adding the attributes as concepts to the model addresses PROV's and PAV's flat approach to version relations, but the attributes do not capture the inter-relation between objects for \textit{New} and \textit{Old} attributes.
-Having Version 2 be responsible for all the changes causes issues with the model since it must be associated with attributes from an entirely different object.
-The \textit{Old} attributes should not exists within Version 2.
-Associating \textit{Old} attributes with Version 1 would be more appropriate and intuitive to understand.
-The model does not capture the \textbf{type} of change, making the result a listing of attributes without the version differences to contextualize the relationship between the versions.
+Adding the \glspl{attribute} as concepts to the model addresses PROV's and PAV's flat approach to \gls{version} relations, but the \glspl{attribute} do not capture the inter-relation between objects for \textit{New} and \textit{Old} \glspl{attribute}.
+Having Version 2 be responsible for all the changes causes issues with the model since it must be associated with \glspl{attribute} from an entirely different object.
+The \textit{Old} \glspl{attribute} should not exists within Version 2.
+Associating \textit{Old} \glspl{attribute} with Version 1 would be more appropriate and intuitive to understand.
+The model does not capture the \underline{type} of change, making the result a listing of \glspl{attribute} without the \gls{version} differences to contextualize the relationship between the \glspl{version}.
 
-From a different direction, Figure \ref{DiscardedFig2} shows a model created by starting from the change log.
+From a different direction, Figure \ref{DiscardedFig2} shows a model created by starting from the \gls{log}.
 \begin{figure}
 	\centering
 	\vspace{0.0in} % normally the command here would be \includegraphics
@@ -174,19 +102,19 @@ From a different direction, Figure \ref{DiscardedFig2} shows a model created by 
 	\caption{Change log based versioning model.}
 	\label{DiscardedFig2}  % the \label command comes AFTER the caption
 \end{figure}
-Attributes are attached to the log as the primary indicators for old, new, and modified concepts.
-Change logs often break down and group changes by attributes.
-For modified attributes, an additional change concept is associated, encapsulating the values and nature of the change.
-At the far right side of the figure is a concept called \textit{Type} which indicates more specifically the nature of the change, for example unit of speed to another.
+\Glspl{attribute} are attached to the log as the primary indicators for old, new, and modified concepts.
+\Glspl{log} often break down and group changes by \glspl{attribute}.
+For modified \glspl{attribute}, an additional change concept is associated, encapsulating the values and nature of the change.
+At the far right side of the figure is a concept called \textit{Type} which indicates more specifically the nature of the change, for example one unit of speed to another.
 Pre- and post- values are also included to explicitly define the change concept.
 
-The primary drawback of the log-based construction is that the change log assumes all responsibility for every modification to the data even though the document only reports the differences.
-The version objects are also left out of the model, leaving the log concept in possession of the attributes.
-One of the major breakthroughs with this model construction is that while specific values are kept in the log, those values do not need to be in the model.
+The primary drawback of the log-based construction is that the \gls{log} assumes all responsibility for every modification to the data even though the document only reports the differences.
+The \gls{version} objects are also left out of the model, leaving the log concept in possession of the attributes.
+One of the major breakthroughs with the log-centric model construction is that while specific values are kept in the log, pre- and post- values do not need to be in the model.
 By encoding the type of change, the need for actual values becomes superfluous as change type is more generalizable across domains and contexts.
 
 Figure \ref{DiscardedFig3} combines the provenance and change log approaches by capturing the transition from Version 1 to Version 2 in the change log.
-\begin{figure}[b]
+\begin{figure}
 	\centering
 	\vspace{0.0in} % normally the command here would be \includegraphics
 	%	\includegraphics{figures/Addition.png}
@@ -212,15 +140,15 @@ Figure \ref{DiscardedFig3} combines the provenance and change log approaches by 
 	\label{DiscardedFig3}  % the \label command comes AFTER the caption
 \end{figure}
 The idea here is to enable distance capture between versions by encapsulating all changes within the log concept.
-The changes are then associated with specific attributes.
-Pre- and post- values do not appear in the model because the presence and kind of change is more valuable than assessing the explicit values involved.
-As a data set becomes more volatile, more values would need to be stored, resulting in more of a copy of the data rather than a summarization of the changes.
-Notice in Figure \ref{DiscardedFig3} that \textit{Attribute} has now become disconnected from either version.
-Reconnecting the \textit{Attribute} concept brings into question which version it should be associated with since it exists in both.
-The larger issue with both the log-based and hybrid approach is that the model resembles a tree more than a graph, making linked data queries less powerful, as most of the concepts are disconnected.
+The changes are then associated with specific \glspl{attribute}.
+Pre- and post- values do not appear in the model because the presence and kind of change is more valuable information than assessing the explicit values involved.
+As a data set becomes more volatile, more values would need to be stored, resulting in more copying of the data rather than summarization of the changes.
+Notice in Figure \ref{DiscardedFig3} that \textit{Attribute} has now become disconnected from either \gls{version}.
+Reconnecting the \textit{Attribute} concept brings into question which \gls{version} it should be associated with since it exists in both.
+The larger issue with both the log-based and hybrid approach is that the model resembles a tree more than a graph, making \gls{linked} queries less powerful, as most of the concepts are disconnected.
 
-A fourth formulation, in Figure \ref{DiscardedFig4}, leverages the insight that when a change interacts with an attribute, the attribute is different in the next version.
-\begin{figure}
+A fourth formulation, in Figure \ref{DiscardedFig4}, leverages the insight that when a change interacts with an \gls{attribute}, the \gls{attribute} is different in the next \gls{version}.
+\begin{figure}[b]
 	\centering
 	\vspace{0.0in} % normally the command here would be \includegraphics
 	%	\includegraphics{figures/Addition.png}
@@ -243,45 +171,45 @@ A fourth formulation, in Figure \ref{DiscardedFig4}, leverages the insight that 
 	\caption{Highly connected model of just versions, changes, and attributes}
 	\label{DiscardedFig4}  % the \label command comes AFTER the caption
 \end{figure}
-The model addresses the attribution problem by forming two attributes, each associated with a different version.
-These attributes inform a change which acts upon both version concepts.
+The model addresses the attribution problem by forming two \glspl{attribute}, each associated with a different \gls{version}.
+These \glspl{attribute} inform a change which acts upon both \textit{Version} concepts.
 The \textit{Log} object is dropped for the model since it is a method to convey change and not an actor involved in the change.
-From the highly connected construction, new and old \textit{attributes} no longer need to be explicitly stated, but they can be implied from the model's structure.
-A new attribute would not exist in \textit{Version 1} so \textit{Attribute 1} and its associated properties (arrows) are removed, leaving a unique construction implying an attribute addition.
+From the highly connected construction, new and old \textit{Attributes} no longer need to be explicitly stated, but they can be implied from the model's structure.
+A new attribute would not exist in \textit{Version 1} so \textit{Attribute 1} and its associated properties (arrows) are removed, leaving a unique construction implying an \gls{attribute} \gls{add}.
 
-One observation is that the relation from changes to versions is redundant since the links from \textit{version} to \textit{attribute} to \textit{change} implies the same relationship.
+One observation is that the relation from changes to \glspl{version} is redundant since the links from \textit{Version} to \textit{Attribute} to \textit{Change} implies the same relationship.
 Removing the explicit relation would shorten the number of triples required to encode a change and improve scalability.
-The versioning graph using this highly connected model would also be easier to query if the edges were oriented in the same direction, additionally implying that change flows from one version to the next.
+The \gls{vergraph} using the highly connected model would also be easier to query if the edges were oriented in the same direction, additionally implying that change flows from one \gls{version} to the next.
 These final observations result in the current versioning model.
 
-\subsection{Model Objects}
+\section{Model Objects} \label{sec:model}
 
-The versioning model incorporates three kinds of objects: \textbf{versions}, \textbf{attribut\-es}, and \textbf{changes}.
-A \textbf{version} object represents the items being compared such as a book or spreadsheet.
-In PROV, a \textbf{version} would likely correspond with the \textit{prov:Entity} involved in a \textit{prov:wasRevisionOf} property.
-The \textbf{attribute} object refers to specific parts which make up a \textbf{version}.
-\textbf{Attributes} could be lines in a book or columns in a spreadsheet.
-Including \textbf{attributes} addresses the lack of detail involved in a \textit{prov:wasRevisionOf} or \textit{pav:previousVersion}.
-The relationship between \textbf{versions} and \textbf{attributes} captures the influence that changes in the underlying part will have on the overarching \textbf{version}.
-Because the model refers to specific parts of a \textbf{version}, the \textbf{version} concept corresponds most closely with a FRBR \textbf{manifestation} rather than an \textbf{expression}.
-The presence or absence of an \textbf{attribute} is used to determine the kind of \textbf{change} which occurs to the \textbf{attribute} between \textbf{versions}.
-\textbf{Changes} are used to link together \textbf{attributes} from different \textbf{versions}.
-The \textbf{change} captures a difference between the old \textbf{version} state and the new \textbf{version} state.
-While the \textbf{change} object greatly resembles a PROV qualified property, its form can change depending on the kind of \textbf{change}, like a \textit{schema:UpdateAction}.
+The versioning model incorporates three kinds of objects: \glspl{version}, \glspl{attribute}, and \gls{change}.
+A \gls{version} object represents the items being compared such as a book or spreadsheet.
+In \gls{prov}, a \gls{version} would likely correspond with the \textit{prov:Entity} involved in a \textit{prov:wasRevisionOf} property.
+The \textbf{attribute} object refers to specific parts which make up a \gls{version}.
+\Glspl{attribute} could be lines in a book or columns in a spreadsheet.
+Including \glspl{attribute} addresses the lack of detail involved in a \textit{prov:wasRevisionOf} or \textit{pav:previousVersion}.
+The relationship between \textbf{versions} and \textbf{attributes} captures the influence that changes in the underlying part will have on the overarching \gls{version}.
+Because the model refers to specific parts of a \gls{version}, the \gls{version} concept corresponds most closely with a \gls{frbr} \textbf{manifestation} rather than an \textbf{expression}.
+The presence or absence of an \gls{attribute} is used to determine the kind of \gls{change} which occurs to the \gls{attribute} between \glspl{version}.
+\Gls{change} are used to link together \glspl{attribute} from different \glspl{version}.
+The \gls{change} captures a difference between the old \gls{version} state and the new \gls{version} state.
+While the \gls{change} object greatly resembles a \gls{prov} qualified property, its form can change depending on the kind of \gls{change}, like a \textit{schema:UpdateAction}.
 
-\subsubsection{Left-hand Right-hand Convention}
+\subsection{Left-hand Right-hand Convention}
 
-In the following diagrams and figures, the original or base version and its attributes will be placed on the left-hand side and the new version will be placed on the right-hand side with its attributes.
-References to the versions as previous and next are avoided since sequencing may not play a major role in distinguishing versions.
-Scientific data in large repositories often track sequential releases of data, but a book may have different versions distinguished by printed language.
-To recognize this distinction, objects will be referred to as the \textbf{left-hand version} or \textbf{left-hand attribute} when they are not sequentially or temporally related.
+In the following diagrams and figures, the original or base \gls{version} and its \glspl{attribute} will be placed on the left-hand side and the new \gls{version} will be placed on the right-hand side with its \glspl{attribute}.
+References to the \glspl{version} as previous and next are avoided since sequencing may not play a major role in distinguishing \glspl{version}.
+Scientific data in large repositories often track sequential releases of data, but a book may have different \glspl{version} distinguished by printed language.
+To recognize the distinction, objects will be referred to as the \textbf{left-hand version} or \textbf{left-hand attribute} when they are not sequentially or temporally related.
 
-\subsection{How Changes are Represented in the Model}
+\section{How Changes are Represented in the Model}
 
-The model bases \textbf{changes} around the three core versioning operations because their commonality across systems provides a fundamental basis for comparisons.
-\textbf{Additions} occur when an \textbf{attribute} appears only in the \textbf{right-hand version}.
-When an \textbf{attribute} only shows up in the \textbf{left-hand version}, the model captures this as an \textbf{invalidation}.
-Finally, a \textbf{modification} change has \textbf{attributes} in both the \textbf{left-} and \textbf{right-hand versions}, but it only connects two \textbf{attributes} if their values are different.
+The model bases \glspl{change} around the three core versioning operations because their commonality across systems provides a fundamental basis for comparisons.
+\glspl{add} occur when an \gls{attribute} appears only in the \textbf{right-hand version}.
+When an \gls{attribute} only shows up in the \textbf{left-hand version}, the model captures the relationship as an \gls{invalidate}.
+Finally, a \gls{modify} change has \glspl{attribute} in both the \textbf{left-} and \textbf{right-hand versions}, but the \gls{modify} change only connects two \glspl{attribute} if the values are different.
 These three combinations cover the possible situations within the model.
 
 \begin{figure}
@@ -306,20 +234,20 @@ These three combinations cover the possible situations within the model.
 	\label{ModificationFig}  % the \label command comes AFTER the caption
 \end{figure}
 
-\subsubsection{Modification}
+\subsection{Modification}
 
-The \textbf{modification} relation occurs when an \textbf{attribute} appears in both \textbf{versions} and their values are different.
-In Figure \ref{ModificationFig}, a \textbf{modification} is captured between two versions.
-Each \textbf{version} has an \textbf{attribute}, Attribute 1 and Attribute 2, respectively.
-Finally, a \textbf{change} object connects the two \textbf{attributes}, denoting that the values described by the attribute are different.
+The \gls{modify} relation occurs when an \gls{attribute} appears in both \glspl{version} and their values are different.
+In Figure \ref{ModificationFig}, a \gls{modify} is captured between two \glspl{version}.
+Each \gls{version} has an \gls{attribute}, Attribute 1 and Attribute 2, respectively.
+Finally, a \gls{change} object connects the two \glspl{attribute}, denoting that the values described by the \gls{attribute} are different.
 
 The specific values pertaining to Attribute 1 and Attribute 2 are not captured by the model because acknowledging that a difference exists is more important.
-Extending the model to properly communicate the significance of a modification for a wide variety of domains would require sizable domain knowledge and would be outside the scope of this project.
+Extending the model to properly communicate the significance of a modification for a wide variety of domains would require sizable domain knowledge and would be outside of a data versioning scientist's domain.
 In addition, the model would essentially begin storing a copy of the data set, leading to space and redundancy concerns.
 
-\subsubsection{Addition}
+\subsection{Addition}
 
-In Figure \ref{AdditionFig}, the \textbf{addition} model differs from the \textbf{modification} construction by the absence of Attribute 1.
+In Figure \ref{AdditionFig}, the \gls{add} model differs from the \gls{modify} construction by the absence of Attribute 1.
 \begin{figure}
 	\centering
 	\vspace{0.0in} % normally the command here would be \includegraphics
@@ -340,17 +268,17 @@ In Figure \ref{AdditionFig}, the \textbf{addition} model differs from the \textb
 	\label{AdditionFig}  % the \label command comes AFTER the caption
 \end{figure}
 The absence creates a disconnect between ``Version 1" and ``Change A".
-We know that a connected graph will be desirable to accommodate traversal using linked data query languages so ``Version 1" must be reconnected to the other concepts in the model.
-A \textbf{property} is used to create a path between the two \textbf{attributes} to indicate the contribution of  ``Version 1" to the change's lineage.
+We know that a connected graph will be desirable to accommodate traversal using \gls{linked} query languages so ``Version 1" must be reconnected to the other concepts in the model.
+A \textbf{property} is used to create a path between the two \glspl{attribute} to indicate the contribution of  ``Version 1" to the \gls{change}'s \gls{provenance}.
 The path does not show that ``Version 1" informs or creates ``Attribute 2", while that may be true.
-The construction was also chosen to create a symmetric orientation with the \textbf{invalidation} change.
+The construction was also chosen to create a symmetric orientation with the \gls{invalidate} change.
 
 
-\subsubsection{Invalidation}
+\subsection{Invalidation}
 
-The \textit{invalidation} model has a missing \textbf{attribute} on the right-hand side of the relation, contrary to the \textbf{addition} construction.
-As a result of the invalidation, an attribute no longer exists in the \textbf{right-hand version}.
-As seen in Figure \ref{InvalidationFig}, the invalidation change concept matches to the Version 2 object.
+The \gls{invalidate} model has a missing \gls{attribute} on the right-hand side of the relation, contrary to the \gls{add} construction.
+As a result of the invalidation, an \gls{attribute} no longer exists in the \textbf{right-hand version}.
+As seen in Figure \ref{InvalidationFig}, the \gls{invalidate} change concept matches to the Version 2 object.
 \begin{figure}
 	\centering
 	\vspace{0.0in} % normally the command here would be \includegraphics
@@ -370,296 +298,69 @@ As seen in Figure \ref{InvalidationFig}, the invalidation change concept matches
 	\caption{Model of the relationships between Versions 1 and 2 when invalidating Attribute 1 from Version 1 as a result of Change I}
 	\label{InvalidationFig}  % the \label command comes AFTER the caption
 \end{figure}
-Just like in the \textbf{addition} model, this construction maintains a link between the two \textbf{version} objects.
-In this case, it makes more conceptual sense, however, because ``Version 2" invalidates ``Attribute 1" by omitting it.
+Just like in the \gls{add} model, the \gls{invalidate} construction maintains a link between the two \gls{version} objects.
+In the \gls{invalidate} case, it makes more conceptual sense, however, because ``Version 2" invalidates ``Attribute 1" by omitting the \gls{attribute}.
 
 
-\section{Encoding a Change Log}
+\section{Utilized Data Sets}
 
-Very little natural language is used in the change log to regularize the format and improve compatibility with RDFa.
-The change logs follow a common format with three sections: Additions, Invalidations, and then Modifications.
-The sections may be further grouped by column or row additions.
-The division means that changes are not published into the change log as they are found, but instead organized and grouped beforehand.
+\subsection{Noble Gas Data set}
 
-Employing RDFa means that the document must be written using HTML formatting.
-Listing \ref{rdfa_list} shows the text necessary to layout the first four lines of Figure \ref{changelog_zoomed}.
-While the content only shows four lines, the underlying markup takes up three and a half times as many lines.
-Line 2 of Listing \ref{rdfa_list} states that all following resources will be \textbf{attributes} of Version 1.
-Line 3 defines such an \textbf{attribute}.
-Lines 5 through 8 define the changes Abswurmbachite undergoes.
-Because RDFa allows the statements to be embedded within the content, the triples can appear along with the text they describe.
-Lines 11 and 12 define complete triples which do not appear in the visible document.
-The lines complete the graph, but must be included in spans because RDFa only allows a single triple within each tag.
-Modifying the tags' order so that the spans are unnecessary would cause the visible content to appear in a confusing and disorganized order, rendering the document machine-readable but not human-readable.
+The ``Global Database on \textsuperscript{3}He/\textsuperscript{4}He in on-shore free-circulated subsurface fluids" is a tumultuous database \cite{Polyak2015}.
+The first \gls{version}, published in June 11, 2013, contains the information from 8 regions of the world united into a single file with 199 columns.
+The next \gls{version} of the database, published March 8, 2015, reduces the number of columns to 54, marking a drastic change.
+In addition, several columns changed the units with which they reported measurements.
+While usage documentation, explaining the content and use of the data, accompanied each \gls{version}, no records were included indicating what changed between \glspl{version}.
+A \gls{log} would be valuable guide with such drastic structural and content changes.
+The third and most recent publication came in July 11, 2017, with no changes to the number of files or columns, but many new rows.
+The structural summary of each of the files can be found in Table \ref{noble_gas_file_table}.
 
-\begin{listing}
-	\begin{minted}[linenos, frame=lines, framesep=2mm, breaklines]{HTML}
-<h3>Change Log</h3>
-<div about="Version1" rel="vo:hasAttribute">
-<div resource="v2:Abswurmbachite" typeof="vo:Attribute">
-<span style="font-weight:bold" property="http://www.w3.org/2000/01/rdf-schema#label">Abswurmbachite</span>
-<table rel="vo:Undergoes">
-<tr  about="ChangeAbswurmbachite12" typeof="vo:Change">
-<td align="right" rev="vo:Undergoes" resource="v1:AttributeAbswurmbachite12v1" typeof="vo:Attribute"> 9</td>
-<td property="vo:resultsIn" resource="v2:AttributeAbswurmbachite12v2" typeof="vo:Attribute">(12)</td>
-<td>          </td>
-<td>       0.0</td>
-<span about="Version1" property="vo:hasAttribute" resource="v1:AttributeAbswurmbachite12v1"></span>
-<span about="Version2" property="vo:hasAttribute" resource="v2:AttributeAbswurmbachite12v2"></span>
-</tr>
-</table></div></div><br>
-	\end{minted}
-	\label{rdfa_list}
-	\caption{Abswurmbachite RDFa}
-\end{listing}
-
-After encountering the limitations of using RDFa to include the versioning graph into the change log, JSON-LD was used.
-The JSON data does not need to conform to the structure or ordering of visible content in the change log.
-Listing \ref{json_list} provides the alternative encoding of the Abswurmbachite entry from RDFa.
-The entry is significantly longer, almost three times longer than the RDFa entry and ten times longer than the original visible content.
-Instead of including all the data in the beginning or end of the document, each change block is separated into the particular \textit{div} section for that change.
-This choice allows consumers to extract pertinent change information without needing to ingest the entire versioning graph.
-
-\begin{listing}
-	\begin{minted}[linenos, frame=lines, breaklines]{HTML}
-<h3>Change Log</h3>
-<div about="v1:Abswurmbachite">
-<span style="font-weight:bold" property="http://www.w3.org/2000/01/rdf-schema#label">Abswurmbachite</span>
-<table>
-<tr  id="ModifyChangeAbswurmbachite12">
-<td align="right"> 9</td>
-<td >(12)</td>
-<td>          </td>
-<td>       0.0</td>
-<script type="application/ld+json">
-[
-{
-"@context": "https://orion.tw.rpi.edu/~blee/provdist/GCMD/VO.jsonld", 
-"@id": "http://CUdb.com/v1/AttributeAbswurmbachite9", 
-"@reverse": {
-"hasAttribute": "Version1"
-}, 
-"@type": "vo:Attribute", 
-"label": "Primary", 
-"undergoes": "http://orion.tw.rpi.edu/~blee/provdist/CU/DTDI/CUjsonlog.html#ModifyChangeAbswurmbachite12"
-}, 
-{
-"@context": "https://orion.tw.rpi.edu/~blee/provdist/GCMD/VO.jsonld", 
-"@id": "http://orion.tw.rpi.edu/~blee/provdist/CU/DTDI/CUjsonlog.html#ModifyChangeAbswurmbachite12", 
-"@type": "vo:ModifyChange", 
-"resultsIn": "http://CUdb.com/v2/AttributeAbswurmbachite12"
-}, 
-{
-"@context": "https://orion.tw.rpi.edu/~blee/provdist/GCMD/VO.jsonld", 
-"@id": "http://CUdb.com/v2/AttributeAbswurmbachite12", 
-"@reverse": {
-"hasAttribute": "Version2"
-}, 
-"@type": "vo:Attribute", 
-"label": "Primary"
-}
-]
-</script>
-</tr>
-</table></div><br>
-	\end{minted}
-	\label{json_list}
-	\caption{Abswurmbachite JSON-LD}
-\end{listing}
-The change logs created with RDFa or JSON-LD demonstrates progress towards documents which are both human and machine-readable.
-The implementation provides evidence that JSON-LD is better suited to embed a versioning graph into a change log than RDFa.
-RDFa suffers limitations since it is constrained by the content's structure.
-The \textbf{modify} relation presented in Figure \ref{NobleGraph1} is unbalanced and the right-hand side of ``ChangeCAM00111" links only to the column \textbf{attribute} but not to the corresponding row \textbf{attribute}.
-This stems from a mismatch between the model's structure, the order in which data appears in the change log, and the way RDFa links properties together.
-Because the row label forms the outermost encapsulation, it cannot instantiate both row identifiers and implicitly link them separately.
-To do so would require explicitly instantiating the \textbf{attribute} in a non-visible part of the document, defeating the purpose of using RDFa to implicitly encode the versioning graph into the document.
-
-Both structured data implementations break up the graph across \textbf{attributes} so that individual parts of the graph can be extracted.
-The practice of a one-node JSON object is generally helpful for many web applications to load data quickly, but since the change log is not an application, it makes more sense to break up the content.
-Changes to individual \textbf{attributes} can be identified using anchors on the web page, then agents need only extract and parse the linked data to these specific entries.
-This way, a subgraph of only the pertinent attributes can be created without first ingesting the entire versioning graph.
-
-An unexpected challenge with the change logs is the larger file size and difficulties in loading the Noble Gas data set's JSON-LD change log.
-The problem results from needing ten lines to express a single row in the change log.
-Noble Gas also had an impressive number of \textbf{modifications}, some of which are shared across all rows in the data set.
-Repeated modifications over rows would account for the explosion in entries within the change log.
-
-\section{Cold Land Processes Field Experiment}
-
-The NASA's Cold Land Processes Field Experiment collects ice measurements from a wide number of sites in the arctic \cite{CLPX}.
-The data was published originally in ASCII, but the data was later ported into shapefiles as well.
-A known issue with the transition was that comments in the Summary data set were left out do to format limitations.
-A change log was created to determine whether additional differences existed within the two formats.
-
-The initial problem with forming a change log is that rows in the data did not include unique identifiers to align attributes within the versions.
-A unique tuple, using values from 5 columns of the data, was created to match rows together since the order of the rows did not correspond between the two formats.
-An immediate problem that results was some differences occurred within the columns necessary to form the unique tuple, namely some values disagreed by 0.5.
-Following the correction, the data could be correctly aligned.
-
-The change log found that for columns ``soil sample A" (SL\_A) and ``soil sample B" (SL\_B), many entries consistently disagreed between versions.
-Disagreements resulted from values being recorded with `y' or `n' for a number of values but with numbers for the rest.
-Since the values in the shapefiles are stored in a database format, an column must conform to a pre-specified type, causing the character encodings to appear as 0s in the shapefiles.
-Additionally, the columns experienced 0.5 misalignments and null values of -999.0 being encoded as 0.
-The columns are encoded as integers, causing the disagreement.
-
-With further investigation, misalignment in the values caused repeated inquiries into differences between expected and reported values.
-A passage in Parsons et al. \cite{CLPX2} states, \begin{quotation}
-	"After soliciting feedback from the CLP Working Group and working closely with several of the CLP investigators, we settled on a set of four simple, fixed-width, ASCII tables for each IOP. This was simple and readily understandable and, we thought, flexible enough to be used by most applications. Unfortunately, we found that, although these ASCII tables worked well for many applications, it was not very easy to import them into Excel and ArcGIS, two of the most common data analysis tools. To ensure future readability of the data, we were committed to using a textual file protocol (Raymond, 2004). Yet, we also sought to provide the data in a format that would facilitate analysis and examination. Therefore, we modified the fixed-width tables to conform to the Microsoft comma-separated value (CSV) file convention while keeping fixed-width columns. This facilitated import into Excel and other spreadsheets. The text files are the primary archival format of the data, but we also created ESRI shapefiles for GIS users. Documentation clearly describes both CSV and shapefile versions of the data, and indicates that the only differences in content are in the free-text comments recorded by the surveyors (shapefile text fields suffer from a short field width, so surveyor free-text comments are only included in the CSV files). By working closely with current data users while considering future users and applications, we were able to develop a data format that met current needs, is flexible enough to accommodate future applications, and is simple enough to survive long-term technological changes."
-\end{quotation}
-The solution resulting from the differences was to indicate that the preferred and official version of the data was the ASCII representation.
-The deference to a different format, unfortunately partially undermines the benefits of increased accessibility provided by also providing the data in shapefile format.
-
-\section{Change Log Analysis} \label{sec:CLA}
-
-With a trade-off of 14 HTML lines for every visible line and 40 HTML code lines to each visible line, space utilization is a very present concern.
-Table \ref{table:Ng_changelog_table1} shows the size of each encoding of the change log as well as the percentage in size as compared to either of the files involved in the version transition.
 \begin{table}
-	\caption{Noble Gas change log size: 1st Transition}
-	\label{table:Ng_changelog_table1}
-	\centering
-	\begin{tabular}{|c|r|c|c|}
-		\hline
-		Encoding Type & File Size (Bytes) & \% of File 1 & \% of File 2 \\
-		\hline
-		Text&	5575405&	207.8294&	204.2976\\
-		RDFa&	62175478&	2317.660&	2278.2745\\
-		Turtle&	80919783&	3016.375&	2965.1156\\
-		JSON-LD&	130134071&	4850.893&	4768.4577\\
-		\hline
-	\end{tabular}
-\end{table}
-`Text' denotes the encoding control where no structured data is included into the change log.
-Alone, the control is already double the size of either file.
-The RDFa encoding more than 20 times the size of the original files, exceeding the size of the control by more than 10 fold.
-A separate file was generated in turtle format to observe whether taking just the linked data values would reduce the information to a more manageable size, but the turtle file was still 30 times the size of the original files.
-Adopting the versioning model and encoding it into a change log will very likely require significant storage investment.
-
-Table \ref{table:Ng_changelog_table2} shows the change log sizes for the second version transition in the Noble Gas data set.
-\begin{table}
-	\caption{Noble Gas change log size: 2nd Transition}
-	\label{table:Ng_changelog_table2}
-	\centering
-	\begin{tabular}{|c|r|c|c|}
-		\hline
-		Encoding Type & File Size (Bytes) & \% of File 2 & \% of File 3 \\
-		\hline
-		Text&	403227&	14.7753&	9.56286\\
-		RDFa&	4168390&	152.7409&	98.85678\\
-		Turtle&	4515435&	165.4575&	107.0872\\
-		JSON-LD&	8095372&	296.6359&	191.9884\\
-		\hline
-	\end{tabular}
-\end{table}
-Notice that the second transition has much smaller text encodings compared to the original files.
-The RDFa and JSON-LD encodings once again 10 and 20 times, respectively, the size of the text encoding.
-The turtle encodings, representing the most raw form of data without additional HTML text, surprisingly ends up larger than the other data encodings.
-The explanation is that in order to automate printing the formal triple statements, fewer elements can be smartly implied, leading to larger file sizes even though no markup symbols are in the file.
-Looking at Table \ref{table:Ng_turtle}, the second transition had 20 times fewer \textbf{Modify} entries, leading to a much smaller turtle file.
-\begin{table}
-	\caption{Noble Gas Turtle files}
-	\label{table:Ng_turtle}
+	\caption{Files in the Noble Gas data set.}
+	\label{noble_gas_file_table}
 	\centering
 	\begin{tabular}{|c|c|c|c|c|}
 		\hline
-		Filename&	Add&	Invalidate&	Modify&	Total Triples\\ \hline
-		changelog.ttl&	608&	216&	102830&	110602\\
-		changelog2\_3.ttl&	990&	24&	5369&	8146\\
+		Filename & File Size (Bytes) & Rows & Columns &	Total Cells \\ \hline
+		DB\_HE\_6733.xlsx &	2682683 &	6733 &	199 &	1339867 \\
+		DB\_final-55-7262\_2015\_03 &	2729060 &	7265 &	54 &	392310 \\
+		\_08.xlsx&&&&\\
+		NG\_DB\_final\_2017\_07 &	4216595 &	8231 &	54 &	444474 \\
+		\_01.xlsx&&&&\\
 		\hline
 	\end{tabular}
 \end{table}
 
-Another way to evaluate the performance of the change log is to look at the number of change entries compared to the number of changed values, in the Copper database's case spreadsheet cells.
-From Table \ref{table:Cu_changelog_table1}, the behavior of the encodings is very similar to the second transition of Noble Gas.
-\begin{table}
-	\caption{Copper change log size: 1st Transition}
-	\label{table:Cu_changelog_table1}
-	\centering
-	\begin{tabular}{|c|r|c|c|}
-		\hline
-		Encoding Type & File Size (Bytes) & \% of File 1 & \% of File 2 \\
-		\hline
-		Text&	140131&	41.3152&	59.9580\\
-		RDFa&	2032823&	599.343&	869.787\\
-		Turtle&	1538772&	453.680&	658.396\\
-		JSON-LD&	3500067&	1031.93&	1497.57\\
-		\hline
-	\end{tabular}
-\end{table}
-The text format is smaller than the original data set, but the encoded files are at least 10 times the size of the database files.
-To determine the number of cells affected by a change, the number of cells added by new rows is summed with the number of cells added by new columns, using the width and length of file 2.
-The cells affected by removals is based on the length and width of the first file.
-The number of remaining cells, equivalent between the two files is 23940.
-Since \textbf{Modifications} are reported cell-by-cell, the number of cells affected is equal to the number of \textbf{Modifies}, 2628.
-The rows and columns that \textbf{Modify} affects are not available because the changes appear inconsistently across the rows and columns meaning a reported value would be misleading.
-The complete counts are reported in Table \ref{table:Cu_cells}.
-\begin{table}
-	\caption{Changes to Copper Data}
-	\label{table:Cu_cells}
-	\centering
-	\begin{tabular}{|c|c|c|c|}
-		\hline
-		Change Type&	Rows&	Columns&	Cells Affected\\ \hline
-		Add&	1&	16&	10995\\
-		Invalidate&	21&	2&	2145\\
-		Modify&NA&NA& 2628\\
-		\hline
-	\end{tabular}
-\end{table}
+\subsection{Copper Data set}
 
-The triples used to explain changes as a percentage of the cells affected is reported in Table \ref{table:Cu_change}.
+The Paragenetic Mode for Copper Minerals database became available through collaboration with the author's lab to create new methods of visualizing mineralogy relationships \cite{Morrison2016}.
+The first version was collected June 8, 2016, with the update following soon after on August 8, 2016.
+Major edits are fairly limited with only 16 column additions and 2 removals between the versions.
+Value formats remain consistent from one version to the next, resulting in a much more condensed body of changes, making transitions more easily verifiable.
+Compared to the Noble Gas data set, it provides a more stable data platform to implement the versioning model in Section \ref{sec:model}.
+The data from Copper Minerals is also more processing friendly, making it agreeable to automatic \gls{log} generation.
+An interesting thing to note in Table \ref{copper_file_table} is that the second version takes up less storage space even though it has more data.
+
 \begin{table}
-	\caption{Change capture efficiency in Copper Data}
-	\label{table:Cu_change}
+	\caption{Files in the Copper data set.}
+	\label{copper_file_table}
 	\centering
-	\begin{tabular}{|c|c|c|}
+	\begin{tabular}{|c|c|c|c|c|}
 		\hline
-		Change Type&	Triples&	\% of Cells Affected\\ \hline
-		Add&	17&	0.065\%\\
-		Invalidate&	23&	1.1\%\\
-		Modify&	2628&	100\%\\
+		Filename & File Size (Bytes) & Rows & Columns &	Total Cells \\ \hline
+		ParageneticModeTable\_Cu\_6. &	339175 & 705 &	37 &	26085\\
+		8.2016.xlsx&&&&\\
+		ParageneticModeTable\_Cu\_8. & 233715 & 685 & 51 & 34935\\
+		21.2016.xlsx&&&&\\
 		\hline
 	\end{tabular}
 \end{table}
-Smaller percentages indicate a higher efficiency of each triple since one triple can explain changes to multiple cells.
-Notice that \textbf{Adds} are much more efficient in explaining changes than \textbf{Invalidates} due to the kind of change each triple explains.
-\textbf{Invalidates} explained changes to rows primarily while \textbf{Adds} mostly explained changes to columns, but since columns are much longer, \textbf{Adds} ended up scoring higher on efficiency.
-\textbf{Modify} triples are extremely inefficient and also account for more than a majority of the changes to the data, meaning that \textbf{Modify} triples most likely account for the bloat in the physical representation of the triples.
-Not represented in the change log are the unmodified cells which account for 89.02\% of the matching cells between the Copper files.
-The analysis indicates that while \textbf{Add} and \textbf{Invalidate} may be very efficient in expressing changes, improvements to encoding and \textbf{Modify} capture efficiency are needed to bring down the storage costs of automated change logs.
-The bloated change log size likely explains the dearth of data set change logs in practice since using the storage space for more data would be more valuable. 
 
 \section{Summary}
 
-The automated change log generation yielded some unexpected results.
-Automated change logs standardize the process to capture change within a data set.
-While more popular text-only change logs could be adopted, a versioning data model was necessary to make the logs also machine computable.
-The computability improves user navigation over large data sets.
-The drawback is that the encoded change logs are reliably much larger than the original data set in bytes.
-The storage space cost likely contributes to the reason that change logs are often unseen in data set documentation.
-The automation and inclusion of change logs inform consumers how much the data set has changed.
-
-The versioning model provides a method to capture change information in greater detail than current provenance models.
-The inclusion of \textbf{versions} and \textbf{attributes} into the model connect changing items with the objects they influence.
-The \textbf{changes} create a ladder-like structure to connect \textbf{version} objects in greater detail.
+The versioning model provides a method to capture \gls{change} information in greater detail than current provenance models.
+The inclusion of \glspl{version} and \glspl{attribute} into the model connect changing items with the objects they influence.
+The \glspl{change} create a ladder-like structure to connect \gls{version} objects in greater detail.
 Each rung of the ladder can not only be counted, but also grouped into types of change according to the respective operation.
-The method of instantiating a versioning graph will be covered in Chapter \ref{ch:graph}.
+The method of instantiating a \gls{vergraph} will be covered in Chapter \ref{ch:graph}.
 
-The human-readable presentation defines the structure which tags in the chan\-ge log must take since maintaining human-readability is desired.
-The structure then determines the order in which linked data statements must appear in the log to encode the graph with RDFa.
-The ordering creates limitations on how strictly the encoded graph adheres to the specification from Chapter \ref{ch:model}.
-While construction of the change log is automated, encoding through RDFa significantly reduces the source HTML readability.
-In other applications using RDFa, the triples describe and link the text encapsulated by HTML tags.
-The versioning graph exclusively ignores the marked up content and links together tags or explicitly defines full triples in span tags.
-
-Change logs are much less restricted when encoded using JSON-LD rather than RDFa.
-The encoding format pulls the graph out of the attributes where they do not interact with content and into a separate script section.
-The method causes a drastic expansion per change in necessary text.
-The decision to divide up JSON-LD objects by the row in the change log they describe likely contributes significantly to the overhead necessary for the encoding.
-The division was made with the forethought that change log consumers may desire to only ingest specific subgraphs of the versioning graph.
-Separated JSON-LD objects will likely need to be merged in the future to save space for data sets with many changes.
-
-The resulting logs end up very large and sometimes do not load in a browser.
-Reassuringly, both data sets displayed the same space usage complexity with RDFa being ten times the plain text size and JSON-LD twice the size of a change long in RDFa.
-The relationship unfortunately means that a JSON-LD change log, with more readable source code, is twenty times the size of a plain text change log.
-The Copper data set's logs were reasonably responsive, displaying in seconds, but the Noble Gas's change log did not.
-In order to retain usability, there will need to be methods optimizing change log structure or representation.
