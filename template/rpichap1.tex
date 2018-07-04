@@ -8,7 +8,7 @@
 
 \section{Definitions of Version} \label{sec:def}
 
-Using the term `versions' in the vernacular has become so pervasive that few documents formally define it.
+Using the term `version' in the vernacular has become so pervasive that few documents formally define it.
 Barkstrom describes versions as \textbf{homogeneous groupings} used to control, ``production volatility induced by changes in algorithms and coefficients as result of validation and reprocessing," \cite{Barkstrom2003}.
 The \textbf{groupings} he mentions is a method of separating data objects such that they have similar scientific or technical properties.
 In order to determine when these properties have changed, he leverages the \gls{nasa} Earth Science workflow model shown in Figure \ref{NASALevels}.
@@ -98,7 +98,7 @@ Their model, shown in Figure \ref{HCLSModel}, separates the concept of a data se
 \begin{figure}%[b]
 	\centering
 	\includegraphics[scale=0.34]{figures/HCLSModel.png}
-	\caption[Data model from the W3C's Health Care and Life Sciences Interest Group separating data into three levels: works, versions, and instances.]{Data model from the Health Care and Life Sciences Interest Group separating data into three levels: works, versions, and instances.  From Dummontier, et al. \cite{Dummontier2016}}
+	\caption[Data model from the W3C's Health Care and Life Sciences Interest Group separating data into three levels: works, versions, and instances.]{Data model from the W3C's Health Care and Life Sciences Interest Group separating data into three levels: works, versions, and instances.  From Dummontier, et al. \cite{Dummontier2016}}
 	\label{HCLSModel}
 \end{figure}
 The highest level summarizes the data as an abstract work, perhaps better described as a topic or title.
@@ -159,7 +159,7 @@ One particular strength that has contributed to the adoption of \gls{prov} is it
 
 \gls{prov} has provided a major contribution in maintaining the quality and traceability of data sets and reporting in the \gls{nca} \cite{Ma2014191}.
 The inclusion into the \gls{nca} signifies that there is an increased likelihood of adoption through other scientific fields as a result of this reporting.
-The Global Change Information System, which houses the data used to generate the \gls{nca}, uses \gls{prov} to meticulously track the generation of its artifacts and results as they are used in assessment report \cite{Tilmes2012}.
+The Global Change Information System, which houses the data used to generate the \gls{nca}, uses \gls{prov} to meticulously track the generation of its artifacts and results as they are used in the assessment report \cite{Tilmes2012}.
 The usage means that not only does the data have a traceable lineage to verify quality, but the content of documents can have the same verifiability \cite{Ma2014}.
 
 Komadu, a framework developed to alleviate workflow integration, utilizes PROV to improve upon its predecessor, Karma, by no longer utilizing global context identifiers that were not necessarily shared throughout the workflow. \cite{Suriarachchi_2015}.
@@ -368,13 +368,13 @@ The evaluation of hypothesis five will determine whether version publication rat
 
 %Add chapter number and references.
 
-In Chapter \ref{ch:graph}, I present my first contribution, the model forming the basis of \gls{vo} which is used to instantiate \glspl{vergraph}.
+In Chapter \ref{ch:model}, I present my first contribution, the model forming the basis of \gls{vo} which is used to instantiate \glspl{vergraph}.
 \Glspl{vergraph} capture differences between objects, not the course used to create a data object, differentiating themselves from provenance graphs.
 The \gls{vergraph} enables my second contribution, a standardized process to compute and publish \gls{linked} \glspl{log}, covered in Chapter \ref{ch:changelog}.
 The contribution eases consuming very lengthy logs, which data sets often produce, as well as enabling searchability and discoverability of \glspl{change} affecting the \gls{version}.
 My third contribution, discussed in Chapter \ref{ch:graph}, is using a \gls{vergraph} to provide a quantitative metric for determining \gls{changedist}.
 Differing methods between data producers and consumers in computing \gls{changedist} highlights disagreements in the prodcuer/consumer dynamic.
-A fourth contribution is a comparison between version publication and change rates to determine the propriety of versions as proxies for change.
+A fourth contribution is a comparison between version publication and change rates, found in Chapter \ref{Volatility}, to determine the propriety of versions as proxies for change.
 
 %%% Local Variables:
 %%% mode: latex

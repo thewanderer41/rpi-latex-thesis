@@ -87,7 +87,8 @@ Listing \ref{json_list} provides the alternative encoding of the Abswurmbachite 
 The entry is significantly longer, almost three times longer than the \gls{rdfa} entry and ten times longer than the original visible content.
 Instead of including all the data in the beginning or end of the document, each change block is separated into the particular \textit{div} section for that change.
 This choice allows consumers to extract pertinent change information without needing to ingest the entire \gls{vergraph}.
-\begin{mdframed}[topline=false, bottomline=false, leftline=false, rightline=false]
+\begin{listing}
+%\begin{mdframed}[topline=false, bottomline=false, leftline=false, rightline=false]
 	\begin{minted}[linenos, frame=lines, breaklines]{HTML}
 <h3>Change Log</h3>
   <div about="v1:Abswurmbachite">
@@ -130,9 +131,11 @@ This choice allows consumers to extract pertinent change information without nee
     </tr>
 </table></div><br>
 	\end{minted}
-	
-	\captionof{listing}{Abswurmbachite JSON-LD\label{json_list}}
-\end{mdframed}
+
+	\caption{Abswurmbachite JSON-LD\label{json_list}}
+\end{listing}
+%	\captionof{listing}{Abswurmbachite JSON-LD\label{json_list}}
+%\end{mdframed}
 
 The change logs created with \gls{rdfa} or \gls{jsonld} demonstrates progress towards documents which are both human and machine-readable.
 The implementation provides evidence that \gls{jsonld} is better suited to embed a versioning graph into a \gls{log} than \gls{rdfa}.
