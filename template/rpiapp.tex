@@ -8,7 +8,7 @@
 %\addcontentsline{toc}{chapter}{APPENDICES}             %toc entry  or:
 \addtocontents{toc}{\parindent0pt\vskip12pt APPENDICES} %toc entry, no page #
 
-\chapter{NOBLE GAS CHANGE LOG GENERATOR VERSION 1 TO 2}
+\chapter{NOBLE GAS CHANGE LOG GENERATOR VERSION 1 TO 2} \label{app:noble12}
 \begin{minted}[linenos, frame=lines, baselinestretch=1.2, breaklines]{python}
 from os.path import join, dirname, abspath, isfile
 from os import sep as separator
@@ -564,7 +564,7 @@ if __name__ == "__main__":
 	compare(excel_files, v2_file, out_name, mode)
 \end{minted}
 
-\chapter{NOBLE GAS CHANGE LOG GENERATOR VERSION 2 TO 3}
+\chapter{NOBLE GAS CHANGE LOG GENERATOR VERSION 2 TO 3} \label{app:noble23}
 \begin{minted}[linenos, frame=lines, baselinestretch=1.2, breaklines]{Python}
 from os.path import join, dirname, abspath, isfile
 from os import sep as separator
@@ -1050,7 +1050,7 @@ if __name__ == "__main__":
 	compare(v2_file, v3_file, out_name, mode)
 \end{minted}
 
-\chapter{GLOBAL CHANGE MASTER DIRECTORY CHANGE LOG GENERATOR VERSION JUNE 12, 2012 TO VERSION 8.4.1}
+\chapter{GLOBAL CHANGE MASTER DIRECTORY CHANGE LOG GENERATOR VERSION JUNE 12, 2012 TO VERSION 8.4.1} \label{app:gcmd}
 \begin{minted}[linenos, frame=lines, baselinestretch=1.2, breaklines]{Python}
 import glob, json, rdflib, re
 from rdflib import URIRef, Literal, Namespace
@@ -1348,7 +1348,7 @@ if __name__ == "__main__":
 		GCMDChangeLogGenerator([GCMDfiles[i-1],GCMDfiles[i]])
 \end{minted}
 
-\chapter{GLOBAL CHANGE MASTER DIRECTORY CHANGE LOG GENERATOR VERSION 8.4.1 TO 8.5}
+\chapter{GLOBAL CHANGE MASTER DIRECTORY CHANGE LOG GENERATOR VERSION 8.4.1 TO 8.5} \label{app:gcmd85}
 \begin{minted}[linenos, frame=lines, baselinestretch=1.2, breaklines]{Python}
 import glob, json, rdflib, re
 from rdflib import URIRef, Literal, Namespace
@@ -1759,7 +1759,7 @@ if __name__ == "__main__":
 		extracting(i, d)
 \end{minted}
 
-\chapter{MARINE BIODIVERSITY VIRTUAL LABORATORY CLASSIFIER COMPARISON}
+\chapter{MARINE BIODIVERSITY VIRTUAL LABORATORY CLASSIFIER COMPARISON} \label{app:mbvl}
 \begin{minted}[linenos, frame=lines, baselinestretch=1.2, breaklines]{Python}
 import urllib
 
@@ -2061,7 +2061,7 @@ if __name__ == "__main__":
 	#out.close()
 \end{minted}
 
-\chapter{COLD LAND PROCESS FIELD EXPERIMENT CHANGE LOG GENERATOR}
+\chapter{COLD LAND PROCESS FIELD EXPERIMENT CHANGE LOG GENERATOR} \label{app:clpx}
 \begin{minted}[linenos, frame=lines, baselinestretch=1.2, breaklines]{Python}
 from glob import glob
 from datetime import datetime
@@ -2263,7 +2263,7 @@ if __name__ == "__main__":
 In the CLPX data, versions were encapsulated into individual classes so that computations between versions could be standardized and automated.
 The code could handle ingesting a variety of different formats of data while keeping the core comparison functions independent of individualized fields.
 
-\chapter{EARTH OBSERVING LABORATORY ANALYSER}
+\chapter{EARTH OBSERVING LABORATORY ANALYSER} \label{app:eol}
 \begin{minted}[linenos, frame=lines, baselinestretch=1.2, breaklines]{Python}
 import csv
 from datetime import datetime

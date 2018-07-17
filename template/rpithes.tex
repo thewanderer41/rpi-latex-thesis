@@ -43,7 +43,7 @@
 \usetikzlibrary{positioning}
 \usepackage{bibentry}
 \usepackage{url}
-\usepackage[toc, acronym, nogroupskip]{glossaries}
+\usepackage[toc, acronyms, nogroupskip]{glossaries}
 %http://tex.stackexchange.com/questions/141247/how-to-deal-with-sign-in-url-when-using-hyperref-and-bibentry
 \usepackage{etoolbox}
 \makeatletter
@@ -63,7 +63,7 @@
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
 
-\renewcommand*{\glstextformat}{\textbf}
+%\renewcommand*{\glstextformat}{\textbf}
 
 \setminted{breakanywhere=true}
 \loadglsentries{glossary}
@@ -77,7 +77,8 @@
 \include{rpititle-phd}   % titlepage material for PhD thesis
 \include{rpiack}  % include for acknowledgements
 \include{rpiabs} % abstract
-\printglossaries
+\printglossary[title=GLOSSARY, toctitle=GLOSSARY]
+\printglossary[type=\acronymtype, title=ACRONYMS, toctitle=ACRONYMS]
 \include{rpichap1} % Introduction
 \include{rpichap2} % Literature Review
 \include{rpichap3} % Model Specification

@@ -28,9 +28,11 @@ A known issue with the transition was that comments in the Summary data set were
 A \gls{log} was created to determine whether additional differences existed within the two formats.
 
 The initial problem with forming a \gls{log} is that rows in the data did not include unique identifiers to align \glspl{attribute} within the \glspl{version}.
-A unique tuple, using values from five columns of the data, was created to match rows together since the order of the rows did not correspond between the two formats.
+A unique tuple, using values from four columns of the data as seen in line 72 of Appendix \ref{app:clpx}, was created to match rows together since the order of the rows did not correspond between the two formats.
 An immediate problem that resulted was some differences occurred within the columns necessary to form the unique tuple, namely some values disagreed by 0.5.
 Following the correction, the data could be correctly aligned.
+The change log generating script standardizes the comparison process to encompass every entry in the \mintinline{python}{generate_logs} function.
+As seen in lines 7 through 61 in Appendix \ref{app:clpx}, the script can be modularized to handle different shapefile structure while still using the same \mintinline{python}{generate_logs} function.
 
 The \gls{log} found that for columns ``soil sample A" (SL\_A) and ``soil sample B" (SL\_B), many entries consistently disagreed between \glspl{version}.
 Disagreements resulted from values being recorded with `y' or `n' for a number of values but with numbers for the rest.
@@ -87,8 +89,8 @@ Listing \ref{json_list} provides the alternative encoding of the Abswurmbachite 
 The entry is significantly longer, almost three times longer than the \gls{rdfa} entry and ten times longer than the original visible content.
 Instead of including all the data in the beginning or end of the document, each change block is separated into the particular \textit{div} section for that change.
 This choice allows consumers to extract pertinent change information without needing to ingest the entire \gls{vergraph}.
-\begin{listing}
-%\begin{mdframed}[topline=false, bottomline=false, leftline=false, rightline=false]
+%\begin{listing}
+\begin{mdframed}[topline=false, bottomline=false, leftline=false, rightline=false]
 	\begin{minted}[linenos, frame=lines, breaklines]{HTML}
 <h3>Change Log</h3>
   <div about="v1:Abswurmbachite">
@@ -132,10 +134,10 @@ This choice allows consumers to extract pertinent change information without nee
 </table></div><br>
 	\end{minted}
 
-	\caption{Abswurmbachite JSON-LD\label{json_list}}
-\end{listing}
-%	\captionof{listing}{Abswurmbachite JSON-LD\label{json_list}}
-%\end{mdframed}
+%	\caption{Abswurmbachite JSON-LD\label{json_list}}
+%\end{listing}
+	\captionof{listing}{Abswurmbachite JSON-LD\label{json_list}}
+\end{mdframed}
 
 The change logs created with \gls{rdfa} or \gls{jsonld} demonstrates progress towards documents which are both human and machine-readable.
 The implementation provides evidence that \gls{jsonld} is better suited to embed a versioning graph into a \gls{log} than \gls{rdfa}.
@@ -178,6 +180,8 @@ Table \ref{table:Ng_changelog_table1} shows the size of each encoding of the \gl
 Alone, the control is already double the size of either file.
 The \gls{rdfa} encoding more than 20 times the size of the original files, exceeding the size of the control by more than ten fold.
 A separate file was generated in turtle format to observe whether taking just the \gls{linked} values would reduce the information to a more manageable size, but the turtle file was still 30 times the size of the original files.
+All file types can be independently generated using the modularized script in Appendix \ref{app:noble12}.
+In the \mintinline{python}{write_removed} function on line 184, the text consumption of each data format can be compared by looking at the text written in each mode.
 Adopting the versioning model and encoding it into a \gls{log} will very likely require significant storage investment.
 
 Table \ref{table:Ng_changelog_table2} shows the \gls{log} sizes for the second version transition in the Noble Gas data set.

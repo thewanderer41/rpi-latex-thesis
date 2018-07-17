@@ -6,18 +6,19 @@
 
 \chapter{FUTURE WORK}\label{ch:future}
 
-A number of concerns were not addressed during the versioning graph research process.
-Since a new change statement is made for each difference between versions, some optimizations must be made to keep version graphs small enough to be encoded within change logs.
-Discontinuous attributes across multi-version graphs creates a problematic barrier to graph queries.
-Finally, further study must be done to determine methods in providing quantitative basis for version identifiers.
-These un-addressed questions form the most immediately approachable next steps for this versioning graph approach.
+VersOn opens a number of different avenues for future versioning research.
+Approaches to compressing modification statements when capturing change in spreadsheets need to be pursued.
+The ability to study changes of a collection of data as a vector space was not pursued.
+Data sets can now be studied by unique characteristics resulting from the development of new versioning versioning nomenclature to describe data sets.
+Version analysis can be expanded by developing the ideas of change usage compression, vector analysis of change space, and the study of data set characteristics using new versioning nomenclature.
 
-\section{Change Log Optimization}
+\section{Modification Compression}
 
-Very large change logs encoded with JSON-LD through HTML began experiencing performance issues due to the extreme number of modifications in the graph.
-One observation is that a modification in one cell of the Noble Gas data set sometimes also occurs in every other cell in that spreadsheet column.
-The relation of all those cells could then be summarized with a singe modification statement with just the column attribute, reducing the space utilization dependency from the number of rows to a single statement.
-The summarization could reduce the change log's size to a manageable enough level to be viewable.
+\textbf{Modifications} had to include the same number of triples as cells modified in the Copper Minerals database.
+Fewer triples can be used if changes to entire rows or columns can be summarized in a single statement.
+Encoded change logs would see significant reductions in storage costs as a result.
+Summarization by row or column may fail when a few cells do not change so a method to express no change in \gls{vo} must be pursued.
+Using the smaller number of changes or unmodified values, at most half the length of a row or column in a spreadsheet worth of statements is necessary to describe a change to a row or column, respectively.
 
 \subsection{Dynamic Change Logs}
 
@@ -28,47 +29,26 @@ The versioning graph can also contribute to the generation of unique change logs
 As mentioned in Section \ref{sec:grid}, users can dynamically aggregate and filter data sets to produce a new unique set of data, but doing so still requires tracking of differences from the original data set or sets.
 Further work will need to be done determining requirements to automate change log creation for these data sets.
 
-\section{References to Bug Tickets}
+\section{Vector analysis of Change Space}
 
-As mentioned previously, data versioning plays a major role in documentation for bug fixes and audits.
-Similar to the work done linking Bugzilla and GIT, bug tracking and change logs should also be connected.
-The linked data approach taken to develop versioning graphs provides an avenue to link the data of versions and bug trackers together.
-The work would add value to users' research by laying out which changes address bugs consumers have reported or found.
-The practice would also reinforce producer culpability and responsiveness to the user community.
-Linking data change and bug information would also allow data producers to document the evolution of their data in response to error corrections.
-The traceability would let producers determine if a bug is new or recurring as well.
+The three dimensional scatter plot shown in Figure \ref{EOL_AIM} show versions plotted in change space as a combination of \gls{AIM} counts.
+All points are an absolute distance and direction from (0,0,0), meaning that each version can be represented as a vector.
+Multiple versions could be added together to show the resultant change to a data set.
+Further research is necessary to determine whether vector operations can be used to study version behavior.
 
-\section{Supervised Versioning}
+\section{Nested Versioning graphs}
 
-The comparisons utilized in executing change log creation were basic string or numerical comparisons.
-More complex data sets may need supervised input to properly model version changes.
-Attributes that split or merge were not tested or evaluated for whether they needed unique behavior to capture.
+In Figure \ref{HCLSModel} and Figure \ref{hierarchy} use multiple levels to capture versions, but \gls{vo} only uses two.
+Allowing \textbf{attributes} to also be \textbf{versions} means that a versioning graph can express variable granularity.
+A graph captures a modification in a file of a data set managed by EOL.
+The file would be an \textbf{attribute} of \textbf{versions} of the EOL data set, but a second graph would capture differences in values within the file, making the file a \textbf{version}.
+The second graph could then be nested in the first by connecting the graphs at the file identifiers.
 
-\section{Multi-version Graphs}
+\section{Patterns of change behavior based on Change Classes}
 
-At present, the versioning model captures only changing as a matter of convention and to save space.
-Version graphs with multiple versions can suffer discontinuities across attributes which don't change between two versions, but then experience a modification later.
-Discontinuities in the graph causes problems for search queries since a directed path does not exist through all versions in the graph for that attribute.
-The definition of a null-step to bridge gaps could provide a temporary solution to show an attribute in the graph hasn't changed but re-establish connectivity.
-The addition could also introduce new space utilization concerns.
-
-Once standardized, multi-version graphs provide a full history of a work.
-Versioning systems often only need to provide the changes between two specific versions.
-Not all changes along that profile is necessary.
-As a result, reasoning methods need to be developed to help summarize changes across multiple versions.
-
-\section{Change Distance and Dot-decimal Identifiers}
-
-The initial research to study the relationship between change counts and version identifiers broke down due to the subjectivity of identifier assignment.
-Not enough evidence was found to determine if identifiers were assigned accurately.
-Applying the versioning model to more data sets and comparing change counts may be necessary to determine what quantifiable methods, if any, can be used as a basis for version identifier assignment.
-The research would be conducted to determine the extent to which dot-decimal identifiers can communicate change of a data set.
-
-Compressing changes into a single row or column may disproportionately affect resulting distance counts.
-
-\section{Other Methods of Change Distance Calculation}
-
-Flow calculation seems possible.
+The change classes of unversionable, irregular, and periodic organize data sets by different practices of versioning.
+Further work is necessary to determine if there are versioning requirements specific to the type of change class, and determine if the classes exhibit specific patterns of change which could improve change data capture.
+A particular versioning technique or tradition may not be appropriate for every class of data set.
 
 \section{Database Context}
 
@@ -78,24 +58,10 @@ The scripts and process used to version spreadsheets would not work on these dat
 The databases, however, use standardized add, delete, and modify commands which do map to the versioning model.
 Work remains to be done in studying how these commands can be captured and output as a versioning graph instead of using the script to perform the comparison.
 
-\section{Implementing Recursive Tiers}
-
-The multi-tiered nature of versioning models have been mentioned multiple times, but the specified versioning model only defines one tier.
-Multiple tiers may be necessary to capture the granularity of some data sets such as the one illustrated by Barkstrom.
-If attributes are also allowed to be versions, graphs can be nested recursively to form a multi-tiered graph.
-More work needs to be done to understand what such a graph would look like as well as the mechanics necessary to make the graph accessible.
-
-\section{Multi-file Versions}
-
-As pointed out in Chapter \ref{ch:graph}, little guidance is given on versions spread across multiple files.
-For the Noble Gas data set, the files were grouped into a collection, but if the desired representation are separate objects and multiple left-hand versions, not much work has been done to explain how that should be implemented.
-An alternative way to implement the Noble Gas graph would be to have the collection link not to the attributes and changes, but to a file which then behaves like a left-hand version in the normal graph.
-Such a construction is possible, but whether the setup is desirable remains to be studied.
-
 \section{Summary}
 
-Future work should be conducted to reduce the size of change logs, re-connect multi-version graphs, and determine a quantitative basis for version identifiers.
+Future work remains open to a number of different pursuits.
 Change logs can be shortened by discovering modifications occurring over an entire column which can be summarized in a single statement.
-Null-step links could be used to reconnect attributes in multi-version graphs, but this may also introduce new space consumption issues.
-The versioning model should be applied to more data sets employing the dot-decimal identifier method to gather evidence on the extent to which the identifiers can communicate change in a data set.
+Version analysis can now leverage vector operations to study data set change.
+Organizing data sets by versioning approach opens new avenues of evaluating the behavior and performance of versioning systems.
 These approaches were left unexplored by the project's conclusion.

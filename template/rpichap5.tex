@@ -4,7 +4,7 @@
 %                                                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Determining Data Volatility} \label{Volatility}
+\chapter{DETERMINING DATA VOLATILITY} \label{Volatility}
 
 \section{Introduction}
 
@@ -71,6 +71,11 @@ The \gls{eol} of the \gls{ncar} distributes small data sets, around 10-12 files 
 The \gls{eol} data sets are unique in the data set size means management often does not require automation.
 In mid-2014, \gls{eol} began assigning \gls{version} to stored data sets.
 When receiving a new \gls{version} of a data set from a researcher, the practice is to upload the entire new data set, and replace all old files.
+
+The meta-data extraction and analysis was done by the script found in Appendix \ref{app:eol}.
+The script organizes the information into classes representing the data set, the versions of the data set, and the files within the versions.
+The nested class structure allows federated data computation by having each data set manage version analysis within the data set object.
+The versions also become grouped and co-located with associated versions in the same data set.
 
 Of the 1335 data sets maintained by \gls{eol} with \glspl{version}, only 180 data sets had more than one \gls{version}.  
 The full distribution of version counts is in Table \ref{table:EOL_Versions}

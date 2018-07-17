@@ -16,6 +16,148 @@ While Software Versioning Managers (SVM) prefer to adopt the dot-decimal identif
 Change logs are a feature which commonly appears alongside software projects and provide insight in differences between versions, but they are found very rarely among data sets.
 Measuring the space between versions also appears under-explored in previous approaches.
 
+\section{Current Versioning Models} \label{sec:models}
+
+Version models provide a visual theoretical aid in understanding where a data object lies in relation to the rest of a work.
+The \gls{arm} group at Pacific Northwest National Laboratory used a model dividing the data into mathematical sets which versioning operations acted upon\cite{6906868}.
+Adding files already in the set created a new set which inherited all non-intersecting files and included all the new ones.
+The model provided a means to organize and automate the versioning of \gls{arm}'s daily expanding data sets.
+
+The \gls{hcls} Interest Group of the \gls{w3c} recently released a model which resembles the \gls{frbr} model with a three level hierarchy of increasing granularity \cite{Dummontier2016}.
+Their model, shown in Figure \ref{HCLSModel}, separates the concept of a data set into three groupings.
+\begin{figure}%[b]
+	\centering
+	\includegraphics[scale=0.34]{figures/HCLSModel.png}
+	\caption[Data model from the W3C's Health Care and Life Sciences Interest Group separating data into three levels: works, versions, and instances.]{Data model from the W3C's Health Care and Life Sciences Interest Group separating data into three levels: works, versions, and instances.  From Dummontier, et al. \cite{Dummontier2016}}
+	\label{HCLSModel}
+\end{figure}
+The highest level summarizes the data as an abstract work, perhaps better described as a topic or title.
+The data topic can have multiple versions over time.
+The version can then be instantiated into various distributions with different physical formats.
+The model---relating summary, version, and distribution---provides a method to implement the formation of \gls{frbr}'s work, expression, and manifestation model on the Web.
+
+From his definition of versions, Barkstrom also outlines a hierarchical version model as seen in Figure \ref{hierarchy}.
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.50]{figures/hierarchy.png}
+	\caption[Visual representation of grouping hierarchy.]{Visual representation of grouping hierarchy.  Each row of the hierarchy defines a level of granularity where differences can separate ``homogenous groupings" of data.  From \cite{Barkstrom2003}}
+	\label{hierarchy}
+\end{figure}
+The model features more intermediary levels than the \gls{hcls}'s model by introducing data products and data sets as ``homogeneous groupings" where differences can be introduced \cite{barkstrom2014earth}.
+Each edge in the tree signifies a difference with other objects at the same depth, but the model does not provide a mechanism to explain the difference.
+The difference in the number of tiers employed in the \gls{hcls} and Barkstrom models also indicates that different applications will have varying expectations of granularity to their versioning models.
+Granularity is important because it defines the detail with which versioning activities will be executed.
+A general solution will likely need to be tiered and recursive in structure to accommodate different levels of specificity.
+
+\section{Documenting Versions} \label{sec:changelog}
+
+When workflow activities generate new \glspl{version} of a data object, connective tissue becomes necessary to bind the \glspl{version}.
+\Glspl{log}, artifacts resulting from the versioning process, play a major role filling in gaps between versions.
+\Glspl{log} document changes and explain, in human language, motivations behind the differences \cite{uel1037}.
+Introducing \gls{log} information into \gls{linked} follows logically from the drive to improve transparency of characteristics connecting data sets, a \gls{linked} principle.
+Very little evidence exists suggesting that \gls{log} data is being captured by \gls{linked} practices.
+The provenance ontologies covered in Section \ref{sec:provmod} contain terms which are too broad to express changes at the same level of detail as \glspl{log}.
+\gls{nasa} Earth Science's treatment of versions has been found to vary depending on a data community's traditions, meaning that if an ontology to express change data existed, the ontology may not be applicable to every community due to opposing traditions \cite{barkstrom2014earth}.
+A review of data versioning in biology also identifies the lack of a standardized versioning format suggesting the lack of an accompanying standardized method to consume versioning data \cite{Tagger2005}.
+While some data sets will contain a \gls{log}, software projects have normalized their use in version release documentation \cite{German03automatingthe}.
+The popular \gls{svm} Git provides methods to attach messages to commits, but the messages are in plain-text rather than a \gls{linked} compatible format \cite{Chacon:2009:PG:1618548}.
+As a result, software projects provide a basis for understanding the value of \glspl{log} to data sets with multiple \glspl{version}.
+Drawing trends from \gls{log}s is limited by only appearing in human readable text.
+Wider adoption among data sets may be possible by making change texts machine readable.
+
+The following studies demonstrate the value that can be unlocked by studying the behaviors and data stored within software \glspl{log}.
+\Glspl{log} play an important communication role in open-source projects, allowing new developers to trace implementation decisions made through the life-cycle of a project.
+In one project, researchers explicitly linked \gls{log} entries to documented bug reports, showing how bugs of different priorities were addressed \cite{Chen:2004:OCL:990374.990391}.
+The links give insight into motivations behind particular implementation decisions.
+\Glspl{log} linked with \gls{version} releases also provide feedback to the user community that issues have been addressed, in addition to ensuring that improvements drive modifications to the code base.
+The rate of \gls{log} release has been shown to be a good indicator for the general health and activity within a software project \cite{German03automatingthe}.
+The poor health of a project can negatively impact adjacent systems.
+A project mined change histories to determine dependency patterns in source code changes which would cause a cascade of follow-up bugs in other projects \cite{6132954}.
+The research is pertinent to systems which rely on multiple projects to function, but also functions very similar to inter-operable data systems like those created by \gls{linked}.
+The change history mining project diverges from previous approaches by looking primarily at the presence of differences between the source code instead of the natural language text in accompanying logs.
+
+\section{Provenance Representation} \label{sec:provmod}
+
+\Gls{linked} is a collection of methods standards which improve data set interoperability by using technology to expose the characteristics and connections between collections of data on the Web of Data \cite{ld}.
+Provenance ontologies form a major section of \gls{linked} approaches to data versioning.
+The coverage stems from the close relation between provenance and differentiating versions.
+The Proof Markup Language, one of the first semantic models to capture provenance information, expressed lineage relationships using inference reasoning through traceable graphs \cite{daSilva2006381}.
+The technique provides a powerful way to express and imply sequences of relationships between different versions and characterize the manner of their relation.
+
+\subsection{Open Provenance Model}
+
+\gls{opm} was the product of a series of provenance challenges held at International Provenance and Annotation Workshops after participants began realizing and reaching consensus on the formulation and content of provenence information necessary to establish system interoperability \cite{moreau2008open}.
+In a project, the model has been applied to sensor networks, automating and unifying their provenance capture even as they grow \cite{5478496}.
+To aid \gls{opm}'s adoption, the framework Karma2 integrates provenance capture into scientific workflows and provides a more abstract view of their data collection activities \cite{simmhan2010karma2}.
+The property \textit{opm:WasDerivedFrom} constitutes a core concept in the model and marks the reliance of one object's existence on another object.
+For a large part, the relation encompasses the engagement which provenance models view versions, without further need to explore the derivation's content.
+
+\subsection{PROV-O}\label{sec:prov}
+
+\gls{prov}, a \gls{w3c} Recommendation, delineates a method to express data provenance in a more compact form as seen in Figure \ref{PROVO} \cite{Gil2013a} \cite{Groth2013}.
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.5]{figures/ProvO.png}
+	\caption[Diagram of the PROV Ontology.]{The PROV Ontology is divided into three main objects: Entity, Agent, and Activity.  An Activity is an action or process which produces Entities which is associated with an Agent.  Agents are usually individuals responsible for creating Entities.  The high level ontology can capture complex provenance relationships to ensure traceability of data production.  Figure 1 from \cite{Lebo2013}}
+	\label{PROVO}
+\end{figure}
+The recommendation uses a conceptual model relating activities, agents, and entities to describe data production lineage, the list of data ancestors leading to a data object \cite{Moreau2013c} \cite{Nies2013} \cite{Nies2013a}.
+Intended as a high-level abstraction, \gls{prov} takes an activity-oriented approach to provenance modeling.
+Every data entity results from the actions of some activity \cite{Gil2013}.
+The conceptual model's expression occurs through the \gls{prov} Ontology (PROV-O), which is conveyed through various resource description languages \cite{Hua2013} \cite{Klyne2013}.
+The ontology is further formalized into a functional notation for easier human consumption \cite{Moreau2013b} \cite{Cheney2013a}.
+One particular strength that has contributed to the adoption of \gls{prov} is its ability to link into other ontologies, making it easier for existing semantically enriched data sets to adopt \gls{prov} \cite{Miles2013} \cite{Moreau2013}.
+
+\gls{prov} has provided a major contribution in maintaining the quality and traceability of data sets and reporting in the \gls{nca} published by the U.S. Global Change Research Program \cite{Ma2014191}.
+The inclusion into the \gls{nca} signifies that there is an increased likelihood of adoption through other scientific fields as a result of this reporting.
+The Global Change Information System, which houses the data used to generate the \gls{nca} and maintained by the U.S. Global Change Research Program, uses \gls{prov} to meticulously track the generation of its artifacts and results as they are used in the assessment report \cite{Tilmes2012}.
+Usage means that not only does the data have a traceable lineage to verify quality, but the content of documents can have the same verifiability \cite{Ma2014}.
+
+Komadu, a framework developed to alleviate workflow integration, utilizes PROV to improve upon its predecessor, Karma, by no longer utilizing global context identifiers that were not necessarily shared throughout the workflow. \cite{Suriarachchi_2015}.
+The framework and the adoption of \gls{prov} in high profile scientific applications means versioning applications can be overlayed onto a \gls{provenance} skeleton once a versioning ontology has been created.
+
+The \gls{prov} Ontology provides three different concepts that begin to encapsulate the provenance relationship between data versions.
+It defines a \textit{prov:Generation} as ``the completion of production of a new entity by an activity," \cite{Lebo2013}.
+The definition means that the generation, which corresponds to adding an object to a version, must result from a \textit{prov:Activity}.
+\textit{Prov:Invalidation}, defined as the ``start of the destruction, cessation, or expiry of an existing entity by an activity," makes a similar connection between activities and entities \cite{Lebo2013}.
+A third concept, \textit{prov:Derivation}, relates two entities, and the ontology defines it as, ``a transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a preexisting entity. " \cite{Lebo2013}.
+PROV also has a property called \textit{prov:isDerivedFrom} which conveys the same definition as a \textit{prov:Derivation}.
+Using the property and concept together forms a qualified property which can be instantiated and further annotated.
+
+\subsection{Provenance, Authorship, and Versioning Ontology}
+
+The \gls{pav} Ontology is, ``a lightwei\-ght vocabulary, for capturing ``just enough" descriptions essential for web resources representing digitized knowledge" \cite{Ciccarese2013}.
+It provides a means to track versioning information through linked data by introducing \textit{pav:version} to cite versions and \textit{pav:previousVersion} to link them together in order \cite{Ciccarese2013}.
+The authors of \gls{pav} created the new property to expand on the Dublin Core concept \textit{dc:isVersionOf} which is used when, ``Changes in version imply substantive changes in content rather than differences in format" \cite{DCMI2012}.
+\gls{pav} supports the idea that a new concept becomes necessary to cover cases where new \glspl{version} do not have to be substantive but can still be alternate editions of the original object.
+While it documents related versions well, \gls{pav} does not dive deeper in explaining the circumstances behind version differences.
+
+\subsection{Schema.org}
+
+\sloppy
+The Schema.org structured data schema is not a provenance ontology but provides a means to supply searchable web pages with standardized micro-data.
+The schema has a collection of concepts which could be applied to versioning.
+The \textit{schema:UpdateAction} is defined as, ``the act of managing by changing/editing the state of the object," which encompasses the same responsibilities expected of versioning systems \cite{Schema}.
+The terms \textit{schema:AddAction}, \textit{schema:DeleteAction}, and \textit{schema:ReplaceAction} subclass the \textit{schema:UpdateAction}.
+These classes model actions which further cement parallels between versioning and \textit{schema:UpdateAction}.
+
+\fussy
+Schema.org defines a \textit{schema:ReplaceAction} as, ``the act of editing a recipient by replacing an old object with a new object" \cite{SchemaRep}.
+The concept has two properties, \textit{schema:replacee} and \textit{schema:replacer} which indicates that a new object replaces an old one.
+Schema.org models the interaction by placing the replacement action at the relation's center.
+In comparison, the \textit{schema:AddAction} is defined as, ``the act of editing by adding an object to a collection" \cite{SchemaAdd}.
+The action only involves the object and the new state of the collection, not involving any of the collection's prior lineage.
+Schema.org defines the \textit{schema:DeleteAction} as, "the act of editing a recipient by removing one of its objects," \cite{SchemaRem}.
+The concept aligns well with other versioning systems, although deletion may be a strong assertion.
+The deletion would be inappropriate for use in cases where data is archived but no longer used, for example or when data becomes deprecated.
+
+Provenance models are a necessary step towards the development of versioning models.
+Going back to the working definition of a version and the discussion from Barkstrom, \glspl{version} are produced from changes to \gls{provenance}, and without the ability to clearly trace \gls{provenance}, \glspl{version} cannot be clearly organized.
+A number of \gls{linked} \gls{provenance} models include versioning concepts such as \gls{opm}, \gls{prov}, and \gls{pav}.
+Each model approaches versioning differently, ranging from very broad to very narrow definitions of a \gls{version}.
+None of the models approach capturing the differences between \glspl{version} which is appropriate since the differences do not explain the processes used to create a digital object \cite{moreau2008open}.
+Versioning, in contrast, documents the results of using a different process.
+
 \section{Version Systems} \label{sec:system}
 
 Versioning systems take many different forms from Clotho, an application conducting versioning at the block level, to Champagne, a framework to propagate change data across multiple information systems \cite{Flouris04clotho:transparent} \cite{Systems02champagne:data}.

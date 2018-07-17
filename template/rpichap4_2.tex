@@ -25,7 +25,7 @@ Finally, a \gls{vergraph} is used to classify the kinds of \gls{change} separati
 \section{Implementing the Versioning Model}
 
 The following subsections detail the steps used to implement a \gls{vergraph} using the model defined in Chapter \ref{ch:model} and the challenges encountered.
-Section \ref{mapping} procured the decisions made to align the \glspl{attribute} within the Noble Gas dataset and within the Copper data set.
+Section \ref{mapping} discusses the decisions made to align the \glspl{attribute} within the Noble Gas dataset and within the Copper data set.
 The alignments create a formula to detect changes and assign them to either an \gls{add}, \gls{invalidate}, or \gls{modify} \gls{change}.
 A \gls{log} can then use the assignments to organize a presentation of the change data.
 The underlying \gls{vergraph} exists as \gls{linked} encoded within the \gls{log}, but can also appear as explicit \gls{linked} statements.
@@ -70,6 +70,8 @@ The \glspl{attribute} in these sets are then minted into \glspl{uri} and linked 
 	\end{adjustbox}
 \end{figure}
 The \glspl{vergraph} presented in this section were created by extracting triples, using the code in Appendix \ref{extractor} from the associated \gls{log} which was covered in Chapter \ref{ch:changelog}.
+The \mintinline{python}{extracting} function of the script extracts the JSON objects in every script tag, enters the values into an RDF graph, and then prints the graph out to a file.
+The script has been generalized to process every JSON-LD encoded change log made in this thesis.
 The statements making up the \gls{vergraph} could have alternately been published by writing out the triples directly instead of encoding them into a \gls{log}.
 Figure \ref{NobleGraph1} displays a subgraph of the Noble Gas data set's \gls{vergraph} between Versions 1 and 2, highlighting each of the \gls{AIM} \glspl{change}.
 Notice how the \gls{vergraph} differs from the provenance graph in Figure \ref{CAM001ProvGraph}.
@@ -163,7 +165,7 @@ Since the \gls{log} can use explicit statements, the column identifier refers to
 
 \section{Change Metric} \label{ch:distance}
 
-Use Case 2 addresses the use of \glspl{version} to communicate how different two objects are.
+Research Question 2 seeks to determine the extent of differences between two \glspl{version}.
 Many versioning systems use dot-decimal identifiers to signify whether a change is large, medium, or small.
 The exact requirements to determine change size differs widely across different domains and applications.
 The \gls{vergraph} provides a new, more regular method to quantify change between objects using versioning operations.
@@ -225,6 +227,7 @@ Since the data sets have the same number of sequences, the primary differences b
 The \gls{gcmd} establishes the context that each \textbf{manifestation} of their keyword list is related versions.
 Since the unique identifier for each keyword remains the same across versions, the unique keyword identifier can be used to align a mapping across \glspl{version}.
 \Glspl{add} and \glspl{invalidate} are detected by checking an identifier's presence within both versions.
+Notice that the presence can be computed, as shown in lines 22 and 23 of \ref{app:gcmd}, without iterating through the data set.
 A \gls{modify} occurs when a keyword's \textit{skos:Broader} property differs between adjacent \gls{version}.
 The alignment assumes that there is not reason a keyword's preferred label would change, but still reports a value when it has new entries in the ``notes" property.
 A difference indicates that the word has been moved to a different place within the taxonomy since identifiers do not change across versions and a keyword only has one parent concept.
@@ -235,6 +238,7 @@ A \gls{log} was generated for each pair of consecutive versions in \gls{gcmd} Ke
 \subsection{Connecting Change Counts to Identifiers} \label{gcmd_85}
 
 The \gls{add}, \gls{invalidate}, and \gls{modify} counts for each transition are presented in Figure \ref{GCMDC1}.
+Modify changes are labeled as Moves to differentiate between types of modifications when discussing Version 8.5.
 The query used to extract the counts is found in Listing \ref{gcmd_list}.
 Notice the sharp spike in \glspl{add} and \glspl{invalidate} when transitioning from Version 8.4.1 to 8.5.
 The version identifiers indicate that at most a minor or technical change has occurred, but the counts of \gls{add} and \gls{invalidate} in this transition is more than triple the counts in either of the previous \textbf{major} transitions.
@@ -289,7 +293,8 @@ SELECT ?p (COUNT (DISTINCT ?s) as ?count)
 \end{listing}
 
 Changing the mapping method to account for the new namespace provides a pathway to compare the perceived change by the producer as evidenced by the version identifier with the \gls{changedist} in the \gls{vergraph}.
-To do this, the mapping treats identifiers with \mintinline{html}{http} and \mintinline{html}{https} the same. 
+To do this, the mapping treats identifiers with \mintinline{html}{http} and \mintinline{html}{https} the same as seen in lines 25 and 29 of Appendix \ref{app:gcmd85}.
+The code breaks apart the \gls{uuid} from the \gls{uri} and uses the prior namespace or current namespace, respectively.
 Differences in \gls{changedist} become much clearer after controlling for the altered name space in Figure \ref{GCMDC2}.
 All revisions are dominated by \glspl{add}, but major version changes have counts around 300 to 500 while minor revisions are an order of magnitude smaller.
 The transition from Version 8.4.1 to 8.5 also seems to follow this trend.
@@ -327,10 +332,11 @@ The second phase compares the performances of each candidate classification of a
 The use of \gls{add}, \gls{invalidate}, and \gls{modify} varies slightly in this application since all the results use the same sequences.
 A \gls{vergraph} utilizing just the sequence identifiers would only result in \textbf{modify} changes when taxonomic ranks differ since the sequence identifier exists in both data sets.
 The mapping instead uses the sequence identifiers to align comparisons and then the taxonomic rank classification to determine the kind of \gls{change}.
-If the right-hand result specifies more taxonomic ranks, the relationship is an \gls{add}.
+If the right-hand result specifies more taxonomic ranks, the relationship is an \gls{add}, lines 200, 204, 216, and 226 in Appendix \ref{app:mbvl}.
 If the left-hand result is more specific, then the relationship is classified as an \gls{invalidate}.
 If both results have the same precision but the name differs, then the link is a \gls{modify}.
 Otherwise, no \gls{change} is detected.
+The \textbf{invalidations} and \textbf{modifications} were marked with `-{}-{}-' and `$>$$>$$>$' respectively in the function \mintinline{python}{get_output} of Appendix \ref{app:mbvl}.
 
 Figure \ref{mbvl_chart} shows the changes detected when varying either the taxonomy or the classification algorithm.
 \begin{figure}
@@ -348,8 +354,8 @@ The classifier comparisons feature a high number of \glspl{invalidate}; however,
 
 \section{Version Graph Discussion}
 
-The \gls{vergraph} successfully addresses the concerns of Use Case 1 by capturing all the differences within the Noble Gas data set and within the Copper data set into a \gls{vergraph}.
-Some additional concerns had to be addressed, such as multiple files in a \gls{version} and dual \gls{attribute} identification, during the implementation of the versioning model.
+The \gls{vergraph} successfully addresses the concerns of Research Question 1 by capturing all the differences within the Noble Gas data set and within the Copper data set into a \gls{vergraph}.
+Some additional concerns had to be addressed, such as dual \gls{attribute} identification, during the implementation of the versioning model.
 The multiple files in the first version of the Noble Gas data set needed to be collected into a single concept in order to preserve the one-to-one relation between \glspl{version}.
 The grouping simplifies the \gls{vergraph} structure as well as reduce the complexity of a \gls{log} encoding.
 
