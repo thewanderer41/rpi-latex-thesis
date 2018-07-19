@@ -8,6 +8,12 @@
 
 \section{Definitions of Version} \label{sec:def}
 
+Data sets invariably require versioning systems to manage changes due to an imperfect collection environment.
+Data versioning systems are employed to manage changes to data, logging new data sets and communicating that change to data consumers.
+Versioning discussion remains imprecise, lacking standardization or formal specifications.
+Many works tend to define versions around examples and local characteristics but lack a broader foundation.
+This work contributes to the discussion by capturing version relationships into a linked data model, taking inspiration from provenance models that incorporate versioning concepts such as PROV and Provenance, Authorship, Versioning (PAV) ontologies.
+
 Using the term `version' in the vernacular has become so pervasive that few documents formally define it.
 Barkstrom describes versions as \textbf{homogeneous groupings} used to control, ``production volatility induced by changes in algorithms and coefficients as result of validation and reprocessing," \cite{Barkstrom2003}.
 The \textbf{groupings} he mentions are a method of separating data objects such that they have similar scientific or technical properties.
@@ -86,30 +92,61 @@ The natural evolution of versioning systems, however, have given rise to formal 
 Disagreements between the informal concepts propagate through the formal architecture, causing breakdowns in interoperability between heterogeneous systems, especially when users are not aware of biases in informal versioning concepts \cite{Baker2009}.
 In this dissertation, we identify gaps in versioning practices which result from tradition and develop a data model to more completely capture the interactions involved in versioning.
 
-\section{Change Capture Completeness}
-Provenance - definition
-The ontologies declare relation and influence but do not make comparisons
-The ontologies are missing addition and invalidation changes.
+\subsection{Change Capture Completeness}
 
-\section{Change Log Performance}
-Working definition for change log performance is content per storage space where content is an entry for a specific change.
-Buneman finds that data provenance consumes storage space on the order of the original data to a fifth after compression.
-Encoding increases the storage space used to convey a change so performance must decrease when encoded with linked data.
-The expected impact to performance should be no more than 50\% as provenance data and the original data is double the original size.
+Data provenance has achieved major adoption and implementation goals in data management discussion with the adoption of PROV-O \cite{Lebo2013} as a \gls{w3c} recommendation and PROV-O's utilization in the \gls{nca} \cite{Ma2014191}.
+The inclusion of versioning concepts within the ontology illustrates the close relationship between provenance and change information.
+Provenance's prominence in the data management field defines a specific view of change capture.
+Because provenance focuses on capturing the entities and activities used to produce a data object, it does not completely capture the change differences between objects.
+Delving deeper and comparing the parts of the objects lies outside the scope of provenance information.
+In order to achieve completeness, a \gls{linked} model must include the concepts of addition, invalidation, and modification.
+The model must relate the changing parts which differentiate objects as separate versions with the objects.
+The model must also maintain a continuity between versions to preserve the historical evolution of a data object.
 
+\subsection{Change Log Performance}
 
-\section{Change Distance Precision}
-Dot-decimal identifier tradition only increments a number in the series by one with each new version.
-Change at identifier interval summarizes the amount of change in the data
-Number of changes can range from 1 or more.
-Counting the actual changes or dfferences allows more precision in reporting the amount of change between versions.
+A \gls{log} is a document explaining the differences between two versions \cite{uel1037}.
+Every change logged within the \gls{log} requires a certain amount of storage space to document.
+One of the ways to measure change log performance is to compute the number of entries in the change log relative to the space necessary to store the information.
+The amount of change information generated for an object can be related to provenance information since changes to activities and inputs result in new data objects which can be compared to the original object as a version, generating change information.
+Buneman finds that provenance data consumes storage space on the order of the original data, or after compression, the provenance takes up twenty percent of the original space \cite{Buneman}.
+Including more data in a different form is guaranteed to decrease performance with the increased space utilization, but the reduction can be bounded.
+Since the change log contains the differences between two versions, therefore containing at most all the entries in the data set, encoding the change data into the log will decrease performance by at most fifty percent.
+The storage space necessary to hold the original change log and the change data is double the original data set size, but the entries remain the same since the change log and change data entries describe the same change.
 
-\section{Accuracy of Data Set Change Rate}
-Version identifiers enable sequential ordering.
-Differences between identifiers communicate change across versions, but not across time.
-Git and others show that versions can be published at an arbitrary rate to control the stability of a data set or project.
-Variable number of changes are contained in each version.
-Using the change distance instead of the version metric increases the accuracy of change rate reporting.
+\subsection{Change Distance Precision}
+
+Versioning practices tend to follow specific traditions \cite{barkstrom2014earth}; one tradition is the use of dot-decimal identifiers to communicate change distance \cite{Tagger2005}.
+A dot-decimal identifier is a series of numbers joined together by a decimal point with the left-most number signifying a grouping by major features and the right-most number signifying a grouping over the most minor features.
+The amount of change between two versions is determined by finding the left-most interval at which the identifiers differ.
+Because the identifiers traditionally denote a version's location in a sequence, only one interval is changed at a time and is only incremented by one.
+The identifiers broadly categorize the change distance between two versions.
+Because the number of changes between two versions is one or more, a range of change distances can fall within a category.
+The range suggests that counting changes allows a more precise basis to report change distance than dot-decimal identifiers.
+
+\subsection{Accuracy of Data Set Change Rate}
+
+Looking at just the differences between versions may give a false impression of the data set's rate of change since the comparison to versions assumes that the versions are distributed evenly through time.
+From Git \cite{Chacon:2009:PG:1618548} and other versioning systems \cite{Branco2008}, we can see versions can be arbitrarily distributed through time.
+Variable publication rates help increase the stability of a project by controlling the data volatility, the likelihood of data to change, by aggregating changes before publishing a new version.
+The division of changes across versions suggests that re-introducing time to change distance will give a more accurate reading of a data set's rate of change than the version publication rate and more accurate than changes across versions.
+
+\section{Scope and Assumptions}
+
+The data sets used to develop the versioning model include static tabular databases, taxonomic trees, and collections of small data sets possessing around twelve to thirteen files on average.
+The static tabular databases contained on the order of thousands of records and the time between versions was on the order of months and years.
+A number of classes of data do not reflect the temporal and size characteristics of the utilized data sets including streaming data, which posses short intervals between versions, and big-data repositories, which posses orders of magnitude more records.
+Taxonomic trees do not represent many web ontologies because the ontologies may contain undirected cycles in the ontological structure.
+The versioning model can only be applied to data sets with more than one version since the version must be compared to another object.
+
+The model assumes that multiple changes occur between each version change.
+The results in this thesis may not represent the performance of data sets which operate on single or small numbers of changes between each version of a data set.
+Transactional data sets like centralized data sets are not covered by the research work in this thesis.
+The model assumes that all newly appearing attributes have been added by the new version.
+All attributes which do not appear in the new version are assumed to be invalidated.
+The model assumes that every entry in a data set can be unique identified by an attribute or a combination of attributes.
+Data sets where changes cannot be associated with mutually exclusive groups cannot be correctly represented in the versioning model.
+
 
 \section{The Versioning Use Case} \label{sec:usecase}
 
@@ -224,20 +261,14 @@ Looking at just the version publication rate also misrepresents the actual chang
 I hypothesize that version analysis must factor in time when comparing change rates between \glspl{version}.
 The change rate distribution of each \gls{AIM} \gls{change} follows a distribution significantly different from the version publication rate.
 
-\section{Limitations}
-VersOn cannot compute changes of a data set with only one version.
-VersOn was modeled on data sets with months or years separating versions or with concurrent versions containing on the order of thousands of entries only.
-VersOn does not scale well as the number of attributes needed to uniquely identify an entry increases.
-
 \section{Hypothesis Statement}
 
 The work in this dissertation tests five hypotheses.
 \begin{enumerate}
-	\item Using the versioning model \gls{vo} to expose \glspl{log} as \gls{linked} standardizes versioning publication in \glspl{log}.
-	\item \gls{AIM} counts computes a more accurate \gls{changedist} than the current practice by capturing data differences rather than the sequential labeling common to many versioning traditions.  \gls{AIM} provides a method to compare within a particular kind of change---\gls{add}, \gls{invalidate}, or \gls{modify}---through subclassing concepts within \gls{vo}.
-	\item \gls{AIM} counts provide a method to compare the amount of change as seen by various data consumers.
-	\item Computing \gls{changedist} without time misrepresents the actual change rate.
-	\item The distribution change rate of data sets is significantly different from the publication rate of versions.
+	\item \gls{vo}, compared to current provenance ontologies, increases the completeness of change graphs by capturing \gls{AIM} changes.
+	\item \gls{vo} reduces performance of change logs by no more than 50\% where performance is measured by content per unit storage.
+	\item \gls{vo} increases the precision and detail of change measurements compared to dot-decimal identifiers by enumerating changes.
+	\item VersOn, compared to the version publication rate, increases the accuracy of capturing the data set change rate.
 \end{enumerate}
 
 \section{Contributions}

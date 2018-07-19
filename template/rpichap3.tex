@@ -36,7 +36,7 @@ In doing so, a versioning data model needs to be developed which can capture cha
 
 \section{Exploring Possible Approaches}
 
-The first approach, seen in Figure \ref{DiscardedFig}, simply extends the \gls{provenance} relation with additional concepts to capture more types of relationships.
+The first approach, which will be referred to as the provenance based model and seen in Figure \ref{DiscardedFig}, simply extends the \gls{provenance} relation with additional concepts to capture more types of relationships.
 \begin{figure}
 	\centering
 	\vspace{0.0in} % normally the command here would be \includegraphics
@@ -60,21 +60,23 @@ The first approach, seen in Figure \ref{DiscardedFig}, simply extends the \gls{p
 	\draw [line width=2pt, ->] (a) -- (p2);
 	\end{scope}
 	\end{tikzpicture}
-	\caption{Provenance oriented versioning model.}
+	\caption{Provenance based versioning model.}
 	\label{DiscardedFig}  % the \label command comes AFTER the caption
 \end{figure}
 Until the introduction of or comparison with Version 2, none of the concepts in Version 1 can be considered new or old.
 As the responsible party for introducing changes, Version 2 becomes associated with \textit{New}, \textit{Old}, and modified attributes.
-Version 1 also relates to altered \glspl{attribute} since it provides the \textit{pre-value} used to contextualize Version 2's \textit{post-value}.
+Version 1 also has a link to altered \glspl{attribute} since it provides the \textit{pre-value} used to contextualize Version 2's \textit{post-value}.
 The pre- and post- values are included so that a user can see how much the \gls{attribute} has changed, much like with a \gls{log}.
 
-Adding the \glspl{attribute} as concepts to the model addresses PROV's and PAV's flat approach to \gls{version} relations, but the \glspl{attribute} do not capture the inter-relation between objects for \textit{New} and \textit{Old} \glspl{attribute}.
+Adding the \glspl{attribute} as concepts to the provenance based model addresses PROV's and PAV's flat approach to \gls{version} relations, but the \glspl{attribute} do not capture the inter-relation between objects for \textit{New} and \textit{Old} \glspl{attribute}.
 Having Version 2 be responsible for all the changes causes issues with the model since it must be associated with \glspl{attribute} from an entirely different object.
-The \textit{Old} \glspl{attribute} should not exists within Version 2.
+The \textit{Old} \glspl{attribute} do not appear within Version 2, failing to meet the version-attribute connectivity requirement.
 Associating \textit{Old} \glspl{attribute} with Version 1 would be more appropriate and intuitive to understand.
-The model does not capture the \underline{type} of change, making the result a listing of \glspl{attribute} without the \gls{version} differences to contextualize the relationship between the \glspl{version}.
+To test whether the provenance based model satisfied version continuity, a hypothetical third version is added.
+For attributes which are modified in Versions 1, 2, and 3, all pre- and post-values are grouped under the singlar Attribute, making the sequence of values ambiguous.
+Because the provenance based model cannot unambiguously accommodate a third version, version continuity is not upheld.
 
-From a different direction, Figure \ref{DiscardedFig2} shows a model created by starting from the \gls{log}.
+Using change logs as a basis, a log based model, shown in Figure \ref{DiscardedFig2} was created.
 \begin{figure}
 	\centering
 	\vspace{0.0in} % normally the command here would be \includegraphics
@@ -103,17 +105,17 @@ From a different direction, Figure \ref{DiscardedFig2} shows a model created by 
 	\label{DiscardedFig2}  % the \label command comes AFTER the caption
 \end{figure}
 \Glspl{attribute} are attached to the log as the primary indicators for old, new, and modified concepts.
-\Glspl{log} often break down and group changes by \glspl{attribute}.
+\Glspl{log} often show a break down and group changes by \glspl{attribute}.
 For modified \glspl{attribute}, an additional change concept is associated, encapsulating the values and nature of the change.
 At the far right side of the figure is a concept called \textit{Type} which indicates more specifically the nature of the change, for example one unit of speed to another.
-Pre- and post- values are also included to explicitly define the change concept.
+Pre- and post- values were also included to explicitly define the change concept.
 
-The primary drawback of the log-based construction is that the \gls{log} assumes all responsibility for every modification to the data even though the document only reports the differences.
-The \gls{version} objects are also left out of the model, leaving the log concept in possession of the attributes.
-One of the major breakthroughs with the log-centric model construction is that while specific values are kept in the log, pre- and post- values do not need to be in the model.
+The primary drawback of the log based model is that the Log concept is the origin for every modification to the data even though the document only reports the differences.
+The \gls{version} objects are also left out of the log based model, leaving the Log concept in possession of the attributes.
+One of the major breakthroughs with the log based model formulation is that while specific values are kept in the log, pre- and post- values do not need to be in a versioning model.
 By encoding the type of change, the need for actual values becomes superfluous as change type is more generalizable across domains and contexts.
 
-Figure \ref{DiscardedFig3} combines the provenance and change log approaches by capturing the transition from Version 1 to Version 2 in the change log.
+Figure \ref{DiscardedFig3} combines the provenance and change log approaches, resulting in the hybrid model, by modeling the change log as a transition between Version 1 and Version 2.
 \begin{figure}
 	\centering
 	\vspace{0.0in} % normally the command here would be \includegraphics
@@ -139,15 +141,15 @@ Figure \ref{DiscardedFig3} combines the provenance and change log approaches by 
 	\caption{Hybrid provenance and change log versioning model.}
 	\label{DiscardedFig3}  % the \label command comes AFTER the caption
 \end{figure}
-The idea here is to enable distance capture between versions by encapsulating all changes within the log concept.
+The idea enables distance capture between versions by encapsulating all changes within the Log concept.
 The changes are then associated with specific \glspl{attribute}.
-Pre- and post- values do not appear in the model because the presence and kind of change is more valuable information than assessing the explicit values involved.
-As a data set becomes more volatile, more values would need to be stored, resulting in more copying of the data rather than summarization of the changes.
-Notice in Figure \ref{DiscardedFig3} that \textit{Attribute} has now become disconnected from either \gls{version}.
+Pre- and post- values do not appear in the model because, as explained previously, the presence and kind of change is more valuable information than assessing the explicit values involved.
+As the number of changing entries increases, more values would need to be stored, resulting in the copying of the data rather than summarization of the changes.
+Notice in Figure \ref{DiscardedFig3} that \textit{Attribute} has now become disconnected from either Version concept.
 Reconnecting the \textit{Attribute} concept brings into question which \gls{version} it should be associated with since it exists in both.
-The larger issue with both the log-based and hybrid approach is that the model resembles a tree more than a graph, making \gls{linked} queries less powerful, as most of the concepts are disconnected.
+The larger issue with both the log based model and hybrid model is that the versioning model resembles a tree more than a graph, making \gls{linked} queries less powerful, as most of the concepts are disconnected.
 
-A fourth formulation, in Figure \ref{DiscardedFig4}, leverages the insight that when a change interacts with an \gls{attribute}, the \gls{attribute} is different in the next \gls{version}.
+A fourth formulation, in Figure \ref{DiscardedFig4}, leverages the insight that when a \textbf{change} interacts with an \gls{attribute}, the \gls{attribute} has changed in the next \gls{version}, resulting in the model referred to as the fully connected model.
 \begin{figure}[b]
 	\centering
 	\vspace{0.0in} % normally the command here would be \includegraphics
@@ -171,20 +173,19 @@ A fourth formulation, in Figure \ref{DiscardedFig4}, leverages the insight that 
 	\caption{Highly connected model of just versions, changes, and attributes}
 	\label{DiscardedFig4}  % the \label command comes AFTER the caption
 \end{figure}
-The model addresses the attribution problem by forming two \glspl{attribute}, each associated with a different \gls{version}.
-These \glspl{attribute} inform a change which acts upon both \textit{Version} concepts.
-The \textit{Log} object is dropped for the model since it is a method to convey change and not an actor involved in the change.
-From the highly connected construction, new and old \textit{Attributes} no longer need to be explicitly stated, but they can be implied from the model's structure.
-A new attribute would not exist in \textit{Version 1} so \textit{Attribute 1} and its associated properties (arrows) are removed, leaving a unique construction implying an \gls{attribute} \gls{add}.
+The fully connected model addresses the attribution problem by forming two \glspl{attribute}, each associated with a different \gls{version}.
+These \glspl{attribute} inform a \textbf{change} which acts upon both \textit{Version} concepts.
+The \textit{Log} object is dropped for the fully connected model since it is a method to convey change and not an actor involved in the change.
+The highly connected model is not able to capture new and old \textit{Attributes} because Attribute 1 and Attribute 2 cannot be removed from the model, meaning that the fully connected model cannot represent all additions, invalidations, and modifications.
 
 One observation is that the relation from changes to \glspl{version} is redundant since the links from \textit{Version} to \textit{Attribute} to \textit{Change} implies the same relationship.
 Removing the explicit relation would shorten the number of triples required to encode a change and improve scalability.
 The \gls{vergraph} using the highly connected model would also be easier to query if the edges were oriented in the same direction, additionally implying that change flows from one \gls{version} to the next.
-These final observations result in the current versioning model.
+These final observations result in the final versioning model which is used to instantiate VersOn.
 
-\section{Model Objects} \label{sec:model}
+\section{The Final Model} \label{sec:model}
 
-The versioning model incorporates three kinds of objects: \glspl{version}, \glspl{attribute}, and \gls{change}.
+The final versioning model incorporates three kinds of objects: \glspl{version}, \glspl{attribute}, and \gls{change}.
 A \gls{version} object represents the items being compared such as a book or spreadsheet.
 In \gls{prov}, a \gls{version} would likely correspond with the \textit{prov:Entity} involved in a \textit{prov:wasRevisionOf} property.
 The \textbf{attribute} object refers to specific parts which make up a \gls{version}.
@@ -196,6 +197,14 @@ The presence or absence of an \gls{attribute} is used to determine the kind of \
 \Gls{change} are used to link together \glspl{attribute} from different \glspl{version}.
 The \gls{change} captures a difference between the old \gls{version} state and the new \gls{version} state.
 While the \gls{change} object greatly resembles a \gls{prov} qualified property, its form can change depending on the kind of \gls{change}, like a \textit{schema:UpdateAction}.
+The final model is implemented by The Versioning Ontology (VersOn).
+The full ontology map can be seen in Figure \ref{vo_map}.
+\begin{figure}
+	\centering
+	\includegraphics[scale=.9]{figures/OntologyMap.png}
+	\caption{Ontology map of the Versioning Ontology.  The primary concepts are Version, Attribute, and Change.  Changes are subclassed into disjoint AddChange, InvalidateChange, and ModifyChange concepts.  The MoveChange is a subclass of ModifyChange, demonstrating the extension of the core change concepts.}
+	\label{vo_map}
+\end{figure}
 
 \subsection{Left-hand Right-hand Convention}
 
@@ -206,11 +215,11 @@ To recognize the distinction, objects will be referred to as the \textbf{left-ha
 
 \section{How Changes are Represented in the Model}
 
-The model bases \glspl{change} around the three core versioning operations because their commonality across systems provides a fundamental basis for comparisons.
+The final model bases \glspl{change} around the three core versioning operations because their commonality across systems provides a fundamental basis for comparisons.
 \glspl{add} occur when an \gls{attribute} appears only in the \textbf{right-hand version}.
-When an \gls{attribute} only shows up in the \textbf{left-hand version}, the model captures the relationship as an \gls{invalidate}.
+When an \gls{attribute} only shows up in the \textbf{left-hand version}, the final model captures the relationship as an \gls{invalidate}.
 Finally, a \gls{modify} change has \glspl{attribute} in both the \textbf{left-} and \textbf{right-hand versions}, but the \gls{modify} change only connects two \glspl{attribute} if the values are different.
-These three combinations cover the possible situations within the model.
+These three combinations cover the possible situations within the final model.
 
 \begin{figure}
 	\centering
@@ -244,6 +253,14 @@ Finally, a \gls{change} object connects the two \glspl{attribute}, denoting that
 The specific values pertaining to Attribute 1 and Attribute 2 are not captured by the model because acknowledging that a difference exists is more important.
 Extending the model to properly communicate the significance of a modification for a wide variety of domains would require sizable domain knowledge and would be outside of a data versioning scientist's domain.
 In addition, the model would essentially begin storing a copy of the data set, leading to space and redundancy concerns.
+
+In some applications, a \textbf{modification} is represented as an \textbf{invalidation} followed by an \textbf{addition}.
+The representation has a couple of problems.
+The first is that the sequence of changes implies that there is an intermediary stage where all the modified values have been invalidated but not added.
+The intermediary stage constitutes a new version of the data object, even though only one change is being made.
+The second issue with using the two change sequence is that the two states of attribute, before and after the \textbf{modification}, becomes disassociated.
+Any new attribute being added to the version is not necessarily associated with an attribute in the left-handed version.
+Establishing the association between attributes after an \textbf{invalidation}-\textbf{addition} sequence is the same as and more concisely expressed as a \textbf{modification}.
 
 \subsection{Addition}
 

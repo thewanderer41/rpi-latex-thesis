@@ -9,36 +9,51 @@
 Data sets invariably require versioning systems to manage changes due to an imperfect collection environment.
 Data versioning systems are employed to manage changes to data, logging new data sets and communicating that change to data consumers.
 Versioning discussion remains imprecise, lacking standardization or formal specifications.
-Many works tend to define versions around examples and local characteristics but lack a broader foundation.
-This imprecision results in a reliance on change brackets and dot-decimal identifiers without quantitative measures to justify their application.
-No difference exists between the versioning practices of a group which updates their data regularly and a group which adds many new files but rarely replaces them.
-This work attempts to improve discussion by capturing version relationships into a linked data model, taking inspiration from provenance models that incorporate versioning concepts such as PROV and Provenance, Authorship, Versioning (PAV) ontologies.
-The model captures addition, invalidation, and modification relationships between versions to provide change log-like characterization of the differences.
+Many works tend to define versions based on previously established data project traditions rather than an analysis on the versioning characteristics of the data set.
+Provenance ontologies have begun to address some of the issues in capturing change information as linked-data, but remain incomplete.
+To improve completeness, a linked-data model must capture addition, invalidation, and modification (AIM) changes, connect versions to changing attributes, and maintain continuity between versions.
+Creating a version model enabled documentation which captures the differences between versions known as change logs to be exposed as linked-data, but the encoding process had an impact on the performance of the change log.
+From the behavior of provenance data which has similar properties to version data, the change log performance was expected to decrease by no more than 50\%.
+Data versioning traditions have popularized the use of dot-decimal identifiers which indicate a categorical difference from the immediately prior version.
+Using the change counts from applying the data model, a more precise method of evaluating change distance was generated compared to the categorical differences enabled by dot-decimal identifiers.
+The greater precision enables changes to be assessed across time rather than across versions, improving the accuracy of a data set's change rate assessment.
 
-The data set landscape largely lacks the practice of including detailed change documentation like the logs commonly accompanying software projects.
-The result likely originates from the size of data sets requiring time-intensive work to manually construct.
-A process is presented to automate change log creation for data sets, improving adoption as well as encoding the change logs with linked data.
-The linked data equipped change logs makes the documentation consumable by machines, ensuring not only efficient creation, but also utilization.
-A drawback, as found from larger data set change, the encoding causes significant bloating as compared to plain text change logs.
-The versioning graphs encoded into the document, describing the \textbf{additions}, \textbf{invalidations}, and \textbf{modifications} (AIM) made by the new version, allow new avenues of exploration into data that can be standardized across data sets.
+A complete versioning model needed to satisfy three requirements.
+The requirement of capturing AIM changes means that all types of changes were captured by the model.
+Connecting versions to attributes means the changing parts of a version are appropriately attributed to the correct data object.
+Requiring that version continuity be preserved means that the version model can capture not just the interaction between two objects, but also a series of versions as commonly seen in large data versioning systems.
+A provenance based model was only able to partially achieve version-attribute connections and version continuity.
+A log based model was then developed but could not satisfy version continuity.
+A third hybrid approach was created but did not meet the version to attribute connection requirement.
+A fully connected model was studied, but the model could not differentiate between AIM changes.
+The final model, instantiated as the Versioning Ontology (VersOn), separated the fully connected model into three forms to meet the AIM change capture requirement.
+VersOn explicitly connects version objects to the underlying attributes, fulfilling the version-attribute connectivity requirement.
+By propagating changes across attributes and maintaining relations between versions and changes in cases of missing attributes, our model maintains version continuity, meeting all requirements for completeness.
 
-The AIM changes allow versions within the same data set to be compared using counts of the changes.
-The comparisons provide a quantifiable basis for communicating change as compared to the qualitative version identifiers currently used by the Global Change Master Directory (GCMD) Keywords.
-The analysis revealed conflicts between the observed change in the data set at Version 8.5's release depending upon the perspective of the data consumer or producers.
-Data from the Marine Biodiversity Virtual Laboratory was also explored to give new context to the linked data version comparison process.
-The changes computed provided evidence towards measurably better performance in marine biology classification using the versioning model.
+The instantiation of the versioning model enabled VersOn to be encoded into change logs using the \acrfull{rdfa} and \acrfull{jsonld}.
+Adding more data into the change log had an impact on the performance, measured by content per storage size, but the reduction was expected to be no more than 50\%.
+Scripts were used to automatically generate a change log standardized by VersOn, but the impact to performance exceeded expectations.
+The RDFa change log experienced a 90\% reduction in performance while the JSON-LD change log experienced more than 95\% reduction in performance.
+The increased storage utilization by the JSON-LD change log enabled less restricted implementation of VersOn into the change log.
 
-Version change logs link an amount of change to a particular version, but versions do not have to be published at regular intervals.
-That observation points towards the idea that just looking at versions may obscure trends in change over time by breaking up changes by version.
-An analysis was performed to observe the change rates of each version distributed over time for the GCMD Keywords and discovered that the versions could be clustered according to different change behaviors.
-The Earth Observing Laboratories were also studied for trends over time to study a collection of similar data sets.
-The AIM changes revealed unexpected behaviors in the data sets with respect to the way versions were updated, showing a strong relation between adding and removing files.
-The distribution of changes over time were also compared to the general distribution of versions over time and revealed a significant difference in behavior.
+Versioning graphs instantiated using VersOn separate changes into individual instances organized by type of change which can be counted to create a change distance.
+Dot-decimal identifiers the amount of change from the prior version into major, minor, or smaller categories.
+Using the change counts increases the precision at which change between versions were assessed.
+Extending the changes enabled the use of domain knowledge to additionally improve the precision of change assessment as appropriate to the domain.
+Through analysis of the Global Change Master Directory (GCMD) Keywords Version 8.5, we found that VersOn enables data consumers to assess data change in ways relevant to the consumer and independent of the producer's assessment of change as indicated by the dot-decimal identifier assigned to the version.
 
-Change analysis for data sets need a great amount of work as big data sets become more common.
-Terms and practices need to be standardize and formalized which begins with producing discoverable and consumable change documentation.
-The procedures explored showed promise using linked data models, but suffered from size bloating necessary to make the documents machine consumable.
-Once computable, producers can begin providing better quantitative measure for change in data, but analysis has shown that the perceived change may differ depending on the consumer of the data set.
-The experience highlights an obscured dynamic in change information between data producers and data consumer in which producers often dictate the means of evaluating version change.
-Diverging from version-primary practices and including more detailed change accounting becomes a priority after discovering that versions can hide trends in the actual change rate.
-The difference between data set change rate and behavior suggests that future research is necessary to determine if the differences indicate versioning practices also need to be different.
+Change counts collected using VersOn were made across versions rather than across time.
+Using the version publication time, the change counts of GCMD Keywords were distributed across time.
+Some of the versions were discovered to bundle changes from much earlier than the publication of the previous version, meaning that the change rate using version publication time did not accurately reflect the change rate of the changes in bundles.
+Using the start time of the change rather than the version more accurately captures the change rate of the data.
+The data sets collected by the Earth Observing Laboratory (EOL) were found to have AIM change rates consistently different from the version publication rate.
+Since change counts measure the individual changes in the data set, the VersOn enabled change counts integrated with time provides a more accurate assessment of the data set change rate.
+
+Our versioning model, implemented as VersOn, enables more complete change capture using linked-data and exposes the information stored in change logs as linked-data.
+The model achieves distinct AIM change capture, version-attribute connectivity, and version continuity.
+The impact to change log performance of including the VersOn entries into the log exceeds a 50\% reduction because modifications were not summarized.
+The impact demonstrates the importance of being able to summarize change in generating manageable change logs.
+Our implementation of VersOn enables more precise assessment of change in comparison to dot-decimal identifiers by counting specific changes rather than using categorical assessments.
+Using VersOn, we were able to demonstrate methods to more accurately asses data set change rates by using the change time rather than the version publication time and using the VersOn change rate rather than the version publication rate.
+Through developing VersOn, we additionally found that the ontology enables data consumers to take more control over the change assessment process and become more independent of the version information defined the data producer.
+Analyzing datasets through VersOn also revealed that data sets have a tendancy towards a certain type of change as well as specific categories of versioning schedules.
